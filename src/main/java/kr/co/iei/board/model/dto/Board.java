@@ -12,10 +12,13 @@ import lombok.NoArgsConstructor;
 @Data
 public class Board {
 	
-	private int BoardNo;
-	private int MemberNo;
-	private String BoardTitle;
-	private String BoardContent;
-	private Date BoardDate;
-	private int ReadCount;
+	private int boardNo;
+	private int memberNo;
+	private String boardTitle;
+	private String boardContent;
+	private Date boardDate;
+	private int readCount;
+
+	private int boardLike;
+
 }

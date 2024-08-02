@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @Data
 public class BoardComment {
 
-	private int BoardCommentNo;
-	private int MemberNo;
-	private int BoardNo;
-	private String BoardCommentContent;
-	private Date BoardCommentDate;
-	private int BoardCommentRef;
+	private int boardCommentNo;
+	private int memberNo;
+	private int boardNo;
+	private String boardCommentContent;
+	private Date boardCommentDate;
+	private int boardCommentRef;
 }
