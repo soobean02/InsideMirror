@@ -13,7 +13,7 @@ public class MemberRowMapper implements RowMapper<Member> {
 	public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
 		Member m = new Member();
 		m.setAcorns(rs.getInt("acorns"));
-		m.setEnrollDate(rs.getString("enroll_date"));
+		m.setEnrollDate(rs.getDate("enroll_date"));
 		m.setMemberAddr(rs.getString("member_addr"));
 		m.setMemberGender(rs.getString("member_gender"));
 		m.setMemberId(rs.getString("member_id"));
