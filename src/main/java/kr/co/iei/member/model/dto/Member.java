@@ -1,5 +1,7 @@
 package kr.co.iei.member.model.dto;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +19,7 @@ public class Member {
 	private String memberPhone;		//회원 전화번호
 	private String memberAddr;		//회원 주소
 	private int memberLevel;		//회원 등급 (관리자 1, 정회원 2)
-	private String enrollDate;		//회원 가입일
+	private Date enrollDate;		//회원 가입일
 	
 	private String profileMsg;		//회원 프로필 메세지
 	private String profilePhoto;	//회원 프로필 사진
