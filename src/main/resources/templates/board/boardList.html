@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<style>
+    .board-wrap{
+        width: 100%;
+        height: 700px;
+        /* background-color: #92a2ff; */
+    }
+
+    ul{
+        list-style-type: none;
+    }
+
+    .left{
+        float: left;
+    }
+
+    .board-header{
+        /* overflow: hidden; */
+        margin-top: 10px;
+        width: 100%;
+        height: 50px;
+    }
+
+    .order-content{
+        display: none;
+        padding: 0;
+    }
+
+    .write-wrap{
+        /* background-color: #92fffd; */
+        width: 20%;
+        height: 30px;
+        text-align: center;
+    }
+
+    .search-wrap{
+        /* background-color: aqua; */
+        width: 80%;
+        /* overflow: hidden; */
+        height: 30px;
+        background-color: aquamarine;
+    }
+    .select-wrap{
+        /* background-color: aquamarine; */
+        width: 20%;
+        float: left;
+        height: 30px;
+        text-align: center;
+    }
+    .input-wrap{
+        /* background-color: antiquewhite; */
+        width: 65%;
+        float: left;
+        height: 30px;
+    }
+    .input-wrap>input[type=text]{
+        border: none;
+        border-bottom: 1px solid #000000;
+        width: 250px;
+        margin-top: 5px;
+    }
+    .order-wrap{
+        /* background-color: azure; */
+        width: 15%;
+        float: left;
+        height: 200px;
+    }
+
+
+    .board-content{
+        width: 100%;
+        height: 460px;
+        background-color: aqua;
+        border-top: 1px solid grey;
+    }
+
+
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>minihomepage</title>
+    <link rel="stylesheet" href="/css/minihomepage.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/font.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+
+<body>
+    <div class="bookcover">
+        <div class="bookdot">
+            <div class="page">
+                <div class="profile-container">
+                    <div class="header profile-title">TOTAL
+                        <span class="color-red">28</span>
+                    </div>
+                    <div class="box profile-box">
+                        <div class="profile-image">
+                            <img class="profile-image-img" src="#" alt="프로필 이미지">
+                        </div>
+                        <div class="profile-text">ㄴr는.. 오늘도.. 눈물을.. 흘린ㄷr..★</div>
+                        <div class="profile-username">
+                            <span style="color: #0f1b5c">채연</span>
+                           	 (♪♬)
+                        </div>
+                        <div class="profile-dropdown">
+                            <div class="dropdown-button">
+                                <div class="dropdown-title">일촌 파도타기</div>
+                                <div class="triangle-down"></div>
+                            </div>
+                            <div class="dropdown-content">
+                                <a href="#">ㅁㅁㅁ의 홈피</a>
+                                <a href="#">ㅁㅁㅁ의 홈피</a>
+                                <a href="#">ㅁㅁㅁ의 홈피</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-container">
+                    <div class="header content-title">
+                        <div class="content-title-name">ㅁㅁㅁ님의 홈피</div>
+                    </div>
+                    <div class="box content-box">
+                    
+                        <div class="box-title">Updated news ></div>
+                        
+                        <div class="board-wrap">
+                            <div class="board-header">
+
+                                <!-- 나중에 != 로 바꿔야 함 지금은 테스트를 위함 -->
+                                <div class="write-wrap left">
+                                    <a th:if="${session.member == null}" class="write-btn" href="/board/writeFrm">글작성</a>
+                                </div>
+
+                                <div class="search-wrap left">
+                                    <form action="/board/search">
+                                        <div class="select-wrap left" th:switch="${type}">
+                                            <select name="type" id="searchBox" th:case=null>
+                                                <option value="title" selected>제목</option>
+                                                <option value="writer">작성자</option>
+                                            </select>
+                                            <select name="type" id="searchBox" th:case="title">
+                                                <option value="title" selected>제목</option>
+                                                <option value="writer">작성자</option>
+                                            </select>
+                                            <select name="type" id="searchBox" th:case="writer">
+                                                <option value="title">제목</option>
+                                                <option value="writer" selected>작성자</option>
+                                            </select>
+                                        </div>
+
+                                        <input type="hidden" name="reqPage" value="1">
+
+                                        <div class="input-wrap">
+                                            <input type="text" name="search left" class="search-input left">
+                                            <button type="submit" class="submit-btn left">검색</button>
+                                        </div>
+                                        
+                                        <div class="order-wrap left">
+                                            <span>정렬</span>
+                                            <ul class="order-content">
+                                                <li>
+                                                    <input type="radio" name="orderDate" value="newest" checked>최신순
+                                                    <input type="radio" name="orderDate" value="popular">인기순
+                                                </li>
+                                                <li>
+                                                    <input type="radio" name="orderFriend" value="all" checked>전체
+                                                    <input type="radio" name="orderFriend" value="friend">일촌only
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="board-content">
+                                
+                            </div>
+
+                            
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+                <div class="menu-container">
+                    <div class="menu-button">
+                        <a href="#"><button>홈</button></a>
+                        <a href="/board/list?reqPage=1"><button>자유게시판</button></a>
+                        <a href="#"><button>사진첩</button></a>
+                        <a href="#"><button>방명록</button></a>
+                        <a href="#"><button>선물가게</button></a>
+                        <a href="#"><button>구매목록</button></a>
+                        <a href="#"><button>일촌관리</button></a>
+                        <a href="#"><button>고객센터</button></a>
+                        <a href="#"><button>즐겨찾기</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(".order-wrap>span").on("click",function(){
+            $(".order-content").toggle();
+        })
+    </script>
+
+</body>
+
+</html>

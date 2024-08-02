@@ -27,6 +27,6 @@ public class BoardController {
 	@GetMapping(value = "/list")
 	public String boardList(int reqPage, Model model){
 		BoardListData bld = boardService.selectBoardList(reqPage);
-		return null;
+		return "/board/boardList";
 	}
 }
