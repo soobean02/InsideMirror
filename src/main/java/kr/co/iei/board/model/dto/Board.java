@@ -1,6 +1,8 @@
 package kr.co.iei.board.model.dto;
 
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +16,6 @@ public class Board {
 	private int MemberNo;
 	private String BoardTitle;
 	private String BoardContent;
-	private String BoardDate;
+	private Date BoardDate;
 	private int ReadCount;
 }
