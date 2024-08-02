@@ -16,7 +16,7 @@ public class BoardRowMapper implements RowMapper<Board>{
 		b.setBoardTitle(rs.getString("board_title"));
 		b.setMemberNo(rs.getInt("member_no"));
 		b.setReadCount(rs.getInt("read_count"));
-		b.setBoardDate(rs.getString("board_date"));
+		b.setBoardDate(rs.getDate("board_date"));
 		b.setBoardContent(rs.getString("board_content"));
 		return b;
 	}
