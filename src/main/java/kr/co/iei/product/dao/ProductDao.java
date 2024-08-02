@@ -12,7 +12,7 @@ public class ProductDao {
 	@Autowired
 	private JdbcTemplate jdbc;
 	@Autowired
-	private ProductListRowMapper ProductListRowMapper;
+	private ProductListRowMapper ProductListRowMapper; // 상품 목록(목록 번호, 목록 이름)
 	@Autowired
-	private SellProductRowMapper sellProductRowMapper; // 판매상품(번호,목록번호, 가격, 이름, 이미지, url)
+	private SellProductRowMapper sellProductRowMapper; // 판매상품(번호,목록번호(참조), 가격, 이름, 이미지, url)
 }
