@@ -4,6 +4,7 @@
     .board-wrap{
         width: 100%;
         height: 700px;
+        font-size: 18px;
         /* background-color: #92a2ff; */
     }
 
@@ -16,10 +17,10 @@
     }
 
     .board-header{
-        /* overflow: hidden; */
+        overflow: hidden;
         margin-top: 10px;
         width: 100%;
-        height: 50px;
+        margin-bottom: 20px;
     }
 
     .order-content{
@@ -37,7 +38,7 @@
     .search-wrap{
         /* background-color: aqua; */
         width: 80%;
-        /* overflow: hidden; */
+        overflow: hidden;
         height: 30px;
         background-color: aquamarine;
     }
@@ -70,11 +71,40 @@
 
     .board-content{
         width: 100%;
-        height: 460px;
+        height: 430px;
         background-color: aqua;
         border-top: 1px solid grey;
+        overflow: hidden;
+    }
+    .board-tr>div{
+        margin-bottom: 10px;
+        float: left;
     }
 
+    
+    .board-list{
+        margin-top: 10px;
+        float: left;
+    }
+
+    .pageNavi{
+        background-color: bisque;
+        width: 100%;
+        height: 40px;
+        overflow: hidden;
+    }
+
+    .page-wrap{
+        width: 30%;
+        margin: 0 auto;
+        height: 40px;
+    }
+
+    .page-wrap>li{
+        float: left;
+        height: 50px;
+        margin-left: 10px;
+    }
 
 </style>
 
@@ -103,7 +133,7 @@
                         <div class="profile-text">ㄴr는.. 오늘도.. 눈물을.. 흘린ㄷr..★</div>
                         <div class="profile-username">
                             <span style="color: #0f1b5c">채연</span>
-                           	 (♪♬)
+                            (♪♬)
                         </div>
                         <div class="profile-dropdown">
                             <div class="dropdown-button">
@@ -176,10 +206,30 @@
                             </div>
 
                             <div class="board-content">
-                                
+                                <div class="board-tr">
+                                    <div style="width:10%;">글번호</div>
+                                    <div style="width:40%;">제목</div>
+                                    <div style="width:15%; text-align: center;">작성자</div>
+                                    <div style="width:10%; text-align: center;">조회수</div>
+                                    <div style="width:10%; text-align: center;">좋아요</div>
+                                    <div style="width:15%; text-align: center;">작성일</div>
+                                </div>
+
+                                <div class="board-td" th:each="board : ${list}">
+                                    <a href="#">
+                                        <div class="board-list" style="width:10%;" th:text="${board.boardNo}"></div>
+                                        <div class="board-list" style="width:45%;" th:text="${board.boardTitle}"></div>
+                                        <div class="board-list" style="width:10%;" th:text="${board.memberNo}"></div>
+                                        <div class="board-list" style="width:10%; text-align: center;" th:text="${board.readCount}"></div>
+                                        <div class="board-list" style="width:10%; text-align: center;" th:text="${board.boardLike}"></div>
+                                        <div class="board-list" style="width:15%;" th:text="${board.boardDate}"></div>
+                                    </a>
+                                </div>
+
                             </div>
 
-                            
+                            <div class="pageNavi" th:utext="${pageNavi}"></div>
+
                         </div>
                         
                         
