@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.co.iei.board.model.dto.Board;
 import kr.co.iei.board.model.dto.BoardListData;
 import kr.co.iei.board.model.service.BoardService;
 import kr.co.iei.utils.FileUtils;
@@ -36,5 +37,12 @@ public class BoardController {
 	public String writeFrm(){
 		return "/board/write";
 	}//글 작성
+
+	@GetMapping(value="/view")
+	public String view(int boardNo){
+		Board board = boardService.selectOneBoard(boardNo);
+
+		return "/board/view";
+	}
 
 }

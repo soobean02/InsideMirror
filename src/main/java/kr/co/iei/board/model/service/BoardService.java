@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.iei.board.model.dao.BoardDao;
+import kr.co.iei.board.model.dto.Board;
 import kr.co.iei.board.model.dto.BoardListData;
 
 @Service
@@ -69,5 +70,11 @@ public class BoardService {
 		BoardListData bld = new BoardListData(list, pageNavi);
 
 		return bld;
+	}
+
+
+	public Board selectOneBoard(int boardNo) {
+		
+		return null;
 	}
 }
