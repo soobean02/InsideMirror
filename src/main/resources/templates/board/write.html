@@ -29,9 +29,12 @@
     <link rel="stylesheet" href="/css/font.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="/summernote/summernote-lite.js"></script>
+	<script src="/summernote/summernote-lite.js"></script>
 	<script src="/summernote/lang/summernote-ko-KR.js"></script>
 	<link rel="stylesheet" href="/summernote/summernote-lite.css">
+    
+
+    
 </head>
 
 <body>
@@ -73,16 +76,22 @@
                         <div class="box-title">자유 게시판 글작성></div>
                         
                         <div class="board-wrap">
-                            <div class="board-title">
-                                <input type="text" name="boardTitle" class="boardTitle">
-                            </div>
-                            <input type="hidden" name="memberNo">
-                            <!-- 나중에 로그인 기능 만들어지면 th:value=session.member.memberNo  추가하기-->
-                            <div class="board-content">
-                                <textarea name="boardContent" id="content"></textarea>
 
-                            </div>
+                            <form action="/board/write" method="post" enctype="multipart/form-data">
+
+                                <div class="board-title">
+                                    <input type="text" name="boardTitle" class="boardTitle">
+                                </div>
+                                <input type="hidden" name="memberNo">
+                                <!-- 나중에 로그인 기능 만들어지면 th:value=session.member.memberNo  추가하기-->
+                                <div class="board-content">
+                                    <textarea name="boardContent" id="content"></textarea>
+                                    
+                                </div>
+                            </form>
+
                         </div>
+                            
                         
                         
                     </div>
@@ -105,7 +114,21 @@
     </div>
 
     <script>
-
+        $("#content").summernote({
+			height:400,
+			lang : "ko-KR",
+			disableResize : true,
+			disableResizeEditor : true,
+			resize : false,
+			callbacks : {
+				//사용자가 이미지를 올리면 동작할 함수 지정
+				onImageUpload : function(files){
+					//이미지를 선택하면 해당 파일을 매개변수로 받음
+					//이미지를 처리할 함수를 지정 -> 이때 매개변수로 첨부한 파일, 에디터 객체를 전송
+					uploadImage(files[0], this);		
+				}
+			}
+		});
 
 
 
@@ -114,3 +137,4 @@
 </body>
 
 </html>
+
