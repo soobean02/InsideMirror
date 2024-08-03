@@ -11,6 +11,9 @@
     ul{
         list-style-type: none;
     }
+    a{
+        color: black;
+    }
 
     .left{
         float: left;
@@ -72,20 +75,33 @@
     .board-content{
         width: 100%;
         height: 430px;
-        background-color: aqua;
+        /* background-color: aqua; */
         border-top: 1px solid grey;
         overflow: hidden;
     }
+    
     .board-tr>div{
         margin-bottom: 10px;
         float: left;
     }
-
+    .board-td:hover{
+        background-color: rgb(104, 185, 255);
+    }
+    .board-tr{
+        height: 40px;
+    }
+    .board-td{
+        height: 35px;
+        line-height: 35px;
+        border-top: 1px solid rgb(158, 158, 158);
+        /* padding-top: 10px; */
+    }
     
     .board-list{
-        margin-top: 10px;
+        box-sizing: border-box;
         float: left;
     }
+    
 
     .pageNavi{
         background-color: bisque;
@@ -154,7 +170,7 @@
                     </div>
                     <div class="box content-box">
                     
-                        <div class="box-title">Updated news ></div>
+                        <div class="box-title">자유 게시판 ></div>
                         
                         <div class="board-wrap">
                             <div class="board-header">
@@ -216,10 +232,10 @@
                                 </div>
 
                                 <div class="board-td" th:each="board : ${list}">
-                                    <a href="#">
+                                    <a th:href="${board.boardNo}">
                                         <div class="board-list" style="width:10%;" th:text="${board.boardNo}"></div>
                                         <div class="board-list" style="width:45%;" th:text="${board.boardTitle}"></div>
-                                        <div class="board-list" style="width:10%;" th:text="${board.memberNo}"></div>
+                                        <div class="board-list" style="width:10%;" th:text="${board.boardWriter}"></div>
                                         <div class="board-list" style="width:10%; text-align: center;" th:text="${board.readCount}"></div>
                                         <div class="board-list" style="width:10%; text-align: center;" th:text="${board.boardLike}"></div>
                                         <div class="board-list" style="width:15%;" th:text="${board.boardDate}"></div>

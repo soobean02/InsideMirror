@@ -12,21 +12,22 @@ import kr.co.iei.board.model.service.BoardService;
 import kr.co.iei.utils.FileUtils;
 
 @Controller
-@RequestMapping(value="/board")
+@RequestMapping(value = "/board")
 public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
-	
+
 	@Value("${file.root}")
 	private String root;
-	
+
 	@Autowired
 	private FileUtils fileUtils;
 
 	@GetMapping(value = "/list")
-	public String boardList(int reqPage, Model model){
+	public String boardList(int reqPage, Model model) {
 		BoardListData bld = boardService.selectBoardList(reqPage);
+
 		model.addAttribute("list", bld.getList());
 		model.addAttribute("pageNavi", bld.getPageNavi());
 		return "/board/boardList";

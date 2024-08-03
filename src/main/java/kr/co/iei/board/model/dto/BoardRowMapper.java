@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BoardRowMapper implements RowMapper<Board>{
+public class BoardRowMapper implements RowMapper<Board> {
 
 	@Override
 	public Board mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -18,7 +18,10 @@ public class BoardRowMapper implements RowMapper<Board>{
 		b.setReadCount(rs.getInt("read_count"));
 		b.setBoardDate(rs.getDate("board_date"));
 		b.setBoardContent(rs.getString("board_content"));
+
 		b.setBoardLike(rs.getInt("board_like"));
+
+		b.setBoardWriter(rs.getString("board_writer_nickname"));
 		return b;
 	}
 
