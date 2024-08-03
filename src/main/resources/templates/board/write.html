@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <style>
+
     ul{
         padding: 0;
         margin: 0;
@@ -16,7 +17,22 @@
         font-size: 18px;
         /* background-color: #92a2ff; */
     }
+    .board-title>div{
+        text-align: center;
+    }
 
+    #boardTitle{
+        border: none;
+        border-bottom: 1px solid black;
+        margin: 15px 0px;
+        width: 80%;
+        outline: none;
+        padding: 5px;
+    }
+
+    .note-editor p {
+        margin: 0;
+    }
 
 </style>
 
@@ -80,13 +96,14 @@
                             <form action="/board/write" method="post" enctype="multipart/form-data">
 
                                 <div class="board-title">
-                                    <input type="text" name="boardTitle" class="boardTitle">
+                                    <div>
+                                        <input type="text" name="boardTitle" id="boardTitle" placeholder="당신만의 멋진 제목을 적어주세요!">
+                                    </div>
                                 </div>
                                 <input type="hidden" name="memberNo">
                                 <!-- 나중에 로그인 기능 만들어지면 th:value=session.member.memberNo  추가하기-->
                                 <div class="board-content">
                                     <textarea name="boardContent" id="content"></textarea>
-                                    
                                 </div>
                             </form>
 
@@ -114,21 +131,29 @@
     </div>
 
     <script>
-        $("#content").summernote({
-			height:400,
-			lang : "ko-KR",
-			disableResize : true,
-			disableResizeEditor : true,
-			resize : false,
-			callbacks : {
-				//사용자가 이미지를 올리면 동작할 함수 지정
-				onImageUpload : function(files){
-					//이미지를 선택하면 해당 파일을 매개변수로 받음
-					//이미지를 처리할 함수를 지정 -> 이때 매개변수로 첨부한 파일, 에디터 객체를 전송
-					uploadImage(files[0], this);		
-				}
-			}
-		});
+    $("#content").summernote({
+        height: 400,
+        lang: "ko-KR",
+        disableResize: true,
+        disableResizeEditor: true,
+        resize: false,
+        toolbar: [
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['fontname', 'fontstyle']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['height', ['height']],
+            ['insert', ['link', 'picture']], 
+            ['view', []] 
+        ],
+        fontSizes: ['10', '12', '14', '16', '18', '20', '22', '24', '26', '28', '30', '32','34', '36'],
+        callbacks: {
+            onImageUpload: function(files) {
+            uploadImage(files[0], this);
+            }
+        }
+    });
+
 
 
 
