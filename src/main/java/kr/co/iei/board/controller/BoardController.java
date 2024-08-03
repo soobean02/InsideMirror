@@ -27,9 +27,14 @@ public class BoardController {
 	@GetMapping(value = "/list")
 	public String boardList(int reqPage, Model model) {
 		BoardListData bld = boardService.selectBoardList(reqPage);
-
 		model.addAttribute("list", bld.getList());
 		model.addAttribute("pageNavi", bld.getPageNavi());
 		return "/board/boardList";
-	}
+	}//자유게시판 보기 조회는 10개씩
+
+	@GetMapping(value="/writeFrm")
+	public String writeFrm(){
+		return "/board/write";
+	}//글 작성
+
 }

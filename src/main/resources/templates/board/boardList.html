@@ -9,9 +9,12 @@
     }
 
     ul{
+        padding: 0;
+        margin: 0;
         list-style-type: none;
     }
     a{
+        text-decoration: none;
         color: black;
     }
 
@@ -27,23 +30,25 @@
     }
 
     .order-content{
+        position: absolute;
         display: none;
         padding: 0;
+        border: 1px solid black;
+        background-color: aliceblue;
     }
 
     .write-wrap{
         /* background-color: #92fffd; */
-        width: 20%;
+        width: 15%;
         height: 30px;
-        text-align: center;
+        
     }
-
     .search-wrap{
         /* background-color: aqua; */
         width: 80%;
         overflow: hidden;
         height: 30px;
-        background-color: aquamarine;
+        /* background-color: aquamarine; */
     }
     .select-wrap{
         /* background-color: aquamarine; */
@@ -51,6 +56,10 @@
         float: left;
         height: 30px;
         text-align: center;
+    }
+    .select-wrap>select{
+        width: 70px;
+        height: 25px;
     }
     .input-wrap{
         /* background-color: antiquewhite; */
@@ -66,9 +75,13 @@
     }
     .order-wrap{
         /* background-color: azure; */
-        width: 15%;
+        width: 20%;
         float: left;
-        height: 200px;
+        height: 30px;
+        text-align: center;
+    }
+    .order-wrap>span{
+        cursor: pointer;
     }
 
 
@@ -81,7 +94,7 @@
     }
     
     .board-tr>div{
-        margin-bottom: 10px;
+        margin: 5px 0px;
         float: left;
     }
     .board-td:hover{
@@ -102,6 +115,9 @@
         float: left;
     }
     
+    .write-btn{
+        cursor: pointer;
+    }
 
     .pageNavi{
         background-color: bisque;
@@ -131,6 +147,7 @@
     <link rel="stylesheet" href="/css/minihomepage.css">
     <link rel="stylesheet" href="/css/layout.css">
     <link rel="stylesheet" href="/css/font.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 
@@ -175,9 +192,21 @@
                         <div class="board-wrap">
                             <div class="board-header">
 
-                                <!-- 나중에 != 로 바꿔야 함 지금은 테스트를 위함 -->
-                                <div class="write-wrap left">
-                                    <a th:if="${session.member == null}" class="write-btn" href="/board/writeFrm">글작성</a>
+                                
+                                <div class="order-wrap left">
+                                    <span>정렬</span>
+                                    <div class="order-content">
+                                        <ul>
+                                            <li>
+                                                <input type="radio" name="orderDate" value="newest" checked>최신순
+                                                <input type="radio" name="orderDate" value="popular">인기순
+                                            </li>
+                                            <li>
+                                                <input type="radio" name="orderFriend" value="all" checked>전체
+                                                <input type="radio" name="orderFriend" value="friend">일촌only
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
 
                                 <div class="search-wrap left">
@@ -204,19 +233,12 @@
                                             <button type="submit" class="submit-btn left">검색</button>
                                         </div>
                                         
-                                        <div class="order-wrap left">
-                                            <span>정렬</span>
-                                            <ul class="order-content">
-                                                <li>
-                                                    <input type="radio" name="orderDate" value="newest" checked>최신순
-                                                    <input type="radio" name="orderDate" value="popular">인기순
-                                                </li>
-                                                <li>
-                                                    <input type="radio" name="orderFriend" value="all" checked>전체
-                                                    <input type="radio" name="orderFriend" value="friend">일촌only
-                                                </li>
-                                            </ul>
+                                        <!-- 나중에 != 로 바꿔야 함 지금은 테스트를 위함 -->
+                                        <div class="write-wrap left">
+                                            <span class="material-icons write-btn" th:if="${session.member == null}" href="/board/writeFrm">create</span>
                                         </div>
+                                        
+
                                     </form>
                                 </div>
                             </div>
@@ -233,7 +255,7 @@
 
                                 <div class="board-td" th:each="board : ${list}">
                                     <a th:href="${board.boardNo}">
-                                        <div class="board-list" style="width:10%;" th:text="${board.boardNo}"></div>
+                                        <div class="board-list" style="width:10%; text-indent: 15px;" th:text="${board.boardNo}"></div>
                                         <div class="board-list" style="width:45%;" th:text="${board.boardTitle}"></div>
                                         <div class="board-list" style="width:10%;" th:text="${board.boardWriter}"></div>
                                         <div class="board-list" style="width:10%; text-align: center;" th:text="${board.readCount}"></div>
@@ -272,6 +294,13 @@
         $(".order-wrap>span").on("click",function(){
             $(".order-content").toggle();
         })
+
+        $(".write-btn").on("click",function(){
+            location = "/board/writeFrm";
+        })
+
+
+
     </script>
 
 </body>
