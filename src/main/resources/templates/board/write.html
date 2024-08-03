@@ -139,28 +139,37 @@
     </div>
 
     <script>
-    $("#content").summernote({
-        height: 400,
-        lang: "ko-KR",
-        disableResize: true,
-        disableResizeEditor: true,
-        resize: false,
-        toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['fontname', 'fontstyle']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['height', ['height']],
-            ['insert', ['link', 'picture']], 
-            ['view', []] 
-        ],
-        fontSizes: ['10', '12', '14', '16', '18', '20', '22', '24', '26', '28', '30', '32','34', '36'],
-        callbacks: {
-            onImageUpload: function(files) {
-            uploadImage(files[0], this);
+        
+        $("#content").summernote({
+            height: 400,
+            lang: "ko-KR",
+            disableResize: true,
+            disableResizeEditor: true,
+            resize: false,
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['fontname', 'fontstyle']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['height', ['height']],
+                ['insert', ['link', 'picture']], 
+                ['view', []] 
+            ],
+            fontSizes: ['10', '12', '14', '16', '18', '20', '22', '24', '26', '28', '30', '32','34', '36'],
+            callbacks: {
+                onImageUpload: function(files) {
+                uploadImage(files[0], this);
+                }
             }
-        }
-    });
+        });
+
+        $("#boardTitle").on("keydown",function(e){
+            const enter = e.key;
+            if(enter === "Enter"){
+                event.preventDefault();
+                $("#content").summernote('focus');
+            }
+        });
 
     
 
