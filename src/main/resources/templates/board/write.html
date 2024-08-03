@@ -17,14 +17,17 @@
         font-size: 18px;
         /* background-color: #92a2ff; */
     }
-    .board-title>div{
+
+    .title-bar{
+        margin: 10px 0px;
         text-align: center;
     }
 
+
     #boardTitle{
         border: none;
-        border-bottom: 1px solid black;
-        margin: 15px 0px;
+        border-bottom: 1px solid rgb(150, 150, 150);
+        margin-top: 10px;
         width: 80%;
         outline: none;
         padding: 5px;
@@ -96,14 +99,19 @@
                             <form action="/board/write" method="post" enctype="multipart/form-data">
 
                                 <div class="board-title">
-                                    <div>
+                                    <div class="title-bar">
                                         <input type="text" name="boardTitle" id="boardTitle" placeholder="당신만의 멋진 제목을 적어주세요!">
                                     </div>
+                                    
                                 </div>
                                 <input type="hidden" name="memberNo">
                                 <!-- 나중에 로그인 기능 만들어지면 th:value=session.member.memberNo  추가하기-->
                                 <div class="board-content">
                                     <textarea name="boardContent" id="content"></textarea>
+                                </div>
+
+                                <div>
+                                    <button type="submit">전송</button>
                                 </div>
                             </form>
 
@@ -154,8 +162,9 @@
         }
     });
 
+    
 
-
+    
 
     </script>
 
