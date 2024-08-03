@@ -20,7 +20,34 @@
 
     .title-bar{
         margin: 10px 0px;
+        text-align: right;
+        float: left;
+        width: 75%;
+        margin-left: 60px;
+    }
+    .submit-div{
+        width: 15%;
         text-align: center;
+        margin: 10px 0px;
+        height: 40px;
+        line-height: 40px;
+        float: right;
+    }
+    .submit-div>button {
+        width: 60px;
+        height: 40px;
+        cursor: pointer;
+        background-color: #87CEEB; 
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px; 
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .submit-div>button:hover {
+        background-color: #56B3FA; 
     }
 
 
@@ -31,10 +58,15 @@
         width: 80%;
         outline: none;
         padding: 5px;
+        font-size: 18px;
     }
 
     .note-editor p {
         margin: 0;
+    }
+
+    .board-title{
+        overflow: hidden;
     }
 
 </style>
@@ -102,6 +134,9 @@
                                     <div class="title-bar">
                                         <input type="text" name="boardTitle" id="boardTitle" placeholder="당신만의 멋진 제목을 적어주세요!">
                                     </div>
+                                    <div class="submit-div">
+                                        <button type="submit">전송</button>
+                                    </div>
                                     
                                 </div>
                                 <input type="hidden" name="memberNo">
@@ -110,9 +145,6 @@
                                     <textarea name="boardContent" id="content"></textarea>
                                 </div>
 
-                                <div>
-                                    <button type="submit">전송</button>
-                                </div>
                             </form>
 
                         </div>
@@ -141,7 +173,7 @@
     <script>
         
         $("#content").summernote({
-            height: 400,
+            height: 380,
             lang: "ko-KR",
             disableResize: true,
             disableResizeEditor: true,
