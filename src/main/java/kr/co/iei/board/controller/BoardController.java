@@ -42,7 +42,9 @@ public class BoardController {
 	@GetMapping(value="/view")
 	public String view(int boardNo, Model model){
 		Board board = boardService.selectOneBoard(boardNo);
-		//null 체크 해야함
+		if(board == null){
+			return "redirect:/board/list?reqPage=1";
+		}
 		model.addAttribute("board", board);
 		return "/board/view";
 	}
