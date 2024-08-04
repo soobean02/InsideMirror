@@ -1,7 +1,9 @@
 package kr.co.iei.board.model.dto;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -16,7 +18,12 @@ public class BoardRowMapper implements RowMapper<Board> {
 		b.setBoardTitle(rs.getString("board_title"));
 		b.setMemberNo(rs.getInt("member_no"));
 		b.setReadCount(rs.getInt("read_count"));
-		b.setBoardDate(rs.getDate("board_date"));
+		Date boardDate = rs.getDate("board_date");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String formattedDate = sdf.format(boardDate);
+		b.setBoardDate(formattedDate);
+		
+
 		b.setBoardContent(rs.getString("board_content"));
 
 		b.setBoardLike(rs.getInt("board_like"));

@@ -260,7 +260,7 @@
                                         <div class="board-list" style="width:10%;" th:text="${board.boardWriter}"></div>
                                         <div class="board-list" style="width:10%; text-align: center;" th:text="${board.readCount}"></div>
                                         <div class="board-list" style="width:10%; text-align: center;" th:text="${board.boardLike}"></div>
-                                        <div class="board-list" style="width:15%;" th:text="${board.boardDate}"></div>
+                                        <div class="board-list" style="width:15%;" th:text="${board.boardDate.substring(0,10)}"></div>
                                     </a>
                                 </div>
 
