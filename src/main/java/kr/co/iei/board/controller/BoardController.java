@@ -36,12 +36,14 @@ public class BoardController {
 	@GetMapping(value="/writeFrm")
 	public String writeFrm(){
 		return "/board/write";
+		//파일 올릴 수 있게 해야함
 	}//글 작성
 
 	@GetMapping(value="/view")
-	public String view(int boardNo){
+	public String view(int boardNo, Model model){
 		Board board = boardService.selectOneBoard(boardNo);
-
+		//null 체크 해야함
+		model.addAttribute("board", board);
 		return "/board/view";
 	}
 

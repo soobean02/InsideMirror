@@ -74,7 +74,7 @@ public class BoardService {
 
 
 	public Board selectOneBoard(int boardNo) {
-		
-		return null;
+		Board board = boardDao.selectOneBoard(boardNo);
+		return board;
 	}
 }

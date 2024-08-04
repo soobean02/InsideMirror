@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.co.iei.board.model.dto.Board;
 import kr.co.iei.board.model.dto.BoardCommentRowMapper;
 import kr.co.iei.board.model.dto.BoardFileRowMapper;
 import kr.co.iei.board.model.dto.BoardRowMapper;
@@ -39,5 +40,19 @@ public class BoardDao {
 		int totalCount = jdbc.queryForObject(query, Integer.class);
 		return totalCount;
 	}// 자유 게시글 총 개수 조회
+
+	public Board selectOneBoard(int boardNo) {
+		String query = "select b.*,\r\n" + //
+						"(select count(*) from board_like where board_no = b.board_no) as board_like,\r\n" + //
+						"(select member_nickname from member where member_no = b.member_no) as board_writer_nickname\r\n" + //
+						"from board b where board_no = ?";
+
+		Object[] params = {boardNo};
+		List list = jdbc.query(query, boardRowMapper, params);
+		if(list.isEmpty()){
+			return null;
+		}
+		return (Board)list.get(0);
+	}
 
 }

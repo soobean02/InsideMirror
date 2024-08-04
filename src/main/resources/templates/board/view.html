@@ -5,7 +5,7 @@
         width: 100%;
         height: 700px;
         font-size: 18px;
-        /* background-color: #92a2ff; */
+        background-color: #92a2ff;
     }
 
     ul{
@@ -22,6 +22,57 @@
         float: left;
     }
 
+    .view-title-wrap{
+        width: 100%;
+        height: 100px;
+        background-color: aqua;
+        overflow: hidden;
+    }
+
+    .view-title{
+        width: 60%;
+        height: 70px;
+        background-color: blueviolet;
+    }
+    .view-writer{
+        width: 20%;
+        height: 35px;
+        background-color: #92a2ff;
+    }
+    .view-count{
+        width: 20%;
+        height: 35px;
+        background-color: #0f1b5c;
+    }
+    .view-date{
+        width: 20%;
+        height: 35px;
+        background-color: yellow;
+    }
+    .view-mark{
+        width: 20%;
+        height: 35px;
+        background-color: yellowgreen;
+    }
+    .fix{
+        width: 100%;
+        height: 30px;
+        background-color: blue;
+        text-align: right;
+    }
+
+
+
+    .view-content-wrap{
+        width: 100%;
+        height: 450px;
+        background-color: aquamarine;
+    }
+    .view-comment-wrap{
+        width: 100%;
+        height: 200px;
+        background-color: beige;
+    }
 
 
 </style>
@@ -76,7 +127,38 @@
                         <div class="box-title">자유 게시판 ></div>
                         
                         <div class="board-wrap">
-                            
+                            <div class="view-title-wrap">
+
+                                <div class="view-title left">
+                                    <span th:text="${board.boardTitle}"></span>
+                                </div>
+                                
+                                <div class="view-writer left">
+                                    <span th:text="${board.boardWriter}"></span>
+                                </div>
+
+                                <div class="view-count left">
+                                    <span th:text="${board.readCount}"></span>
+                                    <span th:text="${board.boardLike}"></span>
+                                </div>
+
+                                <div class="view-date left">
+                                    <span th:text="${board.boardDate}"></span>
+                                </div>
+
+                                <div class="view-mark left">
+                                    <span>heart / bookmark</span>
+                                </div>
+
+                                <div class="fix left">
+                                    <span>수정 / 삭제</span>
+                                </div>
+
+                            </div>
+                            <div class="view-content-wrap">
+                                <div th:text="${board.boardContent}"></div>
+                            </div>
+                            <div class="view-comment-wrap"></div>
                             
 
                         </div>
