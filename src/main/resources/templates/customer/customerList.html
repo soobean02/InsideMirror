@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>선물가게</title>
-    <link rel="stylesheet" href="/css/minihomepage.css">
-    <link rel="stylesheet" href="/css/layout.css">
-    <link rel="stylesheet" href="/css/font.css">
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>문의 폼</title>
+<link rel="stylesheet" href="/css/minihomepage.css">
+<link rel="stylesheet" href="/css/layout.css">
+<link rel="stylesheet" href="/css/font.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 </head>
 <style>
 /*-----------------페이징 관련---------------------*/
@@ -54,28 +55,28 @@ a {
 }
 
 /*--------------------------------------*/
-.tbl {
+.atbl {
 	margin-top: 40px;
 	border-top: 1px solid #ddd;
 	width: 100%;
 	border-spacing: 0;
 }
 
-.tbl th, .tbl td {
+.atbl th, .atbl td {
 	text-align: center;
 	border-bottom: 1px solid #ddd;
 	padding: 10px 20px;
 }
 
-.tbl th.left, .tbl td.left {
+.atbl th.left, .tbl td.left {
 	text-align: left;
 }
 
-.tbl th {
+.atbl th {
 	background-color: skyblue;
 }
 
-.tbl.tbl-hover tbody>tr:hover {
+.atbl.atbl-hover tbody>tr:hover {
 	cursor: pointer;
 	background-color: rgba(10, 10, 10, 0.5);
 }
@@ -86,7 +87,7 @@ a {
 	padding: 20px;
 }
 
-.client_btn>button {
+.client_btn>a {
 	background-color: skyblue;
 	border: none;
 	font-weight: bold;
@@ -100,80 +101,38 @@ a {
 
 
 <body>
-	<div class="bookcover">
-		<div class="bookdot">
-			<div class="page">
-				<div class="profile-container">
-					<div class="header profile-title">
-						TOTAL <span class="color-red">28</span>
-					</div>
-					<div class="box profile-box">
-						<div class="profile-image">
-							<img class="profile-image-img" src="" alt="프로필 이미지">
-						</div>
-						<div class="profile-text">ㄴr는.. 오늘도.. 눈물을.. 흘린ㄷr..★</div>
-						<div class="profile-username">
-							<span style="color: #0f1b5c">채연</span> (♪♬)
-						</div>
-						<div class="profile-dropdown">
-							<div class="dropdown-button">
-								<div class="dropdown-title">일촌 파도타기</div>
-								<div class="triangle-down"></div>
-							</div>
-							<div class="dropdown-content">
-								<a href="#">ㅁㅁㅁ의 홈피</a> <a href="#">ㅁㅁㅁ의 홈피</a> <a href="#">ㅁㅁㅁ의
-									홈피</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="content-container">
-					<div class="header content-title">
-						<div class="content-title-name">ㅁㅁㅁ님의 홈피</div>
-					</div>
-					<div class="box content-box">
-						<!--시작!!!!-->
-						<div class="box-title">고객 센터</div>
-						<div class="client_btn">
-							<button><a href="/customer/customerFrm">문의하기</a></button>
-						</div>
-						<table class="tbl tbl-hover">
-							<tr>
-								<th>글번호</th>
-								<th>제목</th>
-								<th>작성일</th>
-								<th>분류</th>
-								<th>상태</th>
-							</tr>
-							<tr th:each="customer : ${list}">
-								<td th:text="${customer.inqNo}"></td>
-								<td><a th:href ="@{/customer/customerView(inqNo=${customer.inqNo})}" th:text="${customer.inqTitle}"></a></td>
-								<td th:text="${customer.inqDate}">0000-00-00</td>
-								<th:block th:switch="${customer.customerList}">
-									<td th:case="1">환불</td>
-									<td th:case="2">기타</td>
-								</th:block>
-								<td th:text="${customer.status}"></td>
-							</tr>
-						</table>
-						<div id="pageNavi" th:utext="${pageNavi}"></div>
-						<!--끝!!!!-->
-					</div>
-				</div>
-				<div class="menu-container">
-					<div class="menu-button">
-						<a href="#"><button>홈</button></a> <a
-							href="/board/boardList?reqPage=1"><button>자유게시판</button></a> <a
-							href="#"><button>사진첩</button></a> <a href="#"><button>방명록</button></a>
-						<a href="/product/acorn_product"><button>선물가게</button></a> <a
-							href="#"><button>구매목록</button></a> <a href="#"><button>일촌관리</button></a>
-						<a href="/customer/customerList?reqPage=1"><button>고객센터</button></a>
-						<a href="#"><button>즐겨찾기</button></a>
-					</div>
-				</div>
-			</div>
-		</div>
+	<th:block th:include="common/top"></th:block>
+	<!--시작!!!!-->
+	<div class="box-title">고객 센터</div>
+	<div class="client_btn">
+		<a href="/customer/customerFrm" class="client_btn">문의하기</a>
 	</div>
+	<table class="atbl atbl-hover">
+		<tr>
+			<th>글번호</th>
+			<th>제목</th>
+			<th>작성일</th>
+			<th>분류</th>
+			<th>상태</th>
+		</tr>
+		<tr th:each="customer : ${list}">
+			<td th:text="${customer.inqNo}"></td>
+			<td><a
+				th:href="@{/customer/customerView(inqNo=${customer.inqNo})}"
+				th:text="${customer.inqTitle}"></a></td>
+			<td th:text="${customer.inqDate}">0000-00-00</td>
+			<th:block th:switch="${customer.customerList}">
+				<td th:case="1">환불</td>
+				<td th:case="2">기타</td>
+			</th:block>
+			<td th:text="${customer.status}"></td>
+		</tr>
+	</table>
+	<div id="pageNavi" th:utext="${pageNavi}"></div>
+	<!--끝!!!!-->
+	</div>
+	</div>
+	<th:block th:include="common/bottom"></th:block>
 </body>
 
 </html>
