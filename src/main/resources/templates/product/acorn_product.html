@@ -261,7 +261,7 @@
                                 </div>
                             </div>
                             <div class="sec_box">
-                                <div class="list_plus"><a href="#">목록 +</a></div>
+                                <div class="list_plus"><a href="/product/productList?reqPage=1">목록 +</a></div>
 
                                 <div class="product_list">
                                     <a href="#"><!--타임리프 들어갈 자리 등록한 상품 최신순으로 3개-->
@@ -301,7 +301,7 @@
                         <a href="/product/acorn_product"><button>선물가게</button></a>
                         <a href="#"><button>구매목록</button></a>
                         <a href="#"><button>일촌관리</button></a>
-                        <a href="#"><button>고객센터</button></a>
+                        <a href="/customer/customerList?reqPage=1"><button>고객센터</button></a>
                         <a href="#"><button>즐겨찾기</button></a>
                     </div>
                 </div>
@@ -316,6 +316,7 @@
 	        $("#acornCount").text("도토리 " + acornCount + " 개");
 	        $("#acornPrice").text(acornPrice + "원");
 	    });
+	    
     	$(".pay_ok").on("click",function(){
     		const acornPay = $("input[name='acorn']:checked").val()*100;
     		const pay = $("input[name='pay']:checked").val();
@@ -331,6 +332,7 @@
     		 console.log("선택한 결제 방법: " + pay);
     		 pay_start(acornPay, pay);
     	});
+    	
     	function pay_start(acornPay, pay){
     		const date = new Date();
 			const dateString = date.getFullYear()+""+(date.getMonth()+1)+""+date.getDate()+""+date.getHours()+""+date.getMinutes()+""+date.getSeconds();
