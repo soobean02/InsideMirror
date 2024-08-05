@@ -60,7 +60,6 @@ public class BoardController {
 		if(board == null){
 			return "redirect:/board/list?reqPage=1";
 		}
-		System.out.println(222222222);
 		model.addAttribute("board", board);
 		return "/board/view";
 	}//게시글 상세보기
