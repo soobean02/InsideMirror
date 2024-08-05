@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	    <div class="join-all-wrap">
+        <div class="join-content">
+            <div class="join-info">
+                <form action="join.html" method="post">
+                    <table>
+                        <tr>
+                            <td class="join-title" colspan="3">
+                                <h3>회원 가입</h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="emailLocal">아이디(이메일)<sup>*</sup></label></td>
+                            <td>
+                                <input type="text" name="id" id="emailLocal" class="short-input" required
+                                    autocomplete="username">
+                                <span class="mail-center">@</span>
+                                <input type="text" name="id" id="emailDomain" class="short-input" required
+                                    autocomplete="email">
+                                <select class="email-choice">
+                                    <option value="">직접입력</option>
+                                    <option value="naver.com">naver.com</option>
+                                    <option value="gmail.com">gmail.com</option>
+                                    <option value="kakao.com">kakao.com</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="nickName">닉네임(별명)<sup>*</sup></label></td>
+                            <td>
+                                <input type="text" name="nickName" id="nickName" required aria-required="true">
+                                <button type="button" class="nickName-check-btn">중복체크</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="pw">비밀번호<sup>*</sup></label></td>
+                            <td>
+                                <input type="password" name="pw" id="pw" required aria-required="true">
+                            </td>
+                            <td>
+                                <p>(영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 10~16자)</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="pwRe">비밀번호확인<sup>*</sup></label></td>
+                            <td><input type="password" name="pwRe" id="pwRe" required aria-required="true"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="name">이름<sup>*</sup></label></td>
+                            <td><input type="text" name="name" id="name" required aria-required="true"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="phone">전화번호<sup>*</sup></label></td>
+                            <td><input type="text" name="phone" id="phone" value="(-)포함해서 적어주세요" required
+                                    aria-required="true"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="address">주소<sup>*</sup></label></td>
+                            <td><input type="text" name="address" id="address" required aria-required="true"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button type="button" class="join-accept">회원가입</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
