@@ -23,4 +23,8 @@ public class CustomerController {
 		model.addAttribute("pageNavi", cld.getPageNavi());
 		return "customer/customerList";
 	}
+	@GetMapping(value="/customerFrm")
+	public String customerFrm() {
+		return "customer/customerFrm";
+	}
 }
