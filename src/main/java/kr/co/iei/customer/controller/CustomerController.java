@@ -33,4 +33,8 @@ public class CustomerController {
 		int result = customerService.insertCustomerInq(c);
 		return "redirect:/customer/customerList?reqPage=1";
 	}
+	@GetMapping(value="/customerView")
+	public String customerView() {
+		return "/customer/customerPage";
+	}
 }
