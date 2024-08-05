@@ -164,6 +164,7 @@
 </head>
 
 <body>
+    
     <div class="bookcover">
         <div class="bookdot">
             <div class="page">
@@ -238,7 +239,7 @@
 
                             </div>
                             <div class="view-content-wrap">
-                                <div th:text="${board.boardContent}"></div>
+                                <div th:utext="${board.boardContent}"></div>
                             </div>
 
                             <!-- 나중에 session 체크 해서 댓글 작성 넣기 -->
@@ -266,8 +267,9 @@
                                         <div class="edited left">(수정)</div>
 
                                     </div>
-                                    <div class="list-content">
-
+                                    <!-- 댓글 출력 -->
+                                    <div class="comment-wrap">
+                                        <th:block th:each="bc : ${board.commentList}"></th:block>
                                     </div>
                                     
                                 </div>
