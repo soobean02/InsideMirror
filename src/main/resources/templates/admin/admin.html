@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>admin</title>
+<link rel="stylesheet" href="static/css/minihomepage.css">
+<link rel="stylesheet" href="static/css/layout.css">
+<link rel="stylesheet" href="static/css/font.css">
+</head>
+
+<body>
+	<div class="bookcover">
+		<div class="bookdot">
+			<div class="page">
+				<div class="profile-container">
+					<div class="header profile-title">
+						TOTAL <span class="color-red">28</span>
+					</div>
+					<div class="box profile-box">
+						<div class="profile-image">
+							<img class="profile-image-img" src="image/아바타.png" alt="프로필 이미지">
+						</div>
+						<div class="profile-text">관리자</div>
+						<div class="profile-username">
+							<span style="color: #0f1b5c">채연</span> (♪♬)
+						</div>
+						<div class="profile-dropdown">
+							<div class="dropdown-button">
+								<div class="dropdown-title">일촌 파도타기</div>
+								<div class="triangle-down"></div>
+							</div>
+							<div class="dropdown-content">
+								<a href="#">ㅁㅁㅁ의 홈피</a>
+								<a href="#">ㅁㅁㅁ의 홈피</a>
+								<a href="#">ㅁㅁㅁ의 홈피</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="content-container">
+					<div class="header content-title">
+						<div class="content-title-name">관리자님의 홈피</div>
+					</div>
+					<div class="box content-box">
+						<div class="box-title">회원 관리 ></div>
+						<div class="news-flex-box">
+
+							<table class="tbl tbl-hover">
+								<tr>
+									<th style="width: 5%">번호</th>
+									<th style="width: 10%">이름</th>
+									<th style="width: 10%">닉네임</th>
+									<th style="width: 15%">아이디/이메일</th>
+									<th style="width: 5%">성별</th>
+									<th style="width: 15%">전화번호</th>
+									<th style="width: 20%">주소</th>
+									<th style="width: 10%">등급</th>
+									<th style="width: 10%">회원가입일</th>
+								</tr>
+
+								<tr>
+									<td th:text="${m.memberNo}"></td>
+									<td th:text="${m.memberName}"></td>
+									<td th:text="${m.memberNickname}"></td>
+									<td th:text="${m.memberId}"></td>
+									<td th:text="${m.memberGender}"></td>
+									<td th:text="${m.memberPhone}"></td>
+									<td th:text="${m.memberAddr}"></td>
+									<td th:text="${m.memberLevel}"></td>
+									<td th:text="${m.enrollDate}"></td>
+								</tr>
+							</table>
+						</div>
+
+						<div class="picture-room">
+							<div class="box-title">고객 센터 ></div>
+							<div class="news-flex-box">
+
+								<table class="tbl tbl-hover">
+									<tr>
+										<th style="width: 5%">번호</th>
+										<th style="width: 30%">제목</th>
+										<th style="width: 25%">닉네임</th>
+										<th style="width: 25%">신고일자</th>
+										<th style="width: 15%">건의/환불</th>
+									</tr>
+									
+									<tr>
+										<td th:text="${r.reportNo}"></td>
+										<td th:text="${r.reportContent}"></td>
+										<td th:text="${r.memberNo}"></td>
+										<td th:text="${r.reportDate"></td>
+										<td th:text="${r.reportNo}"></td>
+									</tr>
+									
+								</table>
+							</div>
+						</div>
+
+						<div class="picture-room">
+							<div class="box-title">상품 관리 ></div>
+							<div class="product-img">
+								<div class="img-box">
+									<img src="image/선물가게_배경1.png"> <a href="#">관리하기 ></a>
+								</div>
+								<div class="img-box">
+									<img src="image/선물가게_배경2.png"> <a href="#">관리하기 ></a>
+								</div>
+								<div class="img-box">
+									<img src="image/선물가게_배경3.png"> <a href="#">관리하기 ></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="menu-container">
+					<div class="menu-button">
+						<a href="#"><button>홈</button></a>
+						<a href="/admin/allMember?reqPage=1"><button>회원관리</button></a>
+						<a href="#"><button>고객센터</button></a>
+						<a href="#"><button>상품관리</button></a>
+						<a href="#"><button>매출관리</button></a>
+						<a href="#"><button>--</button></a>
+						<a href="#"><button>--</button></a>
+						<a href="#"><button>--</button></a>
+						<a href="#"><button>--</button></a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
