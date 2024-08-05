@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
 <style>
 body {
@@ -156,15 +156,18 @@ body {
 
 </style>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>방명록</title>
 <link rel="stylesheet" href="/05.insidemirror/css/font.css">
 <link rel="stylesheet" href="/05.insidemirror/css/layout.css">
 <link rel="stylesheet" href="/05.insidemirror/css/minihomepage.css">
-<link rel="stylesheet" href="/05.insidemirror/css/guestbook.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+<script src="/js/sweetalert.min.js"></script>
 </head>
 <body>
  <th:block th:include="common/header"></th:block>
+  <main class="content">
+   <section class="section guestbook-view-wrap">
     <div class="bookcover">
         <div class="bookdot">
             <div class="page">
@@ -312,6 +315,9 @@ body {
             input.value = '';
             scrollbox.scrollTop = scrollbox.scrollHeight;
         }
-    </script>
+   	 	</script>
+      </section>
+    </main>
+    <th:block th:include="common/footer"></th:block>
 </body>
 </html>
