@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>선물가게</title>
+    <link rel="stylesheet" href="/css/minihomepage.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/font.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+</head>
+    <style>
+        :root {
+            --point_color: lightskyblue;
+            --btn_primary: skyblue;
+            --btn_secondary: #eee;
+
+            --table_line: #333;
+        }
+        a{
+            text-decoration: none;
+            color: #000;
+        }
+        .btn {
+            border-radius: 5px;
+            padding: 9px 20px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .start_page {
+            margin-top: 20px;
+        }
+
+        .icon_img {
+            width: 160px;
+            height: 160px;
+            margin: 10px 20px 0 20px;
+            float: left;
+        }
+
+        .first_box {
+            height: 200px;
+            border-bottom: 1px solid #8d8d8d;
+        }
+
+        form {
+            width: 200px;
+            float: left;
+        }
+
+        .radio_item {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .radio_item input {
+            margin-right: 10px;
+        }
+
+        .pay {
+            box-sizing: border-box;
+            width: 250px;
+            height: 180px;
+            float: left;
+            border: 1px solid #000;
+            border-radius: 10px;
+        }
+
+        .pay_tx {
+            padding: 10px 0 10px 0;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .acorn_tx {
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+            font-size: 14px;
+
+            padding: 10px 0 10px 0;
+        }
+
+        .pay_title {
+            padding-top: 10px;
+            color: #ccc;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .acorn_box {
+            width: 190px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .acorn_box label {
+            font-size: 14px;
+        }
+
+        .acorn_tx div:nth-child(1n) {
+            float: left;
+        }
+
+        .acorn_tx div:nth-child(2n) {
+            float: right;
+        }
+
+        .pay_ok {
+            font-weight: bold;
+            background-color: transparent;
+            border: none;
+            float: right;
+            padding-top: 10px;
+            cursor: pointer;
+        }
+
+        .sec_box {
+            overflow: hidden;
+        }
+
+        .list_plus {
+            padding: 10px 10px 0 0;
+            font-weight: bold;
+            float: right;
+        }
+
+        .product_list {
+            padding: 10px;
+            margin-top: 40px;
+        }
+
+        .product_box {
+            background-color: #eee;
+            padding: 10px;
+            margin-left: 35px;
+            width: 150px;
+            height: 180px;
+            float: left;
+        }
+
+        .product_name {
+            font-weight: bold;
+            text-align: center;
+            padding-bottom: 10px;
+        }
+
+        .product_box>a {
+            display: inline-block;
+            width: 150px;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .product_img>img {
+            width: 100px;
+            padding: 0 25px 15px 25px;
+        }
+    </style>
+
+<body>
+    <div class="bookcover">
+        <div class="bookdot">
+            <div class="page">
+                <div class="profile-container">
+                    <div class="header profile-title">TOTAL
+                        <span class="color-red">28</span>
+                    </div>
+                    <div class="box profile-box">
+                        <div class="profile-image">
+                            <img class="profile-image-img" src="#" alt="프로필 이미지">
+                        </div>
+                        <div class="profile-text">ㄴr는.. 오늘도.. 눈물을.. 흘린ㄷr..★</div>
+                        <div class="profile-username">
+                            <span style="color: #0f1b5c">채연</span>
+                            (♪♬)
+                        </div>
+                        <div class="profile-dropdown">
+                            <div class="dropdown-button">
+                                <div class="dropdown-title">일촌 파도타기</div>
+                                <div class="triangle-down"></div>
+                            </div>
+                            <div class="dropdown-content">
+                                <a href="#">ㅁㅁㅁ의 홈피</a>
+                                <a href="#">ㅁㅁㅁ의 홈피</a>
+                                <a href="#">ㅁㅁㅁ의 홈피</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-container">
+                    <div class="header content-title">
+                        <div class="content-title-name">ㅁㅁㅁ님의 홈피</div>
+                    </div>
+                    <div class="box content-box">
+                        <!--시작!!!!-->
+
+                        <div class="box-title">도토리 충전 ></div>
+                        <div class="start_page">
+
+
+                            <div class="first_box">
+                                <div class="icon_img"><img src="/img/acorn.png" width="160px" height="160px"></div>
+                                <div class="radio_box">
+                                <!--라디오 박스-->
+                                <form action="/product/acornCount" method="get" id="formAcorn">
+                                	<input type="hidden" value="" name="acorns" id="hiddenAcorn">
+                                </form>
+                                <!--결제에 성공하면 보내질 코드 => $(" [name=ch_acorn]").submit(); 아마 js로 이렇게 보내면 될거같음-->
+                                    <form action="#" name="ch_acorn" method="get">
+                                        <div class="radio_item">
+                                            <input type="radio" name="acorn" id="acorn5" value="5">
+                                            <label for="acorn5">도토리 5개 (500원)</label>
+                                        </div>
+                                        <div class="radio_item">
+                                            <input type="radio" name="acorn" id="acorn10" value="10">
+                                            <label for="acorn10">도토리 10개 (1000원)</label>
+                                        </div>
+                                        <div class="radio_item">
+                                            <input type="radio" name="acorn" id="acorn15" value="15">
+                                            <label for="acorn15">도토리 15개 (1500원)</label>
+                                        </div>
+                                        <div class="radio_item">
+                                            <input type="radio" name="acorn" id="acorn20" value="20">
+                                            <label for="acorn20">도토리 20개 (2000원)</label>
+                                        </div>
+                                        <div class="radio_item">
+                                            <input type="radio" name="acorn" id="acorn25" value="25">
+                                            <label for="acorn25">도토리 25개 (2500원)</label>
+                                        </div>
+                                        <input type="hidden">
+                                    </form>
+                                    <div class="pay">
+                                        <div class="pay_tx center">총 결제 금액</div>
+                                        <div class="acorn_tx acorn_box">
+                                            <div id="acornCount">도토리 0개</div><!--타임리프 들어가야함 도토리 수-->
+                                            <div id="acornPrice">0원</div><!--타임리프 들어가야함 도토리 수에 맞춰진 돈!-->
+                                        </div>
+                                        <div class="pay_system">
+                                            <div class="acorn_box">
+                                                <div class="pay_title">결제 대행</div>
+                                                <!-- <form action="#"> -->
+                                                    <input type="radio" value="kakao" id="kakao" name="pay">
+                                                    <label for="kakao">카카오페이</label>
+                                                    <input type="radio" value="ini" id="eni" name="pay">
+                                                    <label for="eni">이니시스</label>
+                                                    <input type="button" value="결제하기 > " class="pay_ok">
+                                                    <!--결제하기를 누르면 결제창 뜸 결제 완료되면 -->
+                                               <!-- </form> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sec_box">
+                                <div class="list_plus"><a href="#">목록 +</a></div>
+
+                                <div class="product_list">
+                                    <a href="#"><!--타임리프 들어갈 자리 등록한 상품 최신순으로 3개-->
+                                        <div class="product_box">
+                                            <div class="product_img"><img src="/img/acorn.png"></div>
+                                            <div class="product_name">상품이름</div>
+                                            <div class="product_name">구매 하기 ></div>
+                                        </div>
+                                    </a>
+                                    <a href="#"><!--타임리프 들어갈 자리-->
+                                        <div class="product_box">
+                                            <div class="product_img"><img src="/img/acorn.png"></div>
+                                            <div class="product_name">상품이름</div>
+                                            <div class="product_name">구매 하기 ></div>
+                                        </div>
+                                    </a>
+                                    <a href="#"><!--타임리프 들어갈 자리-->
+                                        <div class="product_box">
+                                            <div class="product_img"><img src="/img/acorn.png"></div>
+                                            <div class="product_name">상품이름</div>
+                                            <div class="product_name">구매 하기 ></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--끝!!!!-->
+                    </div>
+                </div>
+                <div class="menu-container">
+                    <div class="menu-button">
+                        <a href="#"><button>홈</button></a>
+                        <a href="/board/boardList?reqPage=1"><button>자유게시판</button></a>
+                        <a href="#"><button>사진첩</button></a>
+                        <a href="#"><button>방명록</button></a>
+                        <a href="/product/acorn_product"><button>선물가게</button></a>
+                        <a href="#"><button>구매목록</button></a>
+                        <a href="#"><button>일촌관리</button></a>
+                        <a href="#"><button>고객센터</button></a>
+                        <a href="#"><button>즐겨찾기</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+	    $("input[name='acorn']").on("change", function() {
+	        const acornCount = $(this).val(); // 도토리 건든 거
+	        const acornPrice = acornCount * 100; // 도토리 가격
+	        
+	        $("#acornCount").text("도토리 " + acornCount + " 개");
+	        $("#acornPrice").text(acornPrice + "원");
+	    });
+    	$(".pay_ok").on("click",function(){
+    		const acornPay = $("input[name='acorn']:checked").val()*100;
+    		const pay = $("input[name='pay']:checked").val();
+    		if (!acornPay) {
+                alert("도토리를 선택해주세요!");
+                return;
+            }
+    		if (!pay) {
+    	        alert("결제 방법을 선택해주세요!");
+    	        return;
+    	    }
+    		 console.log("선택한 도토리 값: " + acornPay);
+    		 console.log("선택한 결제 방법: " + pay);
+    		 pay_start(acornPay, pay);
+    	});
+    	function pay_start(acornPay, pay){
+    		const date = new Date();
+			const dateString = date.getFullYear()+""+(date.getMonth()+1)+""+date.getDate()+""+date.getHours()+""+date.getMinutes()+""+date.getSeconds();
+			if(pay=="kakao"){
+    			// 포트원 라이브러리 시작
+    			IMP.init("imp54205604"); // 포트원 > 연동 정보 > 식별 코드 > 고객사 식별 코드 복붙
+    			// 결제창 연동
+    			IMP.request_pay(
+				  {
+					pg: "kakaopay.TC0ONETIME",
+				    //pg: "html5_inicis.INIpayTest", //테스트 시 html5_inicis.INIpayTest 기재
+				    pay_method: "card",
+				    merchant_uid: "order_no_"+dateString, //상점에서 생성한 고유 주문번호
+				    name: "주문명:결제테스트",
+				    amount: acornPay, // 결제 금액
+				    buyer_email: "test@portone.io",
+				    buyer_name: "구매자이름",
+				    buyer_tel: "010-1234-5678", //필수 파라미터 입니다.
+				    buyer_addr: "서울특별시 강남구 삼성동",
+				    buyer_postcode: "123-456"
+				  },
+				  function(rsp){
+					  if(rsp.success){
+						  alert("결제 성공");
+						  /*결제 성공 시 도토리 개수 컨트롤러로 보내기*/
+						  $("#hiddenAcorn").val(acornPay/100);
+						  $("#formAcorn").submit();
+					  }else{
+						  alert("결제 실패");
+					  }
+				  }
+				)
+			}else{
+				// 포트원 라이브러리 시작
+    			IMP.init("imp54205604"); // 포트원 > 연동 정보 > 식별 코드 > 고객사 식별 코드 복붙
+    			// 결제창 연동
+    			IMP.request_pay(
+				  {
+				    pg: "html5_inicis.INIpayTest", //테스트 시 html5_inicis.INIpayTest 기재
+				    pay_method: "card",
+				    merchant_uid: "order_no_"+dateString, //상점에서 생성한 고유 주문번호
+				    name: "주문명:결제테스트",
+				    amount: acornPay, // 결제 금액
+				    //buyer_email: "test@portone.io",
+				    buyer_name: "구매자이름",
+				    buyer_tel: "010-1234-5678", //필수 파라미터 입니다.
+				    buyer_addr: "서울특별시 강남구 삼성동",
+				    buyer_postcode: "123-456"
+				  },
+				  function(rsp){
+					  if(rsp.success){
+						  alert("결제 성공");
+						  /*결제 성공 시 도토리 개수 컨트롤러로 보내기*/
+						  $("#hiddenAcorn").val(acornPay/100);
+						  $("#formAcorn").submit();
+					  }else{
+						  alert("결제 실패");
+					  }
+				  }
+				)
+			}
+    	}
+    </script>
+</body>
+
+</html>
