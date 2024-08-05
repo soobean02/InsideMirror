@@ -252,6 +252,8 @@
 
                                     <form action="/board/comment/" method="post">
                                         <textarea name="boardCommentContent" id="comment" class="left"></textarea>
+                                        <input type="hidden" name="boardNo" th:value="${board.boardNo}">
+                                        <input type="hidden" name="memberNo" th:if="${session.member != null}" th:value="${session.member.memberNo}">
                                         <button type="submit" id="submit-btn" class="left">작성하기</button>
                                     </form>
                                 </div>

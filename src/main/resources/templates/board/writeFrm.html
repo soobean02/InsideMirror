@@ -203,6 +203,27 @@
             }
         });
 
+        function uploadImage(file,editor){
+            const form = new FormData();
+            form.append("upfile",file);
+            $.ajax({
+                url: "/board/editorImage",
+                type:"post",
+                data : form,
+                processData : false,
+                contentType : false,
+                success : function(data){
+                    $(editor).summernote("insertImage",data);
+                    console.log("suc");
+                },
+                error : function(){
+                    console.log("error");
+                    //에러 메세지 띄우기
+                }
+            });
+
+        }
+
     
 
     
