@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    
+}
+
+.bookcover {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+.header {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 1.5em;
+}
+
+.profile-container, .content-container, .menu-container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+}
+
+.profile-title, .content-title {
+    margin: 10px 0px;
+    font-size: 1.2em;
+}
+
+
+.profile-box, .content-box {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.profile-image-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.profile-text, .profile-username, .profile-dropdown {
+    margin: 10px 0;
+}
+
+.dropdown-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.dropdown-title {
+    font-size: 1em;
+}
+
+.triangle-down {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid black;
+    margin-left: 10px;
+}
+
+.guestbook-scrollbox {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.guestbook-box {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.guestbook-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.guestbook-contents {
+    padding-left: 10px;
+}
+
+.guestbook-text {
+    margin: 0;
+}
+
+.guestbook-writer {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#guestbook-input {
+    flex: 1;
+    padding: 0px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+    height: 60px;
+    margin-top: 10px;
+}
+
+.guestbook-button {
+    padding: 10px 20px;
+    background-color: #3b87ab;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 55px;
+}
+
+.menu-button {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-button a {
+    text-decoration: none;
+    margin: 5px 0;
+}
+.guest-text{
+    border-bottom: 1px solid #000;
+}
+.material-icons{
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+.guest-check-box{
+    padding: 0px 10px;
+}
+.btn-primary{
+    background-color: #ccc9c9;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    float: right;
+    padding: 5px 10px;
+    margin-left: 15px;
+}
+.btn-secondary{
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    float: right;
+    padding: 5px 10px;
+}
+
+</style>
+<meta charset="UTF-8">
+<title>방명록</title>
+<link rel="stylesheet" href="/05.insidemirror/css/font.css">
+<link rel="stylesheet" href="/05.insidemirror/css/layout.css">
+<link rel="stylesheet" href="/05.insidemirror/css/minihomepage.css">
+<link rel="stylesheet" href="/05.insidemirror/css/guestbook.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+</head>
+<body>
+ <th:block th:include="common/header"></th:block>
+    <div class="bookcover">
+        <div class="bookdot">
+            <div class="page">
+                <div class="profile-container">
+                    <div class="header profile-title">TOTAL
+                        <span class="color-red">28</span>
+                    </div>
+                    <div class="box profile-box">
+                        <div class="profile-image">
+                            <img class="profile-image-img" src="./image/cyworld1.png">
+                        </div>
+                        <div class="profile-text">ㄴr는.. 오늘도.. 눈물을.. 흘린ㄷr..★</div>
+                        <div class="profile-username">
+                            <span style="color: #0f1b5c">채연</span>
+                           	 (♪♬)
+                        </div>
+                        <div class="profile-dropdown">
+                            <div class="dropdown-button">
+                                <div class="dropdown-title">일촌 파도타기</div>
+                                <div class="triangle-down"></div>
+                            </div>
+                            <div class="dropdown-content">
+                                <a href="#">ㅁㅁㅁ의 홈피</a>
+                                <a href="#">ㅁㅁㅁ의 홈피</a>
+                                <a href="#">ㅁㅁㅁ의 홈피</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-container">
+                    <div class="header content-title"> 
+                        <div class="content-title-name">ㅁㅁㅁ님의 홈피</div>
+                    </div>
+                    <div class="box content-box">
+                        <div class="guestbook-scrollbox" id="guestbook-scrollbox">
+                            <div class="guest-text">방명록  ></div>
+                            <div class="guestbook-box">
+                                <div class="guestbook-title">No. 1
+                                    <span> 이름</span>
+                                    <button class="material-icons">home</button>
+                                    <div class="guestbook-date">(2024.00.00)
+                                        <button class="btn-primary">수정</button>
+                                        <button class="btn-secondary">삭제</button>
+                                    </div>
+                                </div> 
+                                <div class="guestbook-contents">
+                                    <div class="guestbook-text">
+                                        <p>이 글귀 좋더라.. 읽어봐..<br><br><br>울ㅈ1않ㄱㅣ<br>아프ㅈ1않ㄱㅣ<br>씩씩ㅎrㄱㅣ<br>억ㅈㅣ로ㄹr도 웃ㄱㅣ<br>ㅌ1 ㄴㅐㅈㅣ 말ㄱㅣ<br>.<br>.<br>.<br>오늘도 괜찮은 듯<br>그렇ㄱㅔ ㅈ1ㄴㅐㄱㅣ</p>
+                                    </div> 
+                                </div>
+                            </div>
+                            <div class="guestbook-box">
+                                <div class="guestbook-title">No. 2 
+                                    <span>이름 </span>  
+                                    <button class="material-icons">home</button>
+                                    <div class="guestbook-date">(2024.00.00)
+                                        <button class="btn-primary">수정</button>
+                                        <button class="btn-secondary">삭제</button>
+                                    </div>
+                                </div>
+                                <div class="guestbook-contents">
+                                    <div class="guestbook-text">
+                                        <p>너 내가 보내준 인소 봤냐 이 부분 개쩐다<br><br><br>"누구한테 문자하냐?"<br>"사랑하는 사람한테"<br><br><br>"나한테 문자를 왜 보내"</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="guestbook-box">
+                                <div class="guestbook-title">No. 3 
+                                    <span>이름 </span>
+                                    <button class="material-icons">home</button>
+                                    <div class="guestbook-date">(2024.00.00)
+                                        <button class="btn-primary">수정</button>
+                                        <button class="btn-secondary">삭제</button>
+                                    </div>
+                                </div>
+                                <div class="guestbook-contents">
+                                    <div class="guestbook-text">
+                                        <p>야 내일 캔모아 갈래?</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="guestbook-box">
+                                <div class="guestbook-title">No. 4
+                                    <span>이름 </span>
+                                    <button class="material-icons">home</button>
+                                    <div class="guestbook-date">(2024.00.00)
+                                        <button class="btn-primary">수정</button>
+                                        <button class="btn-secondary">삭제</button>
+                                    </div>
+                                </div>
+                                <div class="guestbook-contents">
+                                    <div class="guestbook-text">
+                                        <p>나랑 찍은 사진은 왜 안 올려 ㅡ.ㅡ</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="guest-check-box">
+                        <input type="checkbox" name="anonymous" id="anonymous">
+                        <label for="anonymous">익명</label>
+                        <input type="checkbox" name="nickname" id="nickname">
+                        <label for="nickname">닉네임</label>
+                    </div>
+                    <div class="guestbook-writer">
+                        <input type="text" id="guestbook-input" placeholder="댓글을 입력하세요">
+                        <button class="guestbook-button" onclick="addGuestbookEntry()">전송</button>
+                    </div>
+                </div>
+                <div class="menu-container">
+                    <div class="menu-button">
+                        <a href="#"><button>홈</button></a>
+                        <a href="/board/boardList?reqPage=1"><button>자유게시판</button></a>
+                        <a href="#"><button>사진첩</button></a>
+                        <a href="#"><button>방명록</button></a>
+                        <a href="#"><button>선물가게</button></a>
+                        <a href="#"><button>구매목록</button></a>
+                        <a href="#"><button>일촌관리</button></a>
+                        <a href="#"><button>고객센터</button></a>
+                        <a href="#"><button>즐겨찾기</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function addGuestbookEntry() {
+            const input = document.getElementById('guestbook-input');
+            const text = input.value.trim();
+            if (text === '') return;
+
+            const guestbookBox = document.createElement('div');
+            guestbookBox.className = 'guestbook-box';
+            guestbookBox.innerHTML = `
+                <div class="guestbook-title">New Entry <span>이름 </span><button class="material-icons">home</button><div class="guestbook-date">(2024.00.00 00:00)</div> <button class="btn-primary">수정</button><button class="btn-secondary">삭제</button></div>
+                <div class="guestbook-contents">
+                    <div class="guestbook-text">
+                        <p>${text}</p>
+                    </div>
+                </div>
+            `;
+
+            const scrollbox = document.getElementById('guestbook-scrollbox');
+            scrollbox.appendChild(guestbookBox);
+            input.value = '';
+            scrollbox.scrollTop = scrollbox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
