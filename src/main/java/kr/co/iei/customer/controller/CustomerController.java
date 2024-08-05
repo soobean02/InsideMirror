@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.co.iei.customer.dto.Customer;
@@ -26,5 +27,10 @@ public class CustomerController {
 	@GetMapping(value="/customerFrm")
 	public String customerFrm() {
 		return "customer/customerFrm";
+	}
+	@PostMapping(value="/customerWrite")
+	public String customerWrite(Customer c) {
+		int result = customerService.insertCustomerInq(c);
+		return "redirect:/customer/customerList?reqPage=1";
 	}
 }

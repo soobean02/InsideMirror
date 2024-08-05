@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>고객 문의 폼</title>
-    <link rel="stylesheet" href="/static/css/minihomepage.css">
-    <link rel="stylesheet" href="/static/css/layout.css">
-    <link rel="stylesheet" href="/static/css/font.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>문의 폼</title>
+    <link rel="stylesheet" href="/css/minihomepage.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/font.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
     <style>
         .radio_inq{
             padding: 10px;
@@ -47,7 +49,6 @@
             cursor: pointer;
         }
     </style>
-</head>
 
 <body>
     <div class="bookcover">
@@ -59,12 +60,11 @@
                     </div>
                     <div class="box profile-box">
                         <div class="profile-image">
-                            <img class="profile-image-img" src="#" alt="프로필 이미지">
+                            <img class="profile-image-img" src="" alt="프로필 이미지">
                         </div>
                         <div class="profile-text">ㄴr는.. 오늘도.. 눈물을.. 흘린ㄷr..★</div>
                         <div class="profile-username">
-                            <span style="color: #0f1b5c">채연</span>
-                            (♪♬)
+                            <span style="color: #0f1b5c">채연</span>(♪♬)
                         </div>
                         <div class="profile-dropdown">
                             <div class="dropdown-button">
@@ -87,15 +87,15 @@
                         <!--시작!!!!-->
                         <div class="box-title">고객 센터</div>
                         <div class="client_wrap">
-                            <form action="#" method="post" class="form_inq">
+                            <form action="/customer/customerWrite" method="post" class="form_inq">
                                 <div class="radio_inq">
-                                    <input type="radio" value="1" id="refund" name="inq">
+                                    <input type="radio" value="1" id="refund" name="customerList">
                                     <label for="refund">환불</label>
-                                    <input type="radio" value="2" id="other" name="inq">
+                                    <input type="radio" value="2" id="other" name="customerList">
                                     <label for="other">기타</label>
                                 </div>
-                                <input type="text" placeholder="문의 제목" name="inq_title">
-                                <input type="text" placeholder="문의 내용" name="inq_content">
+                                <input type="text" placeholder="문의 제목 (15자 이내로 적어주세요)" name="inqTitle" maxlength="15">
+                                <input type="text" placeholder="문의 내용" name="inqContent">
                                 <div class="client_btn">
                                     <button type="submit">문의하기</button>
                                 </div>
@@ -111,10 +111,10 @@
                         <a href="/board/boardList?reqPage=1"><button>자유게시판</button></a>
                         <a href="#"><button>사진첩</button></a>
                         <a href="#"><button>방명록</button></a>
-                        <a href="#"><button>선물가게</button></a>
+                        <a href="/product/acorn_product"><button>선물가게</button></a>
                         <a href="#"><button>구매목록</button></a>
                         <a href="#"><button>일촌관리</button></a>
-                        <a href="#"><button>고객센터</button></a>
+                        <a href="/customer/customerList?reqPage=1"><button>고객센터</button></a>
                         <a href="#"><button>즐겨찾기</button></a>
                     </div>
                 </div>
