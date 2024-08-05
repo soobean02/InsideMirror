@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.board.model.dao.BoardDao;
 import kr.co.iei.board.model.dto.Board;
+import kr.co.iei.board.model.dto.BoardComment;
+import kr.co.iei.board.model.dto.BoardFile;
 import kr.co.iei.board.model.dto.BoardListData;
 
 @Service
@@ -70,11 +73,44 @@ public class BoardService {
 		BoardListData bld = new BoardListData(list, pageNavi);
 
 		return bld;
-	}
+	}//리스트보기
 
-
+	@Transactional
 	public Board selectOneBoard(int boardNo) {
 		Board board = boardDao.selectOneBoard(boardNo);
+		if(board != null){
+			int result = boardDao.updateReadCount(boardNo);
+			//게시물 조회수 증가
+			
+			//댓글 조회
+			List<BoardComment> commentList = boardDao.selectComment(boardNo);
+			board.setCommentList(commentList);
+			List reCommentList = boardDao.selectReCommentList(boardNo);
+			board.setReCommentList(reCommentList);
+
+		}
+
 		return board;
-	}
+	}//상세보기
+
+	@Transactional
+	public int insertBoard(Board board, List<BoardFile> fileList) {
+		int result = boardDao.insertBoard(board);
+
+		if(result > 0){
+			int boardNo = boardDao.selectBoardNo();
+
+			for(BoardFile boardFile : fileList){
+				boardFile.setBoardNo(boardNo);
+				result += boardDao.insertBoardFile(boardFile);
+			}
+		}
+		return result;
+	}//게시판 insert
+
+	@Transactional
+	public int insertBoardComment(BoardComment comment) {
+		int result = boardDao.insertBoardComment(comment);
+		return result;
+	}//댓글 대댓글 insert
 }

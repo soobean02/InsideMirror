@@ -5,7 +5,7 @@
         width: 100%;
         height: 700px;
         font-size: 18px;
-        background-color: #92a2ff;
+        /* background-color: #92a2ff; */
     }
 
     ul{
@@ -25,41 +25,64 @@
     .view-title-wrap{
         width: 100%;
         height: 100px;
-        background-color: aqua;
+        /* background-color: aqua; */
         overflow: hidden;
     }
 
     .view-title{
         width: 60%;
         height: 70px;
-        background-color: blueviolet;
+        /* background-color: blueviolet; */
+        border-bottom: 1px solid black;
+        border-right: 1px solid black;
+        box-sizing: border-box;
+        line-height: 70px;
     }
     .view-writer{
         width: 20%;
         height: 35px;
-        background-color: #92a2ff;
+        /* background-color: #92a2ff; */
+        border-bottom: 1px solid black;
+        /* border-right: 1px solid black; */
+        box-sizing: border-box;
+        padding-left: 5px
     }
     .view-count{
         width: 20%;
         height: 35px;
-        background-color: #0f1b5c;
+        /* background-color: #0f1b5c; */
+        box-sizing: border-box;
+        border-bottom: 1px solid black;
     }
     .view-date{
         width: 25%;
         height: 35px;
-        background-color: yellow;
+        /* background-color: yellow; */
+        box-sizing: border-box;
+        border-bottom: 1px solid black;
+        /* border-right: 1px solid black; */
+        padding-left: 5px;
     }
     .view-mark{
         width: 15%;
         height: 35px;
-        background-color: yellowgreen;
+        /* background-color: yellowgreen; */
+        box-sizing: border-box;
+        border-bottom: 1px solid black;
         text-align: center;
     }
     .fix{
         width: 100%;
         height: 30px;
-        background-color: blue;
+        /* background-color: blue; */
+        box-sizing: border-box;
+        border-bottom: 1px solid black;
         text-align: right;
+    }
+    .fix>.material-icons{
+        margin-right: 15px;
+        cursor: pointer;
+        padding-top: 3px;
     }
     
     .view-mark>span{
@@ -87,12 +110,12 @@
     .view-content-wrap{
         width: 100%;
         height: 450px;
-        background-color: aquamarine;
+        /* background-color: aquamarine; */
     }
     .view-comment-wrap{
         width: 100%;
         height: 400px;
-        background-color: beige;
+        /* background-color: beige; */
     }
 
     .comment-header{
@@ -123,6 +146,9 @@
         margin-left: 15px;
         margin-top: 10px;
     }
+    .view-content-wrap>div{
+        padding-top: 5px;
+    }
 
 </style>
 
@@ -138,6 +164,7 @@
 </head>
 
 <body>
+    
     <div class="bookcover">
         <div class="bookdot">
             <div class="page">
@@ -147,7 +174,7 @@
                     </div>
                     <div class="box profile-box">
                         <div class="profile-image">
-                            <img class="profile-image-img" src="#" alt="프로필 이미지">
+                            <img class="profile-image-img" src="/image/cyworld1.png" alt="프로필 이미지">
                         </div>
                         <div class="profile-text">ㄴr는.. 오늘도.. 눈물을.. 흘린ㄷr..★</div>
                         <div class="profile-username">
@@ -206,14 +233,13 @@
                                 </div>
 
                                 <div class="fix left">
-                                    <span>수정</span>
-                                    <span> | </span>
-                                    <span>삭제</span>
+                                    <span class="material-icons">edit</span>
+                                    <span class="material-icons">delete</span>
                                 </div>
 
                             </div>
                             <div class="view-content-wrap">
-                                <div th:text="${board.boardContent}"></div>
+                                <div th:utext="${board.boardContent}"></div>
                             </div>
 
                             <!-- 나중에 session 체크 해서 댓글 작성 넣기 -->
@@ -227,6 +253,8 @@
 
                                     <form action="/board/comment/" method="post">
                                         <textarea name="boardCommentContent" id="comment" class="left"></textarea>
+                                        <input type="hidden" name="boardNo" th:value="${board.boardNo}">
+                                        <input type="hidden" name="memberNo" th:if="${session.member != null}" th:value="${session.member.memberNo}">
                                         <button type="submit" id="submit-btn" class="left">작성하기</button>
                                     </form>
                                 </div>
@@ -239,8 +267,9 @@
                                         <div class="edited left">(수정)</div>
 
                                     </div>
-                                    <div class="list-content">
-
+                                    <!-- 댓글 출력 -->
+                                    <div class="comment-wrap">
+                                        <th:block th:each="bc : ${board.commentList}"></th:block>
                                     </div>
                                     
                                 </div>
