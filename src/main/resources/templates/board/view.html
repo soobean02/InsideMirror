@@ -21,6 +21,9 @@
     .left{
         float: left;
     }
+    .right{
+        float: right;
+    }
 
     .view-title-wrap{
         width: 100%;
@@ -114,7 +117,7 @@
     }
     .view-comment-wrap{
         width: 100%;
-        height: 400px;
+        height: 110px;
         /* background-color: beige; */
     }
 
@@ -149,7 +152,70 @@
     .view-content-wrap>div{
         padding-top: 5px;
     }
+    /* .comment-profile-image{
+        width: 15%;
+        height: 100px;
+    } */
+    .comment-writer{
+        width: 100%;
+        height: 30px;
+        /* background-color: #b5c0ff; */
+        margin-top: 10px;
+    }
 
+    .comment-profile-image>.material-icons{
+        font-size: 100px;
+    }
+
+    /* 댓글 출력 */
+    .comment-list{
+        width: 100%;
+        height: 500px;
+        margin-top: 20px;
+    }
+
+    .comment-list-content{
+        width: 100%;
+        overflow: hidden;
+        max-height: 110px;
+        /* padding-bottom: 20px; */
+        border-bottom: 1px solid #ccc;
+        position: relative;
+        margin-bottom: 20px;
+    }
+    .more{
+        position: absolute;
+        right: 0px;
+        bottom: 5px;
+        width: 60px;
+        height: 30px;
+        border: none;
+        background-color: #cff4ff;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+    .more:hover{
+        background-color: #6bdcff;
+    }
+
+
+    .edit, .remove{
+        margin-right: 10px;
+    }
+
+    .reCommentBox{
+        display: none;
+    }
+
+    .reComment-content>textarea{
+        width: 70%;
+        height: 100px;
+        resize: none;
+    }
+    .comment-list-wrap:last-child>.comment-list-content{
+        height: 50px;
+        padding-bottom: 80px;
+    }
 </style>
 
 <head>
@@ -239,7 +305,7 @@
 
                             </div>
                             <div class="view-content-wrap">
-                                <div th:utext="${board.boardContent}"></div>
+                                <div th:text="${board.boardContent}"></div>
                             </div>
 
                             <!-- 나중에 session 체크 해서 댓글 작성 넣기 -->
@@ -247,6 +313,7 @@
                             <div class="view-comment-wrap">
 
                                 <div class="comment-header">
+                                    
                                 </div>
                                 
                                 <div class="comment-content">
@@ -258,30 +325,67 @@
                                         <button type="submit" id="submit-btn" class="left">작성하기</button>
                                     </form>
                                 </div>
-
-                                <div class="comment-list">
-                                    <!-- each문으로 댓글 조회 -->
-                                    <div class="profile-image">------------------</div>
-                                    <div class="comment-writer">
-                                        <!-- 나중에 th:if로 수정되었으면 감지해서 이 div 띄우기 -->
-                                        <div class="edited left">(수정)</div>
-
-                                    </div>
-                                    <!-- 댓글 출력 -->
-                                    <div class="comment-wrap">
-                                        <th:block th:each="bc : ${board.commentList}"></th:block>
-                                    </div>
-                                    
-                                </div>
-
                             </div>
                             
+                            <div class="comment-list">
+                                <th:block th:each="bc : ${board.commentList}">
+                                    <div class="comment-list-wrap">
+                                        <!-- <div class="comment-profile-image left">
+                                            <span class="material-icons">account_box</span>
+                                        </div> -->
+                                        <!-- 프사 -->
+    
+                                        <!-- 댓글 출력 -->
+                                        <div class="comment-writer left">
+                                            <div th:text="${bc.memberNo}" class="left"></div>
+                                            <div class="edited left">(수정)</div>
+                                            <!-- 나중에 th:if로 수정되었으면 감지해서 이 div 띄우기 -->
+                                            <div th:text="${bc.boardCommentDate}" class="left"></div>
+                                            <!-- 나중에 th로 답글 개수 조회해와서 넣기 -->
+                                            <span class="getReCommentCount right">(0)</span>
+                                            <a href="javascript:void(0)" class="getReComment right">답글</a>
+                                            <a href="javascript:void(0)" class="remove right" th:onclick="">삭제</a>
+                                            <a href="javascript:void(0)" class="edit right" th:onclick="">수정</a>
+                                        </div>
+    
+                                        <div class="comment-list-content left" th:text="${bc.boardCommentContent}"></div>
+    
+                                        <!-- 답글 -->
+                                        <!-- 나중에 != null로 -->
+                                        <div th:if="${session.member == null}" class="reCommentBox">
+                                            <form action="/board/comment/" method="post">
+                                                <div>
+                                                    <!-- <input type="hidden" name="memberNo" th:value="${session.member.memberNo}"> -->
+                                                    <input type="hidden" name="boardNo" th:value="${board.boardNo}">
+                                                    <input type="hidden" name="boardCommentRef" th:value="${bc.boardCommentNo}">
+                                                </div>
+                                                <div class="reComment-content">
+                                                    <textarea name="boardCommentContent"></textarea>
+                                                </div>
+                                            </form>
+                                        </div>
 
-                        </div>
-                        
-                        
+                                    </div>
+
+                                    <!-- 출력한 댓글의 답글 출력 -->
+
+
+
+                                </th:block>
+                                    
+
+                            </div>
+                                
+                                
+                        </div>   
+
                     </div>
+                        
                 </div>
+
+
+
+                
                 <div class="menu-container">
                     <div class="menu-button">
                         <a href="#"><button>홈</button></a>
@@ -300,8 +404,36 @@
     </div>
 
     <script>
+        const longComment = $(".comment-list-content");
+        longComment.each(function(index,item){
+            const longCommentHeight = $(item).css("height");
+            if(longCommentHeight === '110px'){
+                const more = $("<button class='more'>더보기</button>");
+                $(item).append(more);
+            }
+        });
 
+        $(".more").on("click",function(){
+            $(this).parent().css("max-height","1000px");
+            $(this).remove();
+        })
 
+        //답글누르면 답글 쓸 수 있는 거랑 답글들 리스트 뜨기
+        $(".getReComment").on("click",function(){
+            const item = $(this);
+            $(".getReComment").not(item).text("답글");
+            $(".getReComment").not(item).parent().next().next().hide();
+            if(item.text() === "답글"){
+                item.text("그만보기");
+                item.prev().hide();
+                item.parent().next().next().show();
+            }
+            else{
+                item.text("답글");
+                item.prev().show();
+                item.parent().next().next().hide();
+            }
+        })
 
     </script>
 

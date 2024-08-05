@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>문의 상세보기</title>
+</head>
+<body>
+	<th:block th:include="common/top"></th:block>
+	                       <!--시작!!!!-->
+                        <div class="box-title">고객 센터</div>
+                        <div class="client_wrap">
+                            <div class="customerPage_wrap">
+                                <table class="customerPage_tb">
+                                    <tr>
+                                        <th>글번호</th>
+                                        <td>1004</td>
+                                        <th>상태</th>
+                                        <td>승인중</td>
+                                        <th>작성일</th>
+                                        <td>2024-08-05</td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="2" class="cu_title">제목</th>
+                                        <td>빙글빙글 돌아가는 짱구네 가족</td>
+                                        <th>분류</th>
+                                        <td>환불</td>
+                                    </tr>
+                                </table>
+                                <div class="customerPage_content">
+                                    <div>내용입니다~~~~~~~~~~~~~~~~!!!!내용 내용 내용 내용</div>
+                                </div>
+                            </div>                            
+                        </div>
+                        <!--끝!!!!-->
+	<th:block th:include="common/bottom"></th:block>
+</body>
+</html>

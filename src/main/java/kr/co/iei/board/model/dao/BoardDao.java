@@ -93,14 +93,14 @@ public class BoardDao {
 	}//댓글 대댓글 insert
 
 	public List<BoardComment> selectComment(int boardNo) {
-		String query = "select * from board_comment where board_no = ? and board_comment_ref is null";
+		String query = "select * from board_comment where board_no = ? and board_comment_ref is null order by 1 desc";
 		Object[] params = {boardNo};
 		List list = jdbc.query(query, boardCommentRowMapper, params);
 		return list;
 	}//댓글 조회
 
 	public List selectReCommentList(int boardNo) {
-		String query = "select * from board_comment where board_no = ? and board_comment_ref is not null";
+		String query = "select * from board_comment where board_no = ? and board_comment_ref is not null order by 1 desc";
 		Object[] params = {boardNo};
 		List list = jdbc.query(query, boardCommentRowMapper, params);
 		return list;

@@ -14,4 +14,5 @@ public class SellProduct {
 	private String productName;
 	private String productImg;
 	private String productUrl;
+	private String productPath;
 }

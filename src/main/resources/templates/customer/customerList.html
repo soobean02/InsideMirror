@@ -135,7 +135,7 @@ a {
 						<!--시작!!!!-->
 						<div class="box-title">고객 센터</div>
 						<div class="client_btn">
-							<button>문의하기</button>
+							<button><a href="/customer/customerFrm">문의하기</a></button>
 						</div>
 						<table class="tbl tbl-hover">
 							<tr>
@@ -147,7 +147,7 @@ a {
 							</tr>
 							<tr th:each="customer : ${list}">
 								<td th:text="${customer.inqNo}"></td>
-								<td><a th:href ="@{/customer/view(inqNo=${customer.inqNo})}" th:text="${customer.inqTitle}"></a></td>
+								<td><a th:href ="@{/customer/customerView(inqNo=${customer.inqNo})}" th:text="${customer.inqTitle}"></a></td>
 								<td th:text="${customer.inqDate}">0000-00-00</td>
 								<th:block th:switch="${customer.customerList}">
 									<td th:case="1">환불</td>
