@@ -350,8 +350,10 @@
     
                                         <div class="comment-list-content left" th:text="${bc.boardCommentContent}"></div>
     
+                                    </div>
                                         <!-- 답글 -->
                                         <!-- 나중에 != null로 -->
+                                    <div class="reComment-input-wrap">
                                         <div th:if="${session.member == null}" class="reCommentBox">
                                             <form action="/board/comment/" method="post">
                                                 <div>
@@ -364,11 +366,13 @@
                                                 </div>
                                             </form>
                                         </div>
-
-                                        <!-- 답글 출력 -->
-                                        <div></div>
-
                                     </div>
+
+                                    <div class="reComment-list-wrap">
+                                        <!-- 답글 출력 -->
+                                        <div class="reComment"></div>
+                                    </div>
+
 
                                     <!-- 출력한 댓글의 답글 출력 -->
 
