@@ -81,7 +81,6 @@ public class BoardService {
 		if(board != null){
 			int result = boardDao.updateReadCount(boardNo);
 			//게시물 조회수 증가
-			System.out.println(1111111111);
 			
 			//댓글 조회
 			List<BoardComment> commentList = boardDao.selectComment(boardNo);

@@ -58,7 +58,6 @@ public class BoardDao {
 	}//게시글 상세보기
 
 	public int updateReadCount(int boardNo) {
-		System.out.println("updatedupdatedupdatedupdatedupdatedupdated");
 		String query = "update board set read_count = read_count + 1 where board_no = ?";
 		Object[] params = {boardNo};
 		int result = jdbc.update(query, params);

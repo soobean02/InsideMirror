@@ -178,6 +178,7 @@
     <link rel="stylesheet" href="/css/font.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
 </head>
 
 <body>
@@ -190,12 +191,11 @@
                     </div>
                     <div class="box profile-box">
                         <div class="profile-image">
-                            <img class="profile-image-img" src="#" alt="프로필 이미지">
+                            <img class="profile-image-img" src="" alt="프로필 이미지">
                         </div>
                         <div class="profile-text">ㄴr는.. 오늘도.. 눈물을.. 흘린ㄷr..★</div>
                         <div class="profile-username">
-                            <span style="color: #0f1b5c">채연</span>
-                            (♪♬)
+                            <span style="color: #0f1b5c">채연</span>(♪♬)
                         </div>
                         <div class="profile-dropdown">
                             <div class="dropdown-button">
@@ -330,7 +330,7 @@
         })
 
         $(".write-btn").on("click",function(){
-            location = "/board/writeFrm";
+            location.href = "/board/writeFrm";
         })
 
         $(".search-input").on("keyup",function(){
@@ -345,7 +345,9 @@
             $(".reset-btn").hide();
         })
 
-
+		$(function(){
+			console.log(1);
+		});
     </script>
 
 </body>

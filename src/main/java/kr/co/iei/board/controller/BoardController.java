@@ -40,12 +40,12 @@ public class BoardController {
 		BoardListData bld = boardService.selectBoardList(reqPage);
 		model.addAttribute("list", bld.getList());
 		model.addAttribute("pageNavi", bld.getPageNavi());
-		System.out.println("listlistlist");
 		return "/board/boardList";
 	}//자유게시판 보기 조회는 10개씩
 
 	@GetMapping(value="/writeFrm")
 	public String writeFrm(){
+		System.out.println("writewrite");
 		return "/board/writeFrm";
 		//파일 올릴 수 있게 해야함
 	}//글 작성
