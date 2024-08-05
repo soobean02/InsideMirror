@@ -21,6 +21,9 @@
     .left{
         float: left;
     }
+    .right{
+        float: right;
+    }
 
     .view-title-wrap{
         width: 100%;
@@ -114,7 +117,7 @@
     }
     .view-comment-wrap{
         width: 100%;
-        height: 400px;
+        height: 110px;
         /* background-color: beige; */
     }
 
@@ -149,7 +152,59 @@
     .view-content-wrap>div{
         padding-top: 5px;
     }
+    /* .comment-profile-image{
+        width: 15%;
+        height: 100px;
+    } */
+    .comment-writer{
+        width: 100%;
+        height: 30px;
+        /* background-color: #b5c0ff; */
+        margin-top: 10px;
+    }
 
+    .comment-profile-image>.material-icons{
+        font-size: 100px;
+    }
+
+    /* 댓글 출력 */
+    .comment-list{
+        width: 100%;
+        height: 500px;
+        margin-top: 20px;
+    }
+
+    .comment-list-content{
+        width: 100%;
+        overflow: hidden;
+        max-height: 110px;
+        /* padding-bottom: 20px; */
+        border-bottom: 1px solid #ccc;
+        position: relative;
+        margin-bottom: 20px;
+    }
+    .more{
+        position: absolute;
+        right: 0px;
+        bottom: 5px;
+        width: 60px;
+        height: 30px;
+        border: none;
+        background-color: #cff4ff;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+    .more:hover{
+        background-color: #6bdcff;
+    }
+
+
+    .edit{
+        margin-right: 10px;
+    }
+    .remove{
+        margin-right: 10px;
+    }
 </style>
 
 <head>
@@ -239,7 +294,7 @@
 
                             </div>
                             <div class="view-content-wrap">
-                                <div th:utext="${board.boardContent}"></div>
+                                <div th:text="${board.boardContent}"></div>
                             </div>
 
                             <!-- 나중에 session 체크 해서 댓글 작성 넣기 -->
@@ -247,6 +302,7 @@
                             <div class="view-comment-wrap">
 
                                 <div class="comment-header">
+                                    
                                 </div>
                                 
                                 <div class="comment-content">
@@ -258,30 +314,40 @@
                                         <button type="submit" id="submit-btn" class="left">작성하기</button>
                                     </form>
                                 </div>
-
-                                <div class="comment-list">
-                                    <!-- each문으로 댓글 조회 -->
-                                    <div class="profile-image">------------------</div>
-                                    <div class="comment-writer">
-                                        <!-- 나중에 th:if로 수정되었으면 감지해서 이 div 띄우기 -->
-                                        <div class="edited left">(수정)</div>
-
-                                    </div>
-                                    <!-- 댓글 출력 -->
-                                    <div class="comment-wrap">
-                                        <th:block th:each="bc : ${board.commentList}"></th:block>
-                                    </div>
-                                    
-                                </div>
-
                             </div>
                             
+                            <div class="comment-list">
+                                <th:block th:each="bc : ${board.commentList}">
 
-                        </div>
-                        
-                        
+                                    <!-- <div class="comment-profile-image left">
+                                        <span class="material-icons">account_box</span>
+                                    </div> -->
+                                    <div class="comment-writer left">
+                                        <div th:text="${bc.memberNo}" class="left"></div>
+                                        <div class="edited left">(수정)</div>
+                                        <!-- 나중에 th:if로 수정되었으면 감지해서 이 div 띄우기 -->
+                                        <div th:text="${bc.boardCommentDate}" class="left"></div>
+
+                                        <a href="javascript:void(0)" class="remove right" th:onclick="">삭제</a>
+                                        <a href="javascript:void(0)" class="edit right" th:onclick="">수정</a>
+                                    </div>
+
+                                    <div class="comment-list-content left" th:text="${bc.boardCommentContent}"></div>
+                                </th:block>
+                                    
+
+                            </div>
+                                
+                                
+                        </div>   
+
                     </div>
+                        
                 </div>
+
+
+
+                
                 <div class="menu-container">
                     <div class="menu-button">
                         <a href="#"><button>홈</button></a>
@@ -300,7 +366,19 @@
     </div>
 
     <script>
+        const longComment = $(".comment-list-content");
+        longComment.each(function(index,item){
+            const longCommentHeight = $(item).css("height");
+            if(longCommentHeight === '110px'){
+                const more = $("<button class='more'>더보기</button>");
+                $(item).append(more);
+            }
+        });
 
+        $(".more").on("click",function(){
+            $(this).parent().css("max-height","1000px");
+            $(this).remove();
+        })
 
 
     </script>
