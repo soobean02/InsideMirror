@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.iei.member.model.dao.MemberDao;
+import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.MemberListData;
 
 @Service
@@ -69,4 +70,9 @@ public class MemberService {
 		
 		return mld;
 	}//selectAllMember
+
+
+	public Member selectOneMember(String memberId) {
+		return memberDao.selectOneMember(memberId);
+	}//selectOneMember
 }
