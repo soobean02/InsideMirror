@@ -16,7 +16,10 @@ public class MemberController {
 	
 	@GetMapping(value="/login")
 	public String login() {
-		System.out.println("로그인");
 		return "/member/login";
+	}
+	@GetMapping(value="/joinFrm")
+	public String joinFrm() {
+		return "/member/joinFrm";
 	}
 }

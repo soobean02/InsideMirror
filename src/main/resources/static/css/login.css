@@ -96,7 +96,7 @@
     text-decoration: underline;
 }
 
-.login-bottom .join-in input[type="submit"] {
+.login-bottom .join-in a{
     text-decoration: none;
     background: transparent;
     color: lightgray;
@@ -108,6 +108,6 @@
 .login-bottom p{
     color: lightgray;
 }
-.login-bottom .join-in input[type="submit"]:hover {
+.login-bottom .join-in a:hover {
     text-decoration: underline;
 }
