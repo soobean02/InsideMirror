@@ -199,11 +199,22 @@
     }
 
 
-    .edit{
+    .edit, .remove{
         margin-right: 10px;
     }
-    .remove{
-        margin-right: 10px;
+
+    .reCommentBox{
+        display: none;
+    }
+
+    .reComment-content>textarea{
+        width: 70%;
+        height: 100px;
+        resize: none;
+    }
+    .comment-list-wrap:last-child>.comment-list-content{
+        height: 50px;
+        padding-bottom: 80px;
     }
 </style>
 
@@ -318,21 +329,48 @@
                             
                             <div class="comment-list">
                                 <th:block th:each="bc : ${board.commentList}">
+                                    <div class="comment-list-wrap">
+                                        <!-- <div class="comment-profile-image left">
+                                            <span class="material-icons">account_box</span>
+                                        </div> -->
+                                        <!-- 프사 -->
+    
+                                        <!-- 댓글 출력 -->
+                                        <div class="comment-writer left">
+                                            <div th:text="${bc.memberNo}" class="left"></div>
+                                            <div class="edited left">(수정)</div>
+                                            <!-- 나중에 th:if로 수정되었으면 감지해서 이 div 띄우기 -->
+                                            <div th:text="${bc.boardCommentDate}" class="left"></div>
+                                            <!-- 나중에 th로 답글 개수 조회해와서 넣기 -->
+                                            <span class="getReCommentCount right">(0)</span>
+                                            <a href="javascript:void(0)" class="getReComment right">답글</a>
+                                            <a href="javascript:void(0)" class="remove right" th:onclick="">삭제</a>
+                                            <a href="javascript:void(0)" class="edit right" th:onclick="">수정</a>
+                                        </div>
+    
+                                        <div class="comment-list-content left" th:text="${bc.boardCommentContent}"></div>
+    
+                                        <!-- 답글 -->
+                                        <!-- 나중에 != null로 -->
+                                        <div th:if="${session.member == null}" class="reCommentBox">
+                                            <form action="/board/comment/" method="post">
+                                                <div>
+                                                    <!-- <input type="hidden" name="memberNo" th:value="${session.member.memberNo}"> -->
+                                                    <input type="hidden" name="boardNo" th:value="${board.boardNo}">
+                                                    <input type="hidden" name="boardCommentRef" th:value="${bc.boardCommentNo}">
+                                                </div>
+                                                <div class="reComment-content">
+                                                    <textarea name="boardCommentContent"></textarea>
+                                                </div>
+                                            </form>
+                                        </div>
 
-                                    <!-- <div class="comment-profile-image left">
-                                        <span class="material-icons">account_box</span>
-                                    </div> -->
-                                    <div class="comment-writer left">
-                                        <div th:text="${bc.memberNo}" class="left"></div>
-                                        <div class="edited left">(수정)</div>
-                                        <!-- 나중에 th:if로 수정되었으면 감지해서 이 div 띄우기 -->
-                                        <div th:text="${bc.boardCommentDate}" class="left"></div>
-
-                                        <a href="javascript:void(0)" class="remove right" th:onclick="">삭제</a>
-                                        <a href="javascript:void(0)" class="edit right" th:onclick="">수정</a>
                                     </div>
 
-                                    <div class="comment-list-content left" th:text="${bc.boardCommentContent}"></div>
+                                    <!-- 출력한 댓글의 답글 출력 -->
+
+
+
                                 </th:block>
                                     
 
@@ -380,6 +418,22 @@
             $(this).remove();
         })
 
+        //답글누르면 답글 쓸 수 있는 거랑 답글들 리스트 뜨기
+        $(".getReComment").on("click",function(){
+            const item = $(this);
+            $(".getReComment").not(item).text("답글");
+            $(".getReComment").not(item).parent().next().next().hide();
+            if(item.text() === "답글"){
+                item.text("그만보기");
+                item.prev().hide();
+                item.parent().next().next().show();
+            }
+            else{
+                item.text("답글");
+                item.prev().show();
+                item.parent().next().next().hide();
+            }
+        })
 
     </script>
 
