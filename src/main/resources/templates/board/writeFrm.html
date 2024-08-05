@@ -98,7 +98,7 @@
                     </div>
                     <div class="box profile-box">
                         <div class="profile-image">
-                            <img class="profile-image-img" src="#" alt="프로필 이미지">
+                            <img class="profile-image-img" src="" alt="프로필 이미지">
                         </div>
                         <div class="profile-text">ㄴr는.. 오늘도.. 눈물을.. 흘린ㄷr..★</div>
                         <div class="profile-username">
@@ -202,6 +202,27 @@
                 $("#content").summernote('focus');
             }
         });
+
+        function uploadImage(file,editor){
+            const form = new FormData();
+            form.append("upfile",file);
+            $.ajax({
+                url: "/board/editorImage",
+                type:"post",
+                data : form,
+                processData : false,
+                contentType : false,
+                success : function(data){
+                    $(editor).summernote("insertImage",data);
+                    console.log("suc");
+                },
+                error : function(){
+                    console.log("error");
+                    //에러 메세지 띄우기
+                }
+            });
+
+        }
 
     
 

@@ -82,6 +82,7 @@
     .fix>.material-icons{
         margin-right: 15px;
         cursor: pointer;
+        padding-top: 3px;
     }
     
     .view-mark>span{
@@ -114,7 +115,7 @@
     .view-comment-wrap{
         width: 100%;
         height: 400px;
-        background-color: beige;
+        /* background-color: beige; */
     }
 
     .comment-header{
@@ -172,7 +173,7 @@
                     </div>
                     <div class="box profile-box">
                         <div class="profile-image">
-                            <img class="profile-image-img" src="#" alt="프로필 이미지">
+                            <img class="profile-image-img" src="" alt="프로필 이미지">
                         </div>
                         <div class="profile-text">ㄴr는.. 오늘도.. 눈물을.. 흘린ㄷr..★</div>
                         <div class="profile-username">
@@ -251,6 +252,8 @@
 
                                     <form action="/board/comment/" method="post">
                                         <textarea name="boardCommentContent" id="comment" class="left"></textarea>
+                                        <input type="hidden" name="boardNo" th:value="${board.boardNo}">
+                                        <input type="hidden" name="memberNo" th:if="${session.member != null}" th:value="${session.member.memberNo}">
                                         <button type="submit" id="submit-btn" class="left">작성하기</button>
                                     </form>
                                 </div>

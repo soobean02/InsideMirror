@@ -16,6 +16,7 @@ public class MemberController {
 	
 	@GetMapping(value="/login")
 	public String login() {
+		System.out.println("로그인");
 		return "/member/login";
 	}
 }

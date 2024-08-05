@@ -7,7 +7,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.co.iei.board.model.dto.Board;
+import kr.co.iei.board.model.dto.BoardComment;
 import kr.co.iei.board.model.dto.BoardCommentRowMapper;
+import kr.co.iei.board.model.dto.BoardFile;
 import kr.co.iei.board.model.dto.BoardFileRowMapper;
 import kr.co.iei.board.model.dto.BoardRowMapper;
 
@@ -53,6 +55,56 @@ public class BoardDao {
 			return null;
 		}
 		return (Board)list.get(0);
-	}
+	}//게시글 상세보기
+
+	public int updateReadCount(int boardNo) {
+		String query = "update board set read_count = read_count + 1 where board_no = ?";
+		Object[] params = {boardNo};
+		int result = jdbc.update(query, params);
+		return result;
+	}//게시글 상세보기시 조회수 증가
+
+	public int insertBoard(Board board) {
+		String query = "insert into board values(board_seq.nextval,?,?,?,sysdate,0)";
+		Object[] params = {board.getMemberNo(),board.getBoardTitle(),board.getBoardContent()};
+		int result = jdbc.update(query, params);
+		return result;
+	}//board테이블에 insert 게시글 작성
+
+	public int selectBoardNo() {
+		String qeury = "select max(board_no) from board";
+		int result = jdbc.queryForObject(qeury, Integer.class);
+		return result;
+	}//게시글 번호 하나 조회 (이걸 조회해서 밑에 파일 넣는 작업할때 boardNo를 넣어 줄 수 있음)
+
+	public int insertBoardFile(BoardFile boardFile) {
+		String query = "insert into board_file values(board_file_seq.nextval,?,?)";
+		Object[] params = {boardFile.getBoardNo(),boardFile.getFilepath()};
+		int result = jdbc.update(query, params);
+		return result;
+	}//파일 insert
+
+	public int insertBoardComment(BoardComment comment) {
+		String query = "insert into board_comment values(board_comment_seq.nextval,?,?,?,sysdate,?,0)";
+		String boardCommentRef = comment.getBoardCommentRef() == 0 ? null : String.valueOf(comment.getBoardCommentRef());
+		Object[] params = {comment.getMemberNo(),comment.getBoardNo(),comment.getBoardCommentContent(),boardCommentRef};
+		int result = jdbc.update(query, params);
+		return result;
+	}//댓글 대댓글 insert
+
+	public List<BoardComment> selectComment(int boardNo) {
+		String query = "select * from board_comment where board_no = ? and board_comment_ref is null";
+		Object[] params = {boardNo};
+		List list = jdbc.query(query, boardCommentRowMapper, params);
+		return list;
+	}//댓글 조회
+
+	public List selectReCommentList(int boardNo) {
+		String query = "select * from board_comment where board_no = ? and board_comment_ref is not null";
+		Object[] params = {boardNo};
+		List list = jdbc.query(query, boardCommentRowMapper, params);
+		return list;
+	}//대댓글 조회
+
 
 }
