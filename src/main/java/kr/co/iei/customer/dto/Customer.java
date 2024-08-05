@@ -16,4 +16,5 @@ public class Customer {
 	private String inqTitle;	// 문의 제목
 	private String status;	// 상태 (default로 '승인중'되어있음)
 	private Date inqDate;	// 문의 작성일
+	private String inqContent; //문의 내용
 }

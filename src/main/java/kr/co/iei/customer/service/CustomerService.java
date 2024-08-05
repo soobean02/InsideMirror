@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.customer.dao.CustomerDao;
 import kr.co.iei.customer.dto.Customer;
@@ -82,5 +83,11 @@ public class CustomerService {
 		CustomerListData cld = new CustomerListData(list, pageNavi);
 //		Customer customer = customerDao.selectCustomerList(reqPage);
 		return cld;
+	}
+	
+	@Transactional
+	public int insertCustomerInq(Customer c) {
+		int result = customerDao.insertCustomerInq(c);
+		return 0;
 	}
 }
