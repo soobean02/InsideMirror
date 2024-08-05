@@ -1,0 +1,113 @@
+.content-wrap{
+	display: flex;
+	justify-content: center;
+	margin :100px 0;
+	
+}
+.login-wrap {
+    border-radius: 50%; 
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    width: 550px; 
+    height: 550px; 
+    padding: 30px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background: white;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.login-header h3 {
+    margin: 0;
+    font-size: 48px;
+    color: #333;
+}
+
+.login-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.input-box {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-box input {
+    width: 320px;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    font-size: 16px;
+}
+
+.btn-box {
+    margin-bottom: 20px;
+}
+
+.btn-box input[type="submit"] {
+    width: 350px;
+    padding: 15px;
+    border: none;
+    border-radius: 15px;
+    background: black; 
+    color: white; 
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-box input[type="submit"]:hover {
+    background: #333;
+}
+
+.login-bottom {
+    display: flex; 
+    justify-content: space-between; 
+    margin-top: 30px;
+    padding: 0 10px;
+}
+
+.login-bottom .search,
+.login-bottom .join-in {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-bottom .search a {
+    color: lightgray;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.login-bottom .search a:hover {
+    text-decoration: underline;
+}
+
+.login-bottom .join-in input[type="submit"] {
+    text-decoration: none;
+    background: transparent;
+    color: lightgray;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.login-bottom p{
+    color: lightgray;
+}
+.login-bottom .join-in input[type="submit"]:hover {
+    text-decoration: underline;
+}

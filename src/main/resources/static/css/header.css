@@ -1,0 +1,48 @@
+
+.header {
+    display: flex;
+    justify-content: space-between; /* 왼쪽과 오른쪽 그룹 사이에 최대 공간을 배분 */
+    align-items: center; /* 세로 중앙 정렬 */
+    height: 60px; /* 헤더 높이 */
+    padding: 0 250px; /* 좌우 여백 */
+    padding-top: 20px;
+     margin: 0;
+}
+
+.left-group {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+}
+
+.right-group {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+}
+
+.logo a {
+    text-decoration: none; /* 링크 밑줄 제거 */
+    color: #333; /* 링크 색상 */
+    font-size: 20px; /* 로고 텍스트 크기 */
+    font-weight: bold; /* 로고 텍스트 굵기 */
+}
+
+.nav ul, .user-menu {
+    list-style: none; /* 리스트 스타일 제거 */
+    margin: 0; /* 여백 제거 */
+    padding: 0; /* 패딩 제거 */
+    display: flex; /* 수평 배치 */
+}
+
+.nav li, .user-menu li {
+    margin-left: 20px; /* 아이템 사이 여백 */
+}
+
+.nav a, .user-menu a {
+    text-decoration: none; /* 링크 밑줄 제거 */
+    color: #333; /* 링크 색상 */
+    font-size: 16px; /* 링크 텍스트 크기 */
+}
+
+.user-menu li:first-child {
+    margin-right: 20px; /* 첫 번째 항목과 로그인 버튼 사이의 여백 */
+}

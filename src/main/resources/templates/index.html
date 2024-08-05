@@ -3,12 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <title>main</title>
+<style>
+.main-img {
+    width: 100%;
+    height: 800px;
+    object-fit: contain;
+    }
+body{
+    background: 
+        linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)),
+        url("/image/Up Pixar.gif");
+   	background-repeat: no-repeat;
+   	background-size: cover;
+   	margin: 0;
+    }
+.pixel{
+	position: fixed;
+	left: 870px;
+	bottom: 420px;
+}
+.heart{
+	position: fixed;
+	left: 720px;
+	bottom: 580px;
+}
+</style>
 </head>
 <body>
 	<th:block th:include="common/header"></th:block>
 	<main class="content">
 		<section class="section">
-			<div class="page-title">메인페이지</div>
+			<div class="page-title">
+			<img class="pixel" src="/image/pixel-art-12601_256.gif" width="128px" height="128px">
+			<img class="heart" src="/image/pixel-heart.gif"  width="70px" height="70px">           
+			<img class="main-img" alt="mainImage" src="/image/IM_배경1.png">
+			</div>
 		</section>
 	</main>
 	<th:block th:include="common/footer"></th:block>
