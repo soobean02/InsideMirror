@@ -1,16 +1,23 @@
 package kr.co.iei.board.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.board.model.dto.Board;
+import kr.co.iei.board.model.dto.BoardFile;
 import kr.co.iei.board.model.dto.BoardListData;
 import kr.co.iei.board.model.service.BoardService;
 import kr.co.iei.utils.FileUtils;
+import sun.swing.BakedArrayList;
 
 @Controller
 @RequestMapping(value = "/board")
@@ -48,5 +55,21 @@ public class BoardController {
 		model.addAttribute("board", board);
 		return "/board/view";
 	}
+
+	@PostMapping(value="/write")
+	public String write(Board board, MultipartFile[] upfile, Model model){
+
+		List<BoardFile> fileList = new BakedArrayList<BoardFile>();
+		if(!upfile[0].isEmpty()){
+			String savepath = root+"/board/";
+			for(multipartFile file : upfile){
+				
+			}
+		}
+		return null;
+	}
+
+
+
 
 }
