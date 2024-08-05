@@ -32,8 +32,6 @@ public class CustomerService {
 		}else { // 나머지가 있다면
 			totalPage = totalCount/numPerPage+1;
 		} // 올림연산, 삼항 연산도 많이 씀
-		System.out.println("totalPage : " + totalPage);
-		
 		// 페이지네비 사이즈 조정
 		int pageNaviSize = 5;
 		
