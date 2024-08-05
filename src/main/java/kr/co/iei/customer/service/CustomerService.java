@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.customer.dao.CustomerDao;
 import kr.co.iei.customer.dto.Customer;
@@ -32,8 +33,6 @@ public class CustomerService {
 		}else { // 나머지가 있다면
 			totalPage = totalCount/numPerPage+1;
 		} // 올림연산, 삼항 연산도 많이 씀
-		System.out.println("totalPage : " + totalPage);
-		
 		// 페이지네비 사이즈 조정
 		int pageNaviSize = 5;
 		
@@ -84,5 +83,11 @@ public class CustomerService {
 		CustomerListData cld = new CustomerListData(list, pageNavi);
 //		Customer customer = customerDao.selectCustomerList(reqPage);
 		return cld;
+	}
+	
+	@Transactional
+	public int insertCustomerInq(Customer c) {
+		int result = customerDao.insertCustomerInq(c);
+		return 0;
 	}
 }
