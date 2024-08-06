@@ -1,5 +1,170 @@
 <!DOCTYPE html>
 <html lang="ko">
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    
+}
+
+.bookcover {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+.header {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 1.5em;
+}
+
+.profile-container, .content-container, .menu-container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+}
+
+.profile-title, .content-title {
+    margin: 10px 0px;
+    font-size: 1.2em;
+}
+
+
+.profile-box, .content-box {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.profile-image-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.profile-text, .profile-username, .profile-dropdown {
+    margin: 10px 0;
+}
+
+.dropdown-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.dropdown-title {
+    font-size: 1em;
+}
+
+.triangle-down {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid black;
+    margin-left: 10px;
+}
+
+.guestbook-scrollbox {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.guestbook-box {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.guestbook-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.guestbook-contents {
+    padding-left: 10px;
+}
+
+.guestbook-text {
+    margin: 0;
+}
+
+.guestbook-writer {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#guestbook-input {
+    flex: 1;
+    padding: 0px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+    height: 60px;
+    margin-top: 10px;
+}
+
+.guestbook-button {
+    padding: 10px 20px;
+    background-color: #3b87ab;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 55px;
+}
+
+.menu-button {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-button a {
+    text-decoration: none;
+    margin: 5px 0;
+}
+.guest-text{
+    border-bottom: 1px solid #000;
+}
+.material-icons{
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+.guest-check-box{
+    padding: 0px 10px;
+}
+.btn-primary{
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+    float: right;
+    padding: 5px 8px;
+    margin-right: 15px;
+    color: #000;
+}
+.btn-secondary{
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+    float: right;
+    padding: 5px 8px;
+    color: #000;   
+}
+  .guest-check-box input[type="checkbox"] {
+    display: none;
+  }
+  .guest-check-box label {
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  .guest-check-box input[type="checkbox"]:checked + label {
+    font-weight: bold;
+  }
+
+</style>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,18 +176,6 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src="/js/sweetalert.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<style>
-  .guest-check-box input[type="checkbox"] {
-    display: none;
-  }
-  .guest-check-box label {
-    margin-right: 10px;
-    cursor: pointer;
-  }
-  .guest-check-box input[type="checkbox"]:checked + label {
-    font-weight: bold;
-  }
-</style>
 </head>
 <body>
  <th:block th:include="common/header"></th:block>
@@ -64,7 +217,6 @@
                     <div class="box content-box">
                         <div class="guestbook-scrollbox" id="guestbook-scrollbox">
                             <div class="guest-text">방명록  ></div>
-                            <!-- 방명록 항목들 -->
                             <div class="guestbook-box">
                                 <div class="guestbook-title">No. 1
                                     <span>이름</span>
@@ -155,6 +307,7 @@
         </div>
     </div>
     <script>
+    	//날짜
         function getCurrentDate() {
             const now = new Date();
             const year = now.getFullYear();
@@ -162,15 +315,15 @@
             const day = String(now.getDate()).padStart(2, '0');
             return `(${year}.${month}.${day})`;
         }
-
+		//댓글창
         function addGuestbookEntry() {
             const input = document.getElementById('guestbook-input');
             const text = input.value.trim();
             if (text === '') return;
-
+			//익명 닉네임
             const selectedIdentity = document.querySelector('input[name="guestbook-identity"]:checked');
             const identityText = selectedIdentity ? (selectedIdentity.value === 'anonymous' ? '익명' : '닉네임') : '';
-
+			//댓글들
             const guestbookBox = document.createElement('div');
             guestbookBox.className = 'guestbook-box';
             guestbookBox.innerHTML = `
@@ -188,18 +341,18 @@
                     </div>
                 </div>
             `;
-
+			//스크롤박스
             const scrollbox = document.getElementById('guestbook-scrollbox');
             scrollbox.appendChild(guestbookBox);
             input.value = '';
             scrollbox.scrollTop = scrollbox.scrollHeight;
         }
-
+		//삭제버튼
         function deleteComment(button) {
             const guestbookBox = button.closest('.guestbook-box');
             guestbookBox.remove();
         }
-
+		//수정버튼
         function editComment(button) {
             const guestbookBox = button.closest('.guestbook-box');
             const textElement = guestbookBox.querySelector('.guestbook-text p');
@@ -208,7 +361,7 @@
                 textElement.textContent = newText;
             }
         }
-
+		//댓글 엔터
         document.getElementById('guestbook-input').addEventListener('keypress', function(event) {
             if (event.key === 'Enter' && !event.shiftKey) {
                 event.preventDefault();
