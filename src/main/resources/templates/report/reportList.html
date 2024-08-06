@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>신고글 목록</title>
+<link rel="stylesheet" href="/css/minihomepage.css">
+<link rel="stylesheet" href="/css/layout.css">
+<link rel="stylesheet" href="/css/font.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+</head>
+<style>
+/*-----------------페이징 관련---------------------*/
+a {
+	text-decoration: none;
+	color: #000;
+}
+
+.pagination {
+	list-style-type: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0;
+	margin-top: 50px;
+}
+
+.pagination>li {
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	overflow: hidden;
+}
+
+.pagination.circle-style>li {
+	border-radius: 50%;
+}
+
+.pagination>li>a.page-item {
+	display: block;
+	font-size: 18px;
+}
+
+.pagination>li>a.page-item>span.material-icons {
+	display: block;
+	line-height: 40px;
+}
+
+.pagination .page-item.active-page {
+	background-color: skyblue;
+	color: #fff;
+}
+
+/*--------------------------------------*/
+.atbl {
+	margin-top: 40px;
+	border-top: 1px solid #ddd;
+	width: 100%;
+	border-spacing: 0;
+}
+
+.atbl th, .atbl td {
+	text-align: center;
+	border-bottom: 1px solid #ddd;
+	padding: 10px 20px;
+}
+
+.atbl th.left, .tbl td.left {
+	text-align: left;
+}
+
+.atbl th {
+	background-color: skyblue;
+}
+
+.atbl.atbl-hover tbody>tr:hover {
+	cursor: pointer;
+	background-color: rgba(10, 10, 10, 0.5);
+}
+
+/*--------------------------------------------*/
+.client_btn {
+	margin-top: 10px;
+	padding: 20px;
+}
+
+.client_btn>a {
+	background-color: skyblue;
+	border: none;
+	font-weight: bold;
+	color: #fff;
+	width: 100px;
+	height: 30px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+</style>
+
+
+<body>
+	<th:block th:include="common/top"></th:block>
+	
+	
+	<div class="box-title">고객 센터</div>
+	
+	
+	<table class="atbl atbl-hover">
+		<tr>
+			<th>글번호</th>
+			<th>제목</th>
+			<th>작성자</th>
+			<th>작성일</th>
+			<th>분류</th>
+			<th>상태</th>
+		</tr>
+		<tr th:each="customer : ${customerList}">
+			<td th:text="${customer.inqNo}"></td>
+			<td><a
+				th:href="@{/report/reportView(inqNo=${customer.inqNo})}"
+				th:text="${customer.inqTitle}"></a></td>
+			<td th:text="${customer.memberNo}"></td>
+			<td th:text="${customer.inqDate}">0000-00-00</td>
+			<th:block th:switch="${customer.customerList}">
+				<td th:case="1">환불</td>
+				<td th:case="2">기타</td>
+			</th:block>
+			<td id="status" th:text="${customer.status}"></td>
+		</tr>
+	</table>
+	<div id="pageNavi" th:utext="${pageNavi}"></div>
+	
+	
+	
+	<script>
+		$("#approval").on("click", function(event){
+			alert("처리가 완료되었습니다.")
+			$("#status").text("승인 완료");
+		});
+		
+		$("#reject").on("click", function(){
+			alert("요청이 반려되었습니다.")
+			$("#status").text("반려");
+		});
+		
+	</script>
+	
+	<th:block th:include="common/adminBottom"></th:block>
+</body>
+
+</html>

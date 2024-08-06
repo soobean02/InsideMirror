@@ -36,6 +36,7 @@ public class ProductService {
 		return product;
 	}
 
+	
 	/*판매 상품 */
 	public ProductListData selectProduct(int reqPage) {
 		// 한 페이지당 10개의 글 조회
@@ -106,4 +107,9 @@ public class ProductService {
 //		Customer customer = customerDao.selectCustomerList(reqPage);
 		return pld;
 	}
+
+	//상품 상세보기 후 수정, 삭제
+	public int productView(SellProduct sp) {
+		return 0;
+	}//productView
 }

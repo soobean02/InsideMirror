@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<style>
+/*-----------------페이징 관련---------------------*/
+.pagination {
+	list-style-type: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0;
+}
+
+.pagination>li {
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	overflow: hidden;
+}
+
+.pagination.circle-style>li {
+	border-radius: 50%;
+}
+
+.pagination>li>a.page-item {
+	display: block;
+	font-size: 18px;
+}
+
+.pagination>li>a.page-item>span.material-icons {
+	display: block;
+	line-height: 40px;
+}
+
+.pagination .page-item.active-page {
+	background-color: skyblue;
+	color: #fff;
+}
+
+/*--------------------------------------*/
+.box-title>div:first-child {
+	float: left;
+}
+
+.box-title>div:last-child {
+	color: #000;
+	float: right;
+}
+
+.select_op {
+	padding: 20px;
+	float: right;
+}
+
+.select_op>select {
+	width: 100px;
+	height: 30px;
+	border-radius: 10px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.product_list_box {
+	background-color: pink;
+	margin-top: 70px;
+	height: 390px;
+}
+
+.product_img>img {
+	padding-top: 10px;
+}
+
+.product_name {
+	padding-top: 15px;
+	font-weight: bold;
+}
+
+.product_list_box>a {
+	width: 100px;
+	background-color: #eee;
+	float: left;
+	margin: 35px 10px 20px 20px;
+	text-align: center;
+}
+</style>
+<body>
+	<th:block th:include="common/top"></th:block>
+
+	<!--시작-->
+	<div class="wrap">
+		<div class="client_btn">
+		<a href="/admin/productAdd" class="client_btn">상품 추가</a>
+	</div>
+	
+		<div class="select_op">
+			<select>
+				<option value="1">배경</option>
+				<option value="2">폰트</option>
+				<option value="3">커서</option>
+			</select>
+		</div>
+		<div class="product_list_box">
+			<a href="/admin/productView">
+				<!--타임리프 들어갈 자리-->
+				<div class="product_box">
+					<div class="product_img">
+						<img src="/img/acorn.png" width="80px">
+					</div>
+					<div class="product_name">상품 관리</div>
+				</div>
+			</a> <a href="#">
+				<!--타임리프 들어갈 자리-->
+				<div class="product_box">
+					<div class="product_img">
+						<img src="/img/acorn.png" width="80px">
+					</div>
+					<div class="product_name">상품 관리</div>
+				</div>
+			</a> <a href="#">
+				<!--타임리프 들어갈 자리-->
+				<div class="product_box">
+					<div class="product_img">
+						<img src="/img/acorn.png" width="80px">
+					</div>
+					<div class="product_name">상품 관리</div>
+				</div>
+			</a> <a href="#">
+				<!--타임리프 들어갈 자리-->
+				<div class="product_box">
+					<div class="product_img">
+						<img src="/img/acorn.png" width="80px">
+					</div>
+					<div class="product_name">상품 관리</div>
+				</div>
+			</a> <a href="#">
+				<!--타임리프 들어갈 자리-->
+				<div class="product_box">
+					<div class="product_img">
+						<img src="/img/acorn.png" width="80px">
+					</div>
+					<div class="product_name">상품 관리</div>
+				</div>
+			</a> <a href="#">
+				<!--타임리프 들어갈 자리-->
+				<div class="product_box">
+					<div class="product_img">
+						<img src="/img/acorn.png" width="80px">
+					</div>
+					<div class="product_name">상품 관리</div>
+				</div>
+			</a> <a href="#">
+				<!--타임리프 들어갈 자리-->
+				<div class="product_box">
+					<div class="product_img">
+						<img src="/img/acorn.png" width="80px">
+					</div>
+					<div class="product_name">상품 관리</div>
+				</div>
+			</a> <a href="#">
+				<!--타임리프 들어갈 자리-->
+				<div class="product_box">
+					<div class="product_img">
+						<img src="/img/acorn.png" width="80px">
+					</div>
+					<div class="product_name">상품 관리</div>
+				</div>
+			</a> <a href="#">
+				<!--타임리프 들어갈 자리-->
+				<div class="product_box">
+					<div class="product_img">
+						<img src="/img/acorn.png" width="80px">
+					</div>
+					<div class="product_name">상품 관리</div>
+				</div>
+			</a> <a href="#">
+				<!--타임리프 들어갈 자리-->
+				<div class="product_box">
+					<div class="product_img">
+						<img src="/img/acorn.png" width="80px">
+					</div>
+					<div class="product_name">상품 관리</div>
+				</div>
+			</a>
+		</div>
+		<!--페이징-->
+		<ul class="pagination circle-style">
+			<li><a class="page-item" href="#"><span
+					class="material-icons">keyboard_double_arrow_left</span></a></li>
+			<li><a class="page-item" href="#"><span
+					class="material-icons">chevron_left </span></a></li>
+			<li><a class="page-item" href="#">1</a></li>
+			<li><a class="page-item" href="#">2</a></li>
+			<li><a class="page-item" href="#">3</a></li>
+			<li><a class="page-item active-page" href="#">4</a></li>
+			<li><a class="page-item" href="#">5</a></li>
+			<li><a class="page-item" href="#"><span
+					class="material-icons"> chevron_right </span></a></li>
+			<li><a class="page-item" href="#"><span
+					class="material-icons">keyboard_double_arrow_right</span></a></li>
+		</ul>
+	</div>
+	<!--끝-->
+	<th:block th:include="common/adminBottom"></th:block>
+	</div>
+	</div>
+	</div>
+	</div>
+</body>
+</body>
+</html>
