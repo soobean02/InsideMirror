@@ -121,4 +121,10 @@ public class BoardService {
 		int result = boardDao.updateBoardComment(commentContent, boardCommentNo, boardNo);
 		return result;
 	}
+
+	@Transactional
+	public int removeBoardComment(String boardCommentNo) {
+		int result = boardDao.removeBoardComment(boardCommentNo);
+		return result;
+	}
 }

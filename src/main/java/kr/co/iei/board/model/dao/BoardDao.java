@@ -115,5 +115,13 @@ public class BoardDao {
 		return result;
 	}
 
+	public int removeBoardComment(String boardCommentNo) {
+		String query = "delete from board_comment where board_comment_no = ?";
+		Object[] params = {boardCommentNo};
+		System.out.println("dao");
+		int result = jdbc.update(query, params);
+		return result;
+	}
+
 
 }
