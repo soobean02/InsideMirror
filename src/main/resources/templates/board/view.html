@@ -501,6 +501,8 @@
             //먼저 그 글의 높이 값을 구해와야 하는데 더보기 버튼을 강제로 누른 후 구하기
             $(item).parent().next().children(".more").click();
             const height = $(item).parent().next().height();
+            //다른 수정 버튼들 다시 되돌리기
+            const allRemoveBtn = $(".remove");
 
             const pContent = $(item).parent().next();
             const editContent = $("<textarea class='edit-comment-content left'>");
