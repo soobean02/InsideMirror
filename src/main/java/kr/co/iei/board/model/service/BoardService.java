@@ -87,7 +87,6 @@ public class BoardService {
 			board.setCommentList(commentList);
 			List reCommentList = boardDao.selectReCommentList(boardNo);
 			board.setReCommentList(reCommentList);
-
 		}
 
 		return board;
