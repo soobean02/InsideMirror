@@ -72,18 +72,18 @@ tr td sup{
     color: red;
 }
 
-tr td p {
-    font-size: 11px;
-    color: lightgray;
-}
-
 tr td input{
     width: 80%;
     border: none;
     border-bottom: 1px solid black;
 }
 
-
+.nickName-check-btn{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 70px
+}
 .join-accept{
     margin-left: 100px;
     display: flex;
@@ -102,6 +102,6 @@ tr td input{
 
 }
 .td-2 input[name=memberGender]:checked+label{
-    background-color: lightgray;
+    background-color: black;
     color:  white;
 }
