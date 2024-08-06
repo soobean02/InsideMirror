@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <style>
+
     .board-wrap{
         width: 100%;
         height: 700px;
@@ -182,7 +183,7 @@
         position: relative;
         margin-bottom: 20px;
     }
-    .more{
+    .size-btn{
         position: absolute;
         right: 0px;
         bottom: 5px;
@@ -193,9 +194,14 @@
         border-radius: 20px;
         cursor: pointer;
     }
-    .more:hover{
+    .size-btn:hover{
         background-color: #6bdcff;
     }
+
+    .content-hover:hover>button{
+        opacity: 0.3;
+    }
+
 
 
     .edit, .remove{
@@ -214,6 +220,14 @@
     .comment-list-wrap:last-child>.comment-list-content{
         height: 50px;
         padding-bottom: 80px;
+    }
+
+    .edit-comment-content{
+        resize: none;
+        width: 100%;
+        font-size: 18px;
+        margin-bottom: 20px;
+        outline: none;
     }
 </style>
 
@@ -336,17 +350,17 @@
     
                                         <div class="comment-writer left">
                                             <div th:text="${bc.memberNo}" class="left"></div>
-                                            <div class="edited left">(수정)</div>
+                                            <div th:if="${bc.boardEdit == 1}" class="edited left">(수정)</div>
                                             <!-- 나중에 th:if로 수정되었으면 감지해서 이 div 띄우기 -->
                                             <div th:text="${bc.boardCommentDate}" class="left"></div>
                                             <!-- 나중에 th로 답글 개수 조회해와서 넣기 -->
-                                            <span class="getReCommentCount right">(0)</span>
+                                            <span class="getReCommentCount right" th:text="${'(' + bc.reCommentCount + ')'}"></span>
                                             <a href="javascript:void(0)" class="getReComment right">답글</a>
-                                            <a href="javascript:void(0)" class="remove right" th:onclick="">삭제</a>
-                                            <a href="javascript:void(0)" class="edit right" th:onclick="">수정</a>
+                                            <a href="javascript:void(0)" class="remove right" th:onclick="removeComment(this,[[${bc.boardCommentNo}]],[[${board.boardNo}]])">삭제</a>
+                                            <a href="javascript:void(0)" class="edit right" th:onclick="editComment(this,[[${bc.boardCommentNo}]],[[${board.boardNo}]])">수정</a>
                                         </div>
     
-                                        <div class="comment-list-content left" th:text="${bc.boardCommentContent}"></div>
+                                        <div class="comment-list-content content-hover left" th:text="${bc.boardCommentContent}"></div>
     
                                     </div>
                                         <!-- 답글 -->
@@ -364,19 +378,24 @@
                                                 </div>
                                             </form>
                                         </div>
+
+
+                                        <div class="reComment-list-wrap" th:each="bcc : ${board.reCommentList}" th:if="${bc.boardCommentNo == bcc.boardCommentRef}">
+                                            <!-- 답글 출력 -->
+                                            <div class="reComment-list" style="display: none;">
+                                                <p class="comment-info">
+                                                    <span th:text="${bcc.memberNo}"></span>
+                                                    <span th:text="${bcc.boardCommentDate}"></span>
+                                                </p>
+                                                <p class="reComment-content-list" th:text="${bcc.boardCommentContent}"></p>
+                                            </div>
+
+
+                                        </div>
+
+
                                     </div>
 
-                                    <ul class="reComment-list-wrap" th:each="bcc : ${board.reCommentList}" th:if="${bc.boardCommentNo == bcc.boardCommentRef}">
-                                        <!-- 답글 출력 -->
-                                        <li class="reComment-list">
-                                            <p class="comment-info">
-                                                <span th:text="${bcc.memberNo}"></span>
-                                                <span th:text="${bcc.boardCommentDate}"></span>
-                                            </p>
-                                            <p class="reComment-content-list" th:text="${bcc.boardCommentContent}"></p>
-
-                                        </li>
-                                    </ul>
 
 
 
@@ -413,25 +432,40 @@
             </div>
         </div>
     </div>
-
     <script>
-        const longComment = $(".comment-list-content");
-        longComment.each(function(index,item){
-            const longCommentHeight = $(item).css("height");
-            if(longCommentHeight === '110px'){
-                const more = $("<button class='more'>더보기</button>");
-                $(item).append(more);
-            }
-        });
+        moreComment();
+        function moreComment(){
+            const longComment = $(".comment-list-content");
+            longComment.each(function(index,item){
+                const longCommentHeight = $(item).css("height");
+                if(longCommentHeight === '110px'){
+                    const more = $("<button class='more size-btn'>더보기</button>");
+                    $(item).append(more);
+                }
+            });//댓글이 긴 경우 더보기 버튼 추가(우측 하단)
+            $(".more").on("click",function(){
+                $(this).parent().css("max-height","1000px");
+                reduceComment($(this).parent());
+                $(this).remove();
+            })//더보기 버튼 누르면 max-height를 늘려서 긴 댓글을 다 볼 수 있게 해줌
+        }
+        
 
-        $(".more").on("click",function(){
-            $(this).parent().css("max-height","1000px");
-            $(this).remove();
-        })
+        function reduceComment(longItem){
+            const reduce = $("<button class='reduce size-btn'>줄이기</button>")
+            longItem.append(reduce);
+            $(".reduce").on("click",function(){
+                $(this).parent().css("max-height","110px");
+                moreComment();
+                $(this).remove();
+            })
+        }
+
 
         //답글누르면 답글 쓸 수 있는 거랑 답글들 리스트 뜨기
         $(".getReComment").on("click",function(){
             const item = $(this);
+            $(".getReComment").not(item).prev().show();
             $(".getReComment").not(item).text("답글");
             $(".getReComment").not(item).parent().parent().next().children("div").hide();
             if(item.text() === "답글"){
@@ -439,14 +473,99 @@
                 item.prev().hide();
                 item.parent().parent().next().children("div").show();
                 // 답글 보여주기
-                item.parent().parent().next().next().children("div").show();
+                item.parent().parent().next().children("div").next().children("div").show();
             }
             else{
                 item.text("답글");
                 item.prev().show();
                 item.parent().parent().next().children("div").hide();
+                item.parent().parent().next().children("div").next().children("div").hide();
             }
+        })//답글 버튼 누르면 답글달 수 있는 textarea랑 해당 댓글에 대한 답글 리스트들이 뜸
+
+        //더보기/줄이기  버튼에 hover하면 댓글창이 가지고 있는 content-hover를 없애기
+        //그래야 버튼을 hover했을때 버튼의 투명도가 내려가지 않음
+        $(".size-btn").on("mouseenter",function(){
+            $(this).parent().removeClass("content-hover");
+            $(this).on("mouseleave",function(){
+                $(this).parent().addClass("content-hover");
+            })
         })
+
+        function editComment(item, boardCommentNo, boardNo){
+            //수정버튼 누르면
+            //수정버튼은 수정완료로, 삭제버튼은 수정취소 버튼으로 변경
+            //먼저 그 글의 높이 값을 구해와야 하는데 더보기 버튼을 강제로 누른 후 구하기
+            $(item).parent().next().children(".more").click();
+            const height = $(item).parent().next().height();
+
+            const pContent = $(item).parent().next();
+            const editContent = $("<textarea class='edit-comment-content left'>");
+            editContent.height(height);
+            editContent.val(pContent.text());
+            pContent.replaceWith(editContent);
+
+            $(item).text("완료");
+            $(item).attr("onclick","editComplete(this, "+boardCommentNo+","+boardNo+")")
+            $(item).prev().text("취소");
+            $(item).prev().attr("onclick","editCancel(this, "+boardCommentNo+","+boardNo+")")
+        }
+
+        function editComplete(item, boardCommentNo, boardNo){
+            //수정완료 버튼을 눌렀음
+            //form 태그 만들어서 전송
+            // const form =$("<form action='/board/updateComment' method='post'>");
+            // form.hide();
+
+            // const boardCommentInput = $("<input type='text' name='boardCommentNo'>");
+            // boardCommentInput.val(boardCommentNo);
+
+            // const boardNoInput = $("<input type='text' name='boardNo'>");
+            // boardNoInput.val(boardNo);
+
+            // const boardCommentContent = $(item).parent().next().clone();
+
+            // form.append(boardCommentInput).append(boardNoInput).append(boardCommentContent);
+            // $("body").append(form)
+            // form.submit();
+
+            //비동기 처리  
+            const commentContent = $(item).parent().next().val();
+                $.ajax({
+                    url : "/board/updateComment",
+                    type : "post",
+                    data : {commentContent : commentContent, boardCommentNo : boardCommentNo, boardNo : boardNo},
+                    success: function(data){
+                        if(data > 0){
+                            console.log("댓글 수정 완료");
+                        }
+                        else{
+                            console.log("댓글 수정 실패");
+                        }
+                    },
+                    error : function(){
+                        //에러
+                        console.log("에렁");
+                    }
+                });
+        }
+        function editCancel(item, boardCommentNo, boardNo){
+            //수정 취소 버튼을 눌렀으므로 다시 원상복구
+            const editContent = $(item).parent().next();
+            const pContent = $("<div class='comment-list-content content-hover left'></div>")
+            pContent.text(editContent.val());
+            editContent.replaceWith(pContent);
+            moreComment();
+
+            $(item).next().text("수정");
+            $(item).next().attr("onclick","editComment(this, "+boardCommentNo+","+boardNo+")")
+            $(item).text("삭제");
+            $(item).attr("onclick","removeComment(this, "+boardCommentNo+","+boardNo+")")
+        }
+
+        function removeComment(item, boardCommentNo, boardNo){
+
+        }
 
     </script>
 
