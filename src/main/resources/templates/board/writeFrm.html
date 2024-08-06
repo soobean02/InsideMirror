@@ -75,100 +75,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>글 작성하기</title>
-    <link rel="stylesheet" href="/css/minihomepage.css">
-    <link rel="stylesheet" href="/css/layout.css">
-    <link rel="stylesheet" href="/css/font.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-	<script src="/summernote/summernote-lite.js"></script>
-	<script src="/summernote/lang/summernote-ko-KR.js"></script>
-	<link rel="stylesheet" href="/summernote/summernote-lite.css">
-    
-
     
 </head>
 
 <body>
-    <div class="bookcover">
-        <div class="bookdot">
-            <div class="page">
-                <div class="profile-container">
-                    <div class="header profile-title">TOTAL
-                        <span class="color-red">28</span>
-                    </div>
-                    <div class="box profile-box">
-                        <div class="profile-image">
-                            <img class="profile-image-img" src="/image/cyworld1.png" alt="프로필 이미지">
-                        </div>
-                        <div class="profile-text">ㄴr는.. 오늘도.. 눈물을.. 흘린ㄷr..★</div>
-                        <div class="profile-username">
-                            <span style="color: #0f1b5c">채연</span>
-                            (♪♬)
-                        </div>
-                        <div class="profile-dropdown">
-                            <div class="dropdown-button">
-                                <div class="dropdown-title">일촌 파도타기</div>
-                                <div class="triangle-down"></div>
-                            </div>
-                            <div class="dropdown-content">
-                                <a href="#">ㅁㅁㅁ의 홈피</a>
-                                <a href="#">ㅁㅁㅁ의 홈피</a>
-                                <a href="#">ㅁㅁㅁ의 홈피</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="content-container">
-                    <div class="header content-title">
-                        <div class="content-title-name">ㅁㅁㅁ님의 홈피</div>
-                    </div>
-                    <div class="box content-box">
+    <th:block th:include="common/top"></th:block>
                     
-                        <div class="box-title">자유 게시판 글작성></div>
-                        
-                        <div class="board-wrap">
+    <div class="box-title">자유 게시판 글작성></div>
+    
+    <div class="board-wrap">
 
-                            <form action="/board/write" method="post" enctype="multipart/form-data">
+        <form action="/board/write" method="post" enctype="multipart/form-data">
 
-                                <div class="board-title">
-                                    <div class="title-bar">
-                                        <input type="text" name="boardTitle" id="boardTitle" placeholder="당신만의 멋진 제목을 적어주세요!">
-                                    </div>
-                                    <div class="submit-div">
-                                        <button type="submit">전송</button>
-                                    </div>
-                                    
-                                </div>
-                                <input type="hidden" name="memberNo">
-                                <!-- 나중에 로그인 기능 만들어지면 th:value=session.member.memberNo  추가하기-->
-                                <div class="board-content">
-                                    <textarea name="boardContent" id="content"></textarea>
-                                </div>
-
-                            </form>
-
-                        </div>
-                            
-                        
-                        
-                    </div>
+            <div class="board-title">
+                <div class="title-bar">
+                    <input type="text" name="boardTitle" id="boardTitle" placeholder="당신만의 멋진 제목을 적어주세요!">
                 </div>
-                <div class="menu-container">
-                    <div class="menu-button">
-                        <a href="#"><button>홈</button></a>
-                        <a href="/board/list?reqPage=1"><button>자유게시판</button></a>
-                        <a href="#"><button>사진첩</button></a>
-                        <a href="#"><button>방명록</button></a>
-                        <a href="#"><button>선물가게</button></a>
-                        <a href="#"><button>구매목록</button></a>
-                        <a href="#"><button>일촌관리</button></a>
-                        <a href="#"><button>고객센터</button></a>
-                        <a href="#"><button>즐겨찾기</button></a>
-                    </div>
+                <div class="submit-div">
+                    <button type="submit">전송</button>
                 </div>
+                
             </div>
-        </div>
+            <input type="hidden" name="memberNo" th:value="${session.member.memberNo}">
+            <!-- 나중에 로그인 기능 만들어지면 th:value=session.member.memberNo  추가하기-->
+            <div class="board-content">
+                <textarea name="boardContent" id="content"></textarea>
+            </div>
+
+        </form>
+
     </div>
+        
+    
+
+    <th:block th:include="common/bottom"></th:block>
+
+
 
     <script>
         

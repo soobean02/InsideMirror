@@ -278,11 +278,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>minihomepage</title>
-    <link rel="stylesheet" href="/css/minihomepage.css">
-    <link rel="stylesheet" href="/css/layout.css">
-    <link rel="stylesheet" href="/css/font.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
 </head>
 
 <body>
@@ -528,7 +524,12 @@
                     data : {commentContent : commentContent, boardCommentNo : boardCommentNo, boardNo : boardNo},
                     success: function(data){
                         if(data > 0){
-                            console.log("댓글 수정 완료");
+                            const edited = 1;
+                            editCancel(item, boardCommentNo, boardNo, boardCommentRef, edited);
+                            $(item).text("수정");
+                            $(item).attr("onclick","editComment(this, "+boardCommentNo+","+boardNo+","+boardCommentRef+")")
+                            $(item).next().text("삭제");
+                            $(item).next().attr("onclick","removeComment("+boardCommentNo+")")
                         }
                         else{
                             console.log("댓글 수정 실패");
@@ -540,7 +541,7 @@
                     }
                 });
         }
-        function editCancel(item, boardCommentNo, boardNo, boardCommentRef){
+        function editCancel(item, boardCommentNo, boardNo, boardCommentRef, edited){
             //수정 취소 버튼을 눌렀으므로 다시 원상복구
             const editContent = $(item).parent().next();
             
@@ -557,10 +558,12 @@
                 moreComment();
             }
 
-            $(item).next().text("수정");
-            $(item).next().attr("onclick","editComment(this, "+boardCommentNo+","+boardNo+","+boardCommentRef+")")
-            $(item).text("삭제");
-            $(item).attr("onclick","removeComment("+boardCommentNo+")")
+            if(edited !== 1) {
+                $(item).next().text("수정");
+                $(item).next().attr("onclick","editComment(this, "+boardCommentNo+","+boardNo+","+boardCommentRef+")")
+                $(item).text("삭제");
+                $(item).attr("onclick","removeComment("+boardCommentNo+")")
+            }
         }
 
         function removeComment(boardCommentNo){
@@ -568,7 +571,7 @@
             console.log("삭제하는 로직");
         }
 
-        //수정누르고 삭제 눌렀을때 원래 글 그대로 가기
+        //수정 누르면 다른 수정 없애기 
         //삭제하기
         //수정 누르면 처리
     </script>
