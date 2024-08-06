@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpSession;
 import kr.co.iei.member.model.dto.Member;
@@ -54,6 +55,17 @@ public class MemberController {
 			return "redirect:/member/joinFrm";
 		}
 	}
+	@PostMapping(value="/checkNickname")
+	public String checkPw(String checkNickname, Model model) {
+		Member member = memberService.selectOneMember(checkNickname);
+		if(member == null) {
+			model.addAttribute("result",0);
+		}else {
+			model.addAttribute("result",1);
+		}
+		model.addAttribute("memberNickname",checkNickname);
+		return "member/checkNickname";
+	}
 	@GetMapping(value="/joinFinal")
 	public String joinFinal() {
 		return "/member/joinFinal";
@@ -65,5 +77,16 @@ public class MemberController {
 	@GetMapping(value="/doubleCheckPassword")
 	public String doubleCheckPassword() {
 		return "/member/doubleCheckPassword";
+	}
+	
+	@ResponseBody
+	@GetMapping(value="/ajaxCheckNickname")
+	public int ajaxCheckPw(String memberNickname) {
+		Member member = memberService.selectOneMember(memberNickname);
+		if(member == null) {
+			return 0;
+		}else {
+			return 1;
+		}
 	}
 }

@@ -83,4 +83,10 @@ public class MemberService {
 		int result = memberDao.insertMember(m);
 		return result;
 	}
+
+
+	public Member selectOneMember(String checkNickname) {
+		Member member = memberDao.selectOneMember(checkNickname);
+		return member;
+	}
 }
