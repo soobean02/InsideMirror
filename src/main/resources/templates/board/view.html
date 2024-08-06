@@ -400,7 +400,7 @@
                                         <!-- 답글 -->
                                         <!-- 나중에 != null로 -->
                                     <div class="reComment-input-wrap">
-                                        <div th:if="${session.member == null}" class="reCommentBox">
+                                        <div th:if="${session.member != null}" class="reCommentBox">
                                             <form action="/board/comment/" method="post">
                                                 <div class="reComment-content">
                                                     <!-- <input type="hidden" name="memberNo" th:value="${session.member.memberNo}"> -->
