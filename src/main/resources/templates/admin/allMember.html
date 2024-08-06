@@ -24,7 +24,7 @@
 				<th style="width: 10%">회원가입일</th>
 			</tr>
 
-			<tr th:each="m : ${members}" onclick="memberView([[${m.memberNo}]])">
+			<tr th:each="m : ${member}" onclick="memberView([[${m.memberNo}]])">
 				<td th:text="${m.memberNo}"></td>
 				<td>
 				<a
