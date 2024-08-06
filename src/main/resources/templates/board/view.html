@@ -18,6 +18,9 @@
         text-decoration: none;
         color: black;
     }
+    p{
+        margin: 0;
+    }
 
     .left{
         float: left;
@@ -170,8 +173,12 @@
 
     .comment-list{
         width: 100%;
-        height: 500px;
+        /* height: 10px; */
         margin-top: 20px;
+        padding-bottom: 100px;
+    }
+    .comment-list-wrap{
+        height: 90px;
     }
 
     .comment-list-content{
@@ -181,8 +188,11 @@
         /* padding-bottom: 20px; */
         border-bottom: 1px solid #ccc;
         position: relative;
-        margin-bottom: 20px;
     }
+    .short-content{
+        padding-bottom: 10px;
+    }
+
     .size-btn{
         position: absolute;
         right: 0px;
@@ -211,12 +221,25 @@
     .reCommentBox{
         display: none;
     }
-
-    .reComment-content>textarea{
-        width: 70%;
+    .reComment-content{
+        width: 100%;
         height: 100px;
-        resize: none;
+        overflow: hidden;
     }
+    .reComment-submit{
+        width: 10%;
+        height: 90px;
+        margin-left: 20px;
+    }
+    
+    .reComment-content>textarea{
+        width: 80%;
+        height: 90px;
+        resize: none;
+        box-sizing: border-box;
+    }
+
+
     .comment-list-wrap:last-child>.comment-list-content{
         height: 50px;
         padding-bottom: 80px;
@@ -228,6 +251,17 @@
         font-size: 18px;
         margin-bottom: 20px;
         outline: none;
+    }
+    .date{
+        margin-left: 10px;
+    }
+
+    .reComment-list{
+        border-bottom: 1px solid #ccc;
+        padding-left: 20px;
+    }
+    .reComment-content-list{
+        margin-bottom: 10px;
     }
 </style>
 
@@ -347,18 +381,18 @@
                                             <span class="material-icons">account_box</span>
                                         </div> -->
                                         <!-- 프사 -->
-    
-                                        <div class="comment-writer left">
-                                            <div th:text="${bc.memberNo}" class="left"></div>
-                                            <div th:if="${bc.boardEdit == 1}" class="edited left">(수정)</div>
-                                            <!-- 나중에 th:if로 수정되었으면 감지해서 이 div 띄우기 -->
-                                            <div th:text="${bc.boardCommentDate}" class="left"></div>
-                                            <!-- 나중에 th로 답글 개수 조회해와서 넣기 -->
-                                            <span class="getReCommentCount right" th:text="${'(' + bc.reCommentCount + ')'}"></span>
-                                            <a href="javascript:void(0)" class="getReComment right">답글</a>
-                                            <a href="javascript:void(0)" class="remove right" th:onclick="removeComment(this,[[${bc.boardCommentNo}]],[[${board.boardNo}]])">삭제</a>
-                                            <a href="javascript:void(0)" class="edit right" th:onclick="editComment(this,[[${bc.boardCommentNo}]],[[${board.boardNo}]])">수정</a>
-                                        </div>
+
+                                            <div class="comment-writer left">
+                                                <div th:text="${bc.memberNo}" class="left"></div>
+                                                <div th:if="${bc.boardEdit == 1}" class="edited left">(수정)</div>
+                                                <!-- 나중에 th:if로 수정되었으면 감지해서 이 div 띄우기 -->
+                                                <div th:text="${bc.boardCommentDate}" class="date left"></div>
+                                                <!-- 나중에 th로 답글 개수 조회해와서 넣기 -->
+                                                <span class="getReCommentCount right" th:text="${'(' + bc.reCommentCount + ')'}"></span>
+                                                <a href="javascript:void(0)" class="getReComment right">답글</a>
+                                                <a href="javascript:void(0)" class="remove right" th:onclick="removeComment([[${bc.boardCommentNo}]])">삭제</a>
+                                                <a href="javascript:void(0)" class="edit right" th:onclick="editComment(this,[[${bc.boardCommentNo}]],[[${board.boardNo}]])">수정</a>
+                                            </div>
     
                                         <div class="comment-list-content content-hover left" th:text="${bc.boardCommentContent}"></div>
     
@@ -368,13 +402,12 @@
                                     <div class="reComment-input-wrap">
                                         <div th:if="${session.member == null}" class="reCommentBox">
                                             <form action="/board/comment/" method="post">
-                                                <div>
+                                                <div class="reComment-content">
                                                     <!-- <input type="hidden" name="memberNo" th:value="${session.member.memberNo}"> -->
                                                     <input type="hidden" name="boardNo" th:value="${board.boardNo}">
                                                     <input type="hidden" name="boardCommentRef" th:value="${bc.boardCommentNo}">
-                                                </div>
-                                                <div class="reComment-content">
-                                                    <textarea name="boardCommentContent"></textarea>
+                                                    <textarea name="boardCommentContent" class="left"></textarea>
+                                                    <button type="submit" class="reComment-submit left">답글</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -461,6 +494,17 @@
             })
         }
 
+        addShortComment();
+        function addShortComment(){
+            const content = $(".comment-list-content");
+            content.each(function(index,item){
+                if($(item).height() !== 110){
+                    $(item).addClass("short-content");
+                }
+            });
+
+        }
+
 
         //답글누르면 답글 쓸 수 있는 거랑 답글들 리스트 뜨기
         $(".getReComment").on("click",function(){
@@ -513,21 +557,6 @@
 
         function editComplete(item, boardCommentNo, boardNo){
             //수정완료 버튼을 눌렀음
-            //form 태그 만들어서 전송
-            // const form =$("<form action='/board/updateComment' method='post'>");
-            // form.hide();
-
-            // const boardCommentInput = $("<input type='text' name='boardCommentNo'>");
-            // boardCommentInput.val(boardCommentNo);
-
-            // const boardNoInput = $("<input type='text' name='boardNo'>");
-            // boardNoInput.val(boardNo);
-
-            // const boardCommentContent = $(item).parent().next().clone();
-
-            // form.append(boardCommentInput).append(boardNoInput).append(boardCommentContent);
-            // $("body").append(form)
-            // form.submit();
 
             //비동기 처리  
             const commentContent = $(item).parent().next().val();
@@ -552,7 +581,7 @@
         function editCancel(item, boardCommentNo, boardNo){
             //수정 취소 버튼을 눌렀으므로 다시 원상복구
             const editContent = $(item).parent().next();
-            const pContent = $("<div class='comment-list-content content-hover left'></div>")
+            const pContent = $("<div class='comment-list-content content-hover short-content left'></div>")
             pContent.text(editContent.val());
             editContent.replaceWith(pContent);
             moreComment();
@@ -560,11 +589,12 @@
             $(item).next().text("수정");
             $(item).next().attr("onclick","editComment(this, "+boardCommentNo+","+boardNo+")")
             $(item).text("삭제");
-            $(item).attr("onclick","removeComment(this, "+boardCommentNo+","+boardNo+")")
+            $(item).attr("onclick","removeComment("+boardCommentNo+")")
         }
 
-        function removeComment(item, boardCommentNo, boardNo){
-
+        function removeComment(boardCommentNo){
+            console.log(boardCommentNo);
+            console.log("삭제하는 로직");
         }
 
     </script>
