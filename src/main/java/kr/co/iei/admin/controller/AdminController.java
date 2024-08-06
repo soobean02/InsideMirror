@@ -19,6 +19,11 @@ public class AdminController {
 	@Autowired
 	private MemberService memberService;
 	
+	@GetMapping(value = "/adminHome")
+	public String adminHome(Model model) {
+		return "admin/adminHome";
+	}//adminHome
+	
 	@GetMapping(value = "/allMember")
 	public String allMember(int reqPage, Model model) {
 		MemberListData mld = memberService.selectAllMember(reqPage);

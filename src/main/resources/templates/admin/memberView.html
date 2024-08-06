@@ -18,43 +18,47 @@
 			<table>
 				<tr>
 					<th>번호</th>
-					<td>1</td>
+					<td th:text="${m.memberNo}"></td>
 				</tr>
 				<tr>
 					<th>이름</th>
-					<td>name1</td>
+					<td th:text="${m.memberName}"></td>
 				</tr>
 				<tr>
 					<th>닉네임</th>
-					<td>user01</td>
+					<td th:text="${m.memberNickname}"></td>
 				</tr>
 				<tr>
 					<th>아이디/이메일</th>
-					<td>user01@gmail.com</td>
+					<td th:text="${m.memberId}"></td>
 				</tr>
 				<tr>
 					<th>성별</th>
-					<td>여</td>
+					<td th:text="${m.memberGender}"></td>
 				</tr>
 				<tr>
 					<th>전화번호</th>
-					<td>010-1111-1111</td>
+					<td th:text="${m.memberPhone}"></td>
 				</tr>
 				<tr>
 					<th>주소</th>
-					<td>서울특별시 영등포구</td>
+					<td th:text="${m.memberAddr}"></td>
 				</tr>
 				<tr>
 					<th>등급</th>
-					<td>관리자</td>
+					<td th:switch="${m.memberLevel}">
+						<span th:case="1">관리자</span>
+						<span th:case="2">정회원</span>
+					</td>
 				</tr>
 				<tr>
 					<th>회원가입일</th>
-					<td>2024-08-01</td>
+					<td th:text="${m.enrollDate}"></td>
 				</tr>
 			</table>
 		</div>
 	</div>
+	
 	</div>
 	</div>
 	<th:block th:include="common/adminBottom"></th:block>
