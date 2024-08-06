@@ -117,10 +117,8 @@ a {
 		</tr>
 		<tr th:each="customer : ${list}">
 			<td th:text="${customer.inqNo}"></td>
-			<td><a
-				th:href="@{/customer/customerView(inqNo=${customer.inqNo})}"
-				th:text="${customer.inqTitle}"></a></td>
-			<td th:text="${customer.inqDate}">0000-00-00</td>
+			<td><a th:href="@{/customer/customerPage(inqNo=${customer.inqNo})}" th:text="${customer.inqTitle}"></a></td>
+			<td th:text="${customer.inqDate}"></td>
 			<th:block th:switch="${customer.customerList}">
 				<td th:case="1">환불</td>
 				<td th:case="2">기타</td>
