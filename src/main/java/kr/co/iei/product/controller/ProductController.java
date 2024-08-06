@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.co.iei.product.dto.ProductListData;
 import kr.co.iei.product.dto.SellProduct;
 import kr.co.iei.product.service.ProductService;
 
@@ -37,5 +38,13 @@ public class ProductController {
 			System.out.println("실패");
 		}
 		return "/product/acornProduct";
+	}
+	/*판매 상품 리스트*/
+	@GetMapping(value="/productList")
+	public String productList(Model model, int reqPage) {
+		ProductListData pld = productService.selectProduct(reqPage);
+		model.addAttribute("list", pld.getList());
+		model.addAttribute("pageNavi", pld.getNaviPage());
+		return "/product/productList";
 	}
 }
