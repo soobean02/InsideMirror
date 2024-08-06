@@ -366,17 +366,17 @@
                                         </div>
                                     </div>
 
-                                    <div class="reComment-list-wrap" th:each="bcc : ${board.reCommentList}" th:if="${bc.boardCommentNo == bcc.boardCommentRef}">
+                                    <ul class="reComment-list-wrap" th:each="bcc : ${board.reCommentList}" th:if="${bc.boardCommentNo == bcc.boardCommentRef}">
                                         <!-- 답글 출력 -->
-                                        <div class="reComment-list" style="display: none;">
+                                        <li class="reComment-list">
                                             <p class="comment-info">
                                                 <span th:text="${bcc.memberNo}"></span>
                                                 <span th:text="${bcc.boardCommentDate}"></span>
-                                                <p class="reComment-content-list" th:text="${bcc.boardCommentContent}"></p>
                                             </p>
+                                            <p class="reComment-content-list" th:text="${bcc.boardCommentContent}"></p>
 
-                                        </div>
-                                    </div>
+                                        </li>
+                                    </ul>
 
 
 
