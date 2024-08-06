@@ -85,9 +85,11 @@ public class BoardService {
 			//댓글 조회
 			List<BoardComment> commentList = boardDao.selectComment(boardNo);
 			board.setCommentList(commentList);
+			//답글 조회
 			List reCommentList = boardDao.selectReCommentList(boardNo);
 			board.setReCommentList(reCommentList);
-
+			//답글 개수 조회
+			
 		}
 
 		return board;
@@ -113,4 +115,10 @@ public class BoardService {
 		int result = boardDao.insertBoardComment(comment);
 		return result;
 	}//댓글 대댓글 insert
+
+	@Transactional
+	public int updateBoardComment(String commentContent, String boardCommentNo, String boardNo) {
+		int result = boardDao.updateBoardComment(commentContent, boardCommentNo, boardNo);
+		return result;
+	}
 }

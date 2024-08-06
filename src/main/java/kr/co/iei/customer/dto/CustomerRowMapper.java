@@ -12,6 +12,7 @@ public class CustomerRowMapper implements RowMapper<Customer>{
 	@Override
 	public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
 		Customer ct = new Customer();
+		ct.setInqContent(rs.getString("inqContent"));
 		ct.setInqDate(rs.getDate("inq_date"));
 		ct.setStatus(rs.getString("status"));
 		ct.setInqTitle(rs.getString("inq_title"));

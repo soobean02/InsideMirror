@@ -40,6 +40,7 @@ public class CustomerDao {
 		return result;
 	}
 
+
 	//customer status 상태 '승인 완료' 업데이트 로직
 	public int updateStatus(Customer c) {
 		String query = "update customer set status='승인 완료' where inq_no=?";
@@ -47,5 +48,16 @@ public class CustomerDao {
 		int result = jdbc.update(query, params);
 		return result;
 	}//updateStatus
+
+	public Customer selectCustomerContent(int i) {
+		String query = "select * from customer where inq_no=?";
+		Object[] params = {i};
+		List list = jdbc.query(query, customerRowMapper, params);
+		if(list.isEmpty()) {
+			return null;
+		}
+		return (Customer)list.get(0);
+	}
+
 
 }

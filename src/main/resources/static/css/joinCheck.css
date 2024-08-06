@@ -1,0 +1,81 @@
+.agree-all-wrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 90px 0;
+    background-color: transparent;
+}
+.handright{
+    position: absolute;
+    top: 50px;
+    left: 1400px;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    z-index: 1;
+}
+.handleft{
+    position: absolute;
+    top: 700px;
+    left: 300px;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.agree-wrap{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    border-radius: 45px;
+    width: 800px;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+}
+.back-btn{
+    display: flex;
+    align-self: flex-start;
+    position: fixed;
+    top:230px;
+    left:580px;
+    padding-left: 30px;
+
+}
+.agree-title{
+    display: flex;
+    align-items: center;
+}
+
+.agree{
+    margin: 50px 0;
+}
+
+.agreeAll{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.agree-name{
+    display: flex;
+    justify-content: space-between;
+    gap: 300px;
+}
+
+.agree-join-btn #agreeJoinButton{
+	display: flex;
+	justify-content:center;
+	align-items:center;
+    width: 300px;
+    height: 60px;
+    font-size: 20px;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    border-radius: 45px;
+    margin-left: 135px;
+    text-decoration: none;
+}
+

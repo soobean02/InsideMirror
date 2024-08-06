@@ -102,6 +102,13 @@ public class BoardController {
 	public String comment(BoardComment comment){
 		int result = boardService.insertBoardComment(comment);
 		return null;
-	}
+	}//댓글작성
+
+	@ResponseBody
+	@PostMapping(value="/updateComment")
+	public int updateComment(String commentContent, String boardCommentNo, String boardNo){
+		int result = boardService.updateBoardComment(commentContent, boardCommentNo, boardNo);
+		return result;
+	}//댓글 수정
 
 }

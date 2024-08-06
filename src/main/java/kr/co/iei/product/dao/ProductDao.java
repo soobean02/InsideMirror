@@ -1,5 +1,7 @@
 package kr.co.iei.product.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -9,6 +11,7 @@ import kr.co.iei.product.dto.AcronHistoryRowMapper;
 
 import kr.co.iei.product.dto.BuyProductRowMapper;
 import kr.co.iei.product.dto.ProductListRowMapper;
+import kr.co.iei.product.dto.SellProduct;
 import kr.co.iei.product.dto.SellProductRowMapper;
 
 @Repository
@@ -25,11 +28,30 @@ public class ProductDao {
 	private AcronHistoryRowMapper acorAcronHistoryRowMapper; // 도토리 구매이력 (도토리 번호, 회원 번호, 도토리 가격, 도토리 구매일)
 	@Autowired
 	private MemberRowMapper memberRowMapper;
+	
+	/* 멤버 테이블 도토리 구매 - update */
 	public int updateAcorns(int acorns) {
-		String query = "UPDATE MEMBER SET ACORNS = ACORNS+? WHERE MEMBER_NO=?";
+		String query = "UPDATE MEMBER SET ACORNS = ACORNS + ? WHERE MEMBER_NO=?";
 		Object[] params = {acorns,1}; // 여기 바꿔야함! MEMBER_NO 임시로 넣어둠
 		int result = jdbc.update(query,params);
 		return result;
+	}
+	/*도토리 구매 이력 - insert*/
+	public int insertAcorns(int acorns) {
+		String query = "insert into acorns_purchase_history values(ACORNS_PURCHASE_HISTORY_SEQ.NEXTVAL,?,?,TO_CHAR(SYSDATE,'yyyy-mm-dd'))";
+		Object[] params = {1,(acorns*100)};// 여기 바꿔야함! MEMBER_NO 임시로 넣어둠
+		int result = jdbc.update(query,params);
+		return result;
+	}
+	
+	/*구매 상품 출력 - 3개 짜리*/
+	public List selectProductPhoto() {
+		String query = "SELECT * FROM sell_product WHERE ROWNUM <= 3";
+		List list = jdbc.query(query, sellProductRowMapper);
+		if(list.isEmpty()) {
+			return null;
+		}
+		return list;
 	}
 
 }

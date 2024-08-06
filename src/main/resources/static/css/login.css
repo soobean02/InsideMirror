@@ -4,6 +4,24 @@
 	margin :100px 0;
 	
 }
+.handright{
+    position: absolute;
+    top: 50px;
+    left: 1400px;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    z-index: 1;
+}
+.handleft{
+    position: absolute;
+    top: 700px;
+    left: 300px;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    z-index: 1;
+}
 .login-wrap {
     border-radius: 50%; 
     display: flex;
@@ -13,7 +31,7 @@
     width: 550px; 
     height: 550px; 
     padding: 30px; 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
     background: white;
 }
 
@@ -57,7 +75,7 @@
     margin-bottom: 20px;
 }
 
-.btn-box input[type="submit"] {
+.btn-box button[type="submit"] {
     width: 350px;
     padding: 15px;
     border: none;
@@ -68,7 +86,7 @@
     cursor: pointer;
 }
 
-.btn-box input[type="submit"]:hover {
+.btn-box button[type="submit"]:hover {
     background: #333;
 }
 

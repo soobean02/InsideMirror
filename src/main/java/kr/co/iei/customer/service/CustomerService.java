@@ -91,6 +91,7 @@ public class CustomerService {
 		return 0;
 	}
 
+
 	
 	//customer status 상태 '승인 완료' 업데이트 로직
 	@Transactional
@@ -98,4 +99,12 @@ public class CustomerService {
 		int result = customerDao.updateStatus(c);
 		return result;
 	}//updateStatus
+
+	
+	/*회원 문의 페이지 내용 보기*/
+	public Customer selectCustomerContent(int inqNo) {
+		Customer customer = customerDao.selectCustomerContent(inqNo);
+		return customer;
+	}
+
 }
