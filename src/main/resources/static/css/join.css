@@ -83,9 +83,6 @@ tr td input{
     border-bottom: 1px solid black;
 }
 
-tr td input[value="(-)포함해서 적어주세요"]{
-    color: lightgray;
-}
 
 .join-accept{
     margin-left: 100px;
@@ -104,7 +101,7 @@ tr td input[value="(-)포함해서 적어주세요"]{
     display: none;
 
 }
-.td-2 input[name=gender]:checked+label{
+.td-2 input[name=memberGender]:checked+label{
     background-color: lightgray;
     color:  white;
 }

@@ -6,84 +6,111 @@
 <link rel="stylesheet" href="/css/joinCheck.css">
 </head>
 <style>
-body{
-    background: 
-        linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)),
-        url("/image/Up Pixar.gif");
-   	background-repeat: no-repeat;
-   	background-size: cover;
-   	margin: 0;
-    }
-
+body {
+	background: linear-gradient(rgba(255, 255, 255, 0.3),
+		rgba(255, 255, 255, 0.3)), url("/image/Up Pixar.gif");
+	background-repeat: no-repeat;
+	background-size: cover;
+	margin: 0;
+}
+.agree-name>div>#must{
+	color:red;
+}
 </style>
 <body>
 	<th:block th:include="/common/header"></th:block>
-	    <div class="agree-all-wrap">
-	    <img class="handright" src="/image/backgroundhandright(2).png" alt="">
-        <img class="handleft" src="/image/backgroundhandleft(2).png" alt="">
-        <div class="agree-wrap">
-            <div class="back-btn">
-                <a href="/member/joinFrm"><img src="/image/charm--arrow-left.png" alt="뒤로가기" height="40px"
-                        width="40px"></a>
-            </div>
-            <div class="agree-title">
-                <h1>약관동의</h1>
-            </div>
-            <div class="agree-content">
-                <div class="agree">
-                    <div class="agree-name">
-                        <div class="agreeAll">
-                            <input type="checkbox" name="checkAll" id="checkAll">
-                            <span>전체약관 동의 (선택사항 포함)</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="agree">
-                    <div class="agree-name">
-                        <div>
-                            <input type="checkbox" name="check1" id="check1">
-                            <span>[필수] 이용약관 동의</span>
-                        </div>
-                        <a href="#"><img src="/image/ic--round-play-arrow.png" alt="약관내용" height="21px"
-                                width="21px"></a>
-                    </div>
-                </div>
-                <div class="agree">
-                    <div class="agree-name">
-                        <div>
-                            <input type="checkbox" name="check2" id="check2">
-                            <span>[필수] 개인정보 수집 및 이용 동의</span>
-                        </div>
-                        <a href="#"><img src="/image/ic--round-play-arrow.png" alt="약관내용" height="21px"
-                                width="21px"></a>
-                    </div>
-                </div>
-                <div class="agree">
-                    <div class="agree-name">
-                        <div>
-                            <input type="checkbox" name="check3" id="check3">
-                            <span>[선택] 쇼핑정보 수신 동의</span>
-                        </div>
-                        <a href="#"><img src="/image/ic--round-play-arrow.png" alt="약관내용" height="21px"
-                                width="21px"></a>
-                    </div>
-                </div>
-                <div class="agree">
-                    <div class="agree-name">
-                        <div>
-                            <input type="checkbox" name="check4" id="check4">
-                            <span>[선택] 광고성정보 수신 동의</span>
-                        </div>
-                        <a href="#"><img src="/image/ic--round-play-arrow.png" alt="약관내용" height="21px"
-                                width="21px"></a>
-                    </div>
-                </div>
-            </div>
-            <div class="agree-join-btn">
-                <input type="submit" value="동의하고 회원가입"></input>
-            </div>
-        </div>
-    </div>
-    <th:block th:include="/common/footer"></th:block>
+	<div class="agree-all-wrap">
+		<img class="handright" src="/image/backgroundhandright(2).png" alt="">
+		<img class="handleft" src="/image/backgroundhandleft(2).png" alt="">
+		<div class="agree-wrap">
+			<div class="back-btn">
+				<a href="/member/login"> <img src="/image/charm--arrow-left.png"
+					alt="뒤로가기" height="40px" width="40px">
+				</a>
+			</div>
+			<div class="agree-title">
+				<h1>약관동의</h1>
+			</div>
+			<form id="agreeForm" action="/member/join" method="post"
+				autocomplete="off">
+				<div class="agree-content">
+					<div class="agree">
+						<div class="agree-name">
+							<div class="agreeAll">
+								<input type="checkbox" name="checkAll" id="checkAll"> <span>전체약관
+									동의 (선택사항 포함)</span>
+							</div>
+						</div>
+					</div>
+					<div class="agree">
+						<div class="agree-name">
+							<div>
+								<input type="checkbox" name="check1" id="check1" required>
+								<span id="must">[필수] 이용약관 동의</span>
+							</div>
+							<a href="#"><img src="/image/ic--round-play-arrow.png"
+								alt="약관내용" height="21px" width="21px"></a>
+						</div>
+					</div>
+					<div class="agree">
+						<div class="agree-name">
+							<div>
+								<input type="checkbox" name="check2" id="check2" required>
+								<span id="must">[필수] 개인정보 수집 및 이용 동의</span>
+							</div>
+							<a href="#"><img src="/image/ic--round-play-arrow.png"
+								alt="약관내용" height="21px" width="21px"></a>
+						</div>
+					</div>
+					<div class="agree">
+						<div class="agree-name">
+							<div>
+								<input type="checkbox" name="check3" id="check3"> <span>[선택]
+									쇼핑정보 수신 동의</span>
+							</div>
+							<a href="#"><img src="/image/ic--round-play-arrow.png"
+								alt="약관내용" height="21px" width="21px"></a>
+						</div>
+					</div>
+					<div class="agree">
+						<div class="agree-name">
+							<div>
+								<input type="checkbox" name="check4" id="check4"> <span>[선택]
+									광고성정보 수신 동의</span>
+							</div>
+							<a href="#"><img src="/image/ic--round-play-arrow.png"
+								alt="약관내용" height="21px" width="21px"></a>
+						</div>
+					</div>
+				</div>
+				<div class="agree-join-btn">
+					<a href="/member/joinFrm" id="agreeJoinButton">동의하고 회원가입</a>
+				</div>
+			</form>
+		</div>
+	</div>
+	<th:block th:include="/common/footer"></th:block>
+
+	<script>
+		document.getElementById('checkAll').addEventListener('change',function() {
+					var isChecked = this.checked;
+					var checkboxes = document.querySelectorAll('.agree-content input[type="checkbox"]:not(#checkAll)');
+						checkboxes.forEach(function(checkbox) {
+							checkbox.checked = isChecked;
+						});
+					});
+		
+		document.getElementById('agreeJoinButton').addEventListener('click',function() {
+					var check1 = document.getElementById('check1').checked;
+					var check2 = document.getElementById('check2').checked;
+
+					if (check1 && check2) {
+						document.getElementById('agreeForm').submit();
+					} else {
+						alert('필수 약관에 동의해 주세요.');
+						event.preventDefault();
+					}
+				});
+	</script>
 </body>
 </html>
