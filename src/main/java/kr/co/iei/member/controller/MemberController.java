@@ -27,6 +27,7 @@ public class MemberController {
 			return "member/login";
 		}else {
 			if(member.getMemberLevel() == 2) {
+				session.setAttribute("member", member);
 				return "common/minihomepage";
 			}else {
 				session.setAttribute("member", member);
