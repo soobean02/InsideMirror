@@ -134,7 +134,8 @@ form {
 }
 
 .product_box {
-	background-color: #eee;
+	border: 1px solid #eee;
+	border-radius: 5px;
 	padding: 10px;
 	margin-left: 35px;
 	width: 150px;
@@ -158,6 +159,7 @@ form {
 
 .product_img>img {
 	width: 100px;
+	height: 100px;
 	padding: 0 25px 15px 25px;
 }
 </style>
@@ -237,7 +239,7 @@ form {
 						<!--타임리프 들어갈 자리 등록한 상품 최신순으로 3개-->
 						<div class="product_box">
 							<div class="product_img">
-								<img th:src="@{/product/${p.productImg}}" alt="상품 사진">
+								<img th:src="@{'/product/editor/'+${p.productImg}}" alt="상품 사진">
 							</div>
 							<div class="product_name" th:text="${p.productName}"></div>
 							<div class="product_name">구매 하기 ></div>
