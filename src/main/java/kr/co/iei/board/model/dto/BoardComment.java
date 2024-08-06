@@ -16,6 +16,10 @@ public class BoardComment {
 	private int boardNo;
 	private String boardCommentContent;
 	private String boardCommentDate;
+	private int boardEdit;
 
 	private int boardCommentRef;
+
+	//답글 개수
+	private int reCommentCount;
 }
