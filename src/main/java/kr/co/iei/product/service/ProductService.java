@@ -13,7 +13,16 @@ public class ProductService {
 	
 	@Transactional
 	public int updateAcorns(int acorns) {
-		int result = productDao.updateAcorns(acorns);
-		return result;
+		/*멤버 테이블에 도토리 넣어주기*/
+		int result1 = productDao.updateAcorns(acorns);
+		
+		/*도토리 구매 이력 테이블에 도토리 정보 넣어주기*/
+		int result2 = productDao.insertAcorns(acorns);
+		
+		if(result1>0 && result2>0) { // 도토리 insert 성공 1 반환
+			return 1;
+		}else { // 도토리 insert 실패 0 반환
+			return 0;
+		}
 	}
 }

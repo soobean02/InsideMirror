@@ -25,9 +25,18 @@ public class ProductDao {
 	private AcronHistoryRowMapper acorAcronHistoryRowMapper; // 도토리 구매이력 (도토리 번호, 회원 번호, 도토리 가격, 도토리 구매일)
 	@Autowired
 	private MemberRowMapper memberRowMapper;
+	
+	/* 멤버 테이블 도토리 구매 - update */
 	public int updateAcorns(int acorns) {
 		String query = "UPDATE MEMBER SET ACORNS = ACORNS + ? WHERE MEMBER_NO=?";
 		Object[] params = {acorns,1}; // 여기 바꿔야함! MEMBER_NO 임시로 넣어둠
+		int result = jdbc.update(query,params);
+		return result;
+	}
+	/*도토리 구매 이력 - insert*/
+	public int insertAcorns(int acorns) {
+		String query = "insert into acorns_purchase_history values(ACORNS_PURCHASE_HISTORY_SEQ.NEXTVAL,?,?,TO_CHAR(SYSDATE,'yyyy-mm-dd'))";
+		Object[] params = {1,(acorns*100)};// 여기 바꿔야함! MEMBER_NO 임시로 넣어둠
 		int result = jdbc.update(query,params);
 		return result;
 	}
