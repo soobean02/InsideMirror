@@ -363,7 +363,7 @@
                                             <span class="getReCommentCount right" th:text="${'(' + bc.reCommentCount + ')'}"></span>
                                             <a href="javascript:void(0)" class="getReComment right">답글</a>
                                             <th:block th:if="${session.member != null && session.member.memberNo == bc.memberNo}">
-                                                <a href="javascript:void(0)" class="remove right" th:onclick="removeComment([[${bc.boardCommentNo}]])">삭제</a>
+                                                <a href="javascript:void(0)" class="remove right" th:onclick="removeComment(this,[[${bc.boardCommentNo}]],[[${board.boardNo}]],[[${bc.boardCommentRef}]])">삭제</a>
                                                 <a href="javascript:void(0)" class="edit right" th:onclick="editComment(this,[[${bc.boardCommentNo}]],[[${board.boardNo}]],[[${bc.boardCommentRef}]])">수정</a>
                                             </th:block>
                                         </div>
@@ -392,7 +392,7 @@
                                                     <span th:text="${bcc.memberNo}"></span>
                                                     <span th:text="${bcc.boardCommentDate}"></span>
                                                     <th:block th:if="${session.member != null && session.member.memberNo == bc.memberNo}">
-                                                        <a href="javascript:void(0)" class="remove right" th:onclick="removeComment([[${bcc.boardCommentNo}]])">삭제</a>
+                                                        <a href="javascript:void(0)" class="remove right" th:onclick="removeComment(this,[[${bcc.boardCommentNo}]],[[${board.boardNo}]],[[${bcc.boardCommentRef}]])">삭제</a>
                                                         <a href="javascript:void(0)" class="edit right" th:onclick="editComment(this,[[${bcc.boardCommentNo}]],[[${board.boardNo}]],[[${bcc.boardCommentRef}]])">수정</a>
                                                     </th:block>
                                                 </p>
@@ -502,7 +502,7 @@
             $(item).parent().next().children(".more").click();
             const height = $(item).parent().next().height();
             //다른 수정 버튼들 다시 되돌리기
-            const allRemoveBtn = $(".remove");
+            // $(".remove").click();
 
             const pContent = $(item).parent().next();
             const editContent = $("<textarea class='edit-comment-content left'>");
@@ -548,13 +548,13 @@
             const editContent = $(item).parent().next();
             
             if(boardCommentRef !== 0){
-                const pContent = $("<p class='reComment-content-list content-hover short-content'></p>");
+                const pContent = $("<p class='reComment-content-list content-hover short-content content-both'></p>");
                 pContent.text(editContent.val());
                 editContent.replaceWith(pContent);
                 moreComment();
             }
             else{
-                const pContent = $("<div class='comment-list-content content-hover short-content left'></div>")
+                const pContent = $("<div class='comment-list-content content-hover short-content content-both left'></div>")
                 pContent.text(editContent.val());
                 editContent.replaceWith(pContent);
                 moreComment();
@@ -568,14 +568,23 @@
             }
         }
 
-        function removeComment(boardCommentNo){
-            console.log(boardCommentNo);
-            console.log("삭제하는 로직");
+        function removeComment(item, boardCommentNo, boardNo, boardCommentRef){
+            $.ajax({
+                url : "/board/removeComment",
+                type : "post",
+                data : {boardCommentNo : boardCommentNo},
+                success : function(data){
+                    console.log("지웠음");
+                },
+                error : function(){
+                    console.log("error");
+                }
+            });
+
         }
 
-        //수정 누르면 다른 수정 없애기 
-        //삭제하기
-        //수정 누르면 처리
+        //수정 누르면 다른 수정 없애기 -> .remove로 없애면 댓글이 다 지워져서 해결 해야함
+        //수정 누르면 처리 -> 수정은 됐고 처리 보여주는 거만
     </script>
 
 </body>

@@ -80,7 +80,7 @@ public class BoardController {
 		}
 		int result = boardService.insertBoard(board, fileList);
 		if(result > 0){
-			//작성 성공로직 
+			//작성 성공로직
 		}
 
 		return "redirect:/board/list?reqPage=1";
@@ -110,5 +110,13 @@ public class BoardController {
 		int result = boardService.updateBoardComment(commentContent, boardCommentNo, boardNo);
 		return result;
 	}//댓글 수정
+
+	@ResponseBody
+	@PostMapping(value = "/removeComment")
+	public int removeComment(String boardCommentNo){
+		System.out.println("controller");
+		int result = boardService.removeBoardComment(boardCommentNo);
+		return result;
+	}
 
 }
