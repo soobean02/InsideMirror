@@ -27,7 +27,7 @@ public class MemberService {
 		int totalCount = memberDao.selectAllMemberTotalCount();
 		
 		int totalPage = 0;
-		if(totalCount % totalPage == 0) {
+		if(totalCount % numPerPage == 0) {
 			totalPage = totalCount/numPerPage;
 		}else {
 			totalPage = totalCount/numPerPage + 1;
