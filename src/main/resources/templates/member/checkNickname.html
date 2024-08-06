@@ -13,10 +13,10 @@
 				<button type="button" id="closeBtn">닫기</button>
 			</div>
 			<script>
-				$("#closeBtn").on("click",fucntion(){
+				$("#closeBtn").on("click",function(){
 					const memberPwInput = $("#nickName",opener.document);
-					const pw = $(".valid-nickname").text();
-					memberPwInput.val(pw);
+					const nickname = $(".valid-nickname").text();
+					memberPwInput.val(nickname);
 					memberPwInput.addClass("valid");
 					self.close();
 				})
