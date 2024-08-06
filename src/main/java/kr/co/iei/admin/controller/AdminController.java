@@ -40,4 +40,13 @@ public class AdminController {
 		return "admin/memberView";
 	}//memberView
 
+	@GetMapping(value = "/adminProductList")
+	public String adminProductList() {
+		return "admin/adminProductList";
+	}//adminProductList
+	
+	@GetMapping(value = "/productView")
+	public String productView() {
+		return "admin/productView";
+	}//productView
 }
