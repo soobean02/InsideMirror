@@ -51,4 +51,16 @@ public class MemberDao {
 		int result = jdbc.update(query, params);
 		return result;
 	}
+
+
+	public Member selectOneMember(String checkNickname) {
+		String query = "select * from member where member_nickname=?";
+		Object[] params = {checkNickname};
+		List member = jdbc.query(query, memberRowMapper, params);
+		if(member.isEmpty()) {
+			return null;			
+		}else {
+			return (Member)member.get(0);
+		}
+	}
 }

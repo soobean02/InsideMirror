@@ -15,21 +15,21 @@ public class GuestBookDao {
     private GuestBookRowMapper guestBookRowMapper;
     
     public int insertComment(GuestBook gb) {
-        String query = "INSERT INTO guestbook (guestbook_comment_no, guest_writer_no, guest_comment_content, guest_comment_date) " +
-                       "VALUES (guestbook_seq.nextval, ?, ?, SYSDATE)";
-        Object[] params = { gb.getGuestWriterNo(), gb.getGuestCommentContent() };
+        String query = "insert into guestbook (guestbook_comment_no, guest_writer_no, guest_comment_content, guest_comment_date) " +
+        				"values (guestbook_seq.nextval, ?, ?, sysdate)";
+        Object[] params = {gb.getGuestWriterNo(), gb.getGuestCommentContent() };
         return jdbc.update(query, params);
     }
 
     public int updateComment(GuestBook gb) {
-        String query = "UPDATE guestbook SET guest_comment_content = ? WHERE guestbook_comment_no = ?";
-        Object[] params = { gb.getGuestCommentContent(), gb.getGuestCommentNo() };
+        String query = "update guestbook set guest_comment_content = ? where guestbook_comment_no = ?";
+        Object[] params = {gb.getGuestCommentContent(), gb.getGuestCommentNo() };
         return jdbc.update(query, params);
     }
 
     public int deleteComment(GuestBook gb) {
-        String query = "DELETE FROM guestbook WHERE guestbook_comment_no = ?";
-        Object[] params = { gb.getGuestCommentNo() };
+        String query = "delete from guestbook where guestbook_comment_no = ?";
+        Object[] params = {gb.getGuestCommentNo() };
         return jdbc.update(query, params);
     }
 } 

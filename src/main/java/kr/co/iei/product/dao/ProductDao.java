@@ -53,16 +53,20 @@ public class ProductDao {
 		}
 		return list;
 	}
+
 	public List selectProductList(int start, int end) {
 		String query = "select * from (select rownum as rnum, n.* from (select * from sell_product order by 1 desc)n) where rnum between ? and ?";
 		Object[] params = {start,end};
 		List list = jdbc.query(query,sellProductRowMapper, params);
 		return list;
 	}
+	
 	public int selectProductTotalCount() {
 		String query = "select count(*) from sell_product";
 		int totalCount = jdbc.queryForObject(query, Integer.class); // 이 쿼리문 실행해서 바로 Inter.class로 바로 꺼내줘
 		return totalCount;
 	}
+	
+	
 
 }

@@ -22,12 +22,6 @@ import java.util.List;
 public class GuestBookController {
     @Autowired
     private GuestBookService guestBookService; 
-    
-    @Value("${file.root}")
-    private String root;
-    
-    @Autowired
-    private FileUtils fileUtils;
 
     @PostMapping(value="/insertComment")
     public String insertComment(@RequestBody GuestBook gb, Model model) {
@@ -79,9 +73,4 @@ public class GuestBookController {
         return "common/msg";
     }
 
-    @GetMapping(value="/comments")
-    @ResponseBody
-    public List<GuestBook> getComments() {
-        return guestBookService.getAllComments();
-    }
 }
