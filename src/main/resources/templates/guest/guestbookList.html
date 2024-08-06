@@ -1,168 +1,28 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<style>
-body {
-    margin: 0;
-    padding: 0;
-    
-}
-
-.bookcover {
-    width: 80%;
-    margin: auto;
-    padding: 20px;
-}
-
-.header {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    font-size: 1.5em;
-}
-
-.profile-container, .content-container, .menu-container {
-    display: flex;
-    flex-direction: column;
-    margin: 10px 0;
-}
-
-.profile-title, .content-title {
-    margin: 10px 0px;
-    font-size: 1.2em;
-}
-
-
-.profile-box, .content-box {
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 8px;
-}
-
-.profile-image-img {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-}
-
-.profile-text, .profile-username, .profile-dropdown {
-    margin: 10px 0;
-}
-
-.dropdown-button {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-}
-
-.dropdown-title {
-    font-size: 1em;
-}
-
-.triangle-down {
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid black;
-    margin-left: 10px;
-}
-
-.guestbook-scrollbox {
-    max-height: 400px;
-    overflow-y: auto;
-}
-
-.guestbook-box {
-    border-bottom: 1px solid #ddd;
-    padding: 10px 0;
-}
-
-.guestbook-title {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.guestbook-contents {
-    padding-left: 10px;
-}
-
-.guestbook-text {
-    margin: 0;
-}
-
-.guestbook-writer {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-}
-
-#guestbook-input {
-    flex: 1;
-    padding: 0px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-right: 10px;
-    height: 60px;
-    margin-top: 10px;
-}
-
-.guestbook-button {
-    padding: 10px 20px;
-    background-color: #3b87ab;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    height: 55px;
-}
-
-.menu-button {
-    display: flex;
-    flex-direction: column;
-}
-
-.menu-button a {
-    text-decoration: none;
-    margin: 5px 0;
-}
-.guest-text{
-    border-bottom: 1px solid #000;
-}
-.material-icons{
-    cursor: pointer;
-    border: none;
-    background-color: transparent;
-}
-.guest-check-box{
-    padding: 0px 10px;
-}
-.btn-primary{
-    background-color: #ccc9c9;
-    cursor: pointer;
-    border: none;
-    border-radius: 4px;
-    float: right;
-    padding: 5px 10px;
-    margin-left: 15px;
-}
-.btn-secondary{
-    cursor: pointer;
-    border: none;
-    border-radius: 4px;
-    float: right;
-    padding: 5px 10px;
-}
-
-</style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>방명록</title>
 <link rel="stylesheet" href="/05.insidemirror/css/font.css">
 <link rel="stylesheet" href="/05.insidemirror/css/layout.css">
 <link rel="stylesheet" href="/05.insidemirror/css/minihomepage.css">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+<link rel="stylesheet" href="/05.insidemirror/css/guestbook.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src="/js/sweetalert.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<style>
+  .guest-check-box input[type="checkbox"] {
+    display: none;
+  }
+  .guest-check-box label {
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  .guest-check-box input[type="checkbox"]:checked + label {
+    font-weight: bold;
+  }
+</style>
 </head>
 <body>
  <th:block th:include="common/header"></th:block>
@@ -182,7 +42,7 @@ body {
                         <div class="profile-text">ㄴr는.. 오늘도.. 눈물을.. 흘린ㄷr..★</div>
                         <div class="profile-username">
                             <span style="color: #0f1b5c">채연</span>
-                           	 (♪♬)
+                            (♪♬)
                         </div>
                         <div class="profile-dropdown">
                             <div class="dropdown-button">
@@ -198,34 +58,35 @@ body {
                     </div>
                 </div>
                 <div class="content-container">
-                    <div class="header content-title"> 
+                    <div class="header content-title">
                         <div class="content-title-name">ㅁㅁㅁ님의 홈피</div>
                     </div>
                     <div class="box content-box">
                         <div class="guestbook-scrollbox" id="guestbook-scrollbox">
                             <div class="guest-text">방명록  ></div>
+                            <!-- 방명록 항목들 -->
                             <div class="guestbook-box">
                                 <div class="guestbook-title">No. 1
-                                    <span> 이름</span>
+                                    <span>이름</span>
                                     <button class="material-icons">home</button>
                                     <div class="guestbook-date">(2024.00.00)
-                                        <button class="btn-primary">수정</button>
-                                        <button class="btn-secondary">삭제</button>
+                                        <button class="btn-secondary" onclick="deleteComment(this)">삭제</button>
+                                        <button class="btn-primary" onclick="editComment(this)">수정</button>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="guestbook-contents">
                                     <div class="guestbook-text">
                                         <p>이 글귀 좋더라.. 읽어봐..<br><br><br>울ㅈ1않ㄱㅣ<br>아프ㅈ1않ㄱㅣ<br>씩씩ㅎrㄱㅣ<br>억ㅈㅣ로ㄹr도 웃ㄱㅣ<br>ㅌ1 ㄴㅐㅈㅣ 말ㄱㅣ<br>.<br>.<br>.<br>오늘도 괜찮은 듯<br>그렇ㄱㅔ ㅈ1ㄴㅐㄱㅣ</p>
-                                    </div> 
+                                    </div>
                                 </div>
                             </div>
                             <div class="guestbook-box">
-                                <div class="guestbook-title">No. 2 
-                                    <span>이름 </span>  
+                                <div class="guestbook-title">No. 2
+                                    <span>이름</span>
                                     <button class="material-icons">home</button>
                                     <div class="guestbook-date">(2024.00.00)
-                                        <button class="btn-primary">수정</button>
-                                        <button class="btn-secondary">삭제</button>
+                                        <button class="btn-secondary" onclick="deleteComment(this)">삭제</button>
+                                        <button class="btn-primary" onclick="editComment(this)">수정</button>
                                     </div>
                                 </div>
                                 <div class="guestbook-contents">
@@ -235,12 +96,12 @@ body {
                                 </div>
                             </div>
                             <div class="guestbook-box">
-                                <div class="guestbook-title">No. 3 
-                                    <span>이름 </span>
+                                <div class="guestbook-title">No. 3
+                                    <span>이름</span>
                                     <button class="material-icons">home</button>
                                     <div class="guestbook-date">(2024.00.00)
-                                        <button class="btn-primary">수정</button>
-                                        <button class="btn-secondary">삭제</button>
+                                        <button class="btn-secondary" onclick="deleteComment(this)">삭제</button>
+                                        <button class="btn-primary" onclick="editComment(this)">수정</button>
                                     </div>
                                 </div>
                                 <div class="guestbook-contents">
@@ -251,11 +112,11 @@ body {
                             </div>
                             <div class="guestbook-box">
                                 <div class="guestbook-title">No. 4
-                                    <span>이름 </span>
+                                    <span>이름</span>
                                     <button class="material-icons">home</button>
                                     <div class="guestbook-date">(2024.00.00)
-                                        <button class="btn-primary">수정</button>
-                                        <button class="btn-secondary">삭제</button>
+                                        <button class="btn-secondary" onclick="deleteComment(this)">삭제</button>
+                                        <button class="btn-primary" onclick="editComment(this)">수정</button>
                                     </div>
                                 </div>
                                 <div class="guestbook-contents">
@@ -264,16 +125,16 @@ body {
                                     </div>
                                 </div>
                             </div>
-                        </div>  
+                        </div>
                     </div>
                     <div class="guest-check-box">
-                        <input type="checkbox" name="anonymous" id="anonymous">
+                        <input type="radio" name="guestbook-identity" id="anonymous" value="anonymous">
                         <label for="anonymous">익명</label>
-                        <input type="checkbox" name="nickname" id="nickname">
+                        <input type="radio" name="guestbook-identity" id="nickname" value="nickname">
                         <label for="nickname">닉네임</label>
                     </div>
                     <div class="guestbook-writer">
-                        <input type="text" id="guestbook-input" placeholder="댓글을 입력하세요">
+                        <textarea id="guestbook-input" placeholder="댓글을 입력하세요"></textarea>
                         <button class="guestbook-button" onclick="addGuestbookEntry()">전송</button>
                     </div>
                 </div>
@@ -286,7 +147,7 @@ body {
                         <a href="#"><button>선물가게</button></a>
                         <a href="#"><button>구매목록</button></a>
                         <a href="#"><button>일촌관리</button></a>
-                        <a href="#"><button>고객센터</button></a>
+                        <a href="/customer/customerList?reqPage=1"><button>고객센터</button></a>
                         <a href="#"><button>즐겨찾기</button></a>
                     </div>
                 </div>
@@ -294,15 +155,33 @@ body {
         </div>
     </div>
     <script>
+        function getCurrentDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            return `(${year}.${month}.${day})`;
+        }
+
         function addGuestbookEntry() {
             const input = document.getElementById('guestbook-input');
             const text = input.value.trim();
             if (text === '') return;
 
+            const selectedIdentity = document.querySelector('input[name="guestbook-identity"]:checked');
+            const identityText = selectedIdentity ? (selectedIdentity.value === 'anonymous' ? '익명' : '닉네임') : '';
+
             const guestbookBox = document.createElement('div');
             guestbookBox.className = 'guestbook-box';
             guestbookBox.innerHTML = `
-                <div class="guestbook-title">New Entry <span>이름 </span><button class="material-icons">home</button><div class="guestbook-date">(2024.00.00 00:00)</div> <button class="btn-primary">수정</button><button class="btn-secondary">삭제</button></div>
+                <div class="guestbook-title">
+                    New Entry
+                    <span>${identityText}</span>
+                    <button class="material-icons">home</button>
+                    <div class="guestbook-date">${getCurrentDate()}</div>
+                    <button class="btn-secondary" onclick="deleteComment(this)">삭제</button>
+                    <button class="btn-primary" onclick="editComment(this)">수정</button>
+                </div>
                 <div class="guestbook-contents">
                     <div class="guestbook-text">
                         <p>${text}</p>
@@ -315,8 +194,29 @@ body {
             input.value = '';
             scrollbox.scrollTop = scrollbox.scrollHeight;
         }
-   	 	</script>
-      </section>
+
+        function deleteComment(button) {
+            const guestbookBox = button.closest('.guestbook-box');
+            guestbookBox.remove();
+        }
+
+        function editComment(button) {
+            const guestbookBox = button.closest('.guestbook-box');
+            const textElement = guestbookBox.querySelector('.guestbook-text p');
+            const newText = prompt('수정할 내용을 입력하세요:', textElement.textContent);
+            if (newText !== null) {
+                textElement.textContent = newText;
+            }
+        }
+
+        document.getElementById('guestbook-input').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                addGuestbookEntry();
+            }
+        });
+    </script>
+    </section>
     </main>
     <th:block th:include="common/footer"></th:block>
 </body>
