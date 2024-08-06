@@ -124,19 +124,21 @@ body{
 					type : "get",
 					data : {memberPw : memberPw},
 					success : function(data){
-						if(data == 0){
 							$(".pw-check-msg").text("사용 가능한 비밀번호 입니다.");
 							$(".pw-check-msg").addClass("valid");
-						}else{
-							$(".pw-check-msg").text("(영문 대소문자/숫자/특수문자 중 2가지 이상 조합이 필요합니다. (4~20자 이내");
-							$(".pw-check-msg").addClass("invalid");							
-						}
 					},
 					error : function(){
 						console.log("에러")
 					}
 				});
+			}else{
+				$(".pw-check-msg").text("(영문 대소문자/숫자/특수문자 중 2가지 이상 조합이 필요합니다. (4~20자 이내");
+				$(".pw-check-msg").addClass("invalid");							
 			}
+		});
+				
+		$("#pwRe").on("change",function(){
+			
 		});
 </script>
 </html>

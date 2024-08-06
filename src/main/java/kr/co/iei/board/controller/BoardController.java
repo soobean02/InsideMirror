@@ -61,7 +61,7 @@ public class BoardController {
 			return "redirect:/board/list?reqPage=1";
 		}
 		model.addAttribute("board", board);
-		
+		System.out.println(member);
 		return "/board/view";
 	}//게시글 상세보기
 
