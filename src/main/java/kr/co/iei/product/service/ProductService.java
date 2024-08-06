@@ -33,4 +33,10 @@ public class ProductService {
 		List product = productDao.selectProductPhoto();
 		return product;
 	}
+
+	//상품 상세보기 후 수정, 삭제
+	public int productView(SellProduct sp) {
+		int result = productDao.productView();
+		return result;
+	}//productView
 }

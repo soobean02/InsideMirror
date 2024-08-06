@@ -60,11 +60,58 @@
 	<div class="box-title">상품 관리</div>
 	<div class="client_wrap">
 		<div class="customerPage_wrap">
-			
-			
-			<div class="customerPage_content">
-				<div th:text="${customer.inqContent}"></div>
+
+			<table>
+				<tr>
+					<th>상품사진</th>
+					<td>
+						<div class="product_content">
+							<div class="product_img">
+								<img src="/img/acorn.png" width="80px">
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>상품명</th>
+					<td>
+						<div class="input_item">
+							<input type="text" name="productName" id="productName"
+								th:value="${sp.productName}">
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>상품 분류</th>
+					<td>
+						<div class="select_op">
+							<select>
+								<option value="1">배경</option>
+								<option value="2">폰트</option>
+								<option value="3">커서</option>
+							</select>
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<th>상품 가격</th>
+					<td>
+						<div class="input_item">
+							<input type="text" name="productPrice" id="productPrice"
+								th:value="${sp.productPrice}">
+						</div>
+					</td>
+				</tr>
+			</table>
+
+			<input type="hidden" name="productNo" th:value="${sp.productNo}">
+
+			<div class="product-add-btn">
+				<button type="submit" class="product-add-btn">수정</button>
+				<button type="button" class="product-add-btn">삭제</button>
 			</div>
+
 			<!--끝!!!!-->
 		</div>
 	</div>

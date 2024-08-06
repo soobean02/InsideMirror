@@ -12,12 +12,18 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.MemberListData;
 import kr.co.iei.member.model.service.MemberService;
+import kr.co.iei.product.dto.SellProduct;
+import kr.co.iei.product.service.ProductService;
 
 @Controller
 @RequestMapping(value = "/admin")
 public class AdminController {
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private ProductService productService;
+	
 	
 	@GetMapping(value = "/adminHome")
 	public String adminHome(Model model) {
@@ -46,7 +52,12 @@ public class AdminController {
 	}//adminProductList
 	
 	@GetMapping(value = "/productView")
-	public String productView() {
-		return "admin/productView";
+	public String productView(SellProduct sp, Model model) {
+		int result = productService.productView(sp);
+		if(result>0) {
+			return "redirect:/admin/adminProductList";
+		}else {
+			return "redirect:/";
+		}//else
 	}//productView
 }

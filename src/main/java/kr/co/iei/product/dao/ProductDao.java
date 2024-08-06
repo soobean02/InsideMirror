@@ -53,5 +53,11 @@ public class ProductDao {
 		}
 		return list;
 	}
+	
+	
+	public int productView() {
+		String query 
+		return 0;
+	}
 
 }
