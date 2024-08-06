@@ -33,8 +33,10 @@ public class CustomerController {
 		int result = customerService.insertCustomerInq(c);
 		return "redirect:/customer/customerList?reqPage=1";
 	}
-	@GetMapping(value="/customerView")
-	public String customerView() {
+	@GetMapping(value="/customerPage")
+	public String customerView(Model model, int inqNo) {
+		Customer customer = customerService.selectCustomerContent(inqNo); // 임시로 1해둠 나중에 세션처리 시 멤버 번호 보내야함
+		model.addAttribute("customer",customer);
 		return "/customer/customerPage";
 	}
 }

@@ -90,4 +90,10 @@ public class CustomerService {
 		int result = customerDao.insertCustomerInq(c);
 		return 0;
 	}
+
+	/*회원 문의 페이지 내용 보기*/
+	public Customer selectCustomerContent(int inqNo) {
+		Customer customer = customerDao.selectCustomerContent(inqNo);
+		return customer;
+	}
 }

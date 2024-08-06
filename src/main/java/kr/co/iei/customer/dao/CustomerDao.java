@@ -40,4 +40,14 @@ public class CustomerDao {
 		return result;
 	}
 
+	public Customer selectCustomerContent(int i) {
+		String query = "select * from customer where inq_no=?";
+		Object[] params = {i};
+		List list = jdbc.query(query, customerRowMapper, params);
+		if(list.isEmpty()) {
+			return null;
+		}
+		return (Customer)list.get(0);
+	}
+
 }

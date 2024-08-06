@@ -14,7 +14,7 @@ public class SellProductRowMapper implements RowMapper<SellProduct>{
 		SellProduct sp = new SellProduct();
 		sp.setProductPath(rs.getString("product_path"));
 		sp.setProductUrl(rs.getString("product_url"));
-		sp.setProductImg(rs.getString("prodcut_img"));
+		sp.setProductImg(rs.getString("product_img"));
 		sp.setProductName(rs.getString("product_name"));
 		sp.setProductPrice(rs.getInt("product_price"));
 		sp.setProductListNo(rs.getInt("product_list_no"));
