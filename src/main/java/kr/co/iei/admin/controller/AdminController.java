@@ -39,7 +39,7 @@ public class AdminController {
 	}//allMember
 	
 	@GetMapping(value = "/memberView")
-	public String memberView(Member member, Model model) { //세션 추가
+	public String memberView(Model model, Member member) {
 		String memberId = member.getMemberId();
 		Member m = memberService.selectOneMember(memberId);
 		model.addAttribute("member", m);
@@ -54,10 +54,6 @@ public class AdminController {
 	@GetMapping(value = "/productView")
 	public String productView(SellProduct sp, Model model) {
 		int result = productService.productView(sp);
-		if(result>0) {
-			return "redirect:/admin/adminProductList";
-		}else {
-			return "redirect:/";
-		}//else
+		return "admin/productView";
 	}//productView
 }
