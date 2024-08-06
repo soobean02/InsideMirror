@@ -80,7 +80,7 @@ public class BoardController {
 		}
 		int result = boardService.insertBoard(board, fileList);
 		if(result > 0){
-			//작성 성공로직
+			//작성 성공로직 
 		}
 
 		return "redirect:/board/list?reqPage=1";
