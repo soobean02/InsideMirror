@@ -75,7 +75,7 @@
     margin-bottom: 20px;
 }
 
-.btn-box input[type="submit"] {
+.btn-box button[type="submit"] {
     width: 350px;
     padding: 15px;
     border: none;
@@ -86,7 +86,7 @@
     cursor: pointer;
 }
 
-.btn-box input[type="submit"]:hover {
+.btn-box button[type="submit"]:hover {
     background: #333;
 }
 

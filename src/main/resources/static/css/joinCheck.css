@@ -64,14 +64,18 @@
     gap: 300px;
 }
 
-.agree-join-btn input[type="submit"]{
-    width: 800px;
-    height: 88px;
+.agree-join-btn #agreeJoinButton{
+	display: flex;
+	justify-content:center;
+	align-items:center;
+    width: 300px;
+    height: 60px;
     font-size: 20px;
     background-color: black;
     color: white;
     font-weight: bold;
-    border-bottom-left-radius: 45px;
-    border-bottom-right-radius: 45px;
+    border-radius: 45px;
+    margin-left: 135px;
+    text-decoration: none;
 }
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.Member;
@@ -72,7 +73,14 @@ public class MemberService {
 	}//selectAllMember
 
 
-	public Member selectOneMember(String memberId) {
-		return memberDao.selectOneMember(memberId);
+	public Member selectOneMember(Member m) {
+		Member member = memberDao.selectOneMember(m);
+		return member;
 	}//selectOneMember
+
+	@Transactional
+	public int insertMember(Member m) {
+		int result = memberDao.insertMember(m);
+		return result;
+	}
 }

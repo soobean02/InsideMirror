@@ -179,7 +179,7 @@ form {
 				<form action="/product/acornCount" method="post" id="formAcorn">
 					<input type="hidden" value="" name="acorns" id="hiddenAcorn">
 				</form>
-				<!--결제에 성공하면 보내질 코드 => $(" [name=ch_acorn]").submit(); 아마 js로 이렇게 보내면 될거같음-->
+				<!---->
 				<form action="#" name="ch_acorn" method="get">
 					<div class="radio_item">
 						<input type="radio" name="acorn" id="acorn5" value="5"> <label
@@ -201,7 +201,6 @@ form {
 						<input type="radio" name="acorn" id="acorn25" value="25">
 						<label for="acorn25">도토리 25개 (2500원)</label>
 					</div>
-					<input type="hidden">
 				</form>
 				<div class="pay">
 					<div class="pay_tx center">총 결제 금액</div>
@@ -232,41 +231,24 @@ form {
 			</div>
 
 			<div class="product_list">
-				<a href="#">
-					<!--타임리프 들어갈 자리 등록한 상품 최신순으로 3개-->
-					<div class="product_box">
-						<div class="product_img">
-							<img src="/img/acorn.png">
+				<th:block th:each="p : ${product}">
+					<!-- 누르면 상품 상세페이지로 넘어감 -->
+					<a th:href="@{/product/proudctPage(productNo=${p.productNo})}">
+						<!--타임리프 들어갈 자리 등록한 상품 최신순으로 3개-->
+						<div class="product_box">
+							<div class="product_img">
+								<img th:src="@{/product/${p.productImg}}" alt="상품 사진">
+							</div>
+							<div class="product_name" th:text="${p.productName}"></div>
+							<div class="product_name">구매 하기 ></div>
 						</div>
-						<div class="product_name">상품이름</div>
-						<div class="product_name">구매 하기 ></div>
-					</div>
-				</a> <a href="#">
-					<!--타임리프 들어갈 자리-->
-					<div class="product_box">
-						<div class="product_img">
-							<img src="/img/acorn.png">
-						</div>
-						<div class="product_name">상품이름</div>
-						<div class="product_name">구매 하기 ></div>
-					</div>
-				</a> <a href="#">
-					<!--타임리프 들어갈 자리-->
-					<div class="product_box">
-						<div class="product_img">
-							<img src="/img/acorn.png">
-						</div>
-						<div class="product_name">상품이름</div>
-						<div class="product_name">구매 하기 ></div>
-					</div>
-				</a>
+					</a>
+				</th:block>
 			</div>
 
 		</div>
 	</div>
 	<!--끝!!!!-->
-	</div>
-	</div>
 	<th:block th:include="common/bottom"></th:block>
 	</div>
 	</div>
@@ -312,8 +294,8 @@ form {
 			// 결제창 연동
 			IMP.request_pay({
 				pg : pg,
-				//pg: "kakaopay.TC0ONETIME",
-				//pg: "html5_inicis.INIpayTest", //테스트 시 html5_inicis.INIpayTest 기재
+				//pg: "kakaopay.TC0ONETIME", // 카카오페이
+				//pg: "html5_inicis.INIpayTest", // 이니시스
 				pay_method : "card",
 				merchant_uid : "order_no_" + dateString, //상점에서 생성한 고유 주문번호
 				name : "주문명:결제테스트",

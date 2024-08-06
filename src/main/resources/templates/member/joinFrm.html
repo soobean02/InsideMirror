@@ -24,7 +24,7 @@ body{
         <div class="join-all-wrap">
             <div class="join-content">
                 <div class="join-info">
-                    <form action="join.html" method="post">
+                    <form action="/member/join" method="post" autocomplete="off">
                         <table>
                             <tr>
                                 <td colspan="2">
@@ -34,68 +34,69 @@ body{
                             <tr>
                                 <td><label for="emailLocal">아이디(이메일)<sup>*</sup></label></td>
                                 <td class="td-2">
-                                    <input type="text" name="id" id="emailLocal" class="short-input" required
+                                    <input type="text" name="memberId" id="emailLocal" class="short-input" required
                                         autocomplete="username">
                                     <span class="mail-center">@</span>
-                                    <input type="text" name="id" id="emailDomain" class="short-input" required
+                                    <input type="text" name="memberId2" id="emailDomain" class="short-input" required
                                         autocomplete="email">
                                     <select class="email-choice">
                                         <option value="">직접입력</option>
-                                        <option value="naver.com">naver.com</option>
-                                        <option value="gmail.com">gmail.com</option>
-                                        <option value="kakao.com">kakao.com</option>
+                                        <option value="naver.com">naver</option>
+                                        <option value="gmail.com">google</option>
+                                        <option value="kakao.com">kakao</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label for="nickName">닉네임(별명)<sup>*</sup></label></td>
                                 <td class="td-2">
-                                    <input type="text" name="nickName" id="nickName" required aria-required="true">
+                                    <input type="text" name="memberNickname" id="nickName" required aria-required="true">
                                     <button type="button" class="nickName-check-btn">중복체크</button>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label for="pw">비밀번호<sup>*</sup></label></td>
                                 <td class="td-2">
-                                    <input type="password" name="pw" id="pw" required aria-required="true">
-                                    <p>(영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 10~16자)</p>
+                                    <input type="password" name="memberPw" id="pw" required aria-required="true" placeholder="(영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 10~16자)">
+                                    <p class="pw-check-msg"></p>
+                                    
                                 </td>
                             </tr>
                             <tr>
                                 <td><label for="pwRe">비밀번호확인<sup>*</sup></label></td>
-                                <td class="td-2"><input type="password" name="pwRe" id="pwRe" required
+                                <td class="td-2"><input type="password" name="memberPwRe" id="pwRe" required
                                         aria-required="true">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label for="name">이름<sup>*</sup></label></td>
-                                <td class="td-2"><input type="text" name="name" id="name" required aria-required="true">
+                                <td class="td-2"><input type="text" name="memberName" id="name" required aria-required="true">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label for="gender">성별<sup>*</sup></label></td>
                                 <td class="td-2">
-                                    <input type="radio" name="gender" id="m" value="m" required aria-required="true">
+                                    <input type="radio" name="memberGender" id="m" value="남" required aria-required="true">
                                     <label for="m">남자</label>
-                                    <input type="radio" name="gender" id="f" value="f" required aria-required="true">
+                                    <input type="radio" name="memberGender" id="f" value="여" required aria-required="true">
                                     <label for="f">여자</label>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label for="phone">전화번호<sup>*</sup></label></td>
-                                <td class="td-2"><input type="text" name="phone" id="phone" value="(-)포함해서 적어주세요"
+                                <td class="td-2"><input type="text" name="memberPhone" id="phone" placeholder="(-)포함해서 적어주세요"
                                         required aria-required="true"></td>
                             </tr>
                             <tr>
                                 <td><label for="address">주소<sup>*</sup></label></td>
                                 <td class="td-2">
-                                    <input type="text" name="address" id="address" required aria-required="true">
+                                    <input type="text" name="memberAddr" id="address" required aria-required="true">
                                     <button type="button" class="address-check-btn">주소 검색</button>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <a href="/member/joinFinal" class="join-accept">회원가입</a>
+                                    <input type="submit" class="join-accept" value="회원가입"></input>
                                 </td>
                             </tr>
                         </table>
@@ -106,4 +107,36 @@ body{
     </div>
     <th:block th:include="/common/footer"></th:block>
 </body>
+<script>
+		const select = document.querySelector(".email-choice");
+		select.addEventListener("change",function(){
+		    const input = document.querySelector("[name=memberId2]");
+		    input.value = select.value;
+		});
+		
+		$("#pw").on("change",function(){
+			$(".pw-check-msg").removeClass("valid").removeClass("invalid");
+			const memberPw = $(this).val();
+			const pwReg = /^[a-zA-Z0-9]{4,20}$/;
+			if(pwReg. test(memberPw)){
+				$.ajax({
+					url : "/member/ajaxCheckId",
+					type : "get",
+					data : {memberPw : memberPw},
+					success : function(data){
+						if(data == 0){
+							$(".pw-check-msg").text("사용 가능한 비밀번호 입니다.");
+							$(".pw-check-msg").addClass("valid");
+						}else{
+							$(".pw-check-msg").text("(영문 대소문자/숫자/특수문자 중 2가지 이상 조합이 필요합니다. (4~20자 이내");
+							$(".pw-check-msg").addClass("invalid");							
+						}
+					},
+					error : function(){
+						console.log("에러")
+					}
+				});
+			}
+		});
+</script>
 </html>
