@@ -22,4 +22,16 @@ public class MemberController {
 	public String joinFrm() {
 		return "/member/joinFrm";
 	}
+	@GetMapping(value="/joinFinal")
+	public String joinFinal() {
+		return "/member/joinFinal";
+	}
+	@GetMapping(value="/findPassword")
+	public String findPassword() {
+		return "/member/findPassword";
+	}
+	@GetMapping(value="/doubleCheckPassword")
+	public String doubleCheckPassword() {
+		return "/member/doubleCheckPassword";
+	}
 }

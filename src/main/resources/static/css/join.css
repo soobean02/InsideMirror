@@ -10,11 +10,30 @@
     padding: 20px;
     box-sizing: border-box;
     background-color: white;
-    border-radius: 15px;
+    border-radius: 45px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
     display: flex;
     max-width: 800px;
     margin: 90px 0;
+}
+
+.handright{
+    position: absolute;
+    top: 50px;
+    left: 1400px;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    z-index: 1;
+}
+.handleft{
+    position: absolute;
+    top: 700px;
+    left: 300px;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    z-index: 1;
 }
 .join-content{
     width: 100%;
