@@ -26,7 +26,7 @@ public class ProductDao {
 	@Autowired
 	private MemberRowMapper memberRowMapper;
 	public int updateAcorns(int acorns) {
-		String query = "UPDATE MEMBER SET ACORNS = ACORNS+? WHERE MEMBER_NO=?";
+		String query = "UPDATE MEMBER SET ACORNS = ACORNS + ? WHERE MEMBER_NO=?";
 		Object[] params = {acorns,1}; // 여기 바꿔야함! MEMBER_NO 임시로 넣어둠
 		int result = jdbc.update(query,params);
 		return result;

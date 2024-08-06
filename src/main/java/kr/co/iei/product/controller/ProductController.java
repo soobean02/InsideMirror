@@ -21,6 +21,6 @@ public class ProductController {
 	@PostMapping(value="/acornCount")
 	public String acornCount(int acorns) { // acorns 도토리 받기 나중엔 세션도 받아야함 member쪽에서 회원가입 끝내면 세션 확인하고 도토리 update 해주기 [acorns = acorns+?]
 		int result = productService.updateAcorns(acorns);
-		return "/product/acorn_product";
+		return "/product/acornProduct";
 	}
 }
