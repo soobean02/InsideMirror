@@ -40,4 +40,12 @@ public class CustomerDao {
 		return result;
 	}
 
+	//customer status 상태 '승인 완료' 업데이트 로직
+	public int updateStatus(Customer c) {
+		String query = "update customer set status='승인 완료' where inq_no=?";
+		Object[] params = {c.getInqNo()};
+		int result = jdbc.update(query, params);
+		return result;
+	}//updateStatus
+
 }
