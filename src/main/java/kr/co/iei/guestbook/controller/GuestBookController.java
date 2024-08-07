@@ -1,5 +1,7 @@
 package kr.co.iei.guestbook.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -13,15 +15,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.iei.guestbook.dto.GuestBook;
 import kr.co.iei.guestbook.service.GuestBookService;
-import kr.co.iei.utils.FileUtils;
 
-import java.util.List;
 
 @Controller
-@RequestMapping("/guestbook")
+@RequestMapping("/guest")
 public class GuestBookController {
     @Autowired
     private GuestBookService guestBookService; 
+    
+    @GetMapping(value="/guestbookList")
+	public String guestbookList(Model model) {
+		return "guest/guestbookList";
+	}
 
     @PostMapping(value="/insertComment")
     public String insertComment(@RequestBody GuestBook gb, Model model) {
@@ -71,6 +76,11 @@ public class GuestBookController {
         }
         model.addAttribute("loc", "/guestbook");
         return "common/msg";
+    }
+    @GetMapping(value="/getComments")
+    @ResponseBody
+    public List<GuestBook> getComments() {
+        return guestBookService.getAllComments();
     }
 
 }
