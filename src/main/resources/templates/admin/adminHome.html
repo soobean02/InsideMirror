@@ -1,86 +1,180 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>관리자 메인 홈피</title>
+<link rel="stylesheet" href="/css/minihomepage.css">
+<link rel="stylesheet" href="/css/layout.css">
+<link rel="stylesheet" href="/css/font.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 </head>
+<style>
+/*-----------------페이징 관련---------------------*/
+a {
+	text-decoration: none;
+	color: #000;
+}
+
+.pagination {
+	list-style-type: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0;
+	margin-top: 50px;
+}
+
+.pagination>li {
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	overflow: hidden;
+}
+
+.pagination.circle-style>li {
+	border-radius: 50%;
+}
+
+.pagination>li>a.page-item {
+	display: block;
+	font-size: 18px;
+}
+
+.pagination>li>a.page-item>span.material-icons {
+	display: block;
+	line-height: 40px;
+}
+
+.pagination .page-item.active-page {
+	background-color: skyblue;
+	color: #fff;
+}
+
+/*--------------------------------------*/
+.atbl {
+	margin-top: 40px;
+	border-top: 1px solid #ddd;
+	width: 100%;
+	border-spacing: 0;
+}
+
+.atbl th, .atbl td {
+	text-align: center;
+	border-bottom: 1px solid #ddd;
+	padding: 10px 20px;
+	
+	
+	font-size: 11px;
+}
+
+.atbl th.left, .tbl td.left {
+	text-align: left;
+}
+
+.atbl th {
+	background-color: skyblue;
+}
+
+.atbl.atbl-hover tbody>tr:hover {
+	cursor: pointer;
+	background-color: rgba(10, 10, 10, 0.5);
+}
+
+/*--------------------------------------------*/
+.client_btn {
+	margin-top: 10px;
+	padding: 20px;
+}
+
+.client_btn>a {
+	background-color: skyblue;
+	border: none;
+	font-weight: bold;
+	color: #fff;
+	width: 100px;
+	height: 30px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+</style>
 <body>
 
-<th:block th:include="common/top"></th:block>
+	<th:block th:include="common/top"></th:block>
+
+	<div class="box-title">회원 관리 ></div>
 	
-						<div class="box-title">회원 관리 ></div>
-						<div class="news-flex-box">
 
-							<table class="tbl tbl-hover">
-								<tr>
-									<th style="width: 5%">번호</th>
-									<th style="width: 10%">이름</th>
-									<th style="width: 10%">닉네임</th>
-									<th style="width: 15%">아이디/이메일</th>
-									<th style="width: 5%">성별</th>
-									<th style="width: 15%">전화번호</th>
-									<th style="width: 20%">주소</th>
-									<th style="width: 10%">등급</th>
-									<th style="width: 10%">회원가입일</th>
-								</tr>
+		<table class="atbl atbl-hover">
+			<tr>
+				<th>번호</th>
+				<th>이름</th>
+				<th>닉네임</th>
+				<th>아이디/이메일</th>
+				<th>성별</th>
+				<th>전화번호</th>
+				<th>주소</th>
+				<th>등급</th>
+				<th>회원가입일</th>
+			</tr>
 
-								<tr>
-									<td th:text="${m.memberNo}"></td>
-									<td th:text="${m.memberName}"></td>
-									<td th:text="${m.memberNickname}"></td>
-									<td th:text="${m.memberId}"></td>
-									<td th:text="${m.memberGender}"></td>
-									<td th:text="${m.memberPhone}"></td>
-									<td th:text="${m.memberAddr}"></td>
-									<td th:text="${m.memberLevel}"></td>
-									<td th:text="${m.enrollDate}"></td>
-								</tr>
-							</table>
-						</div>
+			<tr th:each="m : ${member}" onclick="memberView([[${m.memberNo}]])">
+				<td th:text="${m.memberNo}"></td>
+				<td><a th:href="@{/admin/memberView(memberNo=${m.memberNo})}"
+					th:text="${m.memberName}"> </a></td>
+				<td th:text="${m.memberNickname}"></td>
+				<td th:text="${m.memberId}"></td>
+				<td th:text="${m.memberGender}"></td>
+				<td th:text="${m.memberPhone}"></td>
+				<td th:text="${m.memberAddr}"></td>
+				<td th:text="${m.memberLevel}"></td>
+				<td th:text="${m.enrollDate}"></td>
+			</tr>
+		</table>
+	
+		<div class="box-title">고객 센터 ></div>
+			<table class="atbl atbl-hover">
+				<tr>
+					<th style="width: 10%">글번호</th>
+					<th style="width: 30%">제목</th>
+					<th style="width: 12%">작성자</th>
+					<th style="width: 26%">작성일</th>
+					<th style="width: 12%">분류</th>
+					<th style="width: 10%">상태</th>
+				</tr>
+				<tr th:each="customer : ${customerList}">
+					<td th:text="${customer.inqNo}"></td>
+					<td><a
+						th:href="@{/report/reportView(inqNo=${customer.inqNo})}"
+						th:text="${customer.inqTitle}"></a></td>
+					<td th:text="${customer.memberNo}"></td>
+					<td th:text="${customer.inqDate}">0000-00-00</td>
+					<th:block th:switch="${customer.customerList}">
+						<td th:case="1">환불</td>
+						<td th:case="2">기타</td>
+					</th:block>
+					<td id="status" th:text="${customer.status}"></td>
+				</tr>
+			</table>
 
-						<div class="picture-room">
-							<div class="box-title">고객 센터 ></div>
-							<div class="news-flex-box">
 
-								<table class="tbl tbl-hover">
-									<tr>
-										<th style="width: 5%">번호</th>
-										<th style="width: 30%">제목</th>
-										<th style="width: 25%">닉네임</th>
-										<th style="width: 25%">신고일자</th>
-										<th style="width: 15%">건의/환불</th>
-									</tr>
-									
-									<tr>
-										<td th:text="${r.reportNo}"></td>
-										<td th:text="${r.reportContent}"></td>
-										<td th:text="${r.memberNo}"></td>
-										<td th:text="${r.reportDate"></td>
-										<td th:text="${r.reportNo}"></td>
-									</tr>
-									
-								</table>
-							</div>
-						</div>
-
-						<div class="picture-room">
-							<div class="box-title">상품 관리 ></div>
-							<div class="product-img">
-								<div class="img-box">
-									<img src="image/선물가게_배경1.png"> <a href="#">관리하기 ></a>
-								</div>
-								<div class="img-box">
-									<img src="image/선물가게_배경2.png"> <a href="#">관리하기 ></a>
-								</div>
-								<div class="img-box">
-									<img src="image/선물가게_배경3.png"> <a href="#">관리하기 ></a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+	<div class="picture-room">
+		<div class="box-title">상품 관리 ></div>
+		<div class="product-img">
+			<div class="img-box">
+				<img src="image/선물가게_배경1.png"> <a href="#">관리하기 ></a>
+			</div>
+			<div class="img-box">
+				<img src="image/선물가게_배경2.png"> <a href="#">관리하기 ></a>
+			</div>
+			<div class="img-box">
+				<img src="image/선물가게_배경3.png"> <a href="#">관리하기 ></a>
+			</div>
+		</div>
+	</div>
 	
 	<th:block th:include="common/adminBottom"></th:block>
 </body>
