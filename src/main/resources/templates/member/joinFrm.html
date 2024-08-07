@@ -14,6 +14,7 @@ body {
 	margin: 0;
 }
 </style>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <body>
 	<th:block th:include="/common/header"></th:block>
 	<div class="wrapper">
@@ -23,7 +24,7 @@ body {
 			<div class="join-content">
 				<div class="join-info">
 					<form action="/member/checkNickname" name="checkNicknameFrm" method="post">
-						<input type="hidden" name="checkNickname">
+						<input type="hidden" name="memberNickname">
 					</form>
 					<form action="/member/join" method="post" autocomplete="off">
 						<table>
@@ -50,7 +51,6 @@ body {
 								<td><label for="nickName">닉네임(별명)<sup>*</sup></label></td>
 								<td class="td-2"><input type="text" name="memberNickname"
 									id="nickName" required aria-required="true">
-									<button type="button" class="nickName-check-btn">중복체크</button>
 									<p class="nickName-check-msg"></p>
 								</td>
 							</tr>
@@ -58,7 +58,8 @@ body {
 								<td><label for="pw">비밀번호<sup>*</sup></label></td>
 								<td class="td-2"><input type="password" name="memberPw"
 									id="pw" required aria-required="true"
-									placeholder="(영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 10~16자)">
+									placeholder="(영문 대소문자/숫자/특수문자(!,@,#,$,%) 중 2가지 이상 조합, 8~12자)">
+									<p class="pw-check-msg"></p>
 									</td>
 							</tr>
 							<tr>
@@ -89,8 +90,14 @@ body {
 							<tr>
 								<td><label for="address">주소<sup>*</sup></label></td>
 								<td class="td-2"><input type="text" name="memberAddr"
-									id="address" required aria-required="true">
-									<button type="button" class="address-check-btn">주소 검색</button>
+									id="address" readonly>
+									<button type="button" class="address-check-btn" id="searchBtn">주소 검색</button>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<input type="text" name="memberAddr" id="addrDetail" placeholder="상세주소">							
 								</td>
 							</tr>
 							<tr>
@@ -115,7 +122,7 @@ body {
 	$("#nickName").on("change",function() {
 				$(".nickName-check-msg").removeClass("valid").removeClass("invalid");
 				const memberNickname = $(this).val();
-				const nicknameReg = /^[a-zA-Z0-9]{4,20}$/;
+				const nicknameReg = /^[가-힣a-zA-Z0-9]{4,20}$/;
 				if (nicknameReg.test(memberNickname)) {
 					$.ajax({
 						url : "/member/ajaxCheckNickname",
@@ -136,9 +143,30 @@ body {
 					});
 				} else {
 					$(".nickName-check-msg").text(
-							"(영문 대소문자/숫자/특수문자 중 2가지 이상 조합이 필요합니다. (4~20자 이내");
+							"(영문 대소문자/숫자/한글 중 2가지 이상 조합이 필요합니다. (4~20자 이내");
 					$(".nickName-check-msg").addClass("invalid");
 				}
+			});
+							
+		$("#pw").on("keyup",function(){
+			    const pwValue = $(this).val();
+			    const regArr = [
+			        /^.{8,12}$/,
+			        /[A-Z]/,
+			        /[a-z]/,
+			        /[0-9]/,
+			        /[!@#$%]/
+			    ];
+			    for(let i=0;i<regArr.length;i++){
+			        const check = regArr[i].test(pwValue);
+			        if(check){
+			        	 $(".pw-check-msg").eq(i).text("사용가능한 비밀번호 입니다.");
+			            $(".pw-check-msg").eq(i).addClass("valid");
+			        }else{
+			        	$(".pw-check-msg").eq(i).text("영문 대소문자/숫자/특수문자(!@#$%) 조합이 필요합니다 (8~12자이내)");
+			            $(".pw-check-msg").eq(i).addClass("invalid");
+			        }
+			    }
 			});
 
 	$("#pwRe").on("change", function() {
@@ -152,15 +180,6 @@ body {
 			$(".pwRe-check-msg").text("비밀번호가 일치하지않습니다.");
 			$(".pwRe-check-msg").addClass("invalid");
 		}
-	});
-	
-	$(".nickName-check-btn").on("click",function(){
-		window.open("","checkNickname","width=600, height=300");
-		$("[name=checkNicknameFrm]").attr("target","checkNickname");
-		const inputId = $("#memberNickname").val();
-		$("#memberNickname").removeClass("valid");
-		$("[name=checkNickname]").val(inputId);
-		$("[name=checkNicknameFrm]").submit();
 	});
 </script>
 </html>

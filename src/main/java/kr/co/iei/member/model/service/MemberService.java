@@ -89,4 +89,18 @@ public class MemberService {
 		Member member = memberDao.selectOneMember(checkNickname);
 		return member;
 	}
+
+	@Transactional
+	public int resetPassword(Member m) {
+		int result = memberDao.resetPassword(m);
+		return result;
+	}
+
+
+	public Member checkPassword(String memberPw) {
+		Member member = memberDao.checkPassword(memberPw);
+		return member;
+	}
+
+
 }
