@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.customer.dto.CustomerListData;
+import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.product.dao.ProductDao;
 import kr.co.iei.product.dto.ProductListData;
 import kr.co.iei.product.dto.SellProduct;
@@ -17,12 +18,12 @@ public class ProductService {
 	private ProductDao productDao;
 	
 	@Transactional
-	public int updateAcorns(int acorns) {
+	public int updateAcorns(Member m) {
 		/*멤버 테이블에 도토리 넣어주기*/
-		int result1 = productDao.updateAcorns(acorns);
+		int result1 = productDao.updateAcorns(m);
 		
 		/*도토리 구매 이력 테이블에 도토리 정보 넣어주기*/
-		int result2 = productDao.insertAcorns(acorns);
+		int result2 = productDao.insertAcorns(m);
 		
 		if(result1>0 && result2>0) { // 도토리 insert 성공 1 반환
 			return 1;
