@@ -52,4 +52,27 @@ public class ProductController {
 		model.addAttribute("pageNavi", pld.getNaviPage());
 		return "/product/productList";
 	}
+	/*판매 상세 페이지*/
+	@GetMapping(value="/proudctPage")
+	public String buyProductPage(Model model, int productNo,  @SessionAttribute Member member) {
+		// 상품 정보
+		SellProduct p = productService.selectProductInfo(productNo);
+		model.addAttribute("p",p);
+		
+		model.addAttribute("member", member);
+
+		// 최신 상품 3개
+		List product = productService.selectProductPhoto();
+		model.addAttribute("product",product);
+		
+		System.out.println(p);
+		return "/product/productPage";
+	}
+	
+	/*상품 구매하기*/
+	@GetMapping(value="/userBuyProduct")
+	public String userBuyProduct(@SessionAttribute Member member,SellProduct sp) { // 멤버 정보와 판매 상품 정보 받음
+		// 로직 : 멤버 update를 사용해서 상품 가격 만큼 도토리 빼기 -> 성공하면 구매 상품에 추가 insert, 실패 시 알림창
+		return "/product/productList";
+	}
 }

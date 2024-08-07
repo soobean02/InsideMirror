@@ -113,4 +113,10 @@ public class ProductService {
 	public int productView(SellProduct sp) {
 		return 0;
 	}//productView
+
+	// 상품 상세 페이지 정보 출력
+	public SellProduct selectProductInfo(int productNo) {
+		SellProduct p = productDao.selectProductInfo(productNo);
+		return p;
+	}
 }

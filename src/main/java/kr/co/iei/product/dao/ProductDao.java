@@ -12,6 +12,7 @@ import kr.co.iei.product.dto.AcronHistoryRowMapper;
 
 import kr.co.iei.product.dto.BuyProductRowMapper;
 import kr.co.iei.product.dto.ProductListRowMapper;
+import kr.co.iei.product.dto.SellProduct;
 import kr.co.iei.product.dto.SellProductRowMapper;
 
 @Repository
@@ -64,8 +65,19 @@ public class ProductDao {
 	
 	public int selectProductTotalCount() {
 		String query = "select count(*) from sell_product";
-		int totalCount = jdbc.queryForObject(query, Integer.class); // 이 쿼리문 실행해서 바로 Inter.class로 바로 꺼내줘
+		int totalCount = jdbc.queryForObject(query, Integer.class);
 		return totalCount;
+	}
+
+	public SellProduct selectProductInfo(int productNo) {
+		String query = "select * from sell_product where product_no = ?";
+		Object[] params = {productNo};
+		List list = jdbc.query(query, sellProductRowMapper, params);
+		if(list.isEmpty()) {
+			return null;
+		}else {
+			return (SellProduct)list.get(0);
+		}
 	}
 	
 	
