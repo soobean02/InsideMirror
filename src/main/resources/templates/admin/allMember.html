@@ -4,24 +4,119 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>회원 관리</title>
+<link rel="stylesheet" href="/css/minihomepage.css">
+<link rel="stylesheet" href="/css/layout.css">
+<link rel="stylesheet" href="/css/font.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 </head>
+<style>
+/*-----------------페이징 관련---------------------*/
+a {
+	text-decoration: none;
+	color: #000;
+}
+
+.pagination {
+	list-style-type: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0;
+	margin-top: 50px;
+}
+
+.pagination>li {
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	overflow: hidden;
+}
+
+.pagination.circle-style>li {
+	border-radius: 50%;
+}
+
+.pagination>li>a.page-item {
+	display: block;
+	font-size: 18px;
+}
+
+.pagination>li>a.page-item>span.material-icons {
+	display: block;
+	line-height: 40px;
+}
+
+.pagination .page-item.active-page {
+	background-color: skyblue;
+	color: #fff;
+}
+
+/*--------------------------------------*/
+.atbl {
+	margin-top: 40px;
+	border-top: 1px solid #ddd;
+	width: 100%;
+	border-spacing: 0;
+}
+
+.atbl th, .atbl td {
+	text-align: center;
+	border-bottom: 1px solid #ddd;
+	padding: 10px 20px;
+	
+	
+    font-size: 11px;
+}
+
+.atbl th.left, .tbl td.left {
+	text-align: left;
+}
+
+.atbl th {
+	background-color: skyblue;
+}
+
+.atbl.atbl-hover tbody>tr:hover {
+	cursor: pointer;
+	background-color: rgba(10, 10, 10, 0.5);
+}
+
+/*--------------------------------------------*/
+.client_btn {
+	margin-top: 10px;
+	padding: 20px;
+}
+
+.client_btn>a {
+	background-color: skyblue;
+	border: none;
+	font-weight: bold;
+	color: #fff;
+	width: 100px;
+	height: 30px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+</style>
 <body>
 	<th:block th:include="common/top"></th:block>
 
 	<div class="box-title">회원 관리 ></div>
-	<div class="news-flex-box">
 
-		<table>
+		<table class="atbl atbl-hover">
 			<tr>
-				<th style="width: 5%">번호</th>
-				<th style="width: 10%">이름</th>
-				<th style="width: 10%">닉네임</th>
-				<th style="width: 15%">아이디/이메일</th>
-				<th style="width: 5%">성별</th>
-				<th style="width: 15%">전화번호</th>
-				<th style="width: 20%">주소</th>
-				<th style="width: 10%">등급</th>
-				<th style="width: 10%">회원가입일</th>
+				<th>번호</th>
+				<th>이름</th>
+				<th>닉네임</th>
+				<th>아이디/이메일</th>
+				<th>성별</th>
+				<th>전화번호</th>
+				<th>주소</th>
+				<th>등급</th>
+				<th>회원가입일</th>
 			</tr>
 
 			<tr th:each="m : ${member}" onclick="memberView([[${m.memberNo}]])">
@@ -42,11 +137,9 @@
 			</tr>
 		</table>
 
-	</div>
-
 	<div class="pageNavi" th:utext="${pageNavi}"></div>
-	</div>
-	</div>
+	
+
 	<th:block th:include="common/adminBottom"></th:block>
 </body>
 
