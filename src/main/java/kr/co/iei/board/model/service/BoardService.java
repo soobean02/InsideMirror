@@ -120,11 +120,16 @@ public class BoardService {
 	public int updateBoardComment(String commentContent, String boardCommentNo, String boardNo) {
 		int result = boardDao.updateBoardComment(commentContent, boardCommentNo, boardNo);
 		return result;
-	}
+	}//댓글 대댓 수정
 
 	@Transactional
 	public int removeBoardComment(String boardCommentNo) {
 		int result = boardDao.removeBoardComment(boardCommentNo);
 		return result;
-	}
+	}//댓글 대댓 삭제
+
+	public BoardComment selectOneComment(BoardComment comment) {
+		BoardComment oneComment = boardDao.selectOneComment(comment);
+		return oneComment;
+	}//댓글 하나 조회
 }

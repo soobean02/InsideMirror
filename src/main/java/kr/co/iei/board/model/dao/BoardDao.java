@@ -118,10 +118,20 @@ public class BoardDao {
 	public int removeBoardComment(String boardCommentNo) {
 		String query = "delete from board_comment where board_comment_no = ?";
 		Object[] params = {boardCommentNo};
-		System.out.println("dao");
 		int result = jdbc.update(query, params);
 		return result;
 	}
+
+	public BoardComment selectOneComment(BoardComment comment) {
+		String query = "select * from board_comment where board_no = ? and member_no = ? order by 1 desc";
+		Object[] params = {comment.getBoardNo(), comment.getMemberNo()};
+
+		List list = jdbc.query(query, boardCommentRowMapper, params);
+		if(!list.isEmpty()){
+			return (BoardComment)list.get(0);
+		}
+		return null;
+	}//댓글 하나 조회
 
 
 }
