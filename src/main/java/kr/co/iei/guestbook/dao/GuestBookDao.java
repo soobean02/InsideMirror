@@ -1,8 +1,13 @@
 package kr.co.iei.guestbook.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import kr.co.iei.guestbook.dto.GuestBook;
 import kr.co.iei.guestbook.dto.GuestBookRowMapper;
 
@@ -31,5 +36,10 @@ public class GuestBookDao {
         String query = "delete from guestbook where guestbook_comment_no = ?";
         Object[] params = {gb.getGuestCommentNo() };
         return jdbc.update(query, params);
+    }
+
+    public List<GuestBook> getAllComments() {
+        String query = "select * from guestbook order by guest_comment_date desc";
+        return jdbc.query(query, guestBookRowMapper);
     }
 } 

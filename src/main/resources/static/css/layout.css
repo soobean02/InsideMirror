@@ -44,6 +44,7 @@ body {
     bottom: 10px;
     display: flex;
     padding: 15px;
+    margin-bottom : 20px
   }
   
   .profile-container {
