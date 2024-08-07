@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.MemberRowMapper;
 import kr.co.iei.product.dto.AcronHistoryRowMapper;
-
+import kr.co.iei.product.dto.BuyProduct;
 import kr.co.iei.product.dto.BuyProductRowMapper;
 import kr.co.iei.product.dto.ProductListRowMapper;
 import kr.co.iei.product.dto.SellProduct;
@@ -79,6 +79,33 @@ public class ProductDao {
 			return (SellProduct)list.get(0);
 		}
 	}
+	// 상품 구매 시 회원 지갑에서 도토리 빼가기
+	public int updateAcornMinus(Member m, SellProduct sp) {
+		String query = "UPDATE MEMBER SET ACORNS = ACORNS - ? WHERE MEMBER_NO=?";
+		Object[] params = {sp.getProductPrice(),m.getMemberNo()};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+	// 구매한 상품 정보 출력
+	public BuyProduct selectOneProduct(Member member, int productNo) {
+		String query = "SELECT * FROM buy_product WHERE MEMBER_NO=? and product_no = ?";
+		Object[] params = {member.getMemberNo(), productNo};
+		List list = jdbc.query(query, buyProductRowMapper, params);
+		if(list.isEmpty()) { // 사용자가 구매하지 않음
+			return null;
+		}else {
+			return (BuyProduct)list.get(0); // 사용자가 구매한 상품
+		}
+	}
+	
+	// 구매한 상품 테이블에 insert 상품 하기 // 환불 날짜... 환불 상태는 사용으로 하면 되나 not null로 되어있음 ... 홀리 몰리 과카몰리
+	public int insertProductAdd(Member m, SellProduct sp) {
+		String query = "INSERT INTO buy_product VALUES(buy_product_seq.nextval, ?, ?, TO_CHAR(SYSDATE,'yyyy-mm-dd'), '사용',null)";
+		Object[] params = {sp.getProductNo(),m.getMemberNo()};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+	
 	
 	
 
