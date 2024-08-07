@@ -18,6 +18,13 @@ a {
 	text-decoration: none;
 	color: #000;
 }
+.box-title>div:first-child {
+	float: left;
+}
+.box-title>div:last-child {
+	color: #000;
+	float: right;
+}
 
 .btn {
 	border-radius: 5px;
@@ -168,7 +175,11 @@ form {
 	<th:block th:include="common/top"></th:block>
 	<!--시작!!!!-->
 
-	<div class="box-title">도토리 충전 ></div>
+	<div class="box-title">
+		<div>도토리 충전</div>
+		<div class="info">내 도토리 <th:block th:text="${session.member.acorns}"></th:block>개</div>
+	</div>
+	
 	<div class="start_page">
 
 
@@ -179,6 +190,8 @@ form {
 			<div class="radio_box">
 				<!--라디오 박스-->
 				<form action="/product/acornCount" method="post" id="formAcorn">
+					<!-- 멤버 번호와 도토리 수 히든으로 감춰놓고 보내기 -->
+					<input type="hidden" name="memberNo" th:value="${session.member.memberNo}">
 					<input type="hidden" value="" name="acorns" id="hiddenAcorn">
 				</form>
 				<!---->
@@ -217,9 +230,10 @@ form {
 							<div class="pay_title">결제 대행</div>
 							<!-- <form action="#"> -->
 							<input type="radio" value="kakao" id="kakao" name="pay">
-							<label for="kakao">카카오페이</label> <input type="radio" value="ini"
-								id="eni" name="pay"> <label for="eni">이니시스</label> <input
-								type="button" value="결제하기 > " class="pay_ok">
+							<label for="kakao">카카오페이</label>
+							<input type="radio" value="ini" id="eni" name="pay">
+							<label for="eni">이니시스</label>
+							<input type="button" value="결제하기 > " class="pay_ok">
 							<!--결제하기를 누르면 결제창 뜸 결제 완료되면 -->
 							<!-- </form> -->
 						</div>

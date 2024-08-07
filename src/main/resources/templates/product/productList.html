@@ -100,7 +100,7 @@ a {
 	<!--시작-->
 	<div class="box-title">
 		<div>상품 목록</div>
-		<div class="info">내 도토리 <th:block>00</th:block>개</div>
+		<div class="info">내 도토리 <th:block th:text="${session.member.acorns}"></th:block>개</div>
 	</div>
 	<div class="wrap">
 		<div class="select_op">

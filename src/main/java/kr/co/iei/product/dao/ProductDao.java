@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.MemberRowMapper;
 import kr.co.iei.product.dto.AcronHistoryRowMapper;
 
@@ -30,16 +31,17 @@ public class ProductDao {
 	private MemberRowMapper memberRowMapper;
 	
 	/* 멤버 테이블 도토리 구매 - update */
-	public int updateAcorns(int acorns) {
+	public int updateAcorns(Member m) {
 		String query = "UPDATE MEMBER SET ACORNS = ACORNS + ? WHERE MEMBER_NO=?";
-		Object[] params = {acorns,1}; // 여기 바꿔야함! MEMBER_NO 임시로 넣어둠
+		Object[] params = {m.getAcorns(),m.getMemberNo()}; // 여기 바꿔야함! MEMBER_NO 임시로 넣어둠
 		int result = jdbc.update(query,params);
 		return result;
 	}
 	/*도토리 구매 이력 - insert*/
-	public int insertAcorns(int acorns) {
+	public int insertAcorns(Member m) {
 		String query = "insert into acorns_purchase_history values(ACORNS_PURCHASE_HISTORY_SEQ.NEXTVAL,?,?,TO_CHAR(SYSDATE,'yyyy-mm-dd'))";
-		Object[] params = {1,(acorns*100)};// 여기 바꿔야함! MEMBER_NO 임시로 넣어둠
+		System.out.println(m);
+		Object[] params = {m.getMemberNo(),(m.getAcorns()*100)};// 여기 바꿔야함! MEMBER_NO 임시로 넣어둠
 		int result = jdbc.update(query,params);
 		return result;
 	}
@@ -63,8 +65,19 @@ public class ProductDao {
 	
 	public int selectProductTotalCount() {
 		String query = "select count(*) from sell_product";
-		int totalCount = jdbc.queryForObject(query, Integer.class); // 이 쿼리문 실행해서 바로 Inter.class로 바로 꺼내줘
+		int totalCount = jdbc.queryForObject(query, Integer.class);
 		return totalCount;
+	}
+
+	public SellProduct selectProductInfo(int productNo) {
+		String query = "select * from sell_product where product_no = ?";
+		Object[] params = {productNo};
+		List list = jdbc.query(query, sellProductRowMapper, params);
+		if(list.isEmpty()) {
+			return null;
+		}else {
+			return (SellProduct)list.get(0);
+		}
 	}
 	
 	
