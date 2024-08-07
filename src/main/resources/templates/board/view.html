@@ -358,7 +358,7 @@
                     <!-- 프사 -->
 
                     <div class="comment-writer left">
-                        <div th:text="${bc.memberNo}" class="left"></div>
+                        <div th:text="${bc.memberNo}" class="writer left"></div>
                         <div th:if="${bc.boardEdit == 1}" class="edited left">(수정)</div>
                         <div th:text="${bc.boardCommentDate}" class="date left"></div>
                         <span class="getReCommentCount right" th:text="${'(' + bc.reCommentCount + ')'}"></span>
@@ -614,10 +614,10 @@
             const memberNo = $(item).prev().val();
             const boardNo = $(item).prev().prev().val();
             const content = $(item).prev().prev().prev().val();
-
+            
             //만약 대댓을 다는거면 여기에도 값이 있음 if~
-            const boardCommentRef = $(item).prev().prev().prev().prev().val();
-            if(boardCommentRef !== undefined){
+            let boardCommentRef = $(item).prev().prev().prev().prev().val();
+            if(boardCommentRef === undefined){
                 //만약에 답글이면은 ~
                 boardCommentRef = 0;
             }
@@ -631,6 +631,7 @@
                 success : function(data){
                         if(data != null){
                             alert("댓글 추가 성공");
+                            $(item).prev().prev().prev().val("");
                             // console.log(data);
                             // const session = data.session;
                             // const board = data.board;
@@ -640,35 +641,68 @@
                             // console.log(comment);
 
 
-                            const addedComment = `
-                                <div class="comment-list-wrap">
-                                    <div class="comment-writer left">
-                                    <div class="left">${comment.memberNo}</div>
-                                    <div class="edited left">${comment.boardEdit == 1 ? '(수정)' : ''}</div>
-                                    <div class="date left">${comment.boardCommentDate}</div>
-                                    <span class="getReCommentCount right">(${comment.reCommentCount})</span>
-                                    <a href="javascript:void(0)" class="getReComment right">답글</a>
-                                    <a href="javascript:void(0)" class="remove right" onclick="removeComment(this, ${comment.boardCommentNo}, ${boardNo})">삭제</a>
-                                    <a href="javascript:void(0)" class="edit right" onclick="editComment(this, ${comment.boardCommentNo}, ${boardNo})">수정</a>
-                                    </div>
-                                    <div class="content-both comment-list-content content-hover left short-content">${comment.boardCommentContent}</div>
-                                </div>`;
-
-                            const reComment = `
-                            <div class="reComment-input-wrap">
-                                <div class="reCommentBox">
-                                    <form action="/board/comment" method="post">
-                                        <div class="reComment-content">
-                                            <input type="hidden" name="memberNo" value="${memberNo}">
-                                            <input type="hidden" name="boardNo" value="${boardNo}">
-                                            <input type="hidden" name="boardCommentRef" value="${comment.boardCommentNo}">
-                                            <textarea name="boardCommentContent" class="left"></textarea>
-                                            <button type="submit" class="reComment-submit left">답글</button>
+                            if(boardCommentRef === 0){
+                                const addedComment = `
+                                    <div class="comment-list-wrap">
+                                        <div class="comment-writer left">
+                                        <div class="writer left">${comment.memberNo}</div>
+                                        <div class="edited left">${comment.boardEdit == 1 ? '(수정)' : ''}</div>
+                                        <div class="date left">${comment.boardCommentDate}</div>
+                                        <span class="getReCommentCount right">(${comment.reCommentCount})</span>
+                                        <a href="javascript:void(0)" class="getReComment right">답글</a>
+                                        <a href="javascript:void(0)" class="remove right" onclick="removeComment(this, ${comment.boardCommentNo}, ${boardNo})">삭제</a>
+                                        <a href="javascript:void(0)" class="edit right" onclick="editComment(this, ${comment.boardCommentNo}, ${boardNo})">수정</a>
                                         </div>
-                                    </form>
-                                </div>
+                                        <div class="content-both comment-list-content content-hover left short-content">${comment.boardCommentContent}</div>
+                                    </div>`;
+    
+                                const reComment = `
+                                    <div class="reComment-input-wrap">
+                                        <div class="reCommentBox">
+                                            <form action="/board/comment" method="post">
+                                                <div class="reComment-content">
+                                                    <input type="hidden" name="memberNo" value="${memberNo}">
+                                                    <input type="hidden" name="boardNo" value="${boardNo}">
+                                                    <input type="hidden" name="boardCommentRef" value="${comment.boardCommentNo}">
+                                                    <textarea name="boardCommentContent" class="left"></textarea>
+                                                    <button type="submit" class="reComment-submit left">답글</button>
+                                                </div>
+                                            </form>
+                                        </div>
+        
+                                    </div>`;
 
-                            </div>`;
+                                const commentList = $(".comment-list");
+
+                                commentList.prepend(reComment);
+                                commentList.prepend(addedComment);
+                                moreComment();
+
+                                const getReCommentBtn = $(".comment-list-wrap:first-child .getReComment");
+                                //답글 버튼 누르면 동작할 수 있게 다시 기능을 넣기
+                                // const getReCommentBtn = $(".getReComment");
+                                getReCommentBtn.attr("onclick","getReComment(this)")
+
+                            }
+                            else if(boardCommentRef !== 0){
+                                //답글을 달았으므로 답글 보여주기 (댓글쪽이 아니라 답글쪽으로)
+                                const reCommentContent = `
+                                    <div class="reComment-list-wrap">
+                                        <div class="reComment-list">
+                                            <p class="comment-info">
+                                                <span>${memberNo}</span>
+                                                <span>${comment.boardCommentDate}</span>
+                                                <a href="javascript:void(0)" class="remove right" onclick="removeComment(this,${comment.boardCommentNo},${boardNo},${comment.boardCommentRef})">삭제</a>
+                                                <a href="javascript:void(0)" class="edit right" onclick="editComment(this,${comment.boardCommentNo},${boardNo},${comment.boardCommentRef})">수정</a>
+                                            </p>
+                                            <p class="content-both reComment-content-list content-hover short-content">${comment.boardCommentContent}</p>
+                                        </div>
+                                    </div>`;
+                                    const reCommentBox = $(item).parent().parent();
+                                    reCommentBox.after(reCommentContent);
+                                    moreComment();
+
+                            }
                                 
                             // const addedComment = `<div class="comment-writer left"><div class="left">${comment.memberNo}</div><div class="edited left">${comment.boardEdit == 1 ? '(수정)' : ''}</div><div class="date left">${comment.boardCommentDate}</div><span class="getReCommentCount right">(${comment.reCommentCount})</span><a href="javascript:void(0)" class="getReComment right">답글</a><th:block th:if="${session.member != null && session.member.memberNo == comment.memberNo}"><a href="javascript:void(0)" class="remove right" onclick="removeComment(this, ${comment.boardCommentNo}, ${board.boardNo}, ${comment.boardCommentRef})">삭제</a><a href="javascript:void(0)" class="edit right" onclick="editComment(this, ${comment.boardCommentNo}, ${board.boardNo}, ${comment.boardCommentRef})">수정</a></th:block></div><div class="content-both comment-list-content content-hover left short-content">${comment.boardCommentContent}</div>`;
 
@@ -701,33 +735,31 @@
     //         </form>
     //     </div>
 
-//         <div class="reComment-list-wrap" th:each="bcc : ${board.reCommentList}" th:if="${bc.boardCommentNo == bcc.boardCommentRef}">
-//             <div class="reComment-list" style="display: none;">
-//                 <p class="comment-info">
-//                     <span th:text="${bcc.memberNo}"></span>
-//                     <span th:text="${bcc.boardCommentDate}"></span>
-//                     <th:block th:if="${session.member != null && session.member.memberNo == bc.memberNo}">
-//                         <a href="javascript:void(0)" class="remove right" onclick="removeComment(this,${bcc.boardCommentNo},${board.boardNo},${bcc.boardCommentRef})">삭제</a>
-//                         <a href="javascript:void(0)" class="edit right" onclick="editComment(this,${bcc.boardCommentNo},${board.boardNo},${bcc.boardCommentRef})">수정</a>
-//                     </th:block>
-//                 </p>
-//                 <p class="content-both reComment-content-list content-hover" th:text="${bcc.boardCommentContent}"></p>
-//             </div>
+        // <div class="reComment-list-wrap" th:each="bcc : ${board.reCommentList}" th:if="${bc.boardCommentNo == bcc.boardCommentRef}">
+        //     <div class="reComment-list" style="display: none;">
+        //         <p class="comment-info">
+        //             <span th:text="${bcc.memberNo}"></span>
+        //             <span th:text="${bcc.boardCommentDate}"></span>
+        //             <th:block th:if="${session.member != null && session.member.memberNo == bc.memberNo}">
+        //                 <a href="javascript:void(0)" class="remove right" onclick="removeComment(this,${bcc.boardCommentNo},${board.boardNo},${bcc.boardCommentRef})">삭제</a>
+        //                 <a href="javascript:void(0)" class="edit right" onclick="editComment(this,${bcc.boardCommentNo},${board.boardNo},${bcc.boardCommentRef})">수정</a>
+        //             </th:block>
+        //         </p>
+        //         <p class="content-both reComment-content-list content-hover" th:text="${bcc.boardCommentContent}"></p>
+        //     </div>
 
-//         </div>
+        // </div>
 
 //     </div>
 // </th:block>`;
-                            const commentList = $(".comment-list");
+                            
 
                             //댓글 단거 다시 조회해와서 여기에 append
                             // console.log(commentList);
                             // const commentListWrap = $("<div class='comment-list-wrap'></div>")
                             // commentList.prepend(commentListWrap);
                             // commentListWrap.prepend(addedComment);
-                            commentList.prepend(reComment);
-                            commentList.prepend(addedComment);
-                            moreComment();
+                            
 
                             
                             // const reCommentBox = `<div class="reComment-input-wrap"><div class="reCommentBox"><form action="/board/comment" method="post"><div class="reComment-content"><input type="hidden" name="memberNo" value="${memberNo}"><input type="hidden" name="boardNo" value="${boardNo}"><input type="hidden" name="boardCommentRef" value="${boardNo}"><textarea name="boardCommentContent" class="left"></textarea><button type="submit" class="reComment-submit left">답글</button></div></form></div><div class="reComment-list-wrap"><!-- 답글 출력 --><div class="reComment-list" style="display: none;"><p class="comment-info"><span>${memberNo}</span><span>${new Date().toLocaleString()}</span><th:block th:if="${session.member != null && session.member.memberNo == memberNo}"><a href="javascript:void(0)" class="remove right">삭제</a><a href="javascript:void(0)" class="edit right">수정</a></th:block></p><p class="content-both reComment-content-list content-hover"></p></div></div></div>`;
@@ -762,10 +794,7 @@
                 // </div>`;
                             // const firstComment = $(".comment-list-wrap:first-child");
                             
-                            const getReCommentBtn = $(".comment-list-wrap:first-child .getReComment");
-                            //답글 버튼 누르면 동작할 수 있게 다시 기능을 넣기
-                            // const getReCommentBtn = $(".getReComment");
-                            getReCommentBtn.attr("onclick","getReComment(this)")
+                            
 
                             // firstComment.after(reCommentBox);
                         }
