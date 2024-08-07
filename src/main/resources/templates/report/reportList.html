@@ -99,14 +99,13 @@ a {
 }
 </style>
 
-
 <body>
 	<th:block th:include="common/top"></th:block>
-	
-	
+
+
 	<div class="box-title">고객 센터</div>
-	
-	
+
+
 	<table class="atbl atbl-hover">
 		<tr>
 			<th>글번호</th>
@@ -118,8 +117,7 @@ a {
 		</tr>
 		<tr th:each="customer : ${customerList}">
 			<td th:text="${customer.inqNo}"></td>
-			<td><a
-				th:href="@{/report/reportView(inqNo=${customer.inqNo})}"
+			<td><a th:href="@{/report/reportView(inqNo=${customer.inqNo})}"
 				th:text="${customer.inqTitle}"></a></td>
 			<td th:text="${customer.memberNo}"></td>
 			<td th:text="${customer.inqDate}">0000-00-00</td>
@@ -131,22 +129,21 @@ a {
 		</tr>
 	</table>
 	<div id="pageNavi" th:utext="${pageNavi}"></div>
-	
-	
-	
+
+
+
 	<script>
-		$("#approval").on("click", function(event){
+		$("#approval").on("click", function(event) {
 			alert("처리가 완료되었습니다.")
 			$("#status").text("승인 완료");
 		});
-		
-		$("#reject").on("click", function(){
+
+		$("#reject").on("click", function() {
 			alert("요청이 반려되었습니다.")
 			$("#status").text("반려");
 		});
-		
 	</script>
-	
+
 	<th:block th:include="common/adminBottom"></th:block>
 </body>
 
