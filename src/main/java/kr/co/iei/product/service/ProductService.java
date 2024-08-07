@@ -112,4 +112,10 @@ public class ProductService {
 	public int productView(SellProduct sp) {
 		return 0;
 	}//productView
+
+	@Transactional
+	public int addProduct(SellProduct sp) {
+		int result = productDao.addProduct(sp);
+		return result;
+	}//addProduct
 }

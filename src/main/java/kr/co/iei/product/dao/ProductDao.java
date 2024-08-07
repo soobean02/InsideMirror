@@ -67,6 +67,13 @@ public class ProductDao {
 		return totalCount;
 	}
 	
+	public int addProduct(SellProduct sp) {
+		String query = "insert into sell_product values(sell_product_seq.nextval,?,?,?,?,?,?)";
+		Object[] params = {sp.getProductListNo(), sp.getProductPrice(), sp.getProductName(), sp.getProductImg(), sp.getProductUrl(), sp.getProductPath()};
+		int result = jdbc.update(query, params);
+		return result;
+	}//addProduct
+	
 	
 
 }
