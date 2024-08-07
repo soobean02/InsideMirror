@@ -257,6 +257,7 @@
         font-size: 18px;
         margin-bottom: 20px;
         outline: none;
+        box-sizing: border-box;
     }
     .date{
         margin-left: 10px;
@@ -304,7 +305,8 @@
                                     <span class="material-icons">favorite</span>
                                     <span th:text="${board.boardLike}"></span>
                                 </div>
-
+<!-- 작성자 | 작성일 -->
+<!-- 조회수/하트개수 | 하트 | 북마크 순으로 -->
                                 <div class="view-date left">
                                     <span th:text="${board.boardDate}"></span>
                                 </div>
@@ -336,12 +338,10 @@
                                 </div>
                                 
                                 <div class="comment-content" th:if="${session.member != null}">
-                                    <form action="/board/comment/" method="post">
-                                        <textarea name="boardCommentContent" id="comment" class="left"></textarea>
-                                        <input type="hidden" name="boardNo" th:value="${board.boardNo}">
-                                        <input type="hidden" name="memberNo" th:if="${session.member != null}" th:value="${session.member.memberNo}">
-                                        <button type="submit" id="submit-btn" class="left">작성하기</button>
-                                    </form>
+                                    <textarea name="boardCommentContent" id="comment" class="left"></textarea>
+                                    <input type="hidden" name="boardNo" th:value="${board.boardNo}">
+                                    <input type="hidden" name="memberNo" th:if="${session.member != null}" th:value="${session.member.memberNo}">
+                                    <button type="button" id="submit-btn" class="left" onclick="addComment(this)">작성하기</button>
                                 </div>
 
                                 <div class="no-comment" th:if="${session.member == null}">
@@ -374,7 +374,7 @@
                                         <!-- 답글 -->
                                     <div class="reComment-input-wrap">
                                         <div class="reCommentBox">
-                                            <form action="/board/comment/" method="post" th:if="${session.member != null}">
+                                            <form action="/board/comment" method="post" th:if="${session.member != null}">
                                                 <div class="reComment-content">
                                                     <!-- <input type="hidden" name="memberNo" th:value="${session.member.memberNo}"> -->
                                                     <input type="hidden" name="boardNo" th:value="${board.boardNo}">
@@ -410,8 +410,6 @@
                                 
                                 
                         </div>   
-
-
 
                 <th:block th:include="common/bottom"></th:block>
                 
@@ -502,7 +500,13 @@
             $(item).parent().next().children(".more").click();
             const height = $(item).parent().next().height();
             //다른 수정 버튼들 다시 되돌리기
-            // $(".remove").click();
+            $(".cancel").click();
+
+            //원본글은 display none으로 복사해서 editContent에 append
+            //이후 작성자가 취소 누르면 이 글의 텍스트를 복사해서 붙이고 copy된거 지우기
+            const originalContent = $(item).parent().next().clone();
+            originalContent.attr("display","none");
+            originalContent.addClass("copy");
 
             const pContent = $(item).parent().next();
             const editContent = $("<textarea class='edit-comment-content left'>");
@@ -510,10 +514,13 @@
             editContent.val(pContent.text());
             pContent.replaceWith(editContent);
 
+            editContent.append(originalContent);
+
             $(item).text("완료");
             $(item).attr("onclick","editComplete(this, "+boardCommentNo+","+boardNo+","+boardCommentRef+")")
             $(item).prev().text("취소");
             $(item).prev().attr("onclick","editCancel(this, "+boardCommentNo+","+boardNo+","+boardCommentRef+")")
+            $(item).prev().addClass("cancel");
         }
 
         function editComplete(item, boardCommentNo, boardNo, boardCommentRef){
@@ -528,10 +535,14 @@
                         if(data > 0){
                             const edited = 1;
                             editCancel(item, boardCommentNo, boardNo, boardCommentRef, edited);
+                            $(item).parent().next().text(commentContent);
                             $(item).text("수정");
                             $(item).attr("onclick","editComment(this, "+boardCommentNo+","+boardNo+","+boardCommentRef+")")
-                            $(item).next().text("삭제");
-                            $(item).next().attr("onclick","removeComment("+boardCommentNo+")")
+                            $(item).prev().text("삭제");
+                            $(item).prev().attr("onclick","removeComment(this, "+boardCommentNo+","+boardNo+","+boardCommentRef+")")
+                            $(item).prev().removeClass("cancel");
+                            alert("수정이 완료되었습니다");
+                            //나중에 swal로
                         }
                         else{
                             console.log("댓글 수정 실패");
@@ -545,17 +556,19 @@
         }
         function editCancel(item, boardCommentNo, boardNo, boardCommentRef, edited){
             //수정 취소 버튼을 눌렀으므로 다시 원상복구
+            const copyContent = $(".copy").text();
             const editContent = $(item).parent().next();
-            
             if(boardCommentRef !== 0){
+                //답글인 경우
                 const pContent = $("<p class='reComment-content-list content-hover short-content content-both'></p>");
-                pContent.text(editContent.val());
+                pContent.text(copyContent);
                 editContent.replaceWith(pContent);
                 moreComment();
             }
             else{
+                //댓글인 경우
                 const pContent = $("<div class='comment-list-content content-hover short-content content-both left'></div>")
-                pContent.text(editContent.val());
+                pContent.text(copyContent);
                 editContent.replaceWith(pContent);
                 moreComment();
             }
@@ -565,26 +578,67 @@
                 $(item).next().attr("onclick","editComment(this, "+boardCommentNo+","+boardNo+","+boardCommentRef+")")
                 $(item).text("삭제");
                 $(item).attr("onclick","removeComment("+boardCommentNo+")")
+                $(item).removeClass("cancel");
             }
         }
 
         function removeComment(item, boardCommentNo, boardNo, boardCommentRef){
+            //댓글 삭제
             $.ajax({
                 url : "/board/removeComment",
                 type : "post",
                 data : {boardCommentNo : boardCommentNo},
                 success : function(data){
-                    console.log("지웠음");
+                    $(item).parent().parent().remove();
+                    alert("댓글이 삭제되었습니다");
+                    //나중에 swal
                 },
                 error : function(){
                     console.log("error");
                 }
             });
-
         }
 
-        //수정 누르면 다른 수정 없애기 -> .remove로 없애면 댓글이 다 지워져서 해결 해야함
-        //수정 누르면 처리 -> 수정은 됐고 처리 보여주는 거만
+
+        function addComment(item){
+            const memberNo = $(item).prev().val();
+            const boardNo = $(item).prev().prev().val();
+            const content = $(item).prev().prev().prev().val();
+            //댓글 추가 비동기
+            $.ajax({
+                url : "/board/comment",
+                type : "post",
+                data : {memberNo : memberNo , boardNo : boardNo, boardCommentContent : content},
+                success : function(data){
+                        if(data != null){
+                            alert("댓글 추가 성공");
+                            console.log(data);
+                            const session = data.session;
+                            const board = data.board;
+                            const comment = data.comment;
+                            console.log(session);
+                            console.log(board);
+                            console.log(comment);
+                            const addedComment = `<div class="comment-writer left"><div class="left">${comment.memberNo}</div><div class="edited left">${comment.boardEdit == 1 ? '(수정)' : ''}</div><div class="date left">${comment.boardCommentDate}</div><span class="getReCommentCount right">(${comment.reCommentCount})</span><a href="javascript:void(0)" class="getReComment right">답글</a><th:block th:if="${session.member != null && session.member.memberNo == comment.memberNo}"><a href="javascript:void(0)" class="remove right" onclick="removeComment(this, ${comment.boardCommentNo}, ${board.boardNo}, ${comment.boardCommentRef})">삭제</a><a href="javascript:void(0)" class="edit right" onclick="editComment(this, ${comment.boardCommentNo}, ${board.boardNo}, ${comment.boardCommentRef})">수정</a></th:block></div><div class="content-both comment-list-content content-hover left">${comment.boardCommentContent}</div>`;
+                            const firstComment = $(".comment-list-wrap:first-child");
+                            //댓글 단거 다시 조회해와서 여기에 append
+                            firstComment.append(addedComment);
+                            console.log(addedComment);
+                        }
+                        else{
+                            alert("댓글 작성 실패");
+                        }
+                },
+                error : function(){
+                    console.log("error");
+                }
+            })
+        }//댓글 추가
+
+
+
+
+
     </script>
 
 </body>

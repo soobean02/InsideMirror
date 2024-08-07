@@ -1,7 +1,9 @@
 package kr.co.iei.board.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -98,10 +100,24 @@ public class BoardController {
 	}//파일업로드(summernote로 글 작성할때 파일 업로드하면 바로보일 수 있게)
 
 
+	@ResponseBody
 	@PostMapping(value="/comment")
-	public String comment(BoardComment comment){
+	public Map<String, Object> comment(BoardComment comment, Model model, @SessionAttribute Member member){
 		int result = boardService.insertBoardComment(comment);
-		return null;
+		BoardComment oneComment = boardService.selectOneComment(comment);
+		Board board = new Board();
+		board.setBoardNo(comment.getBoardNo());
+		if(result > 0){
+			//댓글 작성 성공시
+			Map<String, Object> info = new HashMap<>();
+			info.put("session", member);
+			info.put("comment", oneComment);
+			info.put("board", comment);
+			return info;
+		}
+		else{
+			return null;
+		}
 	}//댓글작성
 
 	@ResponseBody
