@@ -40,10 +40,9 @@ public class ReportController {
 	}//reportView
 	
 	@PostMapping(value = "/updateStatus")
-	public String updateStatus(Customer c, @SessionAttribute Customer customer) {
+	public String updateStatus(Customer c) {
 		int result = customerService.updateStatus(c);
 		if(result>0) {
-			customer.setStatus(c.getStatus());
 			return "redirect:/report/reportList?reqPage=1";
 		}else {
 			return "redirect:/";

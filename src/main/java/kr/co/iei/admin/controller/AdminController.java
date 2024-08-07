@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -71,4 +72,14 @@ public class AdminController {
 		int result = productService.productView(sp);
 		return "admin/productView";
 	}//productView
+	
+	@GetMapping(value = "/adminProductAddFrm")
+	public String adminProductAddFrm() {
+		return "admin/adminProductAddFrm";
+	}//adminProductAddFrm
+	
+	@PostMapping(value = "/adminProductAdd")
+	public String adminProductAdd() {
+		return "";
+	}//adminProductAdd
 }
