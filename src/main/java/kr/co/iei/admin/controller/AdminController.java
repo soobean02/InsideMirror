@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import kr.co.iei.customer.service.CustomerService;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.MemberListData;
 import kr.co.iei.member.model.service.MemberService;
 import kr.co.iei.product.dto.SellProduct;
 import kr.co.iei.product.service.ProductService;
+import kr.co.iei.report.model.service.ReportService;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -24,9 +26,23 @@ public class AdminController {
 	@Autowired
 	private ProductService productService;
 	
+	@Autowired
+	private ReportService reportService;
+	
+	@Autowired
+	private CustomerService customerService;
+	
 	
 	@GetMapping(value = "/adminHome")
-	public String adminHome() {
+	public String adminHome(Model model) {
+		//회원 5명 조회
+		List fiveMemberList = memberService.selectFiveMember();
+		model.addAttribute("fiveMemberList", fiveMemberList);
+		
+		//고객센터 글 5개 조회
+		List fiveReportList = customerService.selectFiveReport();
+		model.addAttribute("fiveReportList", fiveReportList);
+		
 		return "admin/adminHome";
 	}//adminHome
 	

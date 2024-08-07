@@ -107,4 +107,11 @@ public class CustomerService {
 		return customer;
 	}
 
+	//관리자 메인 홈피에서 고객센터 글 5개만 출력
+	public List selectFiveReport() {
+		List fiveReportList = customerDao.selectFiveReport();
+		return fiveReportList;
+	}//selectFiveReport
+
+
 }

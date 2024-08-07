@@ -77,4 +77,11 @@ public class ReportService {
 		
 		return rld;
 	}//selectReportList
+
+	
+	//관리자 메인 홈피에서 고객센터 글 5개만 출력
+	public List selectFiveReport() {
+		List fiveReportList = reportDao.selectFiveReport();
+		return fiveReportList;
+	}//selectFiveReport
 }

@@ -56,10 +56,10 @@ a {
 
 /*--------------------------------------*/
 .atbl {
-	margin-top: 40px;
 	border-top: 1px solid #ddd;
 	width: 100%;
 	border-spacing: 0;
+	margin-bottom: 20px;
 }
 
 .atbl th, .atbl td {
@@ -85,20 +85,8 @@ a {
 }
 
 /*--------------------------------------------*/
-.client_btn {
-	margin-top: 10px;
-	padding: 20px;
-}
-
-.client_btn>a {
-	background-color: skyblue;
-	border: none;
-	font-weight: bold;
-	color: #fff;
-	width: 100px;
-	height: 30px;
-	border-radius: 5px;
-	cursor: pointer;
+.box-title{
+	padding-bottom: 10px;
 }
 </style>
 <body>
@@ -106,8 +94,6 @@ a {
 	<th:block th:include="common/top"></th:block>
 
 	<div class="box-title">회원 관리 ></div>
-	
-
 		<table class="atbl atbl-hover">
 			<tr>
 				<th>번호</th>
@@ -121,7 +107,7 @@ a {
 				<th>회원가입일</th>
 			</tr>
 
-			<tr th:each="m : ${member}" onclick="memberView([[${m.memberNo}]])">
+			<tr th:each="m : ${fiveMemberList}" onclick="memberView([[${m.memberNo}]])">
 				<td th:text="${m.memberNo}"></td>
 				<td><a th:href="@{/admin/memberView(memberNo=${m.memberNo})}"
 					th:text="${m.memberName}"> </a></td>
@@ -138,20 +124,18 @@ a {
 		<div class="box-title">고객 센터 ></div>
 			<table class="atbl atbl-hover">
 				<tr>
-					<th style="width: 10%">글번호</th>
-					<th style="width: 30%">제목</th>
-					<th style="width: 12%">작성자</th>
-					<th style="width: 26%">작성일</th>
-					<th style="width: 12%">분류</th>
-					<th style="width: 10%">상태</th>
+					<th>글번호</th>
+					<th>제목</th>
+					<th>작성일</th>
+					<th>분류</th>
+					<th>상태</th>
 				</tr>
-				<tr th:each="customer : ${customerList}">
+				<tr th:each="customer : ${fiveReportList}">
 					<td th:text="${customer.inqNo}"></td>
 					<td><a
 						th:href="@{/report/reportView(inqNo=${customer.inqNo})}"
 						th:text="${customer.inqTitle}"></a></td>
-					<td th:text="${customer.memberNo}"></td>
-					<td th:text="${customer.inqDate}">0000-00-00</td>
+					<td th:text="${customer.inqDate}"></td>
 					<th:block th:switch="${customer.customerList}">
 						<td th:case="1">환불</td>
 						<td th:case="2">기타</td>

@@ -30,7 +30,6 @@ public class ReportController {
 		CustomerListData cld = customerService.selectCustomerList(reqPage);
 		
 		model.addAttribute("customerList", cld.getList());
-		model.addAttribute("reportList", rld.getReportList());
 		model.addAttribute("pageNavi", rld.getPageNavi());
 		return "report/reportList";
 	}//reportList

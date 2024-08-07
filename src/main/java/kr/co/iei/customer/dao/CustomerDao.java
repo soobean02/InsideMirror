@@ -59,5 +59,11 @@ public class CustomerDao {
 		return (Customer)list.get(0);
 	}
 
+	public List selectFiveReport() {
+		String query = "select * from (select rownum as rnum, n.* from (select * from customer order by 1 desc)n) where rnum between 1 and 5";
+		List fiveReportList = jdbc.query(query, customerRowMapper);
+		return fiveReportList;
+	}//selectFiveReport
+
 
 }

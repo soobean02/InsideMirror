@@ -89,4 +89,10 @@ public class MemberService {
 		Member member = memberDao.selectOneMember(checkNickname);
 		return member;
 	}
+
+	//관리자 메인 홈피에서 멤버 5명만 출력
+	public List selectFiveMember() {
+		List fiveMemberList = memberDao.selectFiveMember();
+		return fiveMemberList;
+	}//selectFiveMembe
 }

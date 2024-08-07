@@ -63,4 +63,11 @@ public class MemberDao {
 			return (Member)member.get(0);
 		}
 	}
+
+
+	public List selectFiveMember() {
+		String query = "select * from(select rownum as rnum, m.* from (select * from member order by 1 desc)m)where rnum between 1 and 5";
+		List fiveMemberList = jdbc.query(query, memberRowMapper);
+		return fiveMemberList;
+	}//selectFiveMember
 }
