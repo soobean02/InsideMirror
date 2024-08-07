@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>상품 상세</title>
+</head>
+<style>
+:root {
+	--point_color: lightskyblue;
+	--btn_primary: skyblue;
+	--btn_secondary: #eee;
+	--table_line: #333;
+}
+
+.start_page {
+	margin-top: 20px;
+}
+
+.icon_img {
+	width: 160px;
+	height: 160px;
+	margin: 10px 20px 0 20px;
+	float: left;
+}
+
+.first_box {
+	height: 200px;
+	border-bottom: 1px solid #8d8d8d;
+}
+
+form {
+	width: 200px;
+	float: left;
+}
+
+.radio_item {
+	display: block;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.radio_item input {
+	margin-right: 10px;
+}
+
+.pay {
+	box-sizing: border-box;
+	width: 300px;
+	height: 220px;
+	float: right;
+	border: 1px solid #000;
+	border-radius: 10px;
+	margin-right: 40px;
+}
+.pay_tx {
+	padding: 10px 0 10px 0;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.center {
+	text-align: center;
+}
+
+.acorn_tx {
+	width: 280px;
+	border-top: 1px solid #000;
+	border-bottom: 1px solid #000;
+	font-size: 14px;
+	padding: 10px 0 10px 0;
+}
+
+.pay_title {
+	padding-top: 10px;
+	color: #ccc;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.acorn_box {
+	width: 230px;
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+.acorn_box label {
+	font-size: 14px;
+}
+
+.acorn_tx div:nth-child(1n) {
+	float: left;
+}
+
+.acorn_tx div:nth-child(2n) {
+	float: right;
+}
+
+.pay_ok {
+	font-weight: bold;
+	background-color: transparent;
+	border: none;
+	float: right;
+	padding-top: 10px;
+	cursor: pointer;
+}
+
+.sec_box {
+	overflow: hidden;
+}
+
+.list_plus {
+	padding: 10px 10px 0 0;
+	font-weight: bold;
+	float: right;
+}
+
+.product_list {
+	padding: 10px;
+	margin-top: 40px;
+}
+
+
+.product_name {
+	font-weight: bold;
+	text-align: center;
+	padding-bottom: 10px;
+}
+
+.product_box>a {
+	display: inline-block;
+	width: 150px;
+	text-align: center;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.product_img>img {
+	width: 100px;
+	height: 100px;
+	padding: 0 25px 15px 25px;
+}
+
+a {
+	color: #000;
+	text-decoration: none;
+}
+
+.first_box {
+	height: 240px;
+	border-bottom: 1px solid #8d8d8d;
+}
+
+.icon_img {
+	width: 160px;
+	height: 160px;
+	margin: 10px 20px 0 20px;
+	float: left;
+}
+
+.try {
+	padding: 20px 0 20px 30px;
+	float: left;
+	font-weight: bold;
+}
+
+.pr_title {
+	width: 130px;
+	float: left;
+}
+
+h4 {
+	padding-top: 40px;
+}
+
+.sec_box {
+	overflow: hidden;
+}
+
+.acorn_box {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.list_plus {
+	padding: 10px 10px 0 0;
+	font-weight: bold;
+	float: right;
+}
+
+.product_list {
+	padding: 10px;
+	margin-top: 40px;
+}
+
+.product_box {
+	background-color: #eee;
+	padding: 10px;
+	margin-left: 20px;
+	width: 160px;
+	height: 180px;
+	float: left;
+}
+
+
+.pay_acorn>* {
+	margin-top: 5px;
+}
+
+.pay_acorn>button {
+	margin-left: 35px;
+}
+
+.btn {
+	color: #fff;
+	cursor: pointer;
+	background-color: var(--btn_primary);
+	padding: 0;
+	font-weight: bold;
+	width: 120px;
+	height: 30px;
+	border-radius: 5px;
+	border: none;
+}
+.acornShow{
+	float: left;
+	font-weight: bold;
+	font-size: 15px;
+}
+</style>
+<body>
+	<th:block th:include="common/top"></th:block>
+	<!--시작!!!!-->
+
+	<div class="box-title">상품 상세</div>
+	<div class="start_page">
+		<div class="first_box">
+			<div class="icon_img">
+				<img th:src="@{'/product/editor/'+${p.productImg}}" width="160px"
+					height="160px"> <a href="#" class="try">적용해보기 > </a>
+			</div>
+			<div class="pr_title">
+				<h2 th:text="${p.productName}"></h2>
+				<h4>
+					<th:block th:text="${p.productPrice}"></th:block>
+					도토리
+				</h4>
+			</div>
+			<div class="radio_box radio_item">
+				<div class=" pay">
+					<div class="pay_tx center">총 결제 금액</div>
+					<div class="acorn_tx acorn_box">
+						<div>
+							도토리
+							<span th:text="${session.member.acorns}" id="myAcorn"></span>
+							개
+						</div>
+						<!--타임리프 들어가야함 도토리 수-->
+						<div>
+							상품 도토리
+							<span th:text="${p.productPrice}" id="productAcorn"></span>
+							개
+						</div>
+						<!--타임리프 들어가야함 도토리 수-->
+					</div>
+					<div class="pay_system">
+						<div class="acorn_box pay_acorn">
+							<div id="pay"></div>
+							<form action="userBuyProduct" method="get">
+								<!-- 보낼때 상품번호, 상품 가격, 멤버 번호 같이 보내기 -->
+								<input type="hidden" name="productNo" th:value="${p.productNo}">
+								<input type="hidden" name="productPrice" th:value="${p.productPrice}">
+								<input type="hidden" name="memberNo" th:value="${session.member.memberNo}">
+								<button class="btn">구매하기</button>
+							</form>
+							<a href="/product/acornProduct" class="acornShow" style="display: none;">도토리 구매하러 가기 > </a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="sec_box">
+			<div class="list_plus">
+				<a href="/product/productList?reqPage=1">다른 상품 구경하기 +</a>
+			</div>
+
+			<div class="product_list">
+				<th:block th:each="p : ${product}">
+					<!-- 누르면 상품 상세페이지로 넘어감 -->
+					<a th:href="@{/product/proudctPage(productNo=${p.productNo})}">
+						<!--타임리프 들어갈 자리 등록한 상품 최신순으로 3개-->
+						<div class="product_box">
+							<div class="product_img">
+								<img th:src="@{'/product/editor/'+${p.productImg}}" alt="상품 사진">
+							</div>
+							<div class="product_name" th:text="${p.productName}"></div>
+							<div class="product_name">구매 하기 ></div>
+						</div>
+					</a>
+				</th:block>
+			</div>
+		</div>
+	</div>
+	<!--끝!!!!-->
+	<th:block th:include="common/bottom"></th:block>
+
+	</div>
+	</div>
+	</div>
+	
+	<script>
+		const productAcorn = parseInt($("#productAcorn").text());
+		function price(){
+			const myAcorn = parseInt($("#myAcorn").text());
+			if(myAcorn>=productAcorn){
+				$("#pay").text("결제 후 내 도토리 : "+(myAcorn-productAcorn));
+			}else{
+				$("#pay").text("도토리가 부족합니다...");
+				$(".btn").hide(); // 구매하기 버튼 숨기기
+				$(".acornShow").show(); // "도토리 구매하러가기" 보이기
+			}
+		}
+		price();
+	</script>
+</body>
+
+</html>

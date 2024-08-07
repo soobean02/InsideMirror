@@ -16,6 +16,7 @@ public class GuestBookRowMapper implements RowMapper<GuestBook>{
 		gb.setGuestCommentDate(rs.getDate("guest_comment_date"));
 		gb.setGuestCommentNo(rs.getInt("guest_comment_no"));
 		gb.setGuestWriterNo(rs.getInt("guest_writer_no"));
+		gb.setMemberNo(rs.getInt("member_no"));
 		return gb;
 	}
 
