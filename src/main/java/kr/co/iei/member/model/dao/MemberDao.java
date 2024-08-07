@@ -70,4 +70,16 @@ public class MemberDao {
 		List fiveMemberList = jdbc.query(query, memberRowMapper);
 		return fiveMemberList;
 	}//selectFiveMember
+
+
+	public Member selectAdminOneMember(int memberNo) {
+		String query = "select * from member where member_no=?";
+		Object[] params = {memberNo};
+		List member = jdbc.query(query, memberRowMapper, params);
+		if(member.isEmpty()) {
+			return null;			
+		}else {
+			return (Member)member.get(0);
+		}//else
+	}//selectAdminOneMember
 }

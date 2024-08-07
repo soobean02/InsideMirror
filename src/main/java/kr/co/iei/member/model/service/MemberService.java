@@ -73,17 +73,16 @@ public class MemberService {
 	}//selectAllMember
 
 
-	public Member selectOneMember(Member m) {
-		Member member = memberDao.selectOneMember(m);
-		return member;
-	}//selectOneMember
-
 	@Transactional
 	public int insertMember(Member m) {
 		int result = memberDao.insertMember(m);
 		return result;
 	}
 
+	public Member selectOneMember(Member m) {
+		Member member = memberDao.selectOneMember(m);
+		return member;
+	}//selectOneMember
 
 	public Member selectOneMember(String checkNickname) {
 		Member member = memberDao.selectOneMember(checkNickname);
@@ -95,4 +94,10 @@ public class MemberService {
 		List fiveMemberList = memberDao.selectFiveMember();
 		return fiveMemberList;
 	}//selectFiveMembe
+
+
+	public Member selectAdminOneMember(int memberNo) {
+		Member member = memberDao.selectAdminOneMember(memberNo);
+		return member;
+	}//selectAdminOneMember
 }

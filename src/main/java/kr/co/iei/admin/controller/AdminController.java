@@ -55,10 +55,9 @@ public class AdminController {
 	}//allMember
 	
 	@GetMapping(value = "/memberView")
-	public String memberView(Model model, Member member) {
-		String memberId = member.getMemberId();
-		Member m = memberService.selectOneMember(memberId);
-		model.addAttribute("member", m);
+	public String memberView(Model model, int memberNo) {
+		Member m = memberService.selectAdminOneMember(memberNo);
+		model.addAttribute("m", m);
 		return "admin/memberView";
 	}//memberView
 
