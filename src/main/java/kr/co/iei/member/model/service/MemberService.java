@@ -27,7 +27,7 @@ public class MemberService {
 		int totalCount = memberDao.selectAllMemberTotalCount();
 		
 		int totalPage = 0;
-		if(totalCount % totalPage == 0) {
+		if(totalCount % numPerPage == 0) {
 			totalPage = totalCount/numPerPage;
 		}else {
 			totalPage = totalCount/numPerPage + 1;
@@ -73,17 +73,16 @@ public class MemberService {
 	}//selectAllMember
 
 
-	public Member selectOneMember(Member m) {
-		Member member = memberDao.selectOneMember(m);
-		return member;
-	}//selectOneMember
-
 	@Transactional
 	public int insertMember(Member m) {
 		int result = memberDao.insertMember(m);
 		return result;
 	}
 
+	public Member selectOneMember(Member m) {
+		Member member = memberDao.selectOneMember(m);
+		return member;
+	}//selectOneMember
 
 	public Member selectOneMember(String checkNickname) {
 		Member member = memberDao.selectOneMember(checkNickname);
@@ -103,4 +102,15 @@ public class MemberService {
 	}
 
 
+	//관리자 메인 홈피에서 멤버 5명만 출력
+	public List selectFiveMember() {
+		List fiveMemberList = memberDao.selectFiveMember();
+		return fiveMemberList;
+	}//selectFiveMembe
+
+
+	public Member selectAdminOneMember(int memberNo) {
+		Member member = memberDao.selectAdminOneMember(memberNo);
+		return member;
+	}//selectAdminOneMember
 }

@@ -7,7 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.customer.dto.CustomerListData;
+import kr.co.iei.member.model.dao.MemberDao;
+import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.product.dao.ProductDao;
+import kr.co.iei.product.dto.BuyProduct;
 import kr.co.iei.product.dto.ProductListData;
 import kr.co.iei.product.dto.SellProduct;
 
@@ -15,14 +18,16 @@ import kr.co.iei.product.dto.SellProduct;
 public class ProductService {
 	@Autowired
 	private ProductDao productDao;
+	@Autowired
+	private MemberDao memberDao;
 	
 	@Transactional
-	public int updateAcorns(int acorns) {
+	public int updateAcorns(Member m) {
 		/*멤버 테이블에 도토리 넣어주기*/
-		int result1 = productDao.updateAcorns(acorns);
+		int result1 = productDao.updateAcorns(m);
 		
 		/*도토리 구매 이력 테이블에 도토리 정보 넣어주기*/
-		int result2 = productDao.insertAcorns(acorns);
+		int result2 = productDao.insertAcorns(m);
 		
 		if(result1>0 && result2>0) { // 도토리 insert 성공 1 반환
 			return 1;
@@ -112,4 +117,48 @@ public class ProductService {
 	public int productView(SellProduct sp) {
 		return 0;
 	}//productView
+
+	@Transactional
+	public int addProduct(SellProduct sp) {
+		int result = productDao.addProduct(sp);
+		return result;
+	}//addProduct
+	// 상품 상세 페이지 정보 출력
+	public SellProduct selectProductInfo(int productNo) {
+		SellProduct p = productDao.selectProductInfo(productNo);
+		return p;
+	}
+	/*구매한 상품 정보 출력*/
+	public BuyProduct selectOneProduct(Member member, int productNo) {
+		BuyProduct bp = productDao.selectOneProduct(member,productNo);
+		return bp;
+	}
+	
+	// 상품 구매하기 insert
+	@Transactional
+	public int productAdd(Member m, SellProduct sp) {
+		// 회원 정보에서 가지고 있는 도토리 개수 확인하기
+		Member member = memberDao.selectOneMember(m);
+		if(member.getAcorns() >= sp.getProductPrice()) { // 판매중인 도토리 수 보다 멤버가 가지고 있는 도토리 개수가 같거나 많다면 성공 
+			// 상품 구매 회원 지갑에서 도토리 빼내기 => 성공하면 insert / 실패시 0 반환
+			int result = productDao.updateAcornMinus(m,sp);
+			if(result > 0) { // 성공하면 구매한 상품에 넣어주기
+				int result2 = productDao.insertProductAdd(m,sp);
+				if(result2>0) { // 구매한 상품에 잘 넣었으면 리턴
+					return result2;
+				}
+				return 0;
+			}else {
+				// 회원 지갑에서 빼내는거 실패 시 0 반환 => 컨트롤러에서 알림창 띄우기
+				return 0;
+			}
+		}else {
+			// 상품 가격이 도토리 수 보다 크다면 ... 실패
+			return -10; // 상품 가격이 더 큰건 -10으로 구분
+		}
+		
+		
+	}
+
+
 }
