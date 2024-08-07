@@ -37,7 +37,7 @@
     }
 
     .view-title{
-        width: 60%;
+        width: 55%;
         height: 70px;
         /* background-color: blueviolet; */
         border-bottom: 1px solid black;
@@ -45,8 +45,9 @@
         box-sizing: border-box;
         line-height: 70px;
     }
+
     .view-writer{
-        width: 20%;
+        width: 28%;
         height: 35px;
         /* background-color: #92a2ff; */
         border-bottom: 1px solid black;
@@ -54,15 +55,8 @@
         box-sizing: border-box;
         padding-left: 5px
     }
-    .view-count{
-        width: 20%;
-        height: 35px;
-        /* background-color: #0f1b5c; */
-        box-sizing: border-box;
-        border-bottom: 1px solid black;
-    }
     .view-date{
-        width: 25%;
+        width: 17%;
         height: 35px;
         /* background-color: yellow; */
         box-sizing: border-box;
@@ -70,6 +64,14 @@
         /* border-right: 1px solid black; */
         padding-left: 5px;
     }
+
+    .view-count{
+        width: 30%;
+        height: 35px;
+        /* background-color: #0f1b5c; */
+        box-sizing: border-box;
+        border-bottom: 1px solid black;
+    } 
     .view-mark{
         width: 15%;
         height: 35px;
@@ -304,6 +306,10 @@
                 <span th:text="${board.boardWriter}"></span>
             </div>
 
+            <div class="view-date left">
+                <span th:text="${board.boardDate}"></span>
+            </div>
+
             <div class="view-count left">
                 <span class="material-icons">visibility</span>
                 <span th:text="${board.readCount}"></span>
@@ -312,9 +318,7 @@
             </div>
 <!-- 작성자 | 작성일 -->
 <!-- 조회수/하트개수 | 하트 | 북마크 순으로 -->
-            <div class="view-date left">
-                <span th:text="${board.boardDate}"></span>
-            </div>
+            
 
             <div class="view-mark left">
                 <span class="material-icons">favorite</span>
@@ -482,6 +486,7 @@
 
         function getReComment(thisbtn){
             //this로 받아온 thisbtn을 btn으로 바꾸고 item으로 다시 바꿔줘야 기존 코드 그대로 사용 가능
+            $(".cancel").click();
             const btn = thisbtn;
             const item = $(btn);
             $(".getReComment").parent().parent().css("border-bottom","1px solid #ccc");
@@ -505,6 +510,7 @@
                 item.parent().parent().css("border-bottom","none");
             }
             else{
+                
                 item.text("답글");
                 item.prev().prev().prev().show();
                 item.prev().prev().show();
@@ -520,7 +526,10 @@
             //수정버튼은 수정완료로, 삭제버튼은 수정취소 버튼으로 변경
             //먼저 그 글의 높이 값을 구해와야 하는데 더보기 버튼을 강제로 누른 후 구하기
             $(item).parent().next().children(".more").click();
-            const height = $(item).parent().next().height();
+            let height = $(item).parent().next().height();
+            if(height < 100){
+                height = 100; 
+            }
             //다른 수정 버튼들 다시 되돌리기
             $(".cancel").click();
 
