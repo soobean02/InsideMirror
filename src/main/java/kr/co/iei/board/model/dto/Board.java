@@ -23,6 +23,8 @@ public class Board {
 
 	//로그인한 회원이 그 게시글에 좋아요를 눌렀는지 여부
 	private int isLike;
+	//로그인한 회원이 그 게시글에 즐겨찾기를 눌렀는지 여부
+	private int isBookMark;
 
 	private int boardLike;
 

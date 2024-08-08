@@ -149,6 +149,16 @@ public class BoardController {
 	}//좋아요버튼 누르면
 
 	@ResponseBody
+	@PostMapping(value = "/bookmark")
+	public int pushBookMark(int isBookMark, int boardNo, @SessionAttribute(required = false) Member member, Model model){
+		if(member == null){
+			return -1;
+		}
+		int result = boardService.pushBookMark(isBookMark, boardNo, member);
+		return result;
+	}
+
+	@ResponseBody
 	@PostMapping(value="/comment")
 	public Map<String, Object> comment(BoardComment comment, Model model, @SessionAttribute Member member){
 		int result = boardService.insertBoardComment(comment);

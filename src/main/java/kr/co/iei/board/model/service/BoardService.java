@@ -134,7 +134,6 @@ public class BoardService {
 	@Transactional
 	public int pushLike(int isLike, int boardNo, Member member) {
 		int result = 0;
-		System.out.println("service");
 		if(isLike == 0){
 			//좋아요 누른 경우
 			result = boardDao.insertLike(boardNo, member);
@@ -145,6 +144,21 @@ public class BoardService {
 		}
 		return result;
 	}//게시글 좋아요
+
+	@Transactional
+	public int pushBookMark(int isBookMark, int boardNo, Member member) {
+		int result = 0;
+		String photoNo = null;
+		if(isBookMark == 0){
+			//북마크 한 경우
+			result = boardDao.insertBookMark(boardNo, photoNo, member);
+		}
+		else{
+			//북마크 취소한경우
+			result = boardDao.deleteBookMark(boardNo, member);
+		}
+		return result;
+	}//게시글 북마크(즐겨찾기)
 
 	@Transactional
 	public int insertBoardComment(BoardComment comment) {
@@ -168,6 +182,8 @@ public class BoardService {
 		BoardComment oneComment = boardDao.selectOneComment(comment);
 		return oneComment;
 	}//댓글 하나 조회
+
+	
 
 	
 

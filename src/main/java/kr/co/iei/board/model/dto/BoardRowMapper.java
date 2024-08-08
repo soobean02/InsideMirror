@@ -32,8 +32,10 @@ public class BoardRowMapper implements RowMapper<Board> {
 
 		try {
 			b.setIsLike(rs.getInt("is_like"));
+			b.setIsBookMark(rs.getInt("is_book_mark"));
 		} catch (Exception e) {
 			b.setIsLike(0);
+			b.setIsBookMark(0);
 		}
 		return b;
 	}
