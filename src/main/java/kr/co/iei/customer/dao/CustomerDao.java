@@ -66,5 +66,18 @@ public class CustomerDao {
 		return fiveReportList;
 	}//selectFiveReport
 
+	public List selectAdminCustomerList(int start, int end) {
+		String query = "select * from (select rownum as rnum, n.* from (select * from customer order by 1 desc)n) where rnum between ? and ?";
+		Object[] params = {start,end};
+		List list = jdbc.query(query,customerRowMapper, params);
+		return list;
+	}//selectAdminCustomerLis
+
+	public int selectAdminCustomerTotalCount() {
+		String query = "select count(*) from customer";
+		int totalCount = jdbc.queryForObject(query, Integer.class); // 이 쿼리문 실행해서 바로 Inter.class로 바로 꺼내줘
+		return totalCount;
+	}//selectAdminCustomerTotalCount
+
 
 }

@@ -27,7 +27,7 @@ public class ReportController {
 	@GetMapping(value = "/reportList")
 	public String reportList(Model model, int reqPage) {
 		ReportListData rld = reportService.selectReportList(reqPage);
-		CustomerListData cld = customerService.selectCustomerList(reqPage);
+		CustomerListData cld = customerService.selectAdminCustomerList(reqPage);
 		
 		model.addAttribute("customerList", cld.getList());
 		model.addAttribute("pageNavi", rld.getPageNavi());
