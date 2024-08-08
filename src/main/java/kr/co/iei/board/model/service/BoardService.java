@@ -252,6 +252,7 @@ public class BoardService {
 			if(orderDate.equals("newest") && orderFriend.equals("all")){
 				//최신글 / 전체
 				list = boardDao.titleDateNewFriendAll(keyword, start, end);
+				totalCount = boardDao.selectBoardSearchTitleTotalCount(keyword);
 			}
 			else if(orderDate.equals("newest") && orderFriend.equals("friend")){
 				//최신글 / 일촌only
@@ -260,14 +261,14 @@ public class BoardService {
 			else if(orderDate.equals("popular") && orderFriend.equals("all")){
 				//인기글 / 전체
 				list = boardDao.titleDatePopularFriendAll(keyword, start, end);
+				totalCount = boardDao.selectBoardSearchTitleTotalCount(keyword);
 			}
 			else if(orderDate.equals("popular") && orderFriend.equals("friend")){
 				//인기글 / 일촌only
 				list = boardDao.titleDatePopularFriendFriend(keyword, start, end, member);
 			}
 
-			totalCount = boardDao.selectBoardSearchTitleTotalCount(keyword);
-			//어차피 총 개수는 똑같기 때문에 중첩 if문 나와서 한 번에 전체 개수 조회
+			
 		}
 		else if(type.equals("writer")){
 			//작성자로 검색한거면
@@ -275,6 +276,7 @@ public class BoardService {
 			if(orderDate.equals("newest") && orderFriend.equals("all")){
 				//최신글 / 전체
 				list = boardDao.writerDateNewFriendAll(keyword, start, end);
+				totalCount = boardDao.selectBoardSearchWriterTotalCount(keyword);
 			}
 			else if(orderDate.equals("newest") && orderFriend.equals("friend")){
 				//최신글 / 일촌only
@@ -283,13 +285,13 @@ public class BoardService {
 			else if(orderDate.equals("popular") && orderFriend.equals("all")){
 				//인기글 / 전체
 				list = boardDao.writerDatePopularFriendAll(keyword, start, end);
+				totalCount = boardDao.selectBoardSearchWriterTotalCount(keyword);
 			}
 			else if(orderDate.equals("popular") && orderFriend.equals("friend")){
 				//인기글 / 일촌only
 				list = boardDao.writerDatePopularFriendFriend(keyword, start, end, member);
 			}
-			totalCount = boardDao.selectBoardSearchWriterTotalCount(keyword);
-			//어차피 총 개수는 똑같기 때문에 중첩 if문 나와서 한 번에 전체 개수 조회
+			
 		}
 
 		int totalPage = 0;
@@ -310,16 +312,16 @@ public class BoardService {
 
 
 		if(pageNo != 1){
-			pageNavi += "<li><a class='page-index' href='/board/search?type="+type+"&keyword="+keyword+"&reqPage="+(pageNo - 1)+"'><span> < </span></a></li>";
+			pageNavi += "<li><a class='page-index' href='/board/order?orderDate="+orderDate+"&orderFriend="+orderFriend+"&type="+type+"&keyword="+keyword+"&reqPage="+(pageNo - 1)+"'><span> < </span></a></li>";
 		}
 
 		for(int i = 0; i < pageNaviSize; i++){
 			pageNavi += "<li>";
 			if(pageNo == reqPage){
-				pageNavi += "<a class='page-index active-page' href='/board/search?type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'>";
+				pageNavi += "<a class='page-index active-page' href='/board/order?orderDate="+orderDate+"&orderFriend="+orderFriend+"&type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'>";
 			}
 			else{
-				pageNavi += "<a class='page-index' href='/board/search?type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'>";
+				pageNavi += "<a class='page-index' href='/board/order?orderDate="+orderDate+"&orderFriend="+orderFriend+"&type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'>";
 			}
 
 			pageNavi += pageNo;
@@ -329,7 +331,7 @@ public class BoardService {
 		}//for
 
 		if(pageNo <= totalPage){
-			pageNavi += "<li><a class='page-index' href='/board/search?type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'><span> > </span></a></li>";
+			pageNavi += "<li><a class='page-index' href='/board/order?orderDate="+orderDate+"&orderFriend="+orderFriend+"&type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'><span> > </span></a></li>";
 		}
 		pageNavi += "</ul>";
 
