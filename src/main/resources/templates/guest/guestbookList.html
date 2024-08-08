@@ -173,12 +173,11 @@ body {
     <link rel="stylesheet" href="/css/font.css">
     <link rel="stylesheet" href="/css/minihomepage.css">
     <link rel="stylesheet" href="/css/layout.css">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-	
 </head>
+
 <body>
-	
     <main class="content">
         <section class="section guestbook-view-wrap">
             <div class="bookcover">
@@ -190,7 +189,7 @@ body {
                             </div>
                             <div class="box profile-box">
                                 <div class="profile-image">
-                                  <img class="profile-image-img" src="/image/cyworld1.png" alt="Profile Image"> 
+                                    <img class="profile-image-img" src="/image/cyworld1.png" alt="Profile Image">
                                 </div>
                                 <div class="profile-text">ㄴr는.. 오늘도.. 눈물을.. 흘린ㄷr..★</div>
                                 <div class="profile-username">
@@ -217,7 +216,70 @@ body {
                             <div class="box content-box">
                                 <div class="guestbook-scrollbox" id="guestbook-scrollbox">
                                     <div class="guest-text">방명록 ></div>
-                                    
+                                    <div class="guestbook-box" data-comment-no="1">
+                                        <div class="guestbook-title">No. 1
+                                            <span>이름</span>
+                                            <button class="material-icons">home</button>
+                                            <div class="guestbook-date">(2024.00.00)
+                                                <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
+                                                <button class="btn-primary" onclick="editComment(this)">수정</button>
+                                            </div>
+                                        </div>
+                                        <div class="guestbook-contents">
+                                            <div class="guestbook-text">
+                                                <p>이 글귀 좋더라.. 읽어봐..<br><br><br>울ㅈ1않ㄱㅣ<br>아프ㅈ1않ㄱㅣ<br>씩씩ㅎrㄱㅣ<br>억ㅈㅣ로ㄹr도 웃ㄱㅣ<br>ㅌ1 ㄴㅐㅈㅣ 말ㄱㅣ<br>.<br>.<br>.<br>오늘도 괜찮은 듯<br>그렇ㄱㅔ ㅈ1ㄴㅐㄱㅣ</p>
+                                                <textarea class="edit-textarea" style="display: none;"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="guestbook-box" data-comment-no="2">
+                                        <div class="guestbook-title">No. 2
+                                            <span>이름</span>
+                                            <button class="material-icons">home</button>
+                                            <div class="guestbook-date">(2024.00.00)
+                                                <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
+                                                <button class="btn-primary" onclick="editComment(this)">수정</button>
+                                            </div>
+                                        </div>
+                                        <div class="guestbook-contents">
+                                            <div class="guestbook-text">
+                                                <p>너 내가 보내준 인소 봤냐 이 부분 개쩐다<br><br><br>"누구한테 문자하냐?"<br>"사랑하는 사람한테"<br><br><br>"나한테 문자를 왜 보내"</p>
+                                                <textarea class="edit-textarea" style="display: none;"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="guestbook-box" data-comment-no="3">
+                                        <div class="guestbook-title">No. 3
+                                            <span>이름</span>
+                                            <button class="material-icons">home</button>
+                                            <div class="guestbook-date">(2024.00.00)
+                                                <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
+                                                <button class="btn-primary" onclick="editComment(this)">수정</button>
+                                            </div>
+                                        </div>
+                                        <div class="guestbook-contents">
+                                            <div class="guestbook-text">
+                                                <p>야 내일 캔모아 갈래?</p>
+                                                <textarea class="edit-textarea" style="display: none;"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="guestbook-box" data-comment-no="4">
+                                        <div class="guestbook-title">No. 4
+                                            <span>이름</span>
+                                            <button class="material-icons">home</button>
+                                            <div class="guestbook-date">(2024.00.00)
+                                                <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
+                                                <button class="btn-primary" onclick="editComment(this)">수정</button>
+                                            </div>
+                                        </div>
+                                        <div class="guestbook-contents">
+                                            <div class="guestbook-text">
+                                                <p>나랑 찍은 사진은 왜 안 올려 ㅡ.ㅡ</p>
+                                                <textarea class="edit-textarea" style="display: none;"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="guest-check-box">
@@ -228,8 +290,9 @@ body {
                             </div>
                             <div class="guestbook-writer">
                                 <textarea id="guestbook-input" placeholder="댓글을 입력하세요"></textarea>
+                                <input type="hidden" id="guestWriterNo" value="1"> <!-- 사용자의 ID를 동적으로 설정해야 함 -->
                                 <button class="guestbook-button" onclick="addGuestbookEntry()">전송</button>
-                            </div> 
+                            </div>
                         </div>
                         <div class="menu-container">
                             <div class="menu-button">
@@ -250,8 +313,7 @@ body {
         </section>
     </main>
     <script>
-    
- // 날짜 가져오기
+    // 날짜 가져오기
     function getCurrentDate() {
         const now = new Date();
         const year = now.getFullYear();
@@ -266,36 +328,62 @@ body {
     function addGuestbookEntry() {
         const input = document.getElementById('guestbook-input');
         const text = input.value.trim();
-        if (text === '') return;
+        const identity = document.querySelector('input[name="guestbook-identity"]:checked');
 
-        const selectedIdentity = document.querySelector('input[name="guestbook-identity"]:checked');
-        const identityText = selectedIdentity ? (selectedIdentity.value === 'anonymous' ? '익명' : '닉네임') : '';
+        if (text === '') {
+            alert('댓글 내용을 입력하세요.');
+            return;
+        }
 
-        const data = {
-            guestWriterNo: null, // 실제 사용자의 ID를 넣어야 함
-            guestCommentContent: text
-        };
+        if (!identity) {
+            alert('익명 또는 닉네임을 선택하세요.');
+            return;
+        }
 
-        $.ajax({
-            type: 'POST',
-            url: '/guest/insertComment',
-            data: JSON.stringify(data),
-            contentType: 'application/json',
-            success: function(response) {
-                const result = JSON.parse(response);
-                if (result.status === 'success') {
-                    window.location.href = result.redirect; // 사용자의 홈 페이지로 리디렉션
-                } else {
-                    alert('댓글 추가에 실패했습니다.');
-                }
-            },
-            error: function(error) {
-                alert('댓글 추가 중 오류가 발생했습니다.');
-            }
-        });
+        const guestWriterNo = document.getElementById('guestWriterNo').value;
+
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/guest/insertComment';
+
+        const writerInput = document.createElement('input');
+        writerInput.type = 'hidden';
+        writerInput.name = 'guestWriterNo';
+        writerInput.value = guestWriterNo;
+        form.appendChild(writerInput);
+
+        const contentInput = document.createElement('input');
+        contentInput.type = 'hidden';
+        contentInput.name = 'guestCommentContent';
+        contentInput.value = text;
+        form.appendChild(contentInput);
+
+        const identityInput = document.createElement('input');
+        identityInput.type = 'hidden';
+        identityInput.name = 'guestbookIdentity';
+        identityInput.value = identity.value;
+        form.appendChild(identityInput);
+
+        document.body.appendChild(form);
+        form.submit();
     }
 
-    // 댓글 삭제
+    // 댓글 삭제 확인
+    function confirmDeleteComment(button) {
+        const guestbookBox = button.closest('.guestbook-box');
+        const guestCommentNo = guestbookBox.dataset.commentNo;
+
+        if (!guestCommentNo) {
+            console.error('댓글 번호가 없습니다.');
+            return;
+        }
+
+        if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
+            deleteComment(button);
+        }
+    }
+    
+ // 댓글 삭제
     function deleteComment(button) {
         const guestbookBox = button.closest('.guestbook-box');
         const guestCommentNo = guestbookBox.dataset.commentNo;
@@ -307,7 +395,7 @@ body {
 
         $.ajax({
             type: 'GET',
-            url: '/guest/deleteComment?guestCommentNo=${guestCommentNo}',
+            url: `/guest/deleteComment?guestCommentNo=${guestCommentNo}`,
             success: function(response) {
                 guestbookBox.remove();
             },
@@ -320,7 +408,7 @@ body {
     // 댓글 수정
     function editComment(button) {
         const guestbookBox = button.closest('.guestbook-box');
-        const textElement = guestbookBox.querySelector('.guestbook-text p'); // 수정: comment-text -> guestbook-text p
+        const textElement = guestbookBox.querySelector('.guestbook-text p');
         const textarea = guestbookBox.querySelector('.edit-textarea');
 
         if (textarea.style.display === 'none') {
@@ -362,7 +450,7 @@ body {
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function(response) {
-                textElement.innerText = newText; 
+                textElement.innerText = newText;
                 textElement.style.display = 'block';
                 textarea.style.display = 'none';
                 button.textContent = '수정';
@@ -381,9 +469,7 @@ body {
             addGuestbookEntry();
         }
     });
-
-</script>
-   <th:block th:include="common/footer"></th:block>
+    </script>
+    <th:block th:include="common/footer"></th:block>
 </body>
 </html>
-
