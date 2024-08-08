@@ -33,10 +33,23 @@ public class CustomerController {
 		return "customer/customerFrm";
 	}
 	@PostMapping(value="/customerWrite")
-	public String customerWrite(Customer c,@SessionAttribute("member") Member member) {
+	public String customerWrite(Customer c,@SessionAttribute("member") Member member, Model model) {
 		System.out.println(member);
 		int result = customerService.insertCustomerInq(c,member);
-		return "redirect:/customer/customerList?reqPage=1";
+		if(result > 0) {
+			// 세션 업데이트 하기
+			model.addAttribute("title", "문의");
+			model.addAttribute("msg", "5 ~ 10일 정도 걸려요~");
+			model.addAttribute("icon", "success");
+			model.addAttribute("loc", "/customer/customerList?reqPage=1");
+			return "common/msg";
+		}else {
+			model.addAttribute("title", "실패");
+			model.addAttribute("msg", "문의 실패");
+			model.addAttribute("icon", "error");
+			model.addAttribute("loc", "/customer/customerList?reqPage=1");
+			return "common/msg";
+		}
 	}
 	@GetMapping(value="/customerPage")
 	public String customerView(Model model, int inqNo) {

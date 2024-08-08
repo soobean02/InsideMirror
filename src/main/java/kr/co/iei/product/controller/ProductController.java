@@ -99,7 +99,7 @@ public class ProductController {
 		if(result > 0) {
 			member.setAcorns(member.getAcorns() - sp.getProductPrice()); // 세션 갱신
 		}
-		return "redirect:/product/productList?reqPage=1";
+		return "redirect:/product/productList?reqPage=1&type=0";
 	}
 	
 	/*구매 상품 리스트 - 타입 검사 추가*/
