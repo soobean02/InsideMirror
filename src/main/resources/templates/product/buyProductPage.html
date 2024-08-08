@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>상품 상세</title>
+<title>구입한 상품 상세</title>
 </head>
 <style>
 :root { -
@@ -13,13 +13,26 @@
 	-table_line: #333;
 }
 
+a {
+	text-decoration: none;
+	color: #000;
+}
+
+.btn {
+	border-radius: 5px;
+	padding: 9px 20px;
+	font-weight: bold;
+	font-size: 1rem;
+	cursor: pointer;
+}
+
 .start_page {
 	margin-top: 20px;
 }
 
 .icon_img {
-	width: 150px;
-	height: 150px;
+	width: 160px;
+	height: 160px;
 	margin: 10px 20px 0 20px;
 	float: left;
 }
@@ -46,12 +59,11 @@ form {
 
 .pay {
 	box-sizing: border-box;
-	width: 300px;
-	height: 220px;
-	float: right;
+	width: 250px;
+	height: 180px;
+	float: left;
 	border: 1px solid #000;
 	border-radius: 10px;
-	margin-right: 10px;
 }
 
 .pay_tx {
@@ -65,7 +77,6 @@ form {
 }
 
 .acorn_tx {
-	width: 280px;
 	border-top: 1px solid #000;
 	border-bottom: 1px solid #000;
 	font-size: 14px;
@@ -80,7 +91,7 @@ form {
 }
 
 .acorn_box {
-	width: 230px;
+	width: 190px;
 	margin: 0 auto;
 	overflow: hidden;
 }
@@ -121,6 +132,15 @@ form {
 	margin-top: 40px;
 }
 
+.product_box {
+	background-color: #eee;
+	padding: 10px;
+	margin-left: 35px;
+	width: 150px;
+	height: 180px;
+	float: left;
+}
+
 .product_name {
 	font-weight: bold;
 	text-align: center;
@@ -136,14 +156,8 @@ form {
 }
 
 .product_img>img {
-	width: 90px;
-	height: 90px;
+	width: 100px;
 	padding: 0 25px 15px 25px;
-}
-
-a {
-	color: #000;
-	text-decoration: none;
 }
 
 .first_box {
@@ -177,11 +191,6 @@ h4 {
 	overflow: hidden;
 }
 
-.acorn_box {
-	padding-top: 20px;
-	padding-bottom: 20px;
-}
-
 .list_plus {
 	padding: 10px 10px 0 0;
 	font-weight: bold;
@@ -197,13 +206,43 @@ h4 {
 	background-color: #eee;
 	padding: 10px;
 	margin-left: 20px;
-	width: 150px;
-	height: 170px;
+	width: 160px;
+	height: 180px;
 	float: left;
 }
 
+.product_name {
+	font-weight: bold;
+	text-align: center;
+	padding-bottom: 10px;
+}
+
+.product_box>a {
+	display: inline-block;
+	width: 150px;
+	text-align: center;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.product_img>img {
+	width: 100px;
+	height: 100px;
+	padding: 0 25px 15px 25px;
+}
+
+.pay {
+	box-sizing: border-box;
+	width: 250px;
+	height: 220px;
+	float: right;
+	border: 1px solid #000;
+	border-radius: 10px;
+	margin-right: 40px;
+}
+
 .pay_acorn>* {
-	margin-top: 5px;
+	margin-top: 20px;
 }
 
 .pay_acorn>button {
@@ -215,23 +254,28 @@ h4 {
 	cursor: pointer;
 	background-color: var(- -btn_primary);
 	padding: 0;
-	font-weight: bold;
 	width: 120px;
 	height: 30px;
-	border-radius: 5px;
+	border: none;
+	float: right;
+	margin-top: 50px;
+}
+
+.refund {
+	width: 120px;
+	height: 30px;
+	float: right;
+	text-align: right;
+	margin-top: 45px;
+	line-height: 30px;
+	font-weight: bold;
+}
+
+.acorn_box {
 	border: none;
 }
-
-.acornShow {
-	float: left;
-	font-weight: bold;
-	font-size: 15px;
-}
-
-.buy_product {
-	color: #ddd;
-}
 </style>
+
 <body>
 	<th:block th:include="common/top"></th:block>
 	<!--시작!!!!-->
@@ -240,59 +284,22 @@ h4 {
 	<div class="start_page">
 		<div class="first_box">
 			<div class="icon_img">
-				<img th:src="@{'/product/editor/'+${p.productImg}}" width="120px"
-					height="120px"> <a href="#" class="try">적용해보기 > </a>
+				<img th:src="@{'/product/editor/'+${sp.sellProduct.productImg}}" width="120px" height="120px">
 			</div>
 			<div class="pr_title">
-				<h2 th:text="${p.productName}"></h2>
+				<h2 th:text="${sp.sellProduct.productName}"></h2>
 				<h4>
-					<th:block th:text="${p.productPrice}"></th:block>
+					<th:block th:text="${sp.sellProduct.productPrice}"></th:block>
 					도토리
 				</h4>
 			</div>
-			<div class="radio_box radio_item">
-				<th:block th:if="${bp == null}">
-					<div class=" pay">
-						<div class="pay_tx center">총 결제 금액</div>
-						<div class="acorn_tx acorn_box">
-							<div>
-								도토리 <span th:text="${session.member.acorns}" id="myAcorn"></span>
-								개
-							</div>
-							<!--타임리프 들어가야함 도토리 수-->
-							<div>
-								상품 도토리 <span th:text="${p.productPrice}" id="productAcorn"></span>
-								개
-							</div>
-							<!--타임리프 들어가야함 도토리 수-->
-						</div>
-
-						<div class="pay_system">
-							<div class="acorn_box pay_acorn">
-								<div id="pay"></div>
-								<form action="userBuyProduct" method="post">
-									<!-- 보낼때 상품번호, 상품 가격, 상품 리스트 정보, 멤버 번호 같이 보내기 -->
-									<input type="hidden" name="productNo" th:value="${p.productNo}">
-									<input type="hidden" name="productPrice"
-										th:value="${p.productPrice}"> <input type="hidden"
-										name="productPrice" th:value="${p.productListNo}"> <input
-										type="hidden" name="memberNo"
-										th:value="${session.member.memberNo}">
-									<button class="btn">구매하기</button>
-								</form>
-								<a href="/product/acornProduct" class="acornShow"
-									style="display: none;">도토리 구매하러 가기 > </a>
-							</div>
-						</div>
-					</div>
-				</th:block>
-				<th:block th:if="${bp != null}">
-					<!-- 여기 고치기 -->
-					<h2 class="buy_product">이미 구매하신 상품 입니다.</h2>
-				</th:block>
+			<div class="acorn_tx acorn_box">
+				<h3>구입일 <th:block th:text="${sp.buyProduct.buyDate}"></th:block></h3>
+				<button class="btn">적용하기</button>
+				<a href="/customer/customerFrm" class="refund">환불하기 > </a>
 			</div>
 		</div>
-		<div class="sec_box">
+				<div class="sec_box">
 			<div class="list_plus">
 				<a href="/product/productList?reqPage=1">다른 상품 구경하기 +</a>
 			</div>
@@ -316,29 +323,9 @@ h4 {
 	</div>
 	<!--끝!!!!-->
 	<th:block th:include="common/bottom"></th:block>
-
 	</div>
 	</div>
 	</div>
-
-	<script>
-		const productAcorn = parseInt($("#productAcorn").text());
-		function price() {
-			const myAcorn = parseInt($("#myAcorn").text());
-			if (myAcorn >= productAcorn) {
-				$("#pay").text("결제 후 내 도토리 : " + (myAcorn - productAcorn));
-			} else {
-				$("#pay").text("도토리가 부족합니다...");
-				$(".btn").hide(); // 구매하기 버튼 숨기기
-				$(".acornShow").show(); // "도토리 구매하러가기" 보이기
-			}
-		}
-		price();
-		
-		$(".btn").on("click",function(){
-			
-		})
-	</script>
 </body>
 
 </html>

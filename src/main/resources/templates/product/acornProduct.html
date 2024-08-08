@@ -7,12 +7,6 @@
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 </head>
 <style>
-:root { -
-	-point_color: lightskyblue; -
-	-btn_primary: skyblue; -
-	-btn_secondary: #eee; -
-	-table_line: #333;
-}
 
 a {
 	text-decoration: none;
@@ -269,7 +263,7 @@ form {
 	</div>
 	</div>
 	</div>
-	<script>
+	<script th:inline="javascript">
 		$("input[name='acorn']").on("change", function() {
 			const acornCount = $(this).val(); // 도토리 건든 거
 			const acornPrice = acornCount * 100; // 도토리 가격
@@ -295,6 +289,10 @@ form {
 		});
 
 		function pay_start(acornPay, pay) {
+			const memberName = [[${session.member.memberName}]];
+			const memberTel = [[${session.member.memberPhone}]];
+			const memberAddr = [[${session.member.memberAddr}]];
+			console.log(memberName);
 			const date = new Date();
 			const dateString = date.getFullYear() + "" + (date.getMonth() + 1)
 					+ "" + date.getDate() + "" + date.getHours() + ""
@@ -314,16 +312,13 @@ form {
 				//pg: "html5_inicis.INIpayTest", // 이니시스
 				pay_method : "card",
 				merchant_uid : "order_no_" + dateString, //상점에서 생성한 고유 주문번호
-				name : "주문명:결제테스트",
+				name : "도토리 구매",
 				amount : acornPay, // 결제 금액
-				buyer_email : "test@portone.io",
-				buyer_name : "구매자이름",
-				buyer_tel : "010-1234-5678", //필수 파라미터 입니다.
-				buyer_addr : "서울특별시 강남구 삼성동",
-				buyer_postcode : "123-456"
+				buyer_name : memberName,
+				buyer_tel : memberTel, //필수 파라미터 입니다.
+				buyer_addr : memberAddr
 			}, function(rsp) {
 				if (rsp.success) {
-					alert("결제 성공");
 					/*결제 성공 시 도토리 개수 컨트롤러로 보내기*/
 					$("#hiddenAcorn").val(acornPay / 100);
 					$("#formAcorn").submit();

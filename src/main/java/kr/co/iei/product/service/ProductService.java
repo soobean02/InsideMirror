@@ -14,6 +14,7 @@ import kr.co.iei.product.dao.ProductDao;
 import kr.co.iei.product.dto.BuyProduct;
 import kr.co.iei.product.dto.BuyProductListData;
 import kr.co.iei.product.dto.ProductListData;
+import kr.co.iei.product.dto.SellBuyProduct;
 import kr.co.iei.product.dto.SellProduct;
 
 @Service
@@ -113,11 +114,6 @@ public class ProductService {
 //		Customer customer = customerDao.selectCustomerList(reqPage);
 		return pld;
 	}
-
-	// 상품 상세보기 후 수정, 삭제
-	public int productView(SellProduct sp) {
-		return 0;
-	}// productView
 
 	@Transactional
 	public int addProduct(SellProduct sp) {
@@ -307,6 +303,7 @@ public class ProductService {
 		return pld;
 	}
 
+
 	@Transactional
 	public int adminAddProduct(SellProduct sp) {
 		int result = productDao.adminAddProduct(sp);
@@ -318,6 +315,7 @@ public class ProductService {
 		int result = productDao.productDelete(productNo);
 		return result;
 	}// productDelete
+
 
 	public BuyProductListData selectRefundList(int reqPage) {
 		int numPerPage = 5;
@@ -377,5 +375,12 @@ public class ProductService {
 
 		return bld;
 	}//selectRefundList
+
+	// 구매한 상품 상세보기 정보 출력
+	public SellBuyProduct selectBuyProductInfo(int buyNo) {
+		SellBuyProduct sp = productDao.selectBuyProductInfo(buyNo);
+		return sp;
+	}
+
 
 }
