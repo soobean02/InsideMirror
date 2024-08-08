@@ -53,12 +53,12 @@ public class BoardController {
 	}//글 작성
 
 	@GetMapping(value="/view")
-	public String view(int boardNo, Model model, @SessionAttribute(required = false) Member member){
-		// int memberNo = 0;
-		// if(member != null){
-		// 	memberNo = member.getMemberNo();
-		// }
-		Board board = boardService.selectOneBoard(boardNo);
+	public String view(int boardNo, String check, Model model, @SessionAttribute(required = false) Member member){
+		int memberNo = 0;
+		if(member != null){
+			memberNo = member.getMemberNo();
+		}
+		Board board = boardService.selectOneBoard(boardNo, check, memberNo);
 		if(board == null){
 			return "redirect:/board/list?reqPage=1";
 		}
@@ -87,6 +87,34 @@ public class BoardController {
 		return "redirect:/board/list?reqPage=1";
 	}//게시글 작성
 
+	@GetMapping(value="/editFrm")
+	public String editBoardFrm(int boardNo, Model model){
+		Board board = boardService.getOneBoard(boardNo);
+		board.setBoardNo(boardNo);
+		model.addAttribute("board", board);
+		return "/board/editFrm";
+	}//게시글 수정 양식으로
+
+	@PostMapping(value="/edit")
+	public String editBoard(Board board, Model model){
+		
+		int result = boardService.editBoard(board);
+		if(result > 0){
+			//수정 성공시
+			model.addAttribute("title", "수정");
+			model.addAttribute("msg", "게시글을 수정했습니다!");
+			model.addAttribute("icon", "success");
+			model.addAttribute("loc", "/board/view?boardNo="+board.getBoardNo()+"&check=1");
+		}
+		else{
+			model.addAttribute("title", "수정");
+			model.addAttribute("msg", "수정실패 다시 시도해주세요.");
+			model.addAttribute("icon", "error");
+			model.addAttribute("loc", "/board/view?boardNo="+board.getBoardNo()+"&check=1");
+		}
+		return "common/msg";
+	}//게시글 수정
+
 	@GetMapping(value="/delete")
 	public String deleteBoard(int boardNo,Model model){
 		int result = boardService.deleteBoard(boardNo);
@@ -95,7 +123,7 @@ public class BoardController {
 		model.addAttribute("icon", "success");
 		model.addAttribute("loc", "/board/list?reqPage=1");
 		return "common/msg";
-	}
+	}//게시글 삭제
 
 	@ResponseBody
 	@PostMapping(value="/editorImage",produces = "plain/text;charset=utf-8")
@@ -108,6 +136,19 @@ public class BoardController {
 		return "/board/"+filepath;
 	}//파일업로드(summernote로 글 작성할때 파일 업로드하면 바로보일 수 있게)
 
+	//게시글 좋아요 / 북마크
+
+	@ResponseBody
+	@PostMapping(value="/like")
+	public int pushLike(int isLike, int boardNo, @SessionAttribute(required = false) Member member, Model model){
+		if(member == null){
+			return -1;
+		}
+		System.out.println(isLike);
+		System.out.println(boardNo);
+		int result = boardService.pushLike(isLike, boardNo, member);
+		return result;
+	}//좋아요버튼 누르면
 
 	@ResponseBody
 	@PostMapping(value="/comment")

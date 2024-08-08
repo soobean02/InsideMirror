@@ -308,6 +308,7 @@
 
                 <div class="view-writer right">
                     <span th:text="${board.boardWriter}"></span>
+                    <span> | </span>
                 </div>
                 
                 
@@ -319,14 +320,15 @@
                 </div>
 
                 <div class="view-mark left">
-                    <span class="material-icons select">favorite_border</span>
-                    <span class="material-icons select">bookmark_border</span>
+                    <span th:if="${board.isLike == 1}" class="material-icons select" th:onclick="pushLike(this,[[${board.boardNo}]])">favorite</span>
+                    <span th:if="${board.isLike == 0}" class="material-icons select" th:onclick="pushLike(this,[[${board.boardNo}]])">favorite_border</span>
+                    <span class="material-icons select" th:onclick="pushBookMark(this,[[${board.boardNo}]])">bookmark_border</span>
                 </div>
             </div>
 <!-- 작성자 | 작성일 -->
 <!-- 조회수/하트개수 | 하트 | 북마크 순으로 -->
             <div class="fix left">
-                <a th:if="${session.member != null && session.member.memberNo == board.memberNo}" class="material-icons" th:href="@{/board/updateFrm(boardNo=${board.boardNo})}">edit</a>
+                <span th:if="${session.member != null && session.member.memberNo == board.memberNo}" class="material-icons" th:onclick="boardEdit([[${board.boardNo}]],[[${board.boardTitle}]],[[${board.boardContent}]])">edit</span>
                 <span th:if="${session.member != null && session.member.memberNo == board.memberNo}" class="material-icons" th:onclick="boardDelete([[${board.boardNo}]])">delete</span>
             </div>
             
@@ -424,9 +426,7 @@
                 <th:block th:include="common/bottom"></th:block>
                 
                 
-            </div>
-        </div>
-    </div>
+
     <script>
             
         moreComment();
@@ -766,9 +766,13 @@
             })
         }//댓글 추가
 
+        //게시글 수정
+        function boardEdit(boardNo, boardTitle, boardContent){
+            location.href = "/board/editFrm?boardNo="+boardNo;
+        }
 
         //게시글 삭제
-        function boardDelete(){
+        function boardDelete(boardNo){
             swal({
                 title : "삭제",
                 text : "게시글을 삭제하시겠습니까?",
@@ -792,6 +796,47 @@
                     location.href="/board/delete?boardNo="+boardNo;
                 }
             });
+        }
+
+
+        ////좋아요 및 북마크 기능
+        function pushLike(obj, boardNo){
+            const text = $(obj).text();
+            //좋아요 누르면 1 취소면 0
+            const isLike = (text == "favorite_border") ? 0 : 1;
+            
+            
+            $.ajax({
+                url : "/board/like",
+                type : "post",
+                data : {isLike : isLike , boardNo : boardNo},
+                success : function(data){
+                    if(data == -1){
+                        alert("로그인 후 이용 가능합니다.");
+                    }
+                    else if(data == 1){
+                        console.log("성공");
+                        if(isLike == 0) $(obj).text("favorite");
+                        else $(obj).text("favorite_border");
+                    }
+                    else if(data == 0){
+                        alert("실패")
+                    }
+                },
+                error : function(){
+                    console.log("error");
+                }
+            });
+        }
+
+        function pushBookMark(obj){
+            const isBookMark = $(obj).text();
+            if(isBookMark === "bookmark_border"){
+                //즐겨찾기 한거
+            }
+            else{
+                //즐겨찾기 취소
+            }
         }
 
 

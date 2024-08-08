@@ -23,12 +23,18 @@ public class BoardRowMapper implements RowMapper<Board> {
 		String formattedDate = sdf.format(boardDate);
 		b.setBoardDate(formattedDate);
 		
-
+		
 		b.setBoardContent(rs.getString("board_content"));
-
+		
 		b.setBoardLike(rs.getInt("board_like"));
-
+		
 		b.setBoardWriter(rs.getString("board_writer_nickname"));
+
+		try {
+			b.setBoardLike(rs.getInt("is_like"));
+		} catch (Exception e) {
+			b.setBoardLike(0);
+		}
 		return b;
 	}
 

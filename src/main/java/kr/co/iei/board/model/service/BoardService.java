@@ -11,6 +11,7 @@ import kr.co.iei.board.model.dto.Board;
 import kr.co.iei.board.model.dto.BoardComment;
 import kr.co.iei.board.model.dto.BoardFile;
 import kr.co.iei.board.model.dto.BoardListData;
+import kr.co.iei.member.model.dto.Member;
 
 @Service
 public class BoardService {
@@ -76,10 +77,13 @@ public class BoardService {
 	}//리스트보기
 
 	@Transactional
-	public Board selectOneBoard(int boardNo) {
-		Board board = boardDao.selectOneBoard(boardNo);
+	public Board selectOneBoard(int boardNo, String check, int memberNo) {
+		Board board = boardDao.selectOneBoard(boardNo, memberNo);
 		if(board != null){
-			int result = boardDao.updateReadCount(boardNo);
+
+			if(check == null){
+				int result = boardDao.updateReadCount(boardNo);
+			}
 			//게시물 조회수 증가
 			
 			//댓글 조회
@@ -94,6 +98,11 @@ public class BoardService {
 
 		return board;
 	}//상세보기
+
+	public Board getOneBoard(int boardNo) {
+		Board board = boardDao.getOneBoard(boardNo);
+		return board;
+	}//수정하기 위해서 데이터를 가져오는 작업 (게시글 수정)
 
 	@Transactional
 	public int insertBoard(Board board, List<BoardFile> fileList) {
@@ -111,10 +120,31 @@ public class BoardService {
 	}//게시판 insert
 
 	@Transactional
+	public int editBoard(Board board) {
+		int result = boardDao.editBoard(board);
+		return result;
+	}//게시글 수정
+
+	@Transactional
 	public int deleteBoard(int boardNo) {
 		int result = boardDao.deleteBoard(boardNo);
 		return result;
 	}//게시글 삭제
+
+	@Transactional
+	public int pushLike(int isLike, int boardNo, Member member) {
+		int result = 0;
+		System.out.println("service");
+		if(isLike == 0){
+			//좋아요 취소인경우
+			result = boardDao.insertLike(boardNo, member);
+		}
+		else{
+			//좋아요 누른 경우
+			result = boardDao.deleteLike(boardNo, member);
+		}
+		return result;
+	}//게시글 좋아요
 
 	@Transactional
 	public int insertBoardComment(BoardComment comment) {
@@ -138,6 +168,12 @@ public class BoardService {
 		BoardComment oneComment = boardDao.selectOneComment(comment);
 		return oneComment;
 	}//댓글 하나 조회
+
+	
+
+	
+
+	
 
 	
 }
