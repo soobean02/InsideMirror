@@ -136,10 +136,23 @@ public class ProductDao {
 		List list = jdbc.query(query,buyInfoRowMapper, params);
 		return list;
 	}
-	// 
 	public int selectBuyProductTotalCount(Member member) {
 		String query = "select count(*) from buy_product where member_no=?";
 		Object[] params = {member.getMemberNo()};
+		int totalCount = jdbc.queryForObject(query, Integer.class,params);
+		return totalCount;
+	}
+	
+	// 구매한 상품 리스트 보기 (타입별)
+	public List selectBuyProductList(int start, int end, Member member, int type) {
+		String query = "select * from (select rownum as rnum, n.* from (select * from buy_product join sell_product using(product_no) where member_no=? and product_list_no=? order by 1 desc)n) join sell_product s using(product_no) where rnum between ? and ?";
+		Object[] params = {member.getMemberNo(),type,start,end};
+		List list = jdbc.query(query,buyInfoRowMapper, params);
+		return list;
+	}
+	public int selectBuyProductTotalCount(Member member, int type) {
+		String query = "select count(*) from (select * from buy_product join sell_product using(product_no) where member_no=? and product_list_no=?)";
+		Object[] params = {member.getMemberNo(),type};
 		int totalCount = jdbc.queryForObject(query, Integer.class,params);
 		return totalCount;
 	}
@@ -198,6 +211,7 @@ public class ProductDao {
 		int refundListTotalCount = jdbc.queryForObject(query, Integer.class);	
 		return refundListTotalCount;
 	}//selectRefundListTotalCount
+
 
 
 

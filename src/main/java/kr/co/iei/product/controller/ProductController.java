@@ -99,15 +99,16 @@ public class ProductController {
 		if(result > 0) {
 			member.setAcorns(member.getAcorns() - sp.getProductPrice()); // 세션 갱신
 		}
-		return "redirect:/product/productList?reqPage=1";
+		return "redirect:/product/productList?reqPage=1&type=0";
 	}
 	
 	/*구매 상품 리스트 - 타입 검사 추가*/
 	@GetMapping(value="/buyProductList")
-	public String buyProductList(Model model, int reqPage, @SessionAttribute Member member) {
-		ProductListData pld = productService.selectBuyProduct(reqPage, member);
+	public String buyProductList(Model model, int reqPage, @SessionAttribute Member member, int type) {
+		ProductListData pld = productService.selectBuyProduct(reqPage, member, type);
 		model.addAttribute("list", pld.getList());
 		model.addAttribute("pageNavi", pld.getNaviPage());
+		model.addAttribute("ty", type);
 		return "/product/buyProductList";
 	}
 	
@@ -125,5 +126,10 @@ public class ProductController {
 		model.addAttribute("product",product);
 		
 		return "/product/buyProductPage";
+	}
+	
+	@GetMapping(value="/appProductList")
+	public String appProductList() {
+		return "/product/appProductList";
 	}
 }

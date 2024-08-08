@@ -53,6 +53,7 @@ public class ProductService {
 		int start = end - numPerPage + 1; // 10 - 10 = 1번 부터..., 20 - 10 + 1 = 11 번 부터...
 		List list = null;
 		int totalCount = 0;
+		
 		if(type==0) { // 타입0 => 전체 조회
 			list = productDao.selectProductList(start, end);
 			totalCount = productDao.selectProductTotalCount();
@@ -240,16 +241,25 @@ public class ProductService {
 		return result;
 	}// productUpdate
 
-	public ProductListData selectBuyProduct(int reqPage,  Member member) {
+	public ProductListData selectBuyProduct(int reqPage,  Member member, int type) {
 		// 한 페이지당 10개의 글 조회
 		int numPerPage = 10;
 		// 시작번호
 		int end = reqPage * numPerPage; // 1페이지면 10, 2페이지면 20 ...
 		int start = end - numPerPage + 1; // 10 - 10 = 1번 부터..., 20 - 10 + 1 = 11 번 부터...
 		
-		List list = productDao.selectBuyProductList(start, end, member);
-		// 전체 페이지 수 계산
-		int totalCount = productDao.selectBuyProductTotalCount(member);
+		List list = null;
+		int totalCount = 0;
+		
+		if(type==0) { // 타입0 => 전체 조회
+			list = productDao.selectBuyProductList(start, end, member);
+			totalCount = productDao.selectBuyProductTotalCount(member);
+		}else { // 타입 (배경, 커서, 폰트) 조회
+			list = productDao.selectBuyProductList(start, end, member, type);
+			totalCount = productDao.selectBuyProductTotalCount(member, type);
+		}
+		
+
 		// 전체 페이지 수 계산
 		int totalPage = 0;
 
