@@ -7,7 +7,7 @@
     <title>header</title>
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/footer.css">
-    <script src="/js/jquery-3.6.0.js"></script>
+    <script src="/js/sweetalert.min.js"></script>
 
 </head>
 
@@ -25,11 +25,36 @@
         </div>
         <div class="right-group">
             <ul class="user-menu">
-                <li class="li"><a href="#">비회원</a></li>
+                <li class="li"><a href="javascript:void(0)" class="nonMember">비회원</a></li>
                 <li class="li"><a href="/member/login">로그인</a></li>
             </ul>
         </div>
     </header>
 </body>
+<script>
+	$(".nonMember").on("click",function(){
+		$(".nonMember").hide();
+		swal({
+			title: "회원가입하시겠습니까?",
+	        text: "회원가입을 원치 않으시면 뒤로가기 눌러주세요.",
+	   		buttons:{
+	   			confirm:{
+	   				text:"회원가입",
+	   				value:true,
+	   				visible:true
+	   			},
+	   			cancel:{
+	   				text:"뒤로가기",
+	   				value:false,
+	   				visible:true,
+	   			}
+	   		}
+		}).then(function(isConfirm){
+			if(isConfirm){
+				location.href = "/member/joinFrm";
+			}
+		});
+	})
+</script>
 </html>
 

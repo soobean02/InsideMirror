@@ -68,18 +68,17 @@ public class BoardController {
 	}//게시글 상세보기
 
 	@PostMapping(value="/write")
-	public String write(Board board, MultipartFile[] upfile, Model model){
-
+	public String write(Board board, Model model){
 		List<BoardFile> fileList = new ArrayList<BoardFile>();
-		if(!upfile[0].isEmpty()){
-			String savepath = root+"/board/";
-			for(MultipartFile file : upfile){
-				String filepath = fileUtils.upload(savepath, file);
-				BoardFile boardFile = new BoardFile();
-				boardFile.setFilepath(filepath);
-				fileList.add(boardFile);
-			}
-		}
+		// if(!upfile[0].isEmpty()){
+		// 	String savepath = root+"/board/";
+		// 	for(MultipartFile file : upfile){
+		// 		String filepath = fileUtils.upload(savepath, file);
+		// 		BoardFile boardFile = new BoardFile();
+		// 		boardFile.setFilepath(filepath);
+		// 		fileList.add(boardFile);
+		// 	}
+		// }
 		int result = boardService.insertBoard(board, fileList);
 		if(result > 0){
 			//작성 성공로직
@@ -94,9 +93,9 @@ public class BoardController {
 		if(member == null){
 			return "redirect:/board/list?reqPage=1";
 		}
-		String savepath = root+"/board/editor/";
+		String savepath = root+"/board/";
 		String filepath = fileUtils.upload(savepath, upfile);
-		return "/board/editor/"+filepath;
+		return "/board/"+filepath;
 	}//파일업로드(summernote로 글 작성할때 파일 업로드하면 바로보일 수 있게)
 
 
