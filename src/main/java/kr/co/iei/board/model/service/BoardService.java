@@ -257,6 +257,7 @@ public class BoardService {
 			else if(orderDate.equals("newest") && orderFriend.equals("friend")){
 				//최신글 / 일촌only
 				list = boardDao.titleDateNewFriendFriend(keyword, start, end, member);
+				totalCount = boardDao.selectBoardSearchTitleFriendTotalCount(keyword, member);
 			}
 			else if(orderDate.equals("popular") && orderFriend.equals("all")){
 				//인기글 / 전체
@@ -266,6 +267,7 @@ public class BoardService {
 			else if(orderDate.equals("popular") && orderFriend.equals("friend")){
 				//인기글 / 일촌only
 				list = boardDao.titleDatePopularFriendFriend(keyword, start, end, member);
+				totalCount = boardDao.selectBoardSearchTitleFriendTotalCount(keyword, member);
 			}
 
 			
@@ -281,6 +283,7 @@ public class BoardService {
 			else if(orderDate.equals("newest") && orderFriend.equals("friend")){
 				//최신글 / 일촌only
 				list = boardDao.writerDateNewFriendFriend(keyword, start, end, member);
+				totalCount = boardDao.selectBoardSearchWriterFriendTotalCount(keyword, member);
 			}
 			else if(orderDate.equals("popular") && orderFriend.equals("all")){
 				//인기글 / 전체
@@ -290,6 +293,7 @@ public class BoardService {
 			else if(orderDate.equals("popular") && orderFriend.equals("friend")){
 				//인기글 / 일촌only
 				list = boardDao.writerDatePopularFriendFriend(keyword, start, end, member);
+				totalCount = boardDao.selectBoardSearchWriterFriendTotalCount(keyword, member);
 			}
 			
 		}

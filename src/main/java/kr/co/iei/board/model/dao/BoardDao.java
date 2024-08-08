@@ -269,20 +269,43 @@ public class BoardDao {
 	
 	public List titleDatePopularFriendAll(String keyword, int start, int end) {
 		//제목 / 인기 / 전체
-		String query = "";
-		Object[] params = {start, end, keyword};
+		String query = "select b_tbl.*,\r\n" + //
+						"    (select count(*) from board_like where board_no = b_tbl.board_no) as board_like\r\n" + //
+						"from \r\n" + //
+						"    (select rownum as rnum, b.*,\r\n" + //
+						"        (select member_nickname from member where member_no = b.member_no) as board_writer_nickname\r\n" + //
+						"        from \r\n" + //
+						"            (select * from board b2 where board_title like '%'||?||'%' order by read_count / 10 + (select count(*) from board_like where board_no = b2.board_no) desc)b\r\n" + //
+						"    )b_tbl \r\n" + //
+						"where rnum between ? and ?";
+		Object[] params = {keyword, start, end};
 		List list = jdbc.query(query, boardRowMapper, params);
 		return list;
 	}
 	
 	public List titleDatePopularFriendFriend(String keyword, int start, int end, Member member) {
 		//제목 / 인기 / 친구
-		String query = "";
-		Object[] params = {start, end, keyword};
+		String query = "select b_tbl.*,\r\n" + //
+						"    (select count(*) from board_like where board_no = b_tbl.board_no) as board_like\r\n" + //
+						"from \r\n" + //
+						"    (select rownum as rnum, b.*,\r\n" + //
+						"        (select member_nickname from member where member_no = b.member_no) as board_writer_nickname\r\n" + //
+						"        from \r\n" + //
+						"            (select * from board b2 where board_title like '%'||?||'%' and member_no in (select friend_member_no from friend where member_no = ?) \r\n" + //
+						"            order by read_count / 10 + (select count(*) from board_like where board_no = b2.board_no) desc)b\r\n" + //
+						"    )b_tbl \r\n" + //
+						"where rnum between ? and ?";
+		Object[] params = {keyword, member.getMemberNo(), start, end};
 		List list = jdbc.query(query, boardRowMapper, params);
 		return list;
 	}
 	
+	public int selectBoardSearchTitleFriendTotalCount(String keyword, Member member) {
+		String query = "select count(*) from board where board_title like '%'||?||'%' and member_no in (select friend_member_no from friend where member_no = ?)";
+		Object[] params = {keyword, member.getMemberNo()};
+		int totalCount = jdbc.queryForObject(query, Integer.class, params);
+		return totalCount;
+	}//제목 조회중에 친구만인경우 totalCount
 	
 	/////////////////////////////
 	
@@ -319,19 +342,41 @@ public class BoardDao {
 	public List writerDatePopularFriendAll(String keyword, int start, int end) {
 		
 		//작성자 / 인기 / 전체
-		String query = "";
-		Object[] params = {start, end, keyword};
+		String query = "select b_tbl.*,\r\n" + //
+						"(select count(*) from board_like where board_no = b_tbl.board_no) as board_like\r\n" + //
+						"from (select rownum as rnum, b.*,\r\n" + //
+						"(select member_nickname from member where member_no = b.member_no) as board_writer_nickname\r\n" + //
+						"from (select * from board b2 where member_no in (select member_no from member where member_nickname like '%'||?||'%')\r\n" + //
+						"order by read_count / 10 + (select count(*) from board_like where board_no = b2.board_no) desc)b)b_tbl \r\n" + //
+						"where rnum between ? and ?";
+		Object[] params = {keyword, start, end};
 		List list = jdbc.query(query, boardRowMapper, params);
 		return list;
 	}
 	
 	public List writerDatePopularFriendFriend(String keyword, int start, int end, Member member) {
 		//작성자 / 인기 / 친구
-		String query = "";
-		Object[] params = {start, end, keyword};
+		String query = "select b_tbl.*,\r\n" + //
+						"(select count(*) from board_like where board_no = b_tbl.board_no) as board_like\r\n" + //
+						"from (select rownum as rnum, b.*,\r\n" + //
+						"(select member_nickname from member where member_no = b.member_no) as board_writer_nickname\r\n" + //
+						"from (select * from board b2 where member_no in (select member_no from member where member_nickname like '%'||?||'%') and\r\n" + //
+						"member_no in (select friend_member_no from friend where member_no = ?)\r\n" + //
+						"order by read_count / 10 + (select count(*) from board_like where board_no = b2.board_no) desc)b)b_tbl \r\n" + //
+						"where rnum between ? and ?";
+		Object[] params = {keyword, member.getMemberNo(),start, end};
 		List list = jdbc.query(query, boardRowMapper, params);
 		return list;
 	}
+
+	public int selectBoardSearchWriterFriendTotalCount(String keyword, Member member) {
+		String query = "select count(*) from board where member_no in (select member_no from member where member_nickname like '%'||?||'%') and member_no in (select friend_member_no from friend where member_no = ?)";
+		Object[] params = {keyword, member.getMemberNo()};
+		int totalCount = jdbc.queryForObject(query, Integer.class, params);
+		return totalCount;
+	}//작성자 조회중에 친구인 경우
+
+	
 
 	
 

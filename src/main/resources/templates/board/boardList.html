@@ -188,20 +188,41 @@
     
     <div class="board-wrap">
         <div class="board-header">
-
             
             <div class="order-wrap left">
                 <span class="order-span">정렬</span>
                 <div class="order-content">
                     <ul>
                         <form action="/board/order" method="get" class="order-form">
-                            <li>
-                                <input type="radio" name="orderDate" value="newest" checked>최신순
-                                <input type="radio" name="orderDate" value="popular">인기순
+                            <li th:switch="${orderDate}">
+                                <div th:case=null>
+                                    <input type="radio" name="orderDate" value="newest" checked>최신순
+                                    <input type="radio" name="orderDate" value="popular">인기순
+                                </div>
+
+                                <div th:case="newest">
+                                    <input type="radio" name="orderDate" value="newest" checked>최신순
+                                    <input type="radio" name="orderDate" value="popular">인기순
+                                </div>
+                                
+                                <div th:case="popular">
+                                    <input type="radio" name="orderDate" value="newest">최신순
+                                    <input type="radio" name="orderDate" value="popular" checked>인기순
+                                </div>
                             </li>
-                            <li>
-                                <input type="radio" name="orderFriend" value="all" checked>전체
-                                <input type="radio" name="orderFriend" value="friend">일촌only
+                            <li th:switch="${orderFriend}">
+                                <div th:case=null>
+                                    <input type="radio" name="orderFriend" value="all" checked>전체
+                                    <input type="radio" name="orderFriend" value="friend">일촌only
+                                </div>
+                                <div th:case="all">
+                                    <input type="radio" name="orderFriend" value="all" checked>전체
+                                    <input type="radio" name="orderFriend" value="friend">일촌only
+                                </div>
+                                <div th:case="friend">
+                                    <input type="radio" name="orderFriend" value="all">전체
+                                    <input type="radio" name="orderFriend" value="friend" checked>일촌only
+                                </div>
                             </li>
                             <input type="hidden" name="reqPage" value="1">
                         </form>

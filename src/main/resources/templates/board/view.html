@@ -591,7 +591,8 @@
                             const ifEdited = $(item).prevAll(".edited").is(".edited");
                             if(!ifEdited){
                                 //만약에 이미 수정된 적이 있는 글이면 (수정) 이라는 글씨를 안 붙이기 위함
-                                if(boardCommentRef === 0){
+                                console.log(boardCommentRef);
+                                if(boardCommentRef === undefined){
                                     //댓글인 경우 left를 넣어야 함
                                     writer.after("<div class='edited left'>(수정)</div>");
                                 }
@@ -691,12 +692,14 @@
                             $(item).prev().prev().prev().val("");
                             const comment = data.comment;
 
+                            // <div class="edited left">${comment.boardEdit == 1 ? '(수정)' : ''}</div>
+                            // 원래 nickname 밑에 있었
                             if(boardCommentRef === 0){
                                 const addedComment = `
                                     <div class="comment-list-wrap">
                                         <div class="comment-writer left">
                                         <div class="writer left">${memberNickName}</div>
-                                        <div class="edited left">${comment.boardEdit == 1 ? '(수정)' : ''}</div>
+
                                         <div class="date left">${comment.boardCommentDate}</div>
                                         <span class="right">)</span>
                                         <span class="getReCommentCount right">${comment.reCommentCount}</span>
