@@ -65,6 +65,24 @@ public class MemberDao {
 	}
 
 
+	public int resetPassword(Member m) {
+		String query = "update member set member_pw=? where member_id=?";
+		Object[] params = {m.getMemberPw(),m.getMemberId()};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+
+
+	public Member checkPassword(String memberPw) {
+		String query = "select * from member where member_pw=?";
+		Object[] params = {memberPw};
+		List member = jdbc.query(query, memberRowMapper, params);
+		if(member.isEmpty()) {
+			return null;
+		}else {
+			return (Member)member.get(0);
+		}
+	}
 	public List selectFiveMember() {
 		String query = "select * from(select rownum as rnum, m.* from (select * from member order by 1 desc)m)where rnum between 1 and 5";
 		List fiveMemberList = jdbc.query(query, memberRowMapper);

@@ -89,6 +89,19 @@ public class MemberService {
 		return member;
 	}
 
+	@Transactional
+	public int resetPassword(Member m) {
+		int result = memberDao.resetPassword(m);
+		return result;
+	}
+
+
+	public Member checkPassword(String memberPw) {
+		Member member = memberDao.checkPassword(memberPw);
+		return member;
+	}
+
+
 	//관리자 메인 홈피에서 멤버 5명만 출력
 	public List selectFiveMember() {
 		List fiveMemberList = memberDao.selectFiveMember();

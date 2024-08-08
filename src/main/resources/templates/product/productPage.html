@@ -6,11 +6,11 @@
 <title>상품 상세</title>
 </head>
 <style>
-:root {
-	--point_color: lightskyblue;
-	--btn_primary: skyblue;
-	--btn_secondary: #eee;
-	--table_line: #333;
+:root { -
+	-point_color: lightskyblue; -
+	-btn_primary: skyblue; -
+	-btn_secondary: #eee; -
+	-table_line: #333;
 }
 
 .start_page {
@@ -53,6 +53,7 @@ form {
 	border-radius: 10px;
 	margin-right: 40px;
 }
+
 .pay_tx {
 	padding: 10px 0 10px 0;
 	font-size: 14px;
@@ -119,7 +120,6 @@ form {
 	padding: 10px;
 	margin-top: 40px;
 }
-
 
 .product_name {
 	font-weight: bold;
@@ -202,7 +202,6 @@ h4 {
 	float: left;
 }
 
-
 .pay_acorn>* {
 	margin-top: 5px;
 }
@@ -214,7 +213,7 @@ h4 {
 .btn {
 	color: #fff;
 	cursor: pointer;
-	background-color: var(--btn_primary);
+	background-color: var(- -btn_primary);
 	padding: 0;
 	font-weight: bold;
 	width: 120px;
@@ -222,10 +221,14 @@ h4 {
 	border-radius: 5px;
 	border: none;
 }
-.acornShow{
+
+.acornShow {
 	float: left;
 	font-weight: bold;
 	font-size: 15px;
+}
+.buy_product{
+	color: #ddd;
 }
 </style>
 <body>
@@ -247,36 +250,45 @@ h4 {
 				</h4>
 			</div>
 			<div class="radio_box radio_item">
-				<div class=" pay">
-					<div class="pay_tx center">총 결제 금액</div>
-					<div class="acorn_tx acorn_box">
-						<div>
-							도토리
-							<span th:text="${session.member.acorns}" id="myAcorn"></span>
-							개
+				<th:block th:if="${bp == null}">
+					<div class=" pay">
+						<div class="pay_tx center">총 결제 금액</div>
+						<div class="acorn_tx acorn_box">
+							<div>
+								도토리 <span th:text="${session.member.acorns}" id="myAcorn"></span>
+								개
+							</div>
+							<!--타임리프 들어가야함 도토리 수-->
+							<div>
+								상품 도토리 <span th:text="${p.productPrice}" id="productAcorn"></span>
+								개
+							</div>
+							<!--타임리프 들어가야함 도토리 수-->
 						</div>
-						<!--타임리프 들어가야함 도토리 수-->
-						<div>
-							상품 도토리
-							<span th:text="${p.productPrice}" id="productAcorn"></span>
-							개
+
+						<div class="pay_system">
+							<div class="acorn_box pay_acorn">
+								<div id="pay"></div>
+								<th:block th:if="${prdouctPrice != -10}"> <!-- 여기 고치기 -->
+								<form action="userBuyProduct" method="post">
+									<!-- 보낼때 상품번호, 상품 가격, 상품 리스트 정보, 멤버 번호 같이 보내기 -->
+									<input type="hidden" name="productNo" th:value="${p.productNo}">
+									<input type="hidden" name="productPrice" th:value="${p.productPrice}">
+									<input type="hidden" name="productPrice" th:value="${p.productListNo}">
+									<input type="hidden" name="memberNo" th:value="${session.member.memberNo}">
+									<button class="btn">구매하기</button>
+								</form>
+								</th:block>
+								<th:block th:if="${prdouctPrice == -10}">
+								<a href="/product/acornProduct" class="acornShow" style="display: none;">도토리 구매하러 가기 > </a>
+								</th:block>
+							</div>
 						</div>
-						<!--타임리프 들어가야함 도토리 수-->
 					</div>
-					<div class="pay_system">
-						<div class="acorn_box pay_acorn">
-							<div id="pay"></div>
-							<form action="userBuyProduct" method="get">
-								<!-- 보낼때 상품번호, 상품 가격, 멤버 번호 같이 보내기 -->
-								<input type="hidden" name="productNo" th:value="${p.productNo}">
-								<input type="hidden" name="productPrice" th:value="${p.productPrice}">
-								<input type="hidden" name="memberNo" th:value="${session.member.memberNo}">
-								<button class="btn">구매하기</button>
-							</form>
-							<a href="/product/acornProduct" class="acornShow" style="display: none;">도토리 구매하러 가기 > </a>
-						</div>
-					</div>
-				</div>
+				</th:block>
+				<th:block th:if="${bp != null}"> <!-- 여기 고치기 -->
+					<h2 class="buy_product">이미 구매하신 상품 입니다.</h2>
+				</th:block>
 			</div>
 		</div>
 		<div class="sec_box">
@@ -307,14 +319,14 @@ h4 {
 	</div>
 	</div>
 	</div>
-	
+
 	<script>
 		const productAcorn = parseInt($("#productAcorn").text());
-		function price(){
+		function price() {
 			const myAcorn = parseInt($("#myAcorn").text());
-			if(myAcorn>=productAcorn){
-				$("#pay").text("결제 후 내 도토리 : "+(myAcorn-productAcorn));
-			}else{
+			if (myAcorn >= productAcorn) {
+				$("#pay").text("결제 후 내 도토리 : " + (myAcorn - productAcorn));
+			} else {
 				$("#pay").text("도토리가 부족합니다...");
 				$(".btn").hide(); // 구매하기 버튼 숨기기
 				$(".acornShow").show(); // "도토리 구매하러가기" 보이기

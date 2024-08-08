@@ -217,70 +217,7 @@ body {
                             <div class="box content-box">
                                 <div class="guestbook-scrollbox" id="guestbook-scrollbox">
                                     <div class="guest-text">방명록 ></div>
-                                     <div class="guestbook-box">
-                                <div class="guestbook-title">No. 1
-                                    <span>이름</span>
-                                    <button class="material-icons">home</button>
-                                    <div class="guestbook-date">(2024.00.00)
-                                        <button class="btn-secondary" onclick="deleteComment(this)">삭제</button>
-                                        <button class="btn-primary" onclick="editComment(this)">수정</button>
-                                    </div>
-                                </div>
-                                <div class="guestbook-contents">
-                                    <div class="guestbook-text">
-                                        <p>이 글귀 좋더라.. 읽어봐..<br><br><br>울ㅈ1않ㄱㅣ<br>아프ㅈ1않ㄱㅣ<br>씩씩ㅎrㄱㅣ<br>억ㅈㅣ로ㄹr도 웃ㄱㅣ<br>ㅌ1 ㄴㅐㅈㅣ 말ㄱㅣ<br>.<br>.<br>.<br>오늘도 괜찮은 듯<br>그렇ㄱㅔ ㅈ1ㄴㅐㄱㅣ</p>
-                                  	    <textarea class="edit-textarea" style="display: none;"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="guestbook-box">
-                                <div class="guestbook-title">No. 2
-                                    <span>이름</span>
-                                    <button class="material-icons">home</button>
-                                    <div class="guestbook-date">(2024.00.00)
-                                        <button class="btn-secondary" onclick="deleteComment(this)">삭제</button>
-                                        <button class="btn-primary" onclick="editComment(this)">수정</button>
-                                    </div>
-                                </div>
-                                <div class="guestbook-contents">
-                                    <div class="guestbook-text">
-                                        <p>너 내가 보내준 인소 봤냐 이 부분 개쩐다<br><br><br>"누구한테 문자하냐?"<br>"사랑하는 사람한테"<br><br><br>"나한테 문자를 왜 보내"</p>
-                                         <textarea class="edit-textarea" style="display: none;"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="guestbook-box">
-                                <div class="guestbook-title">No. 3
-                                    <span>이름</span>
-                                    <button class="material-icons">home</button>
-                                    <div class="guestbook-date">(2024.00.00)
-                                        <button class="btn-secondary" onclick="deleteComment(this)">삭제</button>
-                                        <button class="btn-primary" onclick="editComment(this)">수정</button>
-                                    </div>
-                                </div>
-                                <div class="guestbook-contents">
-                                    <div class="guestbook-text">
-                                        <p>야 내일 캔모아 갈래?</p>
-                                         <textarea class="edit-textarea" style="display: none;"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="guestbook-box">
-                                <div class="guestbook-title">No. 4
-                                    <span>이름</span>
-                                    <button class="material-icons">home</button>
-                                    <div class="guestbook-date">(2024.00.00)
-                                        <button class="btn-secondary" onclick="deleteComment(this)">삭제</button>
-                                        <button class="btn-primary" onclick="editComment(this)">수정</button>
-                                    </div>
-                                </div>
-                                <div class="guestbook-contents">
-                                    <div class="guestbook-text">
-                                        <p>나랑 찍은 사진은 왜 안 올려 ㅡ.ㅡ</p>
-                                         <textarea class="edit-textarea" style="display: none;"></textarea>
-                                    </div>
-                                </div>
-                            </div>
+                                    
                                 </div>
                             </div>
                             <div class="guest-check-box">
@@ -341,7 +278,7 @@ body {
 
         $.ajax({
             type: 'POST',
-            url: '/guestbookList/insertComment',
+            url: '/guest/insertComment',
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function(response) {
@@ -370,7 +307,7 @@ body {
 
         $.ajax({
             type: 'GET',
-            url: `/guestbookList/deleteComment?guestCommentNo=${guestCommentNo}`,
+            url: '/guest/deleteComment?guestCommentNo=${guestCommentNo}',
             success: function(response) {
                 guestbookBox.remove();
             },
@@ -387,7 +324,7 @@ body {
         const textarea = guestbookBox.querySelector('.edit-textarea');
 
         if (textarea.style.display === 'none') {
-            textarea.value = textElement.innerText; // 수정: innerTEXT -> innerText
+            textarea.value = textElement.innerText;
             textarea.style.display = 'block';
             textElement.style.display = 'none';
             button.textContent = '저장';
@@ -421,7 +358,7 @@ body {
 
         $.ajax({
             type: 'POST',
-            url: '/guestbookList/updateComment',
+            url: '/guest/updateComment',
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function(response) {
@@ -449,3 +386,4 @@ body {
    <th:block th:include="common/footer"></th:block>
 </body>
 </html>
+
