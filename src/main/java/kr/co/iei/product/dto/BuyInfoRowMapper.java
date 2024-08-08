@@ -23,7 +23,7 @@ public class BuyInfoRowMapper implements RowMapper<SellBuyProduct>{
 		BuyProduct bp = new BuyProduct();
 		bp.setBuyDate(rs.getDate("buy_date"));
 		bp.setMemberNo(rs.getInt("member_no"));
-		bp.setProductNO(rs.getInt("product_no"));
+		bp.setProductNo(rs.getInt("product_no"));
 		bp.setBuyNo(rs.getInt("buy_no"));
 		
 		SellBuyProduct sb = new SellBuyProduct();

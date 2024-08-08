@@ -17,6 +17,7 @@ import kr.co.iei.customer.service.CustomerService;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.MemberListData;
 import kr.co.iei.member.model.service.MemberService;
+import kr.co.iei.product.dto.BuyProductListData;
 import kr.co.iei.product.dto.ProductListData;
 import kr.co.iei.product.dto.SellProduct;
 import kr.co.iei.product.service.ProductService;
@@ -126,4 +127,12 @@ public class AdminController {
 			return "redirect:/";
 		}//else
 	}//productDelete
+	
+	@GetMapping(value = "/adminRefundList")
+	public String adminRefundList(int reqPage, Model model) {
+		BuyProductListData bld = productService.selectRefundList(reqPage);
+		model.addAttribute("list", bld.getList());
+		model.addAttribute("pageNavi", bld.getPageNavi());
+		return "admin/adminRefundList";
+	}//adminRefundList
 }

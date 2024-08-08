@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>환불 내역</title>
+<link rel="stylesheet" href="/css/minihomepage.css">
+<link rel="stylesheet" href="/css/layout.css">
+<link rel="stylesheet" href="/css/font.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+</head>
+<style>
+/*-----------------페이징 관련---------------------*/
+a {
+	text-decoration: none;
+	color: #000;
+}
+
+.pagination {
+	list-style-type: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0;
+	margin-top: 50px;
+}
+
+.pagination>li {
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	overflow: hidden;
+}
+
+.pagination.circle-style>li {
+	border-radius: 50%;
+}
+
+.pagination>li>a.page-item {
+	display: block;
+	font-size: 18px;
+}
+
+.pagination>li>a.page-item>span.material-icons {
+	display: block;
+	line-height: 40px;
+}
+
+.pagination .page-item.active-page {
+	background-color: skyblue;
+	color: #fff;
+}
+
+/*--------------------------------------*/
+.atbl {
+	border-top: 1px solid #ddd;
+	width: 100%;
+	border-spacing: 0;
+	margin-bottom: 20px;
+}
+
+.atbl th, .atbl td {
+	text-align: center;
+	border-bottom: 1px solid #ddd;
+	padding: 10px 20px;
+}
+
+.atbl th.left, .tbl td.left {
+	text-align: left;
+}
+
+.atbl th {
+	background-color: skyblue;
+}
+
+.atbl.atbl-hover tbody>tr:hover {
+	cursor: pointer;
+	background-color: rgba(10, 10, 10, 0.5);
+}
+
+/*--------------------------------------------*/
+.box-title{
+	padding-bottom: 10px;
+}
+</style>
+
+<body>
+	<th:block th:include="common/top"></th:block>
+
+
+	<div class="box-title">환불 내역</div>
+
+	<table class="atbl atbl-hover">
+		<tr>
+			<th>번호</th>
+			<th>상품명</th>
+			<th>구매자</th>
+			<th>전화번호</th>
+			<th>상품가격</th>
+			<th>상태</th>
+			<th>환불일자</th>
+		</tr>
+
+	</table>
+	<div id="pageNavi" th:utext="${pageNavi}"></div>
+
+
+	<th:block th:include="common/adminBottom"></th:block>
+</body>
+
+</html>

@@ -16,7 +16,7 @@ public class BuyProductRowMapper implements RowMapper<BuyProduct>{
 		bp.setRefundStatus(rs.getString("refund_status"));
 		bp.setBuyDate(rs.getDate("buy_date"));
 		bp.setMemberNo(rs.getInt("member_no"));
-		bp.setProductNO(rs.getInt("product_no"));
+		bp.setProductNo(rs.getInt("product_no"));
 		bp.setBuyNo(rs.getInt("buy_no"));
 		return bp;
 	}

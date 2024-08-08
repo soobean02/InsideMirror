@@ -13,6 +13,7 @@ import kr.co.iei.product.dto.BuyInfoRowMapper;
 import kr.co.iei.product.dto.BuyProduct;
 import kr.co.iei.product.dto.BuyProductRowMapper;
 import kr.co.iei.product.dto.ProductListRowMapper;
+import kr.co.iei.product.dto.RefundRowMapper;
 import kr.co.iei.product.dto.SellProduct;
 import kr.co.iei.product.dto.SellProductRowMapper;
 
@@ -32,6 +33,8 @@ public class ProductDao {
 	private MemberRowMapper memberRowMapper;
 	@Autowired
 	private BuyInfoRowMapper buyInfoRowMapper;
+	@Autowired
+	private RefundRowMapper refundRowMapper;
 	
 	/* 멤버 테이블 도토리 구매 - update */
 	public int updateAcorns(Member m) {
@@ -151,6 +154,19 @@ public class ProductDao {
 		int result = jdbc.update(query, params);
 		return result;
 	}//productDelete
+	
+	public List selectRefundList(int start, int end) {
+		String query = "select * from(select rownum as rnum, re.* from (select b.product_no, s.product_name, m.member_name, m.member_phone, s.product_price, b.refund_status, b.refund_date from buy_product b, member m, sell_product s where b.member_no = m.member_no and s.product_no = b.product_no order by 1 desc)re)where rnum between ? and ?";
+		Object[] params = {start, end};
+		List refund = jdbc.query(query, refundRowMapper, params);
+		return refund;
+	}//selectRefundList
+	
+	public int selectRefundListTotalCount() {
+		String query = "select count(*) from buy_product";
+		int refundListTotalCount = jdbc.queryForObject(query, Integer.class);	
+		return refundListTotalCount;
+	}//selectRefundListTotalCount
 	
 	
 

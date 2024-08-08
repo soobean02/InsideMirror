@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class BuyProduct {
 	private int buyNo; // 구매한 상품 번호
-	private int productNO; // 판매 상품 번호(참조)
+	private int productNo; // 판매 상품 번호(참조)
 	private int memberNo; // 멤버 번호(참조)
 	private Date buyDate; // 구매 날짜
 	
