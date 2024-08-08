@@ -85,7 +85,7 @@ input[name=product]:checked+label {
 	float: right;
 }
 
-.select_op>select {
+.select_op select {
 	width: 100px;
 	height: 30px;
 	border-radius: 10px;
@@ -122,21 +122,24 @@ input[name=product]:checked+label {
 	<!--시작-->
 	<div class="box-title">
 		<div>구매 목록</div>
-		<form action="#" class="form_radio">
+		<form action="/product/appProductList" class="form_radio" method="get">
 			<input type="radio" name="product" id="product_app" value="적용">
 			<label for="product_app">적용한 상품</label>
-			<input type="radio" name="product" id="product_ok" value="구매">
+			<input type="radio" name="product" id="product_ok" value="구매" checked>
 			<label for="product_ok">구매한 상품</label>
 		</form>
 	</div>
 	<div class="wrap">
 		<div class="select_op">
-			<select>
-				<option value="0">전체</option>
-				<option value="1">배경</option>
-				<option value="2">폰트</option>
-				<option value="3">커서</option>
-			</select>
+			<form action="/product/buyProductList" method="get" id="category">
+				<input type="hidden" name="reqPage" value="1">
+				<select name="type">
+					<option value="0"  th:selected="${ty == 0}">전체</option>
+					<option value="1" th:selected="${ty == 1}">배경</option>
+					<option value="2" th:selected="${ty == 2}">커서</option>
+					<option value="3" th:selected="${ty == 3}">폰트</option>
+				</select>
+			</form>
 		</div>
 		<div class="product_list_box">
 			<th:block th:each="pr : ${list}">
@@ -160,8 +163,11 @@ input[name=product]:checked+label {
 	</div>
 	</div>
 	<script>
-		$("#product_ok").on("click",function(){
-			
+    	$("#product_app").on("click",function(){
+    		$(".form_radio").submit();
+    	});
+		$("#category").on("change",function(){
+			 $('#category').submit();
 		});
 	</script>
 </body>
