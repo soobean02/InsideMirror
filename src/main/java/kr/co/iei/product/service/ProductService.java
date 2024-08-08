@@ -232,6 +232,7 @@ public class ProductService {
 		return pld;
 	}
 
+	// 구매한 상품 상세보기 정보 출력
 	public SellBuyProduct selectBuyProductInfo(int buyNo) {
 		SellBuyProduct sp = productDao.selectBuyProductInfo(buyNo);
 		return sp;
