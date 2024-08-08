@@ -83,9 +83,13 @@ body {
 							</tr>
 							<tr>
 								<td><label for="phone">전화번호<sup>*</sup></label></td>
-								<td class="td-2"><input type="text" name="memberPhone"
-									id="phone" placeholder="(-)포함해서 적어주세요" required
-									aria-required="true"></td>
+								<td class="td-2">
+								<input type="text" name="phone" id="phone" required aria-required="true" maxlength="3" placeholder="010">
+								<span class="dash">-</span>
+								<input type="text" name="phone" id="phone" required aria-required="true" maxlength="4" placeholder="0000">
+								<span class="dash">-</span>
+								<input type="text" name="phone" id="phone" required aria-required="true" maxlength="4" placeholder="0000">
+								</td>
 							</tr>
 							<tr>
 								<td><label for="address">주소<sup>*</sup></label></td>
@@ -157,15 +161,19 @@ body {
 			        /[0-9]/,
 			        /[!@#$%]/
 			    ];
+			    let ok = 0;
 			    for(let i=0;i<regArr.length;i++){
 			        const check = regArr[i].test(pwValue);
 			        if(check){
-			        	 $(".pw-check-msg").eq(i).text("사용가능한 비밀번호 입니다.");
-			            $(".pw-check-msg").eq(i).addClass("valid");
-			        }else{
-			        	$(".pw-check-msg").eq(i).text("영문 대소문자/숫자/특수문자(!@#$%) 조합이 필요합니다 (8~12자이내)");
-			            $(".pw-check-msg").eq(i).addClass("invalid");
+			            ok++;
 			        }
+			    }
+			    if(ok===5){
+			    	 $(".pw-check-msg").text("사용가능한 비밀번호 입니다.");
+			            $(".pw-check-msg").addClass("valid");
+			    }else{
+			    	$(".pw-check-msg").text("영문 대소문자/숫자/특수문자(!@#$%) 조합이 필요합니다 (8~12자이내)");
+		            $(".pw-check-msg").addClass("invalid");
 			    }
 			});
 
@@ -180,6 +188,21 @@ body {
 			$(".pwRe-check-msg").text("비밀번호가 일치하지않습니다.");
 			$(".pwRe-check-msg").addClass("invalid");
 		}
+	});
+	
+	$("#searchBtn").on("click", function(){
+    
+	    new daum.Postcode({
+	        oncomplete: function(data) {
+	        	$("#address").val(data.roadAddress);
+	            $("#addrDetail").focus();
+	        },
+	        onclose: function(state) {
+	            if(state === 'FORCE_CLOSE'){
+	            } else if(state === 'COMPLETE_CLOSE'){
+	            }
+	        }
+	    }).open();
 	});
 </script>
 </html>
