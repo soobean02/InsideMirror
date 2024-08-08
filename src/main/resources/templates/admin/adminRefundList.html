@@ -103,7 +103,17 @@ a {
 			<th>상태</th>
 			<th>환불일자</th>
 		</tr>
-
+		
+		<tr th:each="rf : ${list}">
+			<td th:text="${rf.productNo}"></td>
+			<td th:text="${rf.productName}"></td>
+			<td th:text="${rf.memberName}"></td>
+			<td th:text="${rf.memberPhone}"></td>
+			<td th:text="${rf.productPrice}"></td>
+			<td th:text="${rf.refundStatus}"></td>
+			<td th:text="${rf.refundDate}"></td>
+		</tr>
+	
 	</table>
 	<div id="pageNavi" th:utext="${pageNavi}"></div>
 
