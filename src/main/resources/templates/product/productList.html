@@ -60,7 +60,7 @@ a {
 	float: right;
 }
 
-.select_op>select {
+.select_op select {
 	width: 100px;
 	height: 30px;
 	border-radius: 10px;
@@ -104,16 +104,19 @@ a {
 	</div>
 	<div class="wrap">
 		<div class="select_op">
-			<select>
-				<option value="1">배경</option>
-				<option value="2">폰트</option>
-				<option value="3">커서</option>
-			</select>
+			<form action="/product/productList" method="get" id="category">
+				<input type="hidden" name="reqPage" value="1">
+				<select name="type">
+					<option value="0"  th:selected="${ty == 0}">전체</option>
+					<option value="1" th:selected="${ty == 1}">배경</option>
+					<option value="2" th:selected="${ty == 2}">커서</option>
+					<option value="3" th:selected="${ty == 3}">폰트</option>
+				</select>
+			</form>
 		</div>
 		<div class="product_list_box">
 			<th:block th:each="pr : ${list}">
 				<a th:href="@{/product/proudctPage(productNo=${pr.productNo})}">
-					<!--타임리프 들어갈 자리-->
 					<div class="product_box">
 						<div class="product_img">
 							<img th:src="@{'/product/editor/'+${pr.productImg}}">
@@ -126,11 +129,11 @@ a {
 		<div id="pageNavi" th:utext="${pageNavi}"></div>
 	</div>
 	<!--끝-->
-	<th:block th:include="common/adminBottom"></th:block>
-	</div>
-	</div>
-	</div>
-	</div>
-</body>
+	<th:block th:include="common/bottom"></th:block>
+	<script>
+		$("#category").on("change",function(){
+			 $('#category').submit();
+		});
+	</script>
 </body>
 </html>

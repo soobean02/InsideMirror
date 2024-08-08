@@ -59,10 +59,11 @@ public class ProductController {
 	}
 	/*판매 상품 리스트*/
 	@GetMapping(value="/productList")
-	public String productList(Model model, int reqPage) {
-		ProductListData pld = productService.selectProduct(reqPage);
+	public String productList(Model model, int reqPage, int type) {
+		ProductListData pld = productService.selectProduct(reqPage, type);
 		model.addAttribute("list", pld.getList());
 		model.addAttribute("pageNavi", pld.getNaviPage());
+		model.addAttribute("ty", type);
 		return "/product/productList";
 	}
 	/*판매 상세 페이지*/
@@ -101,10 +102,10 @@ public class ProductController {
 		return "redirect:/product/productList?reqPage=1";
 	}
 	
-	/*구매 상품 리스트*/
+	/*구매 상품 리스트 - 타입 검사 추가*/
 	@GetMapping(value="/buyProductList")
-	public String buyProductList(Model model, int reqPage, @SessionAttribute Member member) {
-		ProductListData pld = productService.selectBuyProduct(reqPage, member);
+	public String buyProductList(Model model, int reqPage, int type, @SessionAttribute Member member) {
+		ProductListData pld = productService.selectBuyProduct(reqPage, type, member);
 		model.addAttribute("list", pld.getList());
 		model.addAttribute("pageNavi", pld.getNaviPage());
 		return "/product/buyProductList";
