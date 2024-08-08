@@ -2,13 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>관리자 상품 관리</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>상품 상세</title>
 </head>
 <style>
-a {
-	text-decoration: none;
-	color: #000;
-}
 /*-----------------페이징 관련---------------------*/
 .pagination {
 	list-style-type: none;
@@ -16,6 +13,11 @@ a {
 	justify-content: center;
 	align-items: center;
 	padding: 0;
+}
+
+a {
+	text-decoration: none;
+	color: #000;
 }
 
 .pagination>li {
@@ -46,6 +48,29 @@ a {
 }
 
 /*--------------------------------------*/
+.box-title>div {
+	float: left;
+}
+
+input[name=product] {
+	display: none;
+}
+
+input[name=product]:checked+label {
+	color: #000;
+}
+
+.form_radio {
+	float: right;
+}
+
+.form_radio label {
+	display: block;
+	float: right;
+	padding-right: 20px;
+	color: #ddd;
+}
+
 .box-title>div:first-child {
 	float: left;
 }
@@ -74,8 +99,6 @@ a {
 }
 
 .product_img>img {
-	width: 80px;
-	height: 80px;
 	padding-top: 10px;
 }
 
@@ -86,18 +109,16 @@ a {
 
 .product_list_box>a {
 	width: 100px;
-	border: 1px solid #eee;
 	border-radius: 5px;
+	border: 1px solid #ddd;
 	float: left;
 	margin: 35px 10px 20px 20px;
 	text-align: center;
-	border-radius: 5px;
 }
 </style>
 <body>
 	<th:block th:include="common/top"></th:block>
-
-	<div class="box-title">상품 목록</div>
+	<!--시작-->
 	<div class="wrap">
 		<div class="select_op">
 			<select>
@@ -108,25 +129,24 @@ a {
 		</div>
 		<div class="product_list_box">
 			<th:block th:each="pr : ${list}">
-				<a th:href="@{/admin/adminProductView(productNo=${pr.productNo})}">
-					<!--타임리프 들어갈 자리-->
+				<a th:href="@{/product/proudctPage(productNo=${pr.buyProduct.buyNo})}"> <!--타임리프 들어갈 자리-->
 					<div class="product_box">
 						<div class="product_img">
-							<img th:src="@{'/product/editor/'+${pr.productImg}}">
+							<img th:src="@{'/product/editor/'+${pr.sellProduct.productImg}}" width="70px" height="70px">
 						</div>
-						<div class="product_name" th:text="${pr.productName}">상품이름</div>
+						<div class="product_name" th:text="${pr.sellProduct.productName}">상품이름</div>
 					</div>
 				</a>
 			</th:block>
 		</div>
 		<div id="pageNavi" th:utext="${pageNavi}"></div>
-	</div>
 
-	<th:block th:include="common/adminBottom"></th:block>
+	<!--끝-->
 	</div>
+	<th:block th:include="common/bottom"></th:block>
 	</div>
 	</div>
 	</div>
 </body>
-</body>
+
 </html>

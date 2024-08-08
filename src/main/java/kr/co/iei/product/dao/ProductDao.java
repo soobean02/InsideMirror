@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.MemberRowMapper;
 import kr.co.iei.product.dto.AcronHistoryRowMapper;
+import kr.co.iei.product.dto.BuyInfoRowMapper;
 import kr.co.iei.product.dto.BuyProduct;
 import kr.co.iei.product.dto.BuyProductRowMapper;
 import kr.co.iei.product.dto.ProductListRowMapper;
@@ -29,6 +30,8 @@ public class ProductDao {
 	private AcronHistoryRowMapper acorAcronHistoryRowMapper; // 도토리 구매이력 (도토리 번호, 회원 번호, 도토리 가격, 도토리 구매일)
 	@Autowired
 	private MemberRowMapper memberRowMapper;
+	@Autowired
+	private BuyInfoRowMapper buyInfoRowMapper;
 	
 	/* 멤버 테이블 도토리 구매 - update */
 	public int updateAcorns(Member m) {
@@ -105,6 +108,19 @@ public class ProductDao {
 		int result = jdbc.update(query,params);
 		return result;
 	}
+	public List selectBuyProductList(int start, int end, Member member) {
+		// String query = "select * from (select rownum as rnum, n.* from (select * from customer where member_no=? order by 1 desc)n) where rnum between ? and ?";
+		String query = "select * from (select rownum as rnum, n.* from (select * from buy_product join sell_product using(product_no) where member_no=? order by 1 desc)n) join sell_product s using(product_no) where rnum between ? and ?";
+		Object[] params = {member.getMemberNo(),start,end};
+		List list = jdbc.query(query,buyInfoRowMapper, params);
+		return list;
+	}
+	public int selectBuyProductTotalCount(Member member) {
+		String query = "select count(*) from buy_product where member_no=?";
+		Object[] params = {member.getMemberNo()};
+		int totalCount = jdbc.queryForObject(query, Integer.class,params);
+		return totalCount;
+	}
 	
 	
 	public int addProduct(SellProduct sp) {
@@ -113,6 +129,14 @@ public class ProductDao {
 		int result = jdbc.update(query, params);
 		return result;
 	}//addProduct
+	
+	
+	public int productUpdate(SellProduct sp) {
+		String query = "update sell_product set product_name=?, product_list_no=?, product_price=? where product_no=?";
+		Object[] params = {sp.getProductName(), sp.getProductListNo(), sp.getProductPrice(), sp.getProductNo()};
+		int result = jdbc.update(query, params);
+		return result;
+	}//productUpdate
 	
 	
 

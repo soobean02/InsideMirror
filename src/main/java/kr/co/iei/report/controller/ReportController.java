@@ -35,7 +35,9 @@ public class ReportController {
 	}//reportList
 	
 	@GetMapping(value = "/reportView")
-	public String reportView() {
+	public String reportView(Model model, int inqNo) {
+		Customer customer = customerService.selectCustomerContent(inqNo);
+		model.addAttribute("customer", customer);
 		return "report/reportView";
 	}//reportView
 	

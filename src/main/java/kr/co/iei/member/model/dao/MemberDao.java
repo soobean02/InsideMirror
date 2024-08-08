@@ -46,7 +46,7 @@ public class MemberDao {
 
 	public int insertMember(Member m) {
 		String query = "insert into member values(member_seq.nextval,?,?,?,?,?,?,?,2,to_char(sysdate,'yyyy-mm-dd'),'InsideMirror에 메세지를 적어보세요','이미지첨부',0,0)";
-		Object[] params = {m.getMemberId(),m.getMemberPw(),m.getMemberNickname(),m.getMemberName(),m.getMemberGender(),m.getMemberPhone(),m.getMemberAddr()};
+		Object[] params = {m.getMemberId(),m.getMemberPw(),m.getMemberNickName(),m.getMemberName(),m.getMemberGender(),m.getMemberPhone(),m.getMemberAddr()};
 		System.out.println(m);
 		int result = jdbc.update(query, params);
 		return result;
