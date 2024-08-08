@@ -71,6 +71,14 @@ public class BoardDao {
 		return result;
 	}//board테이블에 insert 게시글 작성
 
+	public int deleteBoard(int boardNo) {
+		String query = "delete from board where board_no = ?";
+		Object[] params = {boardNo};
+
+		int result = jdbc.update(query, params);
+		return result;
+	}//게시글 삭제
+
 	public int selectBoardNo() {
 		String qeury = "select max(board_no) from board";
 		int result = jdbc.queryForObject(qeury, Integer.class);
@@ -94,6 +102,7 @@ public class BoardDao {
 
 	public List<BoardComment> selectComment(int boardNo) {
 		String query = "select bc.*,\r\n" + //
+						"(select member_nickname from member where member_no = bc.member_no) as member_nickname,\r\n" + //
 						"(select count(board_comment_ref) from board_comment where board_comment_ref = bc.board_comment_no) as recomment_count\r\n" + //
 						"from board_comment bc where board_no = ? and board_comment_ref is null order by 1 desc";
 		Object[] params = {boardNo};
@@ -102,7 +111,9 @@ public class BoardDao {
 	}//댓글 조회
 
 	public List selectReCommentList(int boardNo) {
-		String query = "select * from board_comment where board_no = ? and board_comment_ref is not null order by 1 desc";
+		String query = "select bc.*,\r\n" + //
+						"(select member_nickname from member where member_no = bc.member_no) as member_nickname\r\n" + //
+						"from board_comment bc where board_no = ? and board_comment_ref is not null order by 1 desc";
 		Object[] params = {boardNo};
 		List list = jdbc.query(query, boardCommentRowMapper, params);
 		return list;
@@ -113,14 +124,14 @@ public class BoardDao {
 		Object[] params = {commentContent, boardCommentNo, boardNo};
 		int result = jdbc.update(query, params);
 		return result;
-	}
+	}//댓글 답글 수정
 
 	public int removeBoardComment(String boardCommentNo) {
 		String query = "delete from board_comment where board_comment_no = ?";
 		Object[] params = {boardCommentNo};
 		int result = jdbc.update(query, params);
 		return result;
-	}
+	}//댓 답글 수정
 
 	public BoardComment selectOneComment(BoardComment comment) {
 		String query = "select * from board_comment where board_no = ? and member_no = ? order by 1 desc";
@@ -131,7 +142,9 @@ public class BoardDao {
 			return (BoardComment)list.get(0);
 		}
 		return null;
-	}//댓글 하나 조회
+	}//댓글 하나 조회 for 비동기댓글하고 화면에 보여주기 위해서 정보를 먼저 조회(댓글 고유 번호)
+
+	
 
 
 }

@@ -26,8 +26,9 @@ public class BoardCommentRowMapper implements RowMapper<BoardComment>{
 		comment.setMemberNo(rs.getInt("member_no"));
 		comment.setBoardNo(rs.getInt("board_no"));
 		comment.setBoardEdit(rs.getInt("board_edit"));
-
+		
 		try {
+			comment.setBoardCommentWriter(rs.getString("member_nickname"));
 			comment.setReCommentCount(rs.getInt("recomment_count"));
 		} catch (Exception e) {
 			comment.setReCommentCount(0);
