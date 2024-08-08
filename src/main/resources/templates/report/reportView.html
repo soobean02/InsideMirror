@@ -60,6 +60,7 @@
 	<div class="box-title">고객 센터</div>
 	<div class="client_wrap">
 		<div class="customerPage_wrap">
+		
 		<form th:action="@{/report/updateStatus}" method="post">
 			<table class="customerPage_tb">
 				<tr>
@@ -91,7 +92,7 @@
 							<div class="triangle-down"></div>
 						</div>
 						<div class="dropdown-content">
-						<input type="hidden" name="inaNo" th:value="${customer.inqNo}">
+						<input type="hidden" name="inqNo" th:value="${customer.inqNo}">
 							<a href="#" id="approval"><button type="submit">승인</button></a> <a
 								href="#" id="reject"><button type="submit">반려</button></a>
 						</div>

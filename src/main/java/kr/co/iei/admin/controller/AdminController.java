@@ -104,22 +104,13 @@ public class AdminController {
 	}//adminProductAddFrm
 	
 	@PostMapping(value = "/adminProductAdd")
-	public String adminProductAdd(SellProduct sp, Model model, MultipartFile[] upfile) {
-		
-		List<SellProduct> productImgFileList = new ArrayList<SellProduct>();
-		if(!upfile[0].isEmpty()) {
-			String savepath = root+"/product/";
-			for(MultipartFile file : upfile) {
-				String filepath = fileUtils.upload(savepath, file);
-				SellProduct productImgFile = new SellProduct();
-				productImgFile.setProductImg(filepath);
-				productImgFileList.add(productImgFile);
-			}//for
-		}//if
-		
-		int result = productService.addProduct(sp);
+	public String adminProductAdd(SellProduct sp, Model model, MultipartFile addProductImg) {
+		String savepath = root+"/adminProduct/";
+		String filepath = fileUtils.upload(savepath, addProductImg);
+		sp.setProductImg(filepath);
+		int result = productService.adminAddProduct(sp);
 		if(result>0) {
-			return "admin/adminProductList";
+			return "redirect:/admin/adminProductList?reqPage=1";
 		}else {
 			return "redirect:/";
 		}//else

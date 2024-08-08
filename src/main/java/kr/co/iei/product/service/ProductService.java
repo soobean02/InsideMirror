@@ -123,6 +123,7 @@ public class ProductService {
 		int result = productDao.addProduct(sp);
 		return result;
 	}//addProduct
+	
 	// 상품 상세 페이지 정보 출력
 	public SellProduct selectProductInfo(int productNo) {
 		SellProduct p = productDao.selectProductInfo(productNo);
@@ -305,6 +306,12 @@ public class ProductService {
 //		Customer customer = customerDao.selectCustomerList(reqPage);
 		return pld;
 	}
+
+	@Transactional
+	public int adminAddProduct(SellProduct sp) {
+		int result = productDao.adminAddProduct(sp);
+		return result;
+	}//adminAddProduct
 
 
 

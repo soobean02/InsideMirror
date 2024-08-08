@@ -124,8 +124,8 @@ public class ProductDao {
 	
 	
 	public int addProduct(SellProduct sp) {
-		String query = "insert into sell_product values(sell_product_seq.nextval,?,?,?,?,?,?)";
-		Object[] params = {sp.getProductListNo(), sp.getProductPrice(), sp.getProductName(), sp.getProductImg(), sp.getProductUrl(), sp.getProductPath()};
+		String query = "insert into sell_product values(sell_product_seq.nextval,?,?,?,?,'url','이미지 경로')";
+		Object[] params = {sp.getProductListNo(), sp.getProductPrice(), sp.getProductName(), sp.getProductImg()};
 		int result = jdbc.update(query, params);
 		return result;
 	}//addProduct
@@ -137,6 +137,14 @@ public class ProductDao {
 		int result = jdbc.update(query, params);
 		return result;
 	}//productUpdate
+	
+	
+	public int adminAddProduct(SellProduct sp) {
+		String query = "insert into sell_product values(sell_product_seq.nextval,?,?,?,?,'url','이미지 경로')";
+		Object[] params = {sp.getProductListNo(), sp.getProductPrice(), sp.getProductName(), sp.getProductImg()};
+		int result = jdbc.update(query, params);
+		return result;
+	}//adminAddProduct
 	
 	
 
