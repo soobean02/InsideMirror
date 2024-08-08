@@ -90,4 +90,6 @@ public class ProductController {
 		System.out.println(sp);
 		return "redirect:/product/productList?reqPage=1";
 	}
+	
+	/*구매 상품 페이지*/
 }
