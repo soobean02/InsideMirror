@@ -17,6 +17,7 @@ import kr.co.iei.customer.service.CustomerService;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.MemberListData;
 import kr.co.iei.member.model.service.MemberService;
+import kr.co.iei.product.dto.ProductListData;
 import kr.co.iei.product.dto.SellProduct;
 import kr.co.iei.product.service.ProductService;
 import kr.co.iei.report.model.service.ReportService;
@@ -73,14 +74,18 @@ public class AdminController {
 	}//memberView
 
 	@GetMapping(value = "/adminProductList")
-	public String adminProductList() {
+	public String adminProductList(Model model, int reqPage) {
+		ProductListData pld = productService.selectAdminProduct(reqPage);
+		model.addAttribute("list", pld.getList());
+		model.addAttribute("pageNavi", pld.getNaviPage());
 		return "admin/adminProductList";
 	}//adminProductList
 	
 	@GetMapping(value = "/productView")
-	public String productView(SellProduct sp, Model model) {
-		int result = productService.productView(sp);
-		return "admin/productView";
+	public String productView(Model model, int productNo) {
+		SellProduct sp = productService.selectProductInfo(productNo);
+		model.addAttribute("sp", sp);
+		return "admin/adminProductView";
 	}//productView
 	
 	@GetMapping(value = "/adminProductAddFrm")

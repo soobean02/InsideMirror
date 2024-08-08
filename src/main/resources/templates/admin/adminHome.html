@@ -146,16 +146,18 @@ a {
 
 	<div class="picture-room">
 		<div class="box-title">상품 관리 ></div>
-		<div class="product-img">
-			<div class="img-box">
-				<img src="image/선물가게_배경1.png"> <a href="#">관리하기 ></a>
-			</div>
-			<div class="img-box">
-				<img src="image/선물가게_배경2.png"> <a href="#">관리하기 ></a>
-			</div>
-			<div class="img-box">
-				<img src="image/선물가게_배경3.png"> <a href="#">관리하기 ></a>
-			</div>
+		<div class="product_list_box">
+			<th:block th:each="pr : ${list}">
+				<a th:href="@{/product/proudctPage(productNo=${pr.productNo})}">
+					<!--타임리프 들어갈 자리-->
+					<div class="product_box">
+						<div class="product_img">
+							<img th:src="@{'/product/editor/'+${pr.productImg}}">
+						</div>
+						<div class="product_name" th:text="${pr.productName}">상품이름</div>
+					</div>
+				</a>
+			</th:block>
 		</div>
 	</div>
 
