@@ -13,9 +13,7 @@
 	<div class="box profile-box">
 		<form th:action="@{/admin/adminProductAdd}" method="post"
 			enctype="multipart/form-data">
-			
-			<!-- <input type="hidden" name="productNo" id="productNo" th:value="${sp.productNo}"> -->
-			
+
 			<div class="form-group">
 				<label for="productImg">상품 사진:</label> <input type="file"
 					id="addProductImg" name="addProductImg" accept=".jpg,.png,.jpeg" required>
@@ -25,7 +23,7 @@
 					id="productName" name="productName" required>
 			</div>
 			<div class="form-group">
-				<label for="productCategory">상품 분류:</label> <select
+				<label for="productListNo">상품 분류:</label> <select
 					id="productListNo" name="productListNo" required>
 					<option value="1">배경</option>
 					<option value="2">폰트</option>

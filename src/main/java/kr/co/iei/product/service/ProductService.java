@@ -313,6 +313,12 @@ public class ProductService {
 		return result;
 	}//adminAddProduct
 
+	@Transactional
+	public int productDelete(int productNo) {
+		int result = productDao.productDelete(productNo);
+		return result;
+	}//productDelete
+
 
 
 }

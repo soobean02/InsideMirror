@@ -115,4 +115,15 @@ public class AdminController {
 			return "redirect:/";
 		}//else
 	}//adminProductAdd
+	
+	@GetMapping(value = "/productDelete")
+	public String productDelete(SellProduct sp) {
+		int productNo = sp.getProductNo();
+		int result = productService.productDelete(productNo);
+		if(result>0) {
+			return "redirect:/admin/adminHome";
+		}else {
+			return "redirect:/";
+		}//else
+	}//productDelete
 }

@@ -112,11 +112,15 @@
 
 				<input type="hidden" name="productNo" th:value="${sp.productNo}">
 
-				<div class="product-add-btn">
+				<div class="product-btn">
 					<button type="submit" class="product-add-btn">수정</button>
-					<button type="submit" class="product-delete-btn">삭제</button>
+					<a th:href="@{/admin/productDelete(productNo=${sp.productNo})}">
+					<button type="submit" class="product-delete-btn"></button>삭제
+					</a>
 				</div>
 			</form>
+
+
 			<!--끝!!!!-->
 		</div>
 	</div>
