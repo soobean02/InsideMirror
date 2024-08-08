@@ -31,53 +31,54 @@
 
     .view-title-wrap{
         width: 100%;
-        height: 100px;
+        height: 130px;
         /* background-color: aqua; */
         overflow: hidden;
     }
-
+    
     .view-title{
-        width: 55%;
-        height: 70px;
+        width: 100%;
+        height: 60px;
         /* background-color: blueviolet; */
-        border-bottom: 1px solid black;
-        border-right: 1px solid black;
+        border-bottom: 1px solid rgb(132, 132, 132);
         box-sizing: border-box;
-        line-height: 70px;
+        line-height: 60px;
+    }
+    .view-etc{
+        width: 100%;
+        height: 40px;
+        border-bottom: 1px solid rgb(132, 132, 132);
+        box-sizing: border-box;
     }
 
     .view-writer{
-        width: 28%;
-        height: 35px;
+        /* width: 30%; */
+        width: auto;
+        padding-right: 10px;
+        height: 40px;
         /* background-color: #92a2ff; */
-        border-bottom: 1px solid black;
         /* border-right: 1px solid black; */
-        box-sizing: border-box;
-        padding-left: 5px
+        line-height: 40px;
     }
     .view-date{
-        width: 17%;
-        height: 35px;
+        width: 22%;
+        height: 40px;
+        line-height: 40px;
         /* background-color: yellow; */
-        box-sizing: border-box;
-        border-bottom: 1px solid black;
         /* border-right: 1px solid black; */
-        padding-left: 5px;
     }
 
     .view-count{
-        width: 30%;
-        height: 35px;
+        /* width: 20%; */
+        width: auto;
+        height: 40px;
+        line-height: 40px;
         /* background-color: #0f1b5c; */
-        box-sizing: border-box;
-        border-bottom: 1px solid black;
     } 
     .view-mark{
         width: 15%;
-        height: 35px;
+        height: 40px;
         /* background-color: yellowgreen; */
-        box-sizing: border-box;
-        border-bottom: 1px solid black;
         text-align: center;
     }
     .fix{
@@ -85,7 +86,7 @@
         height: 30px;
         /* background-color: blue; */
         box-sizing: border-box;
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid rgb(148, 148, 148);
         text-align: right;
     }
     .fix>.material-icons{
@@ -95,6 +96,7 @@
     }
     
     .view-mark>span{
+        line-height: 40px;
         font-size: 30px;
         cursor: pointer;
         display: none;
@@ -104,15 +106,10 @@
         display: inline-block;
     }
     
-    .view-count>span{
-        float: left;
-        margin-left: 10px;
-    }
-    .view-count>span:not(.material-icons){
-        line-height: 35px;
-    }
     .view-count>.material-icons{
-        margin-top: 5px;
+        margin: 0px 5px;
+        height: 40px;
+        line-height: 40px;
     }
 
 
@@ -302,36 +299,41 @@
                 <span th:text="${board.boardTitle}"></span>
             </div>
             
-            <div class="view-writer left">
-                <span th:text="${board.boardWriter}"></span>
-            </div>
+            <div class="view-etc left">
 
-            <div class="view-date left">
-                <span th:text="${board.boardDate}"></span>
-            </div>
+                <div class="view-date right">
+                    <span th:text="${board.boardDate}"></span>
+                </div>
 
-            <div class="view-count left">
-                <span class="material-icons">visibility</span>
-                <span th:text="${board.readCount}"></span>
-                <span class="material-icons">favorite</span>
-                <span th:text="${board.boardLike}"></span>
+                <div class="view-writer right">
+                    <span th:text="${board.boardWriter}"></span>
+                </div>
+                
+                
+                <div class="view-count left">
+                    <span class="material-icons left">visibility</span>
+                    <div th:text="${board.readCount}" class="left"></div>
+                    <span class="material-icons left">favorite</span>
+                    <div th:text="${board.boardLike}" class="left"></div>
+                </div>
+
+                <div class="view-mark left">
+                    <span class="material-icons">favorite</span>
+                    <span class="material-icons select">favorite_border</span>
+                    <span class="material-icons">bookmark</span>
+                    <span class="material-icons select">bookmark_border</span>
+                
+                </div>
             </div>
 <!-- 작성자 | 작성일 -->
 <!-- 조회수/하트개수 | 하트 | 북마크 순으로 -->
-            
-
-            <div class="view-mark left">
-                <span class="material-icons">favorite</span>
-                <span class="material-icons select">favorite_border</span>
-                <span class="material-icons">bookmark</span>
-                <span class="material-icons select">bookmark_border</span>
-
-            </div>
-
             <div class="fix left">
                 <span class="material-icons">edit</span>
                 <span class="material-icons">delete</span>
             </div>
+            
+
+
 
         </div>
         <div class="view-content-wrap">
