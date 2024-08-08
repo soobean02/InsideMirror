@@ -206,4 +206,17 @@ public class BoardController {
 		return "board/boardList";
 	}//게시글 검색
 
+	//게시글 정렬
+	@GetMapping(value="/order")
+	public String order(String type, String keyword, int reqPage, String orderDate, String orderFriend, Model model, @SessionAttribute(required = false) Member member){
+		BoardListData bld = boardService.selectOrderList(type, keyword, reqPage, orderDate, orderFriend, member);
+		model.addAttribute("list", bld.getList());
+		model.addAttribute("pageNavi", bld.getPageNavi());
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("type", type);
+		model.addAttribute("orderDate", orderDate);
+		model.addAttribute("orderFriend", orderFriend);
+		return "/board/boardList";
+	}
+
 }

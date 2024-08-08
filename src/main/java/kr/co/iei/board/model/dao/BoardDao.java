@@ -239,6 +239,89 @@ public class BoardDao {
 		return totalCount;
 	}
 
+	public List titleDateNewFriendAll(String keyword, int start, int end) {
+		//제목 / 최신 / 전체
+		String query = "select b_tbl.*,\r\n" + //
+						"(select count(*) from board_like where board_no = b_tbl.board_no) as board_like\r\n" + //
+						"from (select rownum as rnum, b.*,\r\n" + //
+						"(select member_nickname from member where member_no = b.member_no) as board_writer_nickname\r\n" + //
+						"from (select * from board order by 1 desc)b)b_tbl \r\n" + //
+						"where (rnum between ? and ?) and (board_title like '%'||?||'%')";
+		Object[] params = {start, end, keyword};
+		List list = jdbc.query(query, boardRowMapper, params);
+		return list;
+	}
+	
+	public List titleDateNewFriendFriend(String keyword, int start, int end, Member member) {
+		//제목 / 최신 / 친구
+		String query = "select b_tbl.*,\r\n" + //
+						"(select count(*) from board_like where board_no = b_tbl.board_no) as board_like\r\n" + //
+						"from (select rownum as rnum, b.*,\r\n" + //
+						"(select member_nickname from member where member_no = b.member_no) as board_writer_nickname\r\n" + //
+						"from (select * from board order by 1 desc)b)b_tbl \r\n" + //
+						"where (rnum between ? and ?) and (board_title like '%'||?||'%') and\r\n" + //
+						"member_no in (select friend_member_no from friend where member_no = ?)";
+
+		Object[] params = {start, end, keyword, member.getMemberNo()};
+		List list = jdbc.query(query, boardRowMapper, params);
+		return list;
+	}
+	
+	public List titleDatePopularFriendAll(String keyword, int start, int end) {
+		//제목 / 인기 / 전체
+		String query = "";
+		Object[] params = {start, end, keyword};
+		List list = jdbc.query(query, boardRowMapper, params);
+		return list;
+	}
+	
+	public List titleDatePopularFriendFriend(String keyword, int start, int end, Member member) {
+		//제목 / 인기 / 친구
+		String query = "";
+		Object[] params = {start, end, keyword};
+		List list = jdbc.query(query, boardRowMapper, params);
+		return list;
+	}
+	
+	
+	/////////////////////////////
+	
+	
+	public List writerDateNewFriendAll(String keyword, int start, int end) {
+		//작성자 / 최신 / 전체
+		String query = "";
+		
+		Object[] params = {start, end, keyword};
+		List list = jdbc.query(query, boardRowMapper, params);
+		return list;
+	}
+	
+	public List writerDateNewFriendFriend(String keyword, int start, int end, Member member) {
+		
+		//작성자 / 최신 / 친구
+		String query = "";
+		Object[] params = {start, end, keyword};
+		List list = jdbc.query(query, boardRowMapper, params);
+		return list;
+	}
+	
+	public List writerDatePopularFriendAll(String keyword, int start, int end) {
+		
+		//작성자 / 인기 / 전체
+		String query = "";
+		Object[] params = {start, end, keyword};
+		List list = jdbc.query(query, boardRowMapper, params);
+		return list;
+	}
+	
+	public List writerDatePopularFriendFriend(String keyword, int start, int end, Member member) {
+		//작성자 / 인기 / 친구
+		String query = "";
+		Object[] params = {start, end, keyword};
+		List list = jdbc.query(query, boardRowMapper, params);
+		return list;
+	}
+
 	
 
 	

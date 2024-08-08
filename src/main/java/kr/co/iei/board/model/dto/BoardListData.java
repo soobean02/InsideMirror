@@ -14,4 +14,5 @@ public class BoardListData {
 
 	private List list;
 	private String pageNavi;
+
 }
