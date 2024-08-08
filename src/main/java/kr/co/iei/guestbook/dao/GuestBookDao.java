@@ -20,7 +20,7 @@ public class GuestBookDao {
     private GuestBookRowMapper guestBookRowMapper;
     
     public int insertComment(GuestBook gb) {
-        String query = "INSERT INTO guestbook (guest_comment_no, guest_writer_no, guest_comment_content, guest_comment_date) VALUES (guestbook_seq.nextval, ?, ?, sysdate)";
+        String query = "INSERT INTO guest_book VALUES (guest_book_seq.nextval,1,2,'내용', sysdate)";
         Object[] params = {gb.getGuestWriterNo(), gb.getGuestCommentContent()};
         return jdbc.update(query, params);
     }

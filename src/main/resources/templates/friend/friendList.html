@@ -11,69 +11,63 @@
     <script src="/js/sweetalert.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <style>
-.content-menu ul{
-margin: 5px;
-padding: 0;
-list-style-type: none;
-overflow: hidden;
-
-}
-.content-menu>ul{
-    background-color: transparent;
-    display: block;
-}
-.content-menu ul>li{
-    float: left;
-    width: 70px;   
-}
-
-.content-menu ul>li>a{
-    display: block;
-    height: 30px;
-    line-height: 30px;
-    text-decoration: none;
-    font-size: 18px;
-    border: 1px solid #000;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    cursor: pointer;
-}
-.content-menu>ul>li>a{
-    color: #092e20;
-}
-
-.content-menu>ul>li>:hover>a{
-    font-weight: 900;
-    background-color: #3b87ab;
-}
-.Ilchon-list>div{
-    list-style-type: none;    
-    margin-left: 100px;
-}
-.list{
-    float: left;
-    margin-top: 30px;
-}
-.list2{
-    float: right;
-    margin-top: 7px;
-    
-}
-.content-menu>ul>li:nth-child(n+2){
-    background-color: #bfe6fa;
-    
-}
-.Ilchon-list{
-border-bottom: 1px solid gray;
-
-}
-.material-icons{
-    float: left;
-    margin-top: 55px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-}
+    .content-menu ul {
+        margin: 5px;
+        padding: 0;
+        list-style-type: none;
+        overflow: hidden;
+    }
+    .content-menu > ul {
+        background-color: transparent;
+        display: block;
+    }
+    .content-menu ul > li {
+        float: left;
+        width: 70px;   
+    }
+    .content-menu ul > li > a {
+        display: block;
+        height: 30px;
+        line-height: 30px;
+        text-decoration: none;
+        font-size: 18px;
+        border: 1px solid #000;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        cursor: pointer;
+    }
+    .content-menu > ul > li > a {
+        color: #092e20;
+    }
+    .content-menu > ul > li > a:hover {
+        font-weight: 1000;
+    }
+    .Ilchon-list > div {
+        list-style-type: none;    
+        margin-left: 100px;
+    }
+    .list {
+        float: left;
+        margin-top: 30px;
+    }
+    .list2 {
+        float: right;
+        margin-top: 7px;
+    }
+    .content-menu > ul > li:nth-child(n+2) {
+        background-color: #bfe6fa;
+    }
+    .Ilchon-list {
+        border-bottom: 1px solid gray;
+        margin-bottom: 25px;
+    }
+    .material-icons {
+        float: left;
+        margin-top: 30px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
     </style>
 </head>
 <body>
@@ -82,11 +76,11 @@ border-bottom: 1px solid gray;
             <div class="page">
                 <div class="profile-container">
                     <div class="header1 profile-title">TOTAL
-                        <span class="color-red">28</span>
+                        <span class="color-red">0</span>
                     </div>
                     <div class="box profile-box">
                         <div class="profile-image">
-                            <img class="profile-image-img" src="/image/cyworld1.png">
+                            <img class="profile-image-img" src="/image/cyworld1.png" alt="Profile Image">
                         </div>
                         <div class="profile-text">ㄴr는.. 오늘도.. 눈물을.. 흘린ㄷr..★</div>
                         <div class="profile-username">
@@ -115,40 +109,13 @@ border-bottom: 1px solid gray;
                         <div class="content-menu">
                             <ul>
                                 <li><a href=" ">일촌목록</a></li>
-                                <li><a href="/friendrequest">일촌신청</a></li>
-                                <li><a href="/neighborrequest">이웃신청</a></li>
+                                <li><a href="/friend/friendrequest">일촌신청</a></li>
+                                <li><a href="/friend/neighborrequest">이웃신청</a></li>
                             </ul>
+                        </div> 
+                        <div id="friend-list-container" class="Ilchon-list">
+                            
                         </div>
-                        <div class="Ilchon-list">
-                            <button class="material-icons" data-url="#">home</button>
-                            <div class="list">친구 : ㄱㄱㄱ</div><br>
-                            <div class="list2">곤ぁㅣズr고잇음‥ㄲй우ㅈł□ㅏ요☆‥、</div>
-                        </div>
-                        <div class="Ilchon-list">
-                            <button class="material-icons" data-url="#">home</button>
-                            <div class="list">친구 : ㄴㄴㄴ</div><br>
-                            <div class="list2">잠수중y - 叉占수中!!쪽보Ŀн즈ıロŀ용∏_∏</div>
-                        </div>
-                        <div class="Ilchon-list">
-                            <button class="material-icons" data-url="#">home</button>
-                            <div class="list">친구 : ㄷㄷㄷ</div><br>
-                            <div class="list2">♡그てЙ를けrZr만보Ør도행복합ĿıてГ♡</div>
-                        </div>
-                        <div class="Ilchon-list">
-                            <button class="material-icons" data-url="#">home</button>
-                            <div class="list">친구 : ㄹㄹㄹ</div><br>
-                            <div class="list2">‥─…+『ŁØvЁ is МАgiС』+…─‥</div>
-                        </div>
-                        <div class="Ilchon-list">
-                            <button class="material-icons" data-url="#">home</button>
-                            <div class="list">친구 : ㅁㅁㅁ</div><br>
-                            <div class="list2">초코칩ㄴrㄹΓøłl 안 촉촉ㅎŁ 초코칩○l</div>
-                        </div>
-                        <div class="Ilchon-list">
-                            <button class="material-icons" data-url="#">home</button>
-                            <div class="list">친구 : ㅂㅂㅂ</div><br>
-                            <div class="list2">♡○l쁜거l조l己r면난㈔형감…ヲ⊂!?</div>
-                        </div>    
                     </div>
                 </div>
                 <div class="menu-container">
@@ -156,7 +123,7 @@ border-bottom: 1px solid gray;
                         <a href="/member/minihomepage"><button>홈</button></a>
                         <a href="/board/list?reqPage=1"><button>자유게시판</button></a>
                         <a href="#"><button>사진첩</button></a>
-                        <a href="#"><button>방명록</button></a>
+                        <a href="/guest/guestbookList"><button>방명록</button></a>
                         <a href="#"><button>선물가게</button></a>
                         <a href="#"><button>구매목록</button></a>
                         <a href="#"><button>일촌관리</button></a>
@@ -167,35 +134,46 @@ border-bottom: 1px solid gray;
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script>
     $(document).ready(function() {
-        
+        // Fetch friend list data
         $.ajax({
-            url: '/api/friend-status',
+            url: '/friend/friendList',
             method: 'GET',
             success: function(data) {
-        
-                updateFriendStatus(data.name, data.status, data.homeUrl);
+                // Call function to render friends
+                renderFriends(data);
             },
             error: function(error) {
-                console.log('Error fetching friend status:', error);
+                console.log('Error fetching friend list:', error);
             }
         });
 
-        function updateFriendStatus(name, status, homeUrl) {
-            $('#friend-name').html(`<span style="color: #0f1b5c">${name}</span> (♪♬)`);
-            $('#status-message').text(status);
-            $('.menu-button a[href="/member/minihomepage"] button').attr('data-url', homeUrl);
+        function renderFriends(friends) {
+            const container = $('#friend-list-container');
+            container.empty(); 
+
+            friends.forEach(friend => {
+                // Create HTML for each friend
+                const friendHtml = `
+                    <div class="Ilchon-list">
+                        <button class="material-icons" data-url="${friend.homeUrl}">home</button>
+                        <div class="list">친구 : ${friend.name}</div><br>
+                        <div class="list2">${friend.status}</div>
+                    </div>
+                `;
+                container.append(friendHtml);
+            });
         }
 
-        
-        $('.material-icons').on('click', function() {
+        $(document).on('click', '.material-icons', function() {
             var url = $(this).data('url');
             if (url) {
-                window.location.href = url; 
+                window.location.href = url;
             }
         });
     });
-</script>
+    </script>
 </body>
 </html>
