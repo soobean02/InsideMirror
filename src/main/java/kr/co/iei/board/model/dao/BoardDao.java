@@ -57,6 +57,7 @@ public class BoardDao {
 
 		Object[] params = {memberNo, boardNo};
 		List list = jdbc.query(query, boardRowMapper, params);
+		System.out.println(list.get(0));
 		if(list.isEmpty()){
 			return null;
 		}

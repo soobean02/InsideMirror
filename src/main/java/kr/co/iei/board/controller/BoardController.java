@@ -58,12 +58,12 @@ public class BoardController {
 		if(member != null){
 			memberNo = member.getMemberNo();
 		}
+
 		Board board = boardService.selectOneBoard(boardNo, check, memberNo);
 		if(board == null){
 			return "redirect:/board/list?reqPage=1";
 		}
 		model.addAttribute("board", board);
-		System.out.println(member);
 		return "/board/view";
 	}//게시글 상세보기
 
@@ -144,8 +144,6 @@ public class BoardController {
 		if(member == null){
 			return -1;
 		}
-		System.out.println(isLike);
-		System.out.println(boardNo);
 		int result = boardService.pushLike(isLike, boardNo, member);
 		return result;
 	}//좋아요버튼 누르면

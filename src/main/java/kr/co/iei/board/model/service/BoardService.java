@@ -136,11 +136,11 @@ public class BoardService {
 		int result = 0;
 		System.out.println("service");
 		if(isLike == 0){
-			//좋아요 취소인경우
+			//좋아요 누른 경우
 			result = boardDao.insertLike(boardNo, member);
 		}
 		else{
-			//좋아요 누른 경우
+			//좋아요 취소인경우
 			result = boardDao.deleteLike(boardNo, member);
 		}
 		return result;

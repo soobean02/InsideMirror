@@ -31,9 +31,9 @@ public class BoardRowMapper implements RowMapper<Board> {
 		b.setBoardWriter(rs.getString("board_writer_nickname"));
 
 		try {
-			b.setBoardLike(rs.getInt("is_like"));
+			b.setIsLike(rs.getInt("is_like"));
 		} catch (Exception e) {
-			b.setBoardLike(0);
+			b.setIsLike(0);
 		}
 		return b;
 	}
