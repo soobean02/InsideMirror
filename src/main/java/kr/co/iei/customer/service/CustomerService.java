@@ -9,22 +9,23 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.iei.customer.dao.CustomerDao;
 import kr.co.iei.customer.dto.Customer;
 import kr.co.iei.customer.dto.CustomerListData;
+import kr.co.iei.member.model.dto.Member;
 
 @Service
 public class CustomerService {
 	@Autowired
 	private CustomerDao customerDao;
 
-	public CustomerListData selectCustomerList(int reqPage) {
+	public CustomerListData selectCustomerList(int reqPage, Member member) {
 		// 한 페이지당 10개의 글 조회
 		int numPerPage = 5;
 		// 시작번호
 		int end = reqPage * numPerPage; // 1페이지면 10, 2페이지면 20 ...
 		int start = end - numPerPage + 1; // 10 - 10 = 1번 부터..., 20 - 10 + 1 = 11 번 부터...
 		
-		List list = customerDao.selectCustomerList(start, end);
+		List list = customerDao.selectCustomerList(member,start, end);
 		// 전체 페이지 수 계산
-		int totalCount = customerDao.selectCustomerTotalCount();
+		int totalCount = customerDao.selectCustomerTotalCount(member);
 		// 전체 페이지 수 계산
 		int totalPage = 0;
 		
@@ -86,9 +87,9 @@ public class CustomerService {
 	}
 	
 	@Transactional
-	public int insertCustomerInq(Customer c) {
-		int result = customerDao.insertCustomerInq(c);
-		return 0;
+	public int insertCustomerInq(Customer c, Member member) {
+		int result = customerDao.insertCustomerInq(c, member);
+		return result;
 	}
 
 

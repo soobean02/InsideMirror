@@ -111,6 +111,12 @@ public class BoardService {
 	}//게시판 insert
 
 	@Transactional
+	public int deleteBoard(int boardNo) {
+		int result = boardDao.deleteBoard(boardNo);
+		return result;
+	}//게시글 삭제
+
+	@Transactional
 	public int insertBoardComment(BoardComment comment) {
 		int result = boardDao.insertBoardComment(comment);
 		return result;
@@ -132,4 +138,6 @@ public class BoardService {
 		BoardComment oneComment = boardDao.selectOneComment(comment);
 		return oneComment;
 	}//댓글 하나 조회
+
+	
 }

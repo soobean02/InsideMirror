@@ -22,4 +22,7 @@ public class BoardComment {
 
 	//답글 개수
 	private int reCommentCount;
+
+	//댓글 작성한 회원 닉네임
+	private String boardCommentWriter;
 }

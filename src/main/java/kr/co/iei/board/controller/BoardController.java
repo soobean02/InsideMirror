@@ -87,6 +87,16 @@ public class BoardController {
 		return "redirect:/board/list?reqPage=1";
 	}//게시글 작성
 
+	@GetMapping(value="/delete")
+	public String deleteBoard(int boardNo,Model model){
+		int result = boardService.deleteBoard(boardNo);
+		model.addAttribute("title", "삭제");
+		model.addAttribute("msg", "게시글을 삭제했습니다");
+		model.addAttribute("icon", "success");
+		model.addAttribute("loc", "/board/list?reqPage=1");
+		return "common/msg";
+	}
+
 	@ResponseBody
 	@PostMapping(value="/editorImage",produces = "plain/text;charset=utf-8")
 	public String editorImage(MultipartFile upfile, @SessionAttribute(required = false) Member member){

@@ -13,7 +13,7 @@ public class Member {
 	private int memberNo;			//회원 고유 번호
 	private String memberId;		//회원 아이디 (중복 X)
 	private String memberPw;		//회원 비밀번호
-	private String memberNickname;	//회원 별명 (중복 X)
+	private String memberNickName;	//회원 별명 (중복 X)
 	private String memberName;		//회원 본명
 	private String memberGender;	//회원 성별 '남', '여'
 	private String memberPhone;		//회원 전화번호
