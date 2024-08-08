@@ -36,6 +36,7 @@ public class ProductController {
 	public String acornCount(Member m, @SessionAttribute Member member) { // acorns 도토리 받기 나중엔 세션도 받아야함 member쪽에서 회원가입 끝내면 세션 확인하고 도토리 update 해주기 [acorns = acorns+?]
 		System.out.println("gg");
 		int result = productService.updateAcorns(m);
+		
 		if(result > 0) {
 			// 도토리 잘 들어감 - 경고창 정하면 model 사용해서 만들기
 			System.out.println("성공");
@@ -88,5 +89,14 @@ public class ProductController {
 		System.out.println(member);
 		System.out.println(sp);
 		return "redirect:/product/productList?reqPage=1";
+	}
+	
+	/*구매 상품 페이지*/
+	@GetMapping(value="/buyProductList")
+	public String buyProductList(Model model, int reqPage, @SessionAttribute Member member) {
+		ProductListData pld = productService.selectBuyProduct(reqPage, member);
+		model.addAttribute("list", pld.getList());
+		model.addAttribute("pageNavi", pld.getNaviPage());
+		return "/product/buyProductList";
 	}
 }
