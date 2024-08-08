@@ -96,16 +96,15 @@ a {
 
 	<table class="atbl atbl-hover">
 		<tr>
-			<th>글번호</th>
+			<th>번호</th>
 			<th>제목</th>
 			<th>작성일</th>
 			<th>분류</th>
 			<th>상태</th>
 		</tr>
-		<tr th:each="customer : ${customerList}">
+		<tr th:each="customer : ${customerList}" th:onclick="'window.location.href=\'/report/reportView?inqNo=' + ${customer.inqNo} + '\''" style="cursor: pointer;">
 			<td th:text="${customer.inqNo}"></td>
-			<td><a th:href="@{/report/reportView(inqNo=${customer.inqNo})}"
-				th:text="${customer.inqTitle}"></a></td>
+			<td th:text="${customer.inqTitle}"></td>
 			<td th:text="${customer.inqDate}"></td>
 			<th:block th:switch="${customer.customerList}">
 				<td th:case="1">환불</td>

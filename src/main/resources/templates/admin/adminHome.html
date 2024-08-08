@@ -66,8 +66,6 @@ a {
 	text-align: center;
 	border-bottom: 1px solid #ddd;
 	padding: 10px 20px;
-	
-	
 	font-size: 11px;
 }
 
@@ -85,7 +83,7 @@ a {
 }
 
 /*--------------------------------------------*/
-.box-title{
+.box-title {
 	padding-bottom: 10px;
 }
 </style>
@@ -94,55 +92,56 @@ a {
 	<th:block th:include="common/top"></th:block>
 
 	<div class="box-title">회원 관리 ></div>
-		<table class="atbl atbl-hover">
-			<tr>
-				<th>번호</th>
-				<th>이름</th>
-				<th>닉네임</th>
-				<th>이메일</th>
-				<th>성별</th>
-				<th>전화번호</th>
-				<th>주소</th>
-				<th>등급</th>
-				<th>가입일</th>
-			</tr>
+	<table class="atbl atbl-hover">
+		<tr>
+			<th>번호</th>
+			<th>이름</th>
+			<th>닉네임</th>
+			<th>이메일</th>
+			<th>성별</th>
+			<th>전화번호</th>
+			<th>주소</th>
+			<th>등급</th>
+			<th>가입일</th>
+		</tr>
 
-			<tr th:each="m : ${fiveMemberList}" onclick="memberView([[${m.memberNo}]])">
-				<td th:text="${m.memberNo}"></td>
-				<td><a th:href="@{/admin/memberView(memberNo=${m.memberNo})}"
-					th:text="${m.memberName}"> </a></td>
-				<td th:text="${m.memberNickname}"></td>
-				<td th:text="${m.memberId}"></td>
-				<td th:text="${m.memberGender}"></td>
-				<td th:text="${m.memberPhone}"></td>
-				<td th:text="${m.memberAddr}"></td>
-				<td th:text="${m.memberLevel}"></td>
-				<td th:text="${m.enrollDate}"></td>
-			</tr>
-		</table>
-	
-		<div class="box-title">고객 센터 ></div>
-			<table class="atbl atbl-hover">
-				<tr>
-					<th>글번호</th>
-					<th>제목</th>
-					<th>작성일</th>
-					<th>분류</th>
-					<th>상태</th>
-				</tr>
-				<tr th:each="customer : ${fiveReportList}">
-					<td th:text="${customer.inqNo}"></td>
-					<td><a
-						th:href="@{/report/reportView(inqNo=${customer.inqNo})}"
-						th:text="${customer.inqTitle}"></a></td>
-					<td th:text="${customer.inqDate}"></td>
-					<th:block th:switch="${customer.customerList}">
-						<td th:case="1">환불</td>
-						<td th:case="2">기타</td>
-					</th:block>
-					<td id="status" th:text="${customer.status}"></td>
-				</tr>
-			</table>
+		<tr th:each="m : ${fiveMemberList}"
+			th:onclick="'window.location.href=\'/admin/memberView?memberNo=' + ${m.memberNo} + '\''"
+			style="cursor: pointer;">
+			<td th:text="${m.memberNo}"></td>
+			<td th:text="${m.memberName}"></td>
+			<td th:text="${m.memberNickname}"></td>
+			<td th:text="${m.memberId}"></td>
+			<td th:text="${m.memberGender}"></td>
+			<td th:text="${m.memberPhone}"></td>
+			<td th:text="${m.memberAddr}"></td>
+			<td th:text="${m.memberLevel}"></td>
+			<td th:text="${m.enrollDate}"></td>
+		</tr>
+	</table>
+
+	<div class="box-title">고객 센터 ></div>
+	<table class="atbl atbl-hover">
+		<tr>
+			<th>글번호</th>
+			<th>제목</th>
+			<th>작성일</th>
+			<th>분류</th>
+			<th>상태</th>
+		</tr>
+		<tr th:each="customer : ${fiveReportList}"
+			th:onclick="'window.location.href=\'/report/reportView?inqNo=' + ${customer.inqNo} + '\''"
+			style="cursor: pointer;">
+			<td th:text="${customer.inqNo}"></td>
+			<td th:text="${customer.inqTitle}"></td>
+			<td th:text="${customer.inqDate}"></td>
+			<th:block th:switch="${customer.customerList}">
+				<td th:case="1">환불</td>
+				<td th:case="2">기타</td>
+			</th:block>
+			<td id="status" th:text="${customer.status}"></td>
+		</tr>
+	</table>
 
 
 	<div class="picture-room">
@@ -159,7 +158,7 @@ a {
 			</div>
 		</div>
 	</div>
-	
+
 	<th:block th:include="common/adminBottom"></th:block>
 </body>
 

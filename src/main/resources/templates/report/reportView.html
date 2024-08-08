@@ -5,6 +5,55 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>신고글 상세보기</title>
 </head>
+<style>
+.customerPage_tb {
+	background-color: lightblue;
+	width: 90%;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+
+.customerPage_tb>tr>* {
+	padding: 20px;
+}
+
+.cu_title {
+	float: left;
+	margin: 10px;
+}
+
+.customerPage_content {
+	width: 90%;
+	height: 300px;
+	margin: 0 auto;
+	margin-top: 20px;
+	box-sizing: border-box;
+	border: 1px solid #000;
+	border-radius: 5px;
+}
+
+.customerPage_content>div {
+	padding: 20px;
+	color: #333;
+}
+
+.client_btn {
+	margin-top: 10px;
+	padding: 20px;
+	float: right;
+}
+
+.client_btn>button {
+	background-color: skyblue;
+	border: none;
+	font-weight: bold;
+	color: #fff;
+	width: 100px;
+	height: 30px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+</style>
 <body>
 	<th:block th:include="common/top"></th:block>
 
@@ -13,22 +62,25 @@
 		<div class="customerPage_wrap">
 			<table class="customerPage_tb">
 				<tr>
-					<th>글번호</th>
-					<td th:text="${customer.inaNo}"></td>
+					<th>번호</th>
+					<td th:text="${customer.inqNo}"></td>
 					<th>상태</th>
-					<td id="status">승인중</td>
+					<td th:text="${customer.status}" id="status">승인중</td>
 					<th>작성일</th>
-					<td>2024-08-05</td>
+					<td th:text="${customer.inqDate}"></td>
 				</tr>
 				<tr>
 					<th colspan="2" class="cu_title">제목</th>
-					<td>빙글빙글 돌아가는 짱구네 가족</td>
+					<td th:text="${customer.inqTitle}"></td>
 					<th>분류</th>
-					<td>환불</td>
+					<th:block th:switch="${customer.customerList}">
+						<td th:case="1">환불</td>
+						<td th:case="2">기타</td>
+					</th:block>
 				</tr>
 			</table>
 			<div class="customerPage_content">
-				<div>내용 내용 내용 내용</div>
+				<div th:text="${customer.inqContent}"></div>
 			</div>
 
 			<form action="/report/updateStatus" method="post">
@@ -39,8 +91,8 @@
 							<div class="triangle-down"></div>
 						</div>
 						<div class="dropdown-content">
-							<a href="#" id="approval"><button type="submit">승인</button></a>
-							<a href="#" id="reject"><button type="submit">반려</button></a>
+							<a href="#" id="approval"><button type="submit">승인</button></a> <a
+								href="#" id="reject"><button type="submit">반려</button></a>
 						</div>
 					</div>
 				</div>
