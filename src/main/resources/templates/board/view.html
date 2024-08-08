@@ -320,6 +320,7 @@
                 </div>
 
                 <div class="view-mark left">
+                    <span th:text="${board.isLike}"></span>
                     <span th:if="${board.isLike == 1}" class="material-icons select" th:onclick="pushLike(this,[[${board.boardNo}]])">favorite</span>
                     <span th:if="${board.isLike == 0}" class="material-icons select" th:onclick="pushLike(this,[[${board.boardNo}]])">favorite_border</span>
                     <span class="material-icons select" th:onclick="pushBookMark(this,[[${board.boardNo}]])">bookmark_border</span>
@@ -802,9 +803,8 @@
         ////좋아요 및 북마크 기능
         function pushLike(obj, boardNo){
             const text = $(obj).text();
-            //좋아요 누르면 1 취소면 0
+            //좋아요 누르면0 취소면 1
             const isLike = (text == "favorite_border") ? 0 : 1;
-            
             
             $.ajax({
                 url : "/board/like",
