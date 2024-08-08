@@ -103,18 +103,21 @@ public class ProductDao {
 	
 	// 구매한 상품 테이블에 insert 상품 하기 // 환불 날짜... 환불 상태는 사용으로 하면 되나 not null로 되어있음 ... 홀리 몰리 과카몰리
 	public int insertProductAdd(Member m, SellProduct sp) {
-		String query = "INSERT INTO buy_product VALUES(buy_product_seq.nextval, ?, ?, TO_CHAR(SYSDATE,'yyyy-mm-dd'), '사용',null)";
+		String query = "INSERT INTO buy_product VALUES(buy_product_seq.nextval, ?, ?, TO_CHAR(SYSDATE,'yyyy-mm-dd'), '사용',null, 0)";
 		Object[] params = {sp.getProductNo(),m.getMemberNo()};
 		int result = jdbc.update(query,params);
 		return result;
 	}
+	
+	// 구매한 상품 리스트 보기 - buyInfoRowMapper
 	public List selectBuyProductList(int start, int end, Member member) {
-		// String query = "select * from (select rownum as rnum, n.* from (select * from customer where member_no=? order by 1 desc)n) where rnum between ? and ?";
 		String query = "select * from (select rownum as rnum, n.* from (select * from buy_product join sell_product using(product_no) where member_no=? order by 1 desc)n) join sell_product s using(product_no) where rnum between ? and ?";
 		Object[] params = {member.getMemberNo(),start,end};
 		List list = jdbc.query(query,buyInfoRowMapper, params);
 		return list;
 	}
+	
+	// 
 	public int selectBuyProductTotalCount(Member member) {
 		String query = "select count(*) from buy_product where member_no=?";
 		Object[] params = {member.getMemberNo()};
