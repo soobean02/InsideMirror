@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>minihomepage</title>
+<style>
+    .board-wrap{
+        width: 100%;
+        height: 700px;
+        font-size: 18px;
+        /* background-color: #92a2ff; */
+    }
+
+    ul{
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+    }
+    a{
+        text-decoration: none;
+        color: black;
+    }
+    p{
+        margin: 0;
+    }
+
+    .left{
+        float: left;
+    }
+    .right{
+        float: right;
+    }
+
+    #boardTitle{
+        outline: none;
+        border: none;
+        border-bottom: 1px solid rgb(132, 132, 132);
+        width: 80%;
+        height: 30px;
+        font-size: 18px;
+        font-weight: 500;
+        margin: 20px 0px;
+    }
+    .board-title{
+        text-align: center;
+    }
+
+</style>
+</head>
+<body>
+
+    <th:block th:include="common/top"></th:block>
+    
+    <div class="box-title">자유 게시판 ></div>
+
+    
+
+    <div class="board-wrap">
+
+        <form action="/board/edit" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="boardNo" th:value="${board.boardNo}">
+            <div class="board-title">
+                <input type="text" name="boardTitle" th:value="${board.boardTitle}" id="boardTitle" placeholder="제목을 입력해주세요!">
+            </div>
+            
+            <div class="board-content">
+                <textarea name="boardContent" id="content" th:utext="${board.boardContent}"></textarea>
+            </div>
+
+            <button type="submit">수정</button>
+        </form>
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+    <th:block th:include="common/bottom"></th:block>
+
+    <script>
+        $("#content").summernote({
+            height: 380,
+            lang: "ko-KR",
+            disableResize: true,
+            disableResizeEditor: true,
+            resize: false,
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['fontname', 'fontstyle']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['height', ['height']],
+                ['insert', ['link', 'picture']], 
+                ['view', []] 
+            ],
+            fontSizes: ['10', '12', '14', '16', '18', '20', '22', '24', '26', '28', '30', '32','34', '36'],
+            callbacks: {
+                onImageUpload: function(files) {
+                uploadImage(files[0], this);
+                }
+            }
+        });
+
+        $("#boardTitle").on("keydown",function(e){
+            const enter = e.key;
+            if(enter === "Enter"){
+                event.preventDefault();
+                $("#content").summernote('focus');
+            }
+        });
+
+        function uploadImage(file,editor){
+            const form = new FormData();
+            form.append("upfile",file);
+            $.ajax({
+                url: "/board/editorImage",
+                type:"post",
+                data : form,
+                processData : false,
+                contentType : false,
+                success : function(data){
+                    $(editor).summernote("insertImage",data);
+                    console.log("suc");
+                },
+                error : function(){
+                    console.log("error");
+                    //에러 메세지 띄우기
+                }
+            });
+        }
+        
+    </script>
+
+</body>
+</html>
