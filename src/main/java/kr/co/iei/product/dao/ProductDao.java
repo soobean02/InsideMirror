@@ -13,6 +13,7 @@ import kr.co.iei.product.dto.BuyInfoRowMapper;
 import kr.co.iei.product.dto.BuyProduct;
 import kr.co.iei.product.dto.BuyProductRowMapper;
 import kr.co.iei.product.dto.ProductListRowMapper;
+import kr.co.iei.product.dto.SellBuyProduct;
 import kr.co.iei.product.dto.SellProduct;
 import kr.co.iei.product.dto.SellProductRowMapper;
 
@@ -58,7 +59,8 @@ public class ProductDao {
 		}
 		return list;
 	}
-
+	
+	/*판매 상품 리스트 출력*/
 	public List selectProductList(int start, int end) {
 		String query = "select * from (select rownum as rnum, n.* from (select * from sell_product order by 1 desc)n) where rnum between ? and ?";
 		Object[] params = {start,end};
@@ -72,6 +74,7 @@ public class ProductDao {
 		return totalCount;
 	}
 
+	/*판매 상품 상세보기 정보 출력*/
 	public SellProduct selectProductInfo(int productNo) {
 		String query = "select * from sell_product where product_no = ?";
 		Object[] params = {productNo};
@@ -82,6 +85,7 @@ public class ProductDao {
 			return (SellProduct)list.get(0);
 		}
 	}
+	
 	// 상품 구매 시 회원 지갑에서 도토리 빼가기
 	public int updateAcornMinus(Member m, SellProduct sp) {
 		String query = "UPDATE MEMBER SET ACORNS = ACORNS - ? WHERE MEMBER_NO=?";
@@ -101,20 +105,23 @@ public class ProductDao {
 		}
 	}
 	
-	// 구매한 상품 테이블에 insert 상품 하기 // 환불 날짜... 환불 상태는 사용으로 하면 되나 not null로 되어있음 ... 홀리 몰리 과카몰리
+	// 구매한 상품 테이블에 insert 상품 하기
 	public int insertProductAdd(Member m, SellProduct sp) {
-		String query = "INSERT INTO buy_product VALUES(buy_product_seq.nextval, ?, ?, TO_CHAR(SYSDATE,'yyyy-mm-dd'), '사용',null)";
+		String query = "INSERT INTO buy_product VALUES(buy_product_seq.nextval, ?, ?, TO_CHAR(SYSDATE,'yyyy-mm-dd'), '사용',null, 0)";
 		Object[] params = {sp.getProductNo(),m.getMemberNo()};
 		int result = jdbc.update(query,params);
 		return result;
 	}
+	
+	// 구매한 상품 리스트 보기 - buyInfoRowMapper
 	public List selectBuyProductList(int start, int end, Member member) {
-		// String query = "select * from (select rownum as rnum, n.* from (select * from customer where member_no=? order by 1 desc)n) where rnum between ? and ?";
 		String query = "select * from (select rownum as rnum, n.* from (select * from buy_product join sell_product using(product_no) where member_no=? order by 1 desc)n) join sell_product s using(product_no) where rnum between ? and ?";
 		Object[] params = {member.getMemberNo(),start,end};
 		List list = jdbc.query(query,buyInfoRowMapper, params);
 		return list;
 	}
+	
+	// 
 	public int selectBuyProductTotalCount(Member member) {
 		String query = "select count(*) from buy_product where member_no=?";
 		Object[] params = {member.getMemberNo()};
@@ -129,6 +136,18 @@ public class ProductDao {
 		int result = jdbc.update(query, params);
 		return result;
 	}//addProduct
+	
+	// 구매한 상품 상세보기 정보 출력
+	public SellBuyProduct selectBuyProductInfo(int buyNo) {
+		String query = "select * from buy_product join sell_product using(product_no) where buy_no=?";
+		Object[] params = {buyNo};
+		List list = jdbc.query(query, buyInfoRowMapper, params);
+		if(list.isEmpty()) { // 사용자가 구매하지 않음
+			return null;
+		}else {
+			return (SellBuyProduct)list.get(0);
+		}
+	}
 	
 	
 	public int productUpdate(SellProduct sp) {
