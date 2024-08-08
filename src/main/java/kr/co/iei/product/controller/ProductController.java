@@ -104,8 +104,8 @@ public class ProductController {
 	
 	/*구매 상품 리스트 - 타입 검사 추가*/
 	@GetMapping(value="/buyProductList")
-	public String buyProductList(Model model, int reqPage, int type, @SessionAttribute Member member) {
-		ProductListData pld = productService.selectBuyProduct(reqPage, type, member);
+	public String buyProductList(Model model, int reqPage, @SessionAttribute Member member) {
+		ProductListData pld = productService.selectBuyProduct(reqPage, member);
 		model.addAttribute("list", pld.getList());
 		model.addAttribute("pageNavi", pld.getNaviPage());
 		return "/product/buyProductList";

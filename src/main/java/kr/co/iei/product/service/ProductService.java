@@ -240,7 +240,7 @@ public class ProductService {
 		return result;
 	}// productUpdate
 
-	public ProductListData selectBuyProduct(int reqPage, int type, Member member) {
+	public ProductListData selectBuyProduct(int reqPage,  Member member) {
 		// 한 페이지당 10개의 글 조회
 		int numPerPage = 10;
 		// 시작번호
