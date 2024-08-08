@@ -270,7 +270,7 @@ h4 {
 						<div class="pay_system">
 							<div class="acorn_box pay_acorn">
 								<div id="pay"></div>
-								<form action="userBuyProduct" method="post">
+								<form action="userBuyProduct" method="post" id="go">
 									<!-- 보낼때 상품번호, 상품 가격, 상품 리스트 정보, 멤버 번호 같이 보내기 -->
 									<input type="hidden" name="productNo" th:value="${p.productNo}">
 									<input type="hidden" name="productPrice"
@@ -278,7 +278,7 @@ h4 {
 										name="productPrice" th:value="${p.productListNo}"> <input
 										type="hidden" name="memberNo"
 										th:value="${session.member.memberNo}">
-									<button class="btn">구매하기</button>
+									<button type="button" class="btn">구매하기</button>
 								</form>
 								<a href="/product/acornProduct" class="acornShow"
 									style="display: none;">도토리 구매하러 가기 > </a>
@@ -336,7 +336,31 @@ h4 {
 		price();
 		
 		$(".btn").on("click",function(){
-			
+			swal({
+				title: "구매",
+				text: "구매하시겠습니까?",
+				icon: "info",
+				buttons:{
+					cancel:{
+						text:"아뇨",
+						value:false,
+						visible:true,
+						className:"btn-secondary",
+						closeModal:true
+					},
+					confirm:{
+						text:"네",
+						value:true,
+						visible:true,
+						className:"btn-primary",
+						closeModal:true
+					}
+				}
+			}).then(function(isConfirm){
+				if(isConfirm){
+					$("#go").submit();
+				}
+			});
 		})
 	</script>
 </body>
