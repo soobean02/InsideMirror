@@ -14,6 +14,7 @@ import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.service.MemberService;
 import kr.co.iei.product.dto.BuyProduct;
 import kr.co.iei.product.dto.ProductListData;
+import kr.co.iei.product.dto.SellBuyProduct;
 import kr.co.iei.product.dto.SellProduct;
 import kr.co.iei.product.service.ProductService;
 
@@ -58,7 +59,7 @@ public class ProductController {
 	}
 	/*판매 상세 페이지*/
 	@GetMapping(value="/proudctPage")
-	public String buyProductPage(Model model, int productNo,  @SessionAttribute Member member) {
+	public String productPage(Model model, int productNo,  @SessionAttribute Member member) { // buyProductPage로 되어있었음...
 		// 상품 정보
 		SellProduct p = productService.selectProductInfo(productNo);
 		model.addAttribute("p",p);
@@ -92,12 +93,28 @@ public class ProductController {
 		return "redirect:/product/productList?reqPage=1";
 	}
 	
-	/*구매 상품 페이지*/
+	/*구매 상품 리스트*/
 	@GetMapping(value="/buyProductList")
 	public String buyProductList(Model model, int reqPage, @SessionAttribute Member member) {
 		ProductListData pld = productService.selectBuyProduct(reqPage, member);
 		model.addAttribute("list", pld.getList());
 		model.addAttribute("pageNavi", pld.getNaviPage());
 		return "/product/buyProductList";
+	}
+	
+	/*구매 상품 상세페이지*/
+	@GetMapping(value="/buyProductPage")
+	public String buyProductPage(Model model, int buyNo,  @SessionAttribute Member member) {
+		// 구매한 상품 정보 출력
+		System.out.println(buyNo);
+		SellBuyProduct sp = productService.selectBuyProductInfo(buyNo);
+		System.out.println(sp.getBuyProduct());
+		System.out.println(sp.getSellProduct());
+		model.addAttribute("sp",sp);
+		// 세션 보내기
+		List product = productService.selectProductPhoto();
+		model.addAttribute("product",product);
+		
+		return "/product/buyProductPage";
 	}
 }

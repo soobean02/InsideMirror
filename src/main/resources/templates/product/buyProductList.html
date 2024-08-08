@@ -129,7 +129,7 @@ input[name=product]:checked+label {
 		</div>
 		<div class="product_list_box">
 			<th:block th:each="pr : ${list}">
-				<a th:href="@{/product/proudctPage(productNo=${pr.buyProduct.buyNo})}"> <!--타임리프 들어갈 자리-->
+				<a th:href="@{/product/buyProductPage(buyNo=${pr.buyProduct.buyNo})}"> <!--타임리프 들어갈 자리-->
 					<div class="product_box">
 						<div class="product_img">
 							<img th:src="@{'/product/editor/'+${pr.sellProduct.productImg}}" width="70px" height="70px">

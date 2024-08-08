@@ -12,6 +12,7 @@ import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.product.dao.ProductDao;
 import kr.co.iei.product.dto.BuyProduct;
 import kr.co.iei.product.dto.ProductListData;
+import kr.co.iei.product.dto.SellBuyProduct;
 import kr.co.iei.product.dto.SellProduct;
 
 @Service
@@ -113,6 +114,7 @@ public class ProductService {
 		return pld;
 	}
 
+	// 이거 내가 쓴 거...?
 	//상품 상세보기 후 수정, 삭제
 	public int productView(SellProduct sp) {
 		return 0;
@@ -228,6 +230,11 @@ public class ProductService {
 		ProductListData pld = new ProductListData(list, pageNavi);
 //		Customer customer = customerDao.selectCustomerList(reqPage);
 		return pld;
+	}
+
+	public SellBuyProduct selectBuyProductInfo(int buyNo) {
+		SellBuyProduct sp = productDao.selectBuyProductInfo(buyNo);
+		return sp;
 	}
 
 
