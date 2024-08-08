@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>상품 상세보기</title>
+<script src="/js/sweetalert.min.js"></script>
 </head>
 <style>
 .customerPage_tb {
@@ -61,7 +62,7 @@
 	<div class="client_wrap">
 		<div class="customerPage_wrap">
 
-			<form th:action="@{/admin/productUpdate}" method="post">
+			<form action="/admin/productUpdate" method="post">
 				<table>
 					<tr>
 						<th>상품사진</th>
@@ -126,4 +127,32 @@
 	</div>
 	<th:block th:include="common/adminBottom"></th:block>
 </body>
+<script>
+	/* $(".product-add-btn").on("click",function(){
+		swal({
+			title:"완료",
+			text:"수정이 완료되었습니다.",
+			buttons:{
+				confirm:{
+					text:"수정 완료",
+					value:true,
+					visible:true,
+				},
+				cancel:{
+					text:"취소",
+					value:false,
+					visible:true,
+				}
+			}
+		}).then(function(isConfirm){
+			console.log(isConfirm);
+			if(isConfirm){
+				const productNo = $("input[name=productNo]").val();
+				location.href = "/admin/adminProductList?reqPage=1/"
+			}else{
+				location.href = "/"
+			}
+		});
+	}); */
+</script>
 </html>

@@ -90,7 +90,7 @@ public class AdminController {
 	}//productView
 	
 	@PostMapping(value = "/productUpdate")
-	public String productUpdate(SellProduct sp) {
+	public String productUpdate(SellProduct sp, Model model) {
 		int result = productService.productUpdate(sp);
 		if(result>0) {
 			return "redirect:/admin/adminProductList?reqPage=1";
