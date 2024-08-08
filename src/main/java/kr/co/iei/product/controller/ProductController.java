@@ -92,4 +92,11 @@ public class ProductController {
 	}
 	
 	/*구매 상품 페이지*/
+	@GetMapping(value="/buyProductList")
+	public String buyProductList(Model model, int reqPage, @SessionAttribute Member member) {
+		ProductListData pld = productService.selectBuyProduct(reqPage, member);
+		model.addAttribute("list", pld.getList());
+		model.addAttribute("pageNavi", pld.getNaviPage());
+		return "/product/buyProductList";
+	}
 }

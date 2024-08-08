@@ -94,7 +94,6 @@ input[name=product]:checked+label {
 }
 
 .product_list_box {
-	background-color: pink;
 	margin-top: 70px;
 	height: 390px;
 }
@@ -110,7 +109,8 @@ input[name=product]:checked+label {
 
 .product_list_box>a {
 	width: 100px;
-	background-color: #eee;
+	border-radius: 5px;
+	border: 1px solid #ddd;
 	float: left;
 	margin: 35px 10px 20px 20px;
 	text-align: center;
@@ -128,107 +128,20 @@ input[name=product]:checked+label {
 			</select>
 		</div>
 		<div class="product_list_box">
-			<a href="#">
-				<!--타임리프 들어갈 자리-->
-				<div class="product_box">
-					<div class="product_img">
-						<img src="img/acorn.png" width="80px">
+			<th:block th:each="pr : ${list}">
+				<a th:href="@{/product/proudctPage(productNo=${pr.buyProduct.buyNo})}"> <!--타임리프 들어갈 자리-->
+					<div class="product_box">
+						<div class="product_img">
+							<img th:src="@{'/product/editor/'+${pr.sellProduct.productImg}}" width="70px" height="70px">
+						</div>
+						<div class="product_name" th:text="${pr.sellProduct.productName}">상품이름</div>
 					</div>
-					<div class="product_name">상품이름</div>
-				</div>
-			</a> <a href="#">
-				<!--타임리프 들어갈 자리-->
-				<div class="product_box">
-					<div class="product_img">
-						<img src="img/acorn.png" width="80px">
-					</div>
-					<div class="product_name">상품이름</div>
-				</div>
-			</a> <a href="#">
-				<!--타임리프 들어갈 자리-->
-				<div class="product_box">
-					<div class="product_img">
-						<img src="img/acorn.png" width="80px">
-					</div>
-					<div class="product_name">상품이름</div>
-				</div>
-			</a> <a href="#">
-				<!--타임리프 들어갈 자리-->
-				<div class="product_box">
-					<div class="product_img">
-						<img src="img/acorn.png" width="80px">
-					</div>
-					<div class="product_name">상품이름</div>
-				</div>
-			</a> <a href="#">
-				<!--타임리프 들어갈 자리-->
-				<div class="product_box">
-					<div class="product_img">
-						<img src="img/acorn.png" width="80px">
-					</div>
-					<div class="product_name">상품이름</div>
-				</div>
-			</a> <a href="#">
-				<!--타임리프 들어갈 자리-->
-				<div class="product_box">
-					<div class="product_img">
-						<img src="img/acorn.png" width="80px">
-					</div>
-					<div class="product_name">상품이름</div>
-				</div>
-			</a> <a href="#">
-				<!--타임리프 들어갈 자리-->
-				<div class="product_box">
-					<div class="product_img">
-						<img src="img/acorn.png" width="80px">
-					</div>
-					<div class="product_name">상품이름</div>
-				</div>
-			</a> <a href="#">
-				<!--타임리프 들어갈 자리-->
-				<div class="product_box">
-					<div class="product_img">
-						<img src="img/acorn.png" width="80px">
-					</div>
-					<div class="product_name">상품이름</div>
-				</div>
-			</a> <a href="#">
-				<!--타임리프 들어갈 자리-->
-				<div class="product_box">
-					<div class="product_img">
-						<img src="img/acorn.png" width="80px">
-					</div>
-					<div class="product_name">상품이름</div>
-				</div>
-			</a> <a href="#">
-				<!--타임리프 들어갈 자리-->
-				<div class="product_box">
-					<div class="product_img">
-						<img src="img/acorn.png" width="80px">
-					</div>
-					<div class="product_name">상품이름</div>
-				</div>
-			</a>
+				</a>
+			</th:block>
 		</div>
-		<!--페이징-->
-		<ul class="pagination circle-style">
-			<li><a class="page-item" href="#"><span
-					class="material-icons">keyboard_double_arrow_left</span></a></li>
-			<li><a class="page-item" href="#"><span
-					class="material-icons">chevron_left </span></a></li>
-			<li><a class="page-item" href="#">1</a></li>
-			<li><a class="page-item" href="#">2</a></li>
-			<li><a class="page-item" href="#">3</a></li>
-			<li><a class="page-item active-page" href="#">4</a></li>
-			<li><a class="page-item" href="#">5</a></li>
-			<li><a class="page-item" href="#"><span
-					class="material-icons"> chevron_right </span></a></li>
-			<li><a class="page-item" href="#"><span
-					class="material-icons">keyboard_double_arrow_right</span></a></li>
-		</ul>
-	</div>
+		<div id="pageNavi" th:utext="${pageNavi}"></div>
+
 	<!--끝-->
-	</div>
 	</div>
 	<th:block th:include="common/bottom"></th:block>
 	</div>
