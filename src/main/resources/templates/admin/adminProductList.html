@@ -93,11 +93,30 @@ a {
 	text-align: center;
 	border-radius: 5px;
 }
+/*--------------------------------------------*/
+.client_btn {
+	margin-top: 10px;
+	padding: 20px;
+}
+
+.client_btn>a {
+	background-color: skyblue;
+	border: none;
+	font-weight: bold;
+	color: #fff;
+	width: 100px;
+	height: 30px;
+	border-radius: 5px;
+	cursor: pointer;
+}
 </style>
 <body>
 	<th:block th:include="common/top"></th:block>
 
 	<div class="box-title">상품 목록</div>
+	<div class="client_btn">
+		<a href="/admin/adminProductAddFrm" class="client_btn">상품 추가</a>
+	</div>
 	<div class="wrap">
 		<div class="select_op">
 			<select>

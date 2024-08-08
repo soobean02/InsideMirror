@@ -107,22 +107,19 @@ a {
 				<th>가입일</th>
 			</tr>
 
-			<tr th:each="m : ${member}" onclick="memberView([[${m.memberNo}]])">
-				<td th:text="${m.memberNo}"></td>
-				<td>
-				<a
-				th:href="@{/admin/memberView(memberNo=${m.memberNo})}"
-				th:text="${m.memberName}">
-				</a>
-				</td>
-				<td th:text="${m.memberNickname}"></td>
-				<td th:text="${m.memberId}"></td>
-				<td th:text="${m.memberGender}"></td>
-				<td th:text="${m.memberPhone}"></td>
-				<td th:text="${m.memberAddr}"></td>
-				<td th:text="${m.memberLevel}"></td>
-				<td th:text="${m.enrollDate}"></td>
-			</tr>
+			<tr th:each="m : ${member}"
+			th:onclick="'window.location.href=\'/admin/memberView?memberNo=' + ${m.memberNo} + '\''"
+			style="cursor: pointer;">
+			<td th:text="${m.memberNo}"></td>
+			<td th:text="${m.memberName}"></td>
+			<td th:text="${m.memberNickName}"></td>
+			<td th:text="${m.memberId}"></td>
+			<td th:text="${m.memberGender}"></td>
+			<td th:text="${m.memberPhone}"></td>
+			<td th:text="${m.memberAddr}"></td>
+			<td th:text="${m.memberLevel}"></td>
+			<td th:text="${m.enrollDate}"></td>
+		</tr>
 		</table>
 
 	<div class="pageNavi" th:utext="${pageNavi}"></div>
