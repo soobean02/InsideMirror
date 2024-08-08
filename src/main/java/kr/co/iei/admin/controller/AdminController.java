@@ -81,12 +81,22 @@ public class AdminController {
 		return "admin/adminProductList";
 	}//adminProductList
 	
-	@GetMapping(value = "/productView")
-	public String productView(Model model, int productNo) {
+	@GetMapping(value = "/adminProductView")
+	public String adminProductView(Model model, int productNo) {
 		SellProduct sp = productService.selectProductInfo(productNo);
 		model.addAttribute("sp", sp);
 		return "admin/adminProductView";
 	}//productView
+	
+	@PostMapping(value = "/productUpdate")
+	public String productUpdate(SellProduct sp) {
+		int result = productService.productUpdate(sp);
+		if(result>0) {
+			return "redirect:/admin/adminHome";
+		}else {
+			return "redirect:/";
+		}//else
+	}//productUpdate
 	
 	@GetMapping(value = "/adminProductAddFrm")
 	public String adminProductAddFrm() {

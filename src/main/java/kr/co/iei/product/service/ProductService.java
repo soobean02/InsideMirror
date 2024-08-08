@@ -229,5 +229,11 @@ public class ProductService {
 				return pld;
 	}//selectAdminProduct
 
+	@Transactional
+	public int productUpdate(SellProduct sp) {
+		int result = productDao.productUpdate(sp);
+		return result;
+	}//productUpdate
+
 
 }
