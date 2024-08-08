@@ -41,7 +41,7 @@ public class ProductController {
 			// 도토리 잘 들어감 - 경고창 정하면 model 사용해서 만들기
 			System.out.println("성공");
 			// 세션 업데이트 하기
-			member.setAcorns(m.getAcorns());
+			member.setAcorns(m.getAcorns()+member.getAcorns());
 		}else {
 			// 도토리 실패 - 경고창 정하면 model 사용해서 만들기
 			System.out.println("실패");
@@ -86,8 +86,9 @@ public class ProductController {
 		// 로직 : 멤버 update를 사용해서 상품 가격 만큼 도토리 빼기 -> 성공하면 구매 상품에 추가 insert, 실패 시 알림창(알림창 우짬..)
 		int result = productService.productAdd(member, sp);
 		model.addAttribute("prdouctPrice", result);
-		System.out.println(member);
-		System.out.println(sp);
+		if(result > 0) {
+			member.setAcorns(member.getAcorns() - sp.getProductPrice()); // 세션 갱신
+		}
 		return "redirect:/product/productList?reqPage=1";
 	}
 	
