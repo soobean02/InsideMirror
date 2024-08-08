@@ -20,9 +20,8 @@ public class GuestBookDao {
     private GuestBookRowMapper guestBookRowMapper;
     
     public int insertComment(GuestBook gb) {
-        String query = "insert into guestbook (guestbook_comment_no, guest_writer_no, guest_comment_content, guest_comment_date) " +
-        				"values (guestbook_seq.nextval, ?, ?, sysdate)";
-        Object[] params = {gb.getGuestWriterNo(), gb.getGuestCommentContent() };
+        String query = "INSERT INTO guestbook (guest_comment_no, guest_writer_no, guest_comment_content, guest_comment_date) VALUES (guestbook_seq.nextval, ?, ?, sysdate)";
+        Object[] params = {gb.getGuestWriterNo(), gb.getGuestCommentContent()};
         return jdbc.update(query, params);
     }
 
@@ -37,9 +36,10 @@ public class GuestBookDao {
         Object[] params = {gb.getGuestCommentNo() };
         return jdbc.update(query, params);
     }
-
     public List<GuestBook> getAllComments() {
-        String query = "select * from guestbook order by guest_comment_date desc";
+        String query = "SELECT * FROM guestbook ORDER BY guest_comment_date DESC";
         return jdbc.query(query, guestBookRowMapper);
     }
+
+   
 } 

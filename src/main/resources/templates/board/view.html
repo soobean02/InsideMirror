@@ -320,9 +320,11 @@
                 </div>
 
                 <div class="view-mark left">
+                    <span th:text="${board.isLike}"></span>
                     <span th:if="${board.isLike == 1}" class="material-icons select" th:onclick="pushLike(this,[[${board.boardNo}]])">favorite</span>
                     <span th:if="${board.isLike == 0}" class="material-icons select" th:onclick="pushLike(this,[[${board.boardNo}]])">favorite_border</span>
-                    <span class="material-icons select" th:onclick="pushBookMark(this,[[${board.boardNo}]])">bookmark_border</span>
+                    <span th:if="${board.isBookMark == 1}" class="material-icons select" th:onclick="pushBookMark(this,[[${board.boardNo}]])">bookmark</span>
+                    <span th:if="${board.isBookMark == 0}" class="material-icons select" th:onclick="pushBookMark(this,[[${board.boardNo}]])">bookmark_border</span>
                 </div>
             </div>
 <!-- 작성자 | 작성일 -->
@@ -802,9 +804,8 @@
         ////좋아요 및 북마크 기능
         function pushLike(obj, boardNo){
             const text = $(obj).text();
-            //좋아요 누르면 1 취소면 0
+            //좋아요 누르면0 취소면 1
             const isLike = (text == "favorite_border") ? 0 : 1;
-            
             
             $.ajax({
                 url : "/board/like",
@@ -829,14 +830,30 @@
             });
         }
 
-        function pushBookMark(obj){
-            const isBookMark = $(obj).text();
-            if(isBookMark === "bookmark_border"){
-                //즐겨찾기 한거
-            }
-            else{
-                //즐겨찾기 취소
-            }
+        function pushBookMark(obj, boardNo){
+            const textBookMark = $(obj).text();
+            const isBookMark = (textBookMark == "bookmark_border") ? 0 : 1;
+
+            $.ajax({
+                url : "/board/bookmark",
+                type : "post",
+                data : {isBookMark : isBookMark, boardNo : boardNo},
+                success : function(data){
+                    if(data == -1){
+                        alert("로그인 후 이용가능합니다.");
+                    }
+                    else if(data == 1){
+                        console.log("성공");
+                        if(isBookMark == 0) $(obj).text("bookmark");
+                        else $(obj).text("bookmark_border");
+                    }
+                },
+                error : function(){
+                    console.log("error");
+                }
+            })
+
+            
         }
 
 

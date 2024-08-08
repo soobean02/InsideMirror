@@ -167,6 +167,9 @@
         margin-left: 10px;
     }
 
+    .active-page{
+        color: aqua;
+    }
 
 </style>
 
@@ -204,7 +207,7 @@
             </div>
 
             <div class="search-wrap left">
-                <form action="/board/search">
+                <form action="/board/search" method="get">
                     <div class="select-wrap left" th:switch="${type}">
                         <select name="type" id="searchBox" th:case=null>
                             <option value="title" selected>제목</option>
@@ -220,10 +223,9 @@
                         </select>
                     </div>
 
-                    <input type="hidden" name="reqPage" value="1">
-
+                    
                     <div class="input-wrap">
-                        <input type="text" name="search left" class="search-input left">
+                        <input type="text" name="keyword" class="search-input left" th:value="${keyword}">
                         <button type="reset" class="reset-btn">
                             <span class="material-icons">cancel</span>
                         </button>
@@ -232,6 +234,7 @@
                         </button>
                     </div>
                     
+                    <input type="hidden" name="reqPage" value="1">
                     <!-- 나중에 != 로 바꿔야 함 지금은 테스트를 위함 -->
                     <div class="write-wrap left">
                         <span class="material-icons write-btn" th:if="${session.member != null}" href="/board/writeFrm">create</span>

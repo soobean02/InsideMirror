@@ -58,12 +58,12 @@ public class BoardController {
 		if(member != null){
 			memberNo = member.getMemberNo();
 		}
+
 		Board board = boardService.selectOneBoard(boardNo, check, memberNo);
 		if(board == null){
 			return "redirect:/board/list?reqPage=1";
 		}
 		model.addAttribute("board", board);
-		System.out.println(member);
 		return "/board/view";
 	}//게시글 상세보기
 
@@ -144,11 +144,19 @@ public class BoardController {
 		if(member == null){
 			return -1;
 		}
-		System.out.println(isLike);
-		System.out.println(boardNo);
 		int result = boardService.pushLike(isLike, boardNo, member);
 		return result;
 	}//좋아요버튼 누르면
+
+	@ResponseBody
+	@PostMapping(value = "/bookmark")
+	public int pushBookMark(int isBookMark, int boardNo, @SessionAttribute(required = false) Member member, Model model){
+		if(member == null){
+			return -1;
+		}
+		int result = boardService.pushBookMark(isBookMark, boardNo, member);
+		return result;
+	}
 
 	@ResponseBody
 	@PostMapping(value="/comment")
@@ -183,6 +191,19 @@ public class BoardController {
 		System.out.println("controller");
 		int result = boardService.removeBoardComment(boardCommentNo);
 		return result;
-	}
+	}//댓글 삭제
+
+	////게시글 검색
+	@GetMapping(value = "/search")
+	public String search(String type, String keyword, int reqPage, Model model){
+		if(keyword.equals("")) return "redirect:/board/list?reqPage=1";
+
+		BoardListData bld = boardService.selectSearchList(type,keyword,reqPage);
+		model.addAttribute("list", bld.getList());
+		model.addAttribute("pageNavi", bld.getPageNavi());
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("type", type);
+		return "board/boardList";
+	}//게시글 검색
 
 }

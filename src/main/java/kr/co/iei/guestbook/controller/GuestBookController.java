@@ -27,11 +27,19 @@ public class GuestBookController {
 	public String guestbookList(Model model) {
 		return "guest/guestbookList";
 	}
-    @ResponseBody
+
     @PostMapping(value="/insertComment")
-    public String insertComment(GuestBook gb, Model model) {
+    public String insertComment(
+        @RequestParam("guestWriterNo") int guestWriterNo, 
+        @RequestParam("guestCommentContent") String guestCommentContent,
+        Model model) {
+        
+        GuestBook gb = new GuestBook();
+        gb.setGuestWriterNo(guestWriterNo);
+        gb.setGuestCommentContent(guestCommentContent);
+        
         int result = guestBookService.insertComment(gb);
-        if(result > 0) {    
+        if(result > 0) {
             model.addAttribute("title", "댓글 작성");
             model.addAttribute("msg", "댓글이 작성되었습니다.");
             model.addAttribute("icon", "success");
@@ -40,10 +48,10 @@ public class GuestBookController {
             model.addAttribute("msg", "댓글 작성 중 문제가 발생했습니다.");
             model.addAttribute("icon", "warning");
         }
-        model.addAttribute("loc", "/guestbook");
+        model.addAttribute("loc", "/guest/guestbookList");
         return "common/msg";
     }
-    @ResponseBody
+
     @PostMapping(value="/updateComment")
     public String updateComment(GuestBook gb, Model model) {
         int result = guestBookService.updateComment(gb);
@@ -59,9 +67,9 @@ public class GuestBookController {
         model.addAttribute("loc", "/guestbook");
         return "common/msg";
     }
-    @ResponseBody
+
     @GetMapping(value="/deleteComment")
-    public String deleteComment(int guestCommentNo, Model model) {
+    public String deleteComment(@RequestParam int guestCommentNo, Model model) {
         GuestBook gb = new GuestBook();
         gb.setGuestCommentNo(guestCommentNo);
         int result = guestBookService.deleteComment(gb);
@@ -77,6 +85,7 @@ public class GuestBookController {
         model.addAttribute("loc", "/guestbook");
         return "common/msg";
     }
+
     @GetMapping(value="/getComments")
     @ResponseBody
     public List<GuestBook> getComments() {

@@ -134,17 +134,31 @@ public class BoardService {
 	@Transactional
 	public int pushLike(int isLike, int boardNo, Member member) {
 		int result = 0;
-		System.out.println("service");
 		if(isLike == 0){
-			//좋아요 취소인경우
+			//좋아요 누른 경우
 			result = boardDao.insertLike(boardNo, member);
 		}
 		else{
-			//좋아요 누른 경우
+			//좋아요 취소인경우
 			result = boardDao.deleteLike(boardNo, member);
 		}
 		return result;
 	}//게시글 좋아요
+
+	@Transactional
+	public int pushBookMark(int isBookMark, int boardNo, Member member) {
+		int result = 0;
+		String photoNo = null;
+		if(isBookMark == 0){
+			//북마크 한 경우
+			result = boardDao.insertBookMark(boardNo, photoNo, member);
+		}
+		else{
+			//북마크 취소한경우
+			result = boardDao.deleteBookMark(boardNo, member);
+		}
+		return result;
+	}//게시글 북마크(즐겨찾기)
 
 	@Transactional
 	public int insertBoardComment(BoardComment comment) {
@@ -168,6 +182,64 @@ public class BoardService {
 		BoardComment oneComment = boardDao.selectOneComment(comment);
 		return oneComment;
 	}//댓글 하나 조회
+
+	public BoardListData selectSearchList(String type, String keyword, int reqPage) {
+		int numPerPage = 10;
+		int end = reqPage * numPerPage;
+		int start = end - numPerPage + 1;
+		List list = null;
+		int totalCount = 0;
+		if(type.equals("title")){
+			list = boardDao.selectBoardSearchTitleList(keyword,start,end);
+			totalCount = boardDao.selectBoardSearchTitleTotalCount(keyword);
+		}
+		else if(type.equals("writer")){
+			list = boardDao.selectBoardSearchWriterList(keyword,start,end);
+			totalCount = boardDao.selectBoardSearchWriterTotalCount(keyword);
+		}
+
+		int totalPage = 0;
+		if(totalCount % numPerPage == 0){
+			totalPage = totalCount / numPerPage;
+		}
+		else{
+			totalPage = totalCount / numPerPage + 1;
+		}
+		int pageNaviSize = 5;
+
+		int pageNo = ((reqPage - 1)/pageNaviSize) * pageNaviSize + 1;
+		String pageNavi = "<ul class='page-wrap'>";
+
+		if(pageNo != 1){
+			pageNavi += "<li><a class='page-index' href='/board/search?type="+type+"&keyword="+keyword+"&reqPage="+(pageNo - 1)+"'><span> < </span></a></li>";
+		}
+
+		for(int i = 0; i < pageNaviSize; i++){
+			pageNavi += "<li>";
+			if(pageNo == reqPage){
+				pageNavi += "<a class='page-index active-page' href='/board/search?type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'>";
+			}
+			else{
+				pageNavi += "<a class='page-index' href='/board/search?type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'>";
+			}
+
+			pageNavi += pageNo;
+			pageNavi += "</a></li>";
+			pageNo++;
+			if(pageNo > totalPage) break;
+		}//for
+
+		if(pageNo <= totalPage){
+			pageNavi += "<li><a class='page-index' href='/board/search?type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'><span> > </span></a></li>";
+		}
+		pageNavi += "</ul>";
+
+		BoardListData bld = new BoardListData(list, pageNavi);
+
+		return bld;
+	}//게시글 검색
+
+	
 
 	
 
