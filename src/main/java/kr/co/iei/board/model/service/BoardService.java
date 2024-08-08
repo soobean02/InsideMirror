@@ -183,6 +183,62 @@ public class BoardService {
 		return oneComment;
 	}//댓글 하나 조회
 
+	public BoardListData selectSearchList(String type, String keyword, int reqPage) {
+		int numPerPage = 10;
+		int end = reqPage * numPerPage;
+		int start = end - numPerPage + 1;
+		List list = null;
+		int totalCount = 0;
+		if(type.equals("title")){
+			list = boardDao.selectBoardSearchTitleList(keyword,start,end);
+			totalCount = boardDao.selectBoardSearchTitleTotalCount(keyword);
+		}
+		else if(type.equals("writer")){
+			list = boardDao.selectBoardSearchWriterList(keyword,start,end);
+			totalCount = boardDao.selectBoardSearchWriterTotalCount(keyword);
+		}
+
+		int totalPage = 0;
+		if(totalCount % numPerPage == 0){
+			totalPage = totalCount / numPerPage;
+		}
+		else{
+			totalPage = totalCount / numPerPage + 1;
+		}
+		int pageNaviSize = 5;
+
+		int pageNo = ((reqPage - 1)/pageNaviSize) * pageNaviSize + 1;
+		String pageNavi = "<ul class='page-wrap'>";
+
+		if(pageNo != 1){
+			pageNavi += "<li><a class='page-index' href='/board/search?type="+type+"&keyword="+keyword+"&reqPage="+(pageNo - 1)+"'><span> < </span></a></li>";
+		}
+
+		for(int i = 0; i < pageNaviSize; i++){
+			pageNavi += "<li>";
+			if(pageNo == reqPage){
+				pageNavi += "<a class='page-index active-page' href='/board/search?type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'>";
+			}
+			else{
+				pageNavi += "<a class='page-index' href='/board/search?type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'>";
+			}
+
+			pageNavi += pageNo;
+			pageNavi += "</a></li>";
+			pageNo++;
+			if(pageNo > totalPage) break;
+		}//for
+
+		if(pageNo <= totalPage){
+			pageNavi += "<li><a class='page-index' href='/board/search?type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'><span> > </span></a></li>";
+		}
+		pageNavi += "</ul>";
+
+		BoardListData bld = new BoardListData(list, pageNavi);
+
+		return bld;
+	}//게시글 검색
+
 	
 
 	

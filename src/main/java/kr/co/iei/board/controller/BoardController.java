@@ -191,6 +191,19 @@ public class BoardController {
 		System.out.println("controller");
 		int result = boardService.removeBoardComment(boardCommentNo);
 		return result;
-	}
+	}//댓글 삭제
+
+	////게시글 검색
+	@GetMapping(value = "/search")
+	public String search(String type, String keyword, int reqPage, Model model){
+		if(keyword.equals("")) return "redirect:/board/list?reqPage=1";
+
+		BoardListData bld = boardService.selectSearchList(type,keyword,reqPage);
+		model.addAttribute("list", bld.getList());
+		model.addAttribute("pageNavi", bld.getPageNavi());
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("type", type);
+		return "board/boardList";
+	}//게시글 검색
 
 }

@@ -199,6 +199,46 @@ public class BoardDao {
 		return null;
 	}//댓글 하나 조회 for 비동기댓글하고 화면에 보여주기 위해서 정보를 먼저 조회(댓글 고유 번호)
 
+	public List selectBoardSearchTitleList(String keyword, int start, int end) {
+		String query = "select b_tbl.*,\r\n" + //
+						"(select count(*) from board_like where board_no = b_tbl.board_no) as board_like\r\n" + //
+						"from (select rownum as rnum, b.*,\r\n" + //
+						"(select member_nickname from member where member_no = b.member_no) as board_writer_nickname\r\n" + //
+						"from (select * from board order by 1 desc)b)b_tbl \r\n" + //
+						"where (rnum between ? and ?) and (board_title like '%'||?||'%')";
+		Object[] params = {start, end, keyword};
+		List list = jdbc.query(query, boardRowMapper, params);
+		return list;
+	}
+
+	public int selectBoardSearchTitleTotalCount(String keyword) {
+		String query = "select count(*) from board where board_title like '%'||?||'%'";
+		Object[] params = {keyword};
+		int totalCount = jdbc.queryForObject(query, Integer.class,params);
+		return totalCount;
+	}
+
+	public List selectBoardSearchWriterList(String keyword, int start, int end) {
+		String query = "select b_tbl.*,\r\n" + //
+						"(select count(*) from board_like where board_no = b_tbl.board_no) as board_like\r\n" + //
+						"from (select rownum as rnum, b.*,\r\n" + //
+						"(select member_nickname from member where member_no = b.member_no) as board_writer_nickname\r\n" + //
+						"from (select * from board order by 1 desc)b)b_tbl \r\n" + //
+						"where (rnum between ? and ?) and\r\n" + //
+						"member_no in (select member_no from member where member_nickname like '%'||?||'%')";
+		Object[] params = {start, end, keyword};
+		List list = jdbc.query(query, boardRowMapper, params);
+		return list;
+	}
+
+	public int selectBoardSearchWriterTotalCount(String keyword) {
+		String query = "select count(*) from board \r\n" + //
+						"where member_no in (select member_no from member where member_nickname like '%'||?||'%')";
+		Object[] params = {keyword};
+		int totalCount = jdbc.queryForObject(query, Integer.class, params);
+		return totalCount;
+	}
+
 	
 
 	
