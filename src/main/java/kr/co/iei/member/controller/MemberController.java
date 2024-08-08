@@ -8,9 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.servlet.http.HttpSession;
 import kr.co.iei.member.model.dto.Member;
@@ -53,9 +51,11 @@ public class MemberController {
 		return "/member/joinFrm";
 	}
 	@PostMapping(value="/join")
-	public String join(Member m,String memberId2) {
+	public String join(Member m,String memberId2, String[]phone) {
 		String memberId = m.getMemberId()+"@"+memberId2;
+		String memberPhone = phone[0]+"-"+phone[1]+"-"+phone[2];
 		m.setMemberId(memberId);
+		m.setMemberPhone(memberPhone);
 		int result = memberService.insertMember(m);
 		if(result>0) {
 			return "redirect:/";
@@ -74,7 +74,7 @@ public class MemberController {
 	
 	@PostMapping(value="/doubleCheckPassword")
 	public String doubleCheckPassword(String id,Model model) {
-		System.out.println(id);
+		
 		model.addAttribute("id", id);
 		return "/member/doubleCheckPassword";
 	}
