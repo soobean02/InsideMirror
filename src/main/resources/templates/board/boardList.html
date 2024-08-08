@@ -188,20 +188,44 @@
     
     <div class="board-wrap">
         <div class="board-header">
-
             
             <div class="order-wrap left">
-                <span>정렬</span>
+                <span class="order-span">정렬</span>
                 <div class="order-content">
                     <ul>
-                        <li>
-                            <input type="radio" name="orderDate" value="newest" checked>최신순
-                            <input type="radio" name="orderDate" value="popular">인기순
-                        </li>
-                        <li>
-                            <input type="radio" name="orderFriend" value="all" checked>전체
-                            <input type="radio" name="orderFriend" value="friend">일촌only
-                        </li>
+                        <form action="/board/order" method="get" class="order-form">
+                            <li th:switch="${orderDate}">
+                                <div th:case=null>
+                                    <input type="radio" name="orderDate" value="newest" checked>최신순
+                                    <input type="radio" name="orderDate" value="popular">인기순
+                                </div>
+
+                                <div th:case="newest">
+                                    <input type="radio" name="orderDate" value="newest" checked>최신순
+                                    <input type="radio" name="orderDate" value="popular">인기순
+                                </div>
+                                
+                                <div th:case="popular">
+                                    <input type="radio" name="orderDate" value="newest">최신순
+                                    <input type="radio" name="orderDate" value="popular" checked>인기순
+                                </div>
+                            </li>
+                            <li th:switch="${orderFriend}">
+                                <div th:case=null>
+                                    <input type="radio" name="orderFriend" value="all" checked>전체
+                                    <input type="radio" name="orderFriend" value="friend">일촌only
+                                </div>
+                                <div th:case="all">
+                                    <input type="radio" name="orderFriend" value="all" checked>전체
+                                    <input type="radio" name="orderFriend" value="friend">일촌only
+                                </div>
+                                <div th:case="friend">
+                                    <input type="radio" name="orderFriend" value="all">전체
+                                    <input type="radio" name="orderFriend" value="friend" checked>일촌only
+                                </div>
+                            </li>
+                            <input type="hidden" name="reqPage" value="1">
+                        </form>
                     </ul>
                 </div>
             </div>
@@ -276,9 +300,29 @@
 
 
     <script>
-        $(".order-wrap>span").on("click",function(){
+        $(".order-span").on("click",function(){
+            $(this).toggleClass("can-order");
             $(".order-content").toggle();
+            order(this);
         })
+
+        //만약에 정렬을 눌러서 정렬 radio들을 보고 다시 정렬을 누르면 정렬을 바로 할 수 있게 세팅
+        function order(obj){
+            const item = $(obj);
+            if(!item.hasClass("can-order")){
+                // const orderDate = $("[name=orderDate]:checked");
+                // const orderFriend = $("[name=orderFriend]:checked");
+                const type = $("#searchBox").val();
+                const keyword = $(".search-input").val();
+                
+                const inputType = $("<input type='hidden' name='type' value="+type+">");
+                const keywordType = $("<input type='hidden' name='keyword' value="+keyword+">");
+
+                $(".order-form").append(inputType).append(keywordType);
+                //type이랑 keyword까지 같이 폼태그로 전송시켜서 현재 유저가 입력한거에서 order할 수 있게
+                $(".order-form").submit();
+            }
+        }
 
         $(".write-btn").on("click",function(){
             location.href = "/board/writeFrm";

@@ -118,10 +118,19 @@ public class BoardController {
 	@GetMapping(value="/delete")
 	public String deleteBoard(int boardNo,Model model){
 		int result = boardService.deleteBoard(boardNo);
-		model.addAttribute("title", "삭제");
-		model.addAttribute("msg", "게시글을 삭제했습니다");
-		model.addAttribute("icon", "success");
-		model.addAttribute("loc", "/board/list?reqPage=1");
+		if(result > 0){
+
+			model.addAttribute("title", "삭제");
+			model.addAttribute("msg", "게시글을 삭제했습니다");
+			model.addAttribute("icon", "success");
+			model.addAttribute("loc", "/board/list?reqPage=1");
+		}
+		else{
+			model.addAttribute("title", "삭제");
+			model.addAttribute("msg", "삭제에 실패했습니다");
+			model.addAttribute("icon", "error");
+			model.addAttribute("loc", "/board/list?reqPage=1");
+		}
 		return "common/msg";
 	}//게시글 삭제
 
@@ -168,9 +177,7 @@ public class BoardController {
 		if(result > 0){
 			//댓글 작성 성공시
 			Map<String, Object> info = new HashMap<>();
-			info.put("session", member);
 			info.put("comment", oneComment);
-			info.put("board", comment);
 			return info;
 		}
 		else{
@@ -205,5 +212,18 @@ public class BoardController {
 		model.addAttribute("type", type);
 		return "board/boardList";
 	}//게시글 검색
+
+	//게시글 정렬
+	@GetMapping(value="/order")
+	public String order(String type, String keyword, int reqPage, String orderDate, String orderFriend, Model model, @SessionAttribute(required = false) Member member){
+		BoardListData bld = boardService.selectOrderList(type, keyword, reqPage, orderDate, orderFriend, member);
+		model.addAttribute("list", bld.getList());
+		model.addAttribute("pageNavi", bld.getPageNavi());
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("type", type);
+		model.addAttribute("orderDate", orderDate);
+		model.addAttribute("orderFriend", orderFriend);
+		return "/board/boardList";
+	}
 
 }

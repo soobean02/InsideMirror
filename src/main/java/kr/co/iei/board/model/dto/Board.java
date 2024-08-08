@@ -28,6 +28,9 @@ public class Board {
 
 	private int boardLike;
 
+	//로그인한 회원의 친구
+	// private int friendNo;
+
 	private List<BoardComment> commentList;
 
 	private List<BoardComment> reCommentList;

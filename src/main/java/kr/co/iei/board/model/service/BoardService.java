@@ -239,6 +239,117 @@ public class BoardService {
 		return bld;
 	}//게시글 검색
 
+	public BoardListData selectOrderList(String type, String keyword, int reqPage, String orderDate, String orderFriend, Member member) {
+		int numPerPage = 10;
+		int end = reqPage * numPerPage;
+		int start = end - numPerPage + 1;
+		List list = null;
+		int totalCount = 0;
+
+		if(type.equals("title")){
+			//제목으로 검색한거면
+			//그중에서
+			if(orderDate.equals("newest") && orderFriend.equals("all")){
+				//최신글 / 전체
+				list = boardDao.titleDateNewFriendAll(keyword, start, end);
+				totalCount = boardDao.selectBoardSearchTitleTotalCount(keyword);
+			}
+			else if(orderDate.equals("newest") && orderFriend.equals("friend")){
+				//최신글 / 일촌only
+				list = boardDao.titleDateNewFriendFriend(keyword, start, end, member);
+				totalCount = boardDao.selectBoardSearchTitleFriendTotalCount(keyword, member);
+			}
+			else if(orderDate.equals("popular") && orderFriend.equals("all")){
+				//인기글 / 전체
+				list = boardDao.titleDatePopularFriendAll(keyword, start, end);
+				totalCount = boardDao.selectBoardSearchTitleTotalCount(keyword);
+			}
+			else if(orderDate.equals("popular") && orderFriend.equals("friend")){
+				//인기글 / 일촌only
+				list = boardDao.titleDatePopularFriendFriend(keyword, start, end, member);
+				totalCount = boardDao.selectBoardSearchTitleFriendTotalCount(keyword, member);
+			}
+
+			
+		}
+		else if(type.equals("writer")){
+			//작성자로 검색한거면
+			//그중에서
+			if(orderDate.equals("newest") && orderFriend.equals("all")){
+				//최신글 / 전체
+				list = boardDao.writerDateNewFriendAll(keyword, start, end);
+				totalCount = boardDao.selectBoardSearchWriterTotalCount(keyword);
+			}
+			else if(orderDate.equals("newest") && orderFriend.equals("friend")){
+				//최신글 / 일촌only
+				list = boardDao.writerDateNewFriendFriend(keyword, start, end, member);
+				totalCount = boardDao.selectBoardSearchWriterFriendTotalCount(keyword, member);
+			}
+			else if(orderDate.equals("popular") && orderFriend.equals("all")){
+				//인기글 / 전체
+				list = boardDao.writerDatePopularFriendAll(keyword, start, end);
+				totalCount = boardDao.selectBoardSearchWriterTotalCount(keyword);
+			}
+			else if(orderDate.equals("popular") && orderFriend.equals("friend")){
+				//인기글 / 일촌only
+				list = boardDao.writerDatePopularFriendFriend(keyword, start, end, member);
+				totalCount = boardDao.selectBoardSearchWriterFriendTotalCount(keyword, member);
+			}
+			
+		}
+
+		int totalPage = 0;
+		if(totalCount % numPerPage == 0){
+			totalPage = totalCount / numPerPage;
+		}
+		else{
+			totalPage = totalCount / numPerPage + 1;
+		}
+		int pageNaviSize = 5;
+
+		int pageNo = ((reqPage - 1)/pageNaviSize) * pageNaviSize + 1;
+		String pageNavi = "<ul class='page-wrap'>";
+
+
+		
+
+
+
+		if(pageNo != 1){
+			pageNavi += "<li><a class='page-index' href='/board/order?orderDate="+orderDate+"&orderFriend="+orderFriend+"&type="+type+"&keyword="+keyword+"&reqPage="+(pageNo - 1)+"'><span> < </span></a></li>";
+		}
+
+		for(int i = 0; i < pageNaviSize; i++){
+			pageNavi += "<li>";
+			if(pageNo == reqPage){
+				pageNavi += "<a class='page-index active-page' href='/board/order?orderDate="+orderDate+"&orderFriend="+orderFriend+"&type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'>";
+			}
+			else{
+				pageNavi += "<a class='page-index' href='/board/order?orderDate="+orderDate+"&orderFriend="+orderFriend+"&type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'>";
+			}
+
+			pageNavi += pageNo;
+			pageNavi += "</a></li>";
+			pageNo++;
+			if(pageNo > totalPage) break;
+		}//for
+
+		if(pageNo <= totalPage){
+			pageNavi += "<li><a class='page-index' href='/board/order?orderDate="+orderDate+"&orderFriend="+orderFriend+"&type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'><span> > </span></a></li>";
+		}
+		pageNavi += "</ul>";
+
+		BoardListData bld = new BoardListData(list, pageNavi);
+
+		return bld;
+
+
+
+
+
+
+	}
+
 	
 
 	
