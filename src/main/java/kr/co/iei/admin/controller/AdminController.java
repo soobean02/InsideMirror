@@ -92,7 +92,7 @@ public class AdminController {
 	public String productUpdate(SellProduct sp) {
 		int result = productService.productUpdate(sp);
 		if(result>0) {
-			return "redirect:/admin/adminHome";
+			return "redirect:/admin/adminProductList?reqPage=1";
 		}else {
 			return "redirect:/";
 		}//else
@@ -121,7 +121,7 @@ public class AdminController {
 		int productNo = sp.getProductNo();
 		int result = productService.productDelete(productNo);
 		if(result>0) {
-			return "redirect:/admin/adminHome";
+			return "redirect:/admin/adminProductList?reqPage=1";
 		}else {
 			return "redirect:/";
 		}//else

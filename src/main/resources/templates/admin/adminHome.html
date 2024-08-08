@@ -148,7 +148,7 @@ a {
 		<div class="box-title">상품 관리 ></div>
 		<div class="product_list_box">
 			<th:block th:each="pr : ${list}">
-				<a th:href="@{/product/proudctPage(productNo=${pr.productNo})}">
+				<a th:href="@{/admin/adminProductView(productNo=${pr.productNo})}">
 					<!--타임리프 들어갈 자리-->
 					<div class="product_box">
 						<div class="product_img">
