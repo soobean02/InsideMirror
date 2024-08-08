@@ -115,7 +115,8 @@
 
     .view-content-wrap{
         width: 100%;
-        height: 450px;
+        min-height: 450px;
+        height: auto;
         /* background-color: aquamarine; */
     }
     .view-comment-wrap{
@@ -318,18 +319,15 @@
                 </div>
 
                 <div class="view-mark left">
-                    <span class="material-icons">favorite</span>
                     <span class="material-icons select">favorite_border</span>
-                    <span class="material-icons">bookmark</span>
                     <span class="material-icons select">bookmark_border</span>
-                
                 </div>
             </div>
 <!-- 작성자 | 작성일 -->
 <!-- 조회수/하트개수 | 하트 | 북마크 순으로 -->
             <div class="fix left">
-                <span class="material-icons">edit</span>
-                <span class="material-icons">delete</span>
+                <a th:if="${session.member != null && session.member.memberNo == board.memberNo}" class="material-icons" th:href="@{/board/updateFrm(boardNo=${board.boardNo})}">edit</a>
+                <span th:if="${session.member != null && session.member.memberNo == board.memberNo}" class="material-icons" th:onclick="boardDelete([[${board.boardNo}]])">delete</span>
             </div>
             
 
@@ -337,7 +335,7 @@
 
         </div>
         <div class="view-content-wrap">
-            <div th:text="${board.boardContent}"></div>
+            <div th:utext="${board.boardContent}"></div>
         </div>
 
         <!-- 나중에 session 체크 해서 댓글 작성 넣기 -->
@@ -769,6 +767,10 @@
         }//댓글 추가
 
 
+        //게시글 삭제
+        function boardDelete(){
+            
+        }
 
 
 
