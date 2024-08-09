@@ -176,50 +176,14 @@ body {
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
-
 <body>
-    <main class="content">
-        <section class="section guestbook-view-wrap">
-            <div class="bookcover">
-                <div class="bookdot">
-                    <div class="page">
-                        <div class="profile-container">
-                            <div class="header profile-title">TOTAL
-                                <span class="color-red">0</span>
-                            </div>
-                            <div class="box profile-box">
-                                <div class="profile-image">
-                                    <img class="profile-image-img" src="/image/cyworld1.png" alt="Profile Image">
-                                </div>
-                                <div class="profile-text">ㄴr는.. 오늘도.. 눈물을.. 흘린ㄷr..★</div>
-                                <div class="profile-username">
-                                    <span style="color: #0f1b5c">채연</span>
-                                    (♪♬)
-                                </div>
-                                <div class="profile-dropdown">
-                                    <div class="dropdown-button">
-                                        <div class="dropdown-title">일촌 파도타기</div>
-                                        <div class="triangle-down"></div>
-                                    </div>
-                                    <div class="dropdown-content">
-                                        <a href="#">ㅁㅁㅁ의 홈피</a>
-                                        <a href="#">ㅁㅁㅁ의 홈피</a>
-                                        <a href="#">ㅁㅁㅁ의 홈피</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="content-container">
-                            <div class="header content-title">
-                                <div class="content-title-name">ㅁㅁㅁ님의 홈피</div>
-                            </div>
-                            <div class="box content-box">
+<th:block th:include="common/top"></th:block>
                                 <div class="guestbook-scrollbox" id="guestbook-scrollbox">
                                     <div class="guest-text">방명록 ></div>
                                     <div class="guestbook-box" data-comment-no="1">
                                         <div class="guestbook-title">No. 1
                                             <span>이름</span>
-                                            <button class="material-icons">home</button>
+                                           <button class="material-icons" data-url="#">home</button>
                                             <div class="guestbook-date">(2024.00.00)
                                                 <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
                                                 <button class="btn-primary" onclick="editComment(this)">수정</button>
@@ -235,7 +199,7 @@ body {
                                     <div class="guestbook-box" data-comment-no="2">
                                         <div class="guestbook-title">No. 2
                                             <span>이름</span>
-                                            <button class="material-icons">home</button>
+                                           <button class="material-icons" data-url="#">home</button>
                                             <div class="guestbook-date">(2024.00.00)
                                                 <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
                                                 <button class="btn-primary" onclick="editComment(this)">수정</button>
@@ -251,7 +215,7 @@ body {
                                     <div class="guestbook-box" data-comment-no="3">
                                         <div class="guestbook-title">No. 3
                                             <span>이름</span>
-                                            <button class="material-icons">home</button>
+                                           <button class="material-icons" data-url="#">home</button>
                                             <div class="guestbook-date">(2024.00.00)
                                                 <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
                                                 <button class="btn-primary" onclick="editComment(this)">수정</button>
@@ -267,7 +231,7 @@ body {
                                     <div class="guestbook-box" data-comment-no="4">
                                         <div class="guestbook-title">No. 4
                                             <span>이름</span>
-                                            <button class="material-icons">home</button>
+                                           <button class="material-icons" data-url="#">home</button>
                                             <div class="guestbook-date">(2024.00.00)
                                                 <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
                                                 <button class="btn-primary" onclick="editComment(this)">수정</button>
@@ -281,37 +245,20 @@ body {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="guest-check-box">
-                                <input type="radio" name="guestbook-identity" id="anonymous" value="anonymous">
-                                <label for="anonymous">익명</label>
-                                <input type="radio" name="guestbook-identity" id="nickname" value="nickname">
-                                <label for="nickname">닉네임</label>
-                            </div>
-                            <div class="guestbook-writer">
-                                <textarea id="guestbook-input" placeholder="댓글을 입력하세요"></textarea>
-                                <input type="hidden" id="guestWriterNo" value="1"> <!-- 사용자의 ID를 동적으로 설정해야 함 -->
-                                <button class="guestbook-button" onclick="addGuestbookEntry()">전송</button>
-                            </div>
-                        </div>
-                        <div class="menu-container">
-                            <div class="menu-button">
-                                <a href="/member/minihomepage"><button>홈</button></a>
-                                <a href="/board/boardList?reqPage=1"><button>자유게시판</button></a>
-                                <a href="#"><button>사진첩</button></a>
-                                <a href="/guest/guestbookList"><button>방명록</button></a>
-                                <a href="#"><button>선물가게</button></a>
-                                <a href="#"><button>구매목록</button></a>
-                                <a href="#"><button>일촌관리</button></a>
-                                <a href="/customer/customerList?reqPage=1"><button>고객센터</button></a>
-                                <a href="#"><button>즐겨찾기</button></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+                            <form action="insertComment" method="post">
+	                            <div class="guest-check-box">
+	                                <input type="radio" name="guestbook-identity" id="anonymous" value="anonymous">
+	                                <label for="anonymous">익명</label>
+	                                <input type="radio" name="guestbook-identity" id="nickname" value="nickname">
+	                                <label for="nickname">닉네임</label>
+	                            </div>
+	                            <div class="guestbook-writer">
+	                                <textarea id="guestbook-input" placeholder="댓글을 입력하세요"></textarea>
+	                                <input type="hidden" name="memberNickName" class="nickName"> <!-- 사용자의 ID를 동적으로 설정해야 함 -->
+	                                <button class="guestbook-button" onclick="addGuestbookEntry()">전송</button> 
+	                            </div>
+                            </form>
+                        <th:block th:include="common/bottom"></th:block>
     <script>
     // 날짜 가져오기
     function getCurrentDate() {
@@ -323,13 +270,19 @@ body {
         const minutes = String(now.getMinutes()).padStart(2, '0');
         return `(${year}년${month}월${day}일${hour}시${minutes}분)`;
     }
-
-    // 댓글 추가
+    
+    getNickName();
+    function getNickName(){
+    	const memberNickNameValue = $(".profile-username>span").text();
+    	$(".nickName").val(memberNickNameValue);
+    }
+    
+	//댓글추가
     function addGuestbookEntry() {
         const input = document.getElementById('guestbook-input');
         const text = input.value.trim();
         const identity = document.querySelector('input[name="guestbook-identity"]:checked');
-
+        
         if (text === '') {
             alert('댓글 내용을 입력하세요.');
             return;
@@ -339,35 +292,45 @@ body {
             alert('익명 또는 닉네임을 선택하세요.');
             return;
         }
+        
+        const memberNickName = $(".profile-username>span").text();
+        
 
-        const guestWriterNo = document.getElementById('guestWriterNo').value;
+        const guestWriterNo = document.getElementById('guestWriterNo');
+        const memberNo = document.getElementById('memberNo');
 
+       
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = '/guest/insertComment';
 
+        // 댓글 작성자 ID 입력 필드
         const writerInput = document.createElement('input');
         writerInput.type = 'hidden';
         writerInput.name = 'guestWriterNo';
-        writerInput.value = guestWriterNo;
+        writerInput.value = 39;
         form.appendChild(writerInput);
 
+        // 댓글 내용 입력 필드
         const contentInput = document.createElement('input');
         contentInput.type = 'hidden';
         contentInput.name = 'guestCommentContent';
         contentInput.value = text;
         form.appendChild(contentInput);
 
-        const identityInput = document.createElement('input');
-        identityInput.type = 'hidden';
-        identityInput.name = 'guestbookIdentity';
-        identityInput.value = identity.value;
-        form.appendChild(identityInput);
+        // 회원 ID 입력 필드
+        const memberInput = document.createElement('input');
+        memberInput.type = 'hidden';
+        memberInput.name = 'memberNo';
+        memberInput.value = test22; 
+        form.appendChild(memberInput);
 
+        // 폼을 문서에 추가하고 제출
         document.body.appendChild(form);
         form.submit();
     }
 
+    
     // 댓글 삭제 확인
     function confirmDeleteComment(button) {
         const guestbookBox = button.closest('.guestbook-box');
@@ -471,6 +434,6 @@ body {
     });
     
     </script>
-    <th:block th:include="common/footer"></th:block>
+    
 </body>
 </html>
