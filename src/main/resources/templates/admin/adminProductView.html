@@ -31,7 +31,7 @@ table {
 
 th, td {
     padding: 10px;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid var(--table_line);
 }
 
@@ -174,13 +174,14 @@ input[type="file"] {
 						<td>
 							<div class="product_content">
 								<div class="product_img">
-								<!-- 이미지 업로드 -->
-								<input type="file" name="imageFile" accept=".jpg,.png,.jpeg" onchange="previewImage(event)">
-									
+																	
 								<!-- 이미지 미리보기 -->
 								<img id="productImg" src="/img/acorn.png" width="80px" alt="상품 사진 미리보기">
 								</div>
+								
 							</div>
+							<!-- 이미지 업로드 -->
+							<input type="file" name="imageFile" accept=".jpg,.png,.jpeg" onchange="previewImage(event)">
 						</td>
 					</tr>
 					<tr>
