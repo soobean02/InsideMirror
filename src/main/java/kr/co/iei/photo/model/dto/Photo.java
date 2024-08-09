@@ -15,4 +15,5 @@ public class Photo {
 	private String photoTitle;
 	private String photoContent;
 	private Date photoDate;
+
 }

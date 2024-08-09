@@ -5,6 +5,55 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>회원 상세보기</title>
 </head>
+    <style>
+        .profile-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-image-view {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-image-img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        table th {
+            width: 30%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+        }
+
+        table td {
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+        table tr:not(:last-child) td {
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
 <body>
 	<th:block th:include="common/top"></th:block>
 
@@ -29,7 +78,7 @@
 					<td th:text="${m.memberNickName}"></td>
 				</tr>
 				<tr>
-					<th>아이디/이메일</th>
+					<th>아이디</th>
 					<td th:text="${m.memberId}"></td>
 				</tr>
 				<tr>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>환불 내역</title>
+<title>구매 내역</title>
 <link rel="stylesheet" href="/css/minihomepage.css">
 <link rel="stylesheet" href="/css/layout.css">
 <link rel="stylesheet" href="/css/font.css">
@@ -91,7 +91,7 @@ a {
 	<th:block th:include="common/top"></th:block>
 
 
-	<div class="box-title">환불 내역</div>
+	<div class="box-title">구매 내역</div>
 
 	<table class="atbl atbl-hover">
 		<tr>
@@ -101,7 +101,6 @@ a {
 			<th>전화번호</th>
 			<th>상품가격</th>
 			<th>상태</th>
-			<th>환불일자</th>
 		</tr>
 		
 		<tr th:each="rf : ${list}">
@@ -111,7 +110,6 @@ a {
 			<td th:text="${rf.memberPhone}"></td>
 			<td th:text="${rf.productPrice}"></td>
 			<td th:text="${rf.refundStatus}"></td>
-			<td th:text="${rf.refundDate}"></td>
 		</tr>
 	
 	</table>

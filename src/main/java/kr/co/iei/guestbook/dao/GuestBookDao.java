@@ -5,41 +5,39 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.iei.guestbook.dto.GuestBook;
 import kr.co.iei.guestbook.dto.GuestBookRowMapper;
 
 @Repository
 public class GuestBookDao {
+
     @Autowired
-    private JdbcTemplate jdbc;
-    
+    private JdbcTemplate jdbcTemplate;
+
     @Autowired
     private GuestBookRowMapper guestBookRowMapper;
-    
+
     public int insertComment(GuestBook gb) {
-        String query = "INSERT INTO guest_book VALUES (guest_book_seq.nextval,1,2,'내용', sysdate)";
-        Object[] params = {gb.getGuestWriterNo(), gb.getGuestCommentContent()};
-        return jdbc.update(query, params);
+        String query = "INSERT INTO guest_book (GUEST_COMMENT_NO, MEMBER_NO, GUEST_WRITER_NO, GUEST_COMMENT_CONTENT, GUEST_COMMENT_DATE) VALUES (GUEST_BOOK_SEQ.NEXTVAL, ?, ?, ?, SYSDATE)";		
+        Object[] params = { gb.getMemberNo(), gb.getGuestWriterNo(), gb.getGuestCommentContent() };
+        return jdbcTemplate.update(query, params);
     }
 
     public int updateComment(GuestBook gb) {
-        String query = "update guestbook set guest_comment_content = ? where guestbook_comment_no = ?";
-        Object[] params = {gb.getGuestCommentContent(), gb.getGuestCommentNo() };
-        return jdbc.update(query, params);
+        String query = "UPDATE guest_book SET GUEST_COMMENT_CONTENT = ? WHERE GUEST_COMMENT_NO = ?";
+        Object[] params = { gb.getGuestCommentContent(), gb.getGuestCommentNo() };
+        return jdbcTemplate.update(query, params);
     }
 
     public int deleteComment(GuestBook gb) {
-        String query = "delete from guestbook where guestbook_comment_no = ?";
-        Object[] params = {gb.getGuestCommentNo() };
-        return jdbc.update(query, params);
-    }
-    public List<GuestBook> getAllComments() {
-        String query = "SELECT * FROM guestbook ORDER BY guest_comment_date DESC";
-        return jdbc.query(query, guestBookRowMapper);
+        String query = "DELETE FROM guest_book WHERE GUEST_COMMENT_NO = ?";
+        Object[] params = {gb.getGuestCommentNo()};
+        return jdbcTemplate.update(query, params);
     }
 
-   
-} 
+    public List<GuestBook> getAllComments() {
+        String query = "SELECT * FROM guest_book ORDER BY GUEST_COMMENT_DATE DESC";
+        return jdbcTemplate.query(query, guestBookRowMapper);
+    }
+}

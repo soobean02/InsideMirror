@@ -167,7 +167,7 @@ public class ProductService {
 	}
 
 	public ProductListData selectAdminProduct(int reqPage) {
-		// 한 페이지당 10개의 글 조회
+
 		int numPerPage = 10;
 		// 시작번호
 		int end = reqPage * numPerPage; // 1페이지면 10, 2페이지면 20 ...
