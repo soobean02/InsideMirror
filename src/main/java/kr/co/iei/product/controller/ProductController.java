@@ -129,9 +129,46 @@ public class ProductController {
 		return "/product/buyProductPage";
 	}
 	
+	// 적용 중인 상품 조회 => use_product = 1 인 것 
 	@GetMapping(value="/appProductList")
-	public String appProductList(Model model, String product) {
+	public String appProductList(Model model, String product, @SessionAttribute Member member) {
+//		BuyProduct bp = productService.selectUseBuyProduct(member);
+		List sp = productService.selectUseProductInfo(member);
+		model.addAttribute("sp",sp);
 		model.addAttribute("product", product);
 		return "/product/appProductList";
+	}
+	
+	// 상품 초기화
+	@GetMapping(value="/canProduct")
+	public String canProduct(Model model, int productNo, int all) {
+		// 전체 초기화
+		if(all == 1) {
+			
+		}else { // 일부 초기화
+			
+		}
+		return "/common/msg"; // 상품 초기화 시 -> 메세지 띄우기
+	}
+	// 상품 적용하기
+	@GetMapping(value="/useP")
+	public String useP(Model model, int productNo, int productListNo, @SessionAttribute Member member) { // 상품 번호, 상품 리스트 번호  
+		int result = productService.updateUseProduct(productNo, productListNo, member);
+		if(result > 0) {
+			// 현재 적용 중인 상품 정보 들고 오기
+			List sp = productService.selectUseProductInfo(member);
+			
+			model.addAttribute("title", "성공!");
+			model.addAttribute("msg", "상품 적용 성공");
+			model.addAttribute("icon", "success");
+			model.addAttribute("sp", sp);
+			model.addAttribute("loc", "/product/appProductList");
+		}else {
+			model.addAttribute("title", "실패");
+			model.addAttribute("msg", "결제 실패");
+			model.addAttribute("icon", "error");
+			model.addAttribute("loc", "/product/buyProductPage");
+		}
+		return "/common/msg";
 	}
 }

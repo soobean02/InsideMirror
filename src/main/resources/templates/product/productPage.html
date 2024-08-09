@@ -240,8 +240,7 @@ h4 {
 	<div class="start_page">
 		<div class="first_box">
 			<div class="icon_img">
-				<img th:src="@{'/product/editor/'+${p.productImg}}" width="120px"
-					height="120px"> <a href="#" class="try">적용해보기 > </a>
+				<img th:src="@{'/product/editor/'+${p.productImg}}" width="120px" height="120px"> <a href="#" class="try">적용해보기 > </a>
 			</div>
 			<div class="pr_title">
 				<h2 th:text="${p.productName}"></h2>
@@ -273,15 +272,12 @@ h4 {
 								<form action="userBuyProduct" method="post" id="go">
 									<!-- 보낼때 상품번호, 상품 가격, 상품 리스트 정보, 멤버 번호 같이 보내기 -->
 									<input type="hidden" name="productNo" th:value="${p.productNo}">
-									<input type="hidden" name="productPrice"
-										th:value="${p.productPrice}"> <input type="hidden"
-										name="productPrice" th:value="${p.productListNo}"> <input
-										type="hidden" name="memberNo"
-										th:value="${session.member.memberNo}">
+									<input type="hidden" name="productPrice" th:value="${p.productPrice}">
+									<input type="hidden" name="productPrice" th:value="${p.productListNo}">
+									<input type="hidden" name="memberNo" th:value="${session.member.memberNo}">
 									<button type="button" class="btn">구매하기</button>
 								</form>
-								<a href="/product/acornProduct" class="acornShow"
-									style="display: none;">도토리 구매하러 가기 > </a>
+								<a href="/product/acornProduct" class="acornShow" style="display: none;">도토리 구매하러 가기 > </a>
 							</div>
 						</div>
 					</div>
