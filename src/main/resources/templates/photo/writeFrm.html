@@ -52,30 +52,71 @@
         outline: none;
         font-size: 18px;
     }
+    
 
     .photo-file{
         width: 30%;
         height: 40px;
     }
+    .photo-file>input{
+        outline: none;
+    }
 
 
     .photo-submit{
-        width: 100%;
+        width: 10%;
         height: 40px;
-        display: flex;
-        justify-content: center;
+        text-align: left;
     }
+    .photo-submit>button{
+        width: 60px;
+        height: 50px;
+        border: 1px solid #878787;
+        background-color: #dff7ff;
+        cursor: pointer;
+
+        line-height: 1.2em;
+        color: #0000;
+        text-shadow: 0 0 #000, 0 3em #1095c1;
+        overflow: hidden;
+        transition: 0.3s;
+    }
+    .photo-submit>button:hover{
+        text-shadow: 0 -3em #000, 0 0 #1095c1;
+    }
+    /* .photo-submit>button:hover{
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    .photo-submit>button::after{
+        content: attr(data-text);
+        position: absolute;
+        left: 0;
+        top: 100%;
+        transform: translateY(10px);
+        transition: transform 0.3s ease-in-out;
+        opacity: 0;
+    }
+    .photo-submit>button::hover::after{
+        opacity: 1;
+        transform: translateY(0);
+    } */
 
 
     .photo-content{
         width: 100%;
-        max-height: 1000px;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        padding-top: 20px;
     }
     
     .photo-content>#img-view{
-        width: auto;
-        height: auto;
-        overflow: auto;
+        min-width: 200px;
+        min-height: 200px;
+        max-width: 600px;
+        max-height: 600px;
+        display: none;
     }
 
 </style>
@@ -90,19 +131,19 @@
 
         <div class="photo-header">
             <form action="/photo/write" method="post" enctype="multipart/form-data">
-                
+                <input type="hidden" name="memberNo" th:value="${session.member.memberNo}">
                 <div class="photo-title left">
                     <input type="text" name="photoTitle" placeholder="사진첩 제목을 입력해주세요!" id="photoTitle">
                 </div>
 
+                <div class="photo-submit left">
+                    <button type="submit"><span class="material-icons">upload</span></button>
+                </div>
                 
                 <div class="photo-file left">
                     <input type="file" name="upfile" accept=".jpg,.png,.jpeg" onchange="loadImg(this)">
                 </div>
                 
-                <div class="photo-submit left">
-                    <button type="submit">사진첩 작성</button>
-                </div>
 
             </form>
         </div>
@@ -134,13 +175,21 @@
 				reader.readAsDataURL(obj.files[0]);
 				reader.onload = function(e){
 					$("#img-view").attr("src",e.target.result);
+                    $("#img-view").show();
 				}
 			}//if
 			else{
 				$("#img-view").attr("src","");
+                $("#img-view").hide();
 			}//else
 		}//    파일불러오기
 
+        $("[type=submit]").on("click",function(e){
+            const t = $("#img-view").attr("src");
+            if($("#img-view").attr("src") == undefined){
+                e.preventDefault();
+            }
+        })
 
     </script>
 

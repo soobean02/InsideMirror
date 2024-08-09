@@ -28,11 +28,30 @@
 					TOTAL <span class="color-red">28</span>
 				</div>
 				<div class="box profile-box">
-					<form action="/member/memberPage" method="post" enctype="multipart/form-data">
+					<form action="/member/profile" method="POST" name="myPageFrm" id="profileFrm" enctype="multipart/form-data">
+
+                    <div class="profile-image-area">
+
+                        <!-- 프로필 이미지가 없으면 기본 이미지 -->
+                        <th:if test="${member member.profilePhoto}" >
+                            <img class="profile-image-img" src="/image/cyworld1.png" id="profileImage">
+                        </th:if>
+                         <!-- 프로필 이미지가 있으면 기본 이미지 -->
+                        <th:if test="${!member member.profilePhoto}" >
+                            <img class="profile-image-img" src="${member.profilePhoto}" id="profileImage">
+                        </th:if>
+                        
+                    </div>
+                    <div class="profile-btn-area">
+                        <label for="imageInput">이미지 선택</label>
+                        <input type="file" name="profilePhoto" id="imageInput" accept=".jpg,.png,.jpeg" onchange="submitFunction(this)">
+                        <button type="submit">변경하기</button>
+                    </div>
+					<!-- <form action="/member/memberPage" method="post" enctype="multipart/form-data">
 						<div class="profile-image">
 							<img class="profile-image-img" src="/image/cyworld1.png" alt="프로필 이미지">
 						</div>
-					</form>
+					</form> -->
 					<div class="profile-text">
 						<th:block th:if="${session.member !=null && session.member.memberNo != member.memberNo}">
 							<textarea id="profileContent" name="profileContent" placeholder="자유롭게 전하고싶은 메세지를 적어주세요..♥"
@@ -71,21 +90,13 @@
 			<div class="box-title">Updated news ></div>
 			<div class="news-flex-box">
 				<div class="news-box">
-					<div class="news-row">
+					<div class="news-row" th:each="b : ${board}">
 						<div class="news-category category-pic">사진첩</div>
-						<div class="news-title"></div><!-- th:text="${getTitle.photo.photoTitle}" -->
+						<div class="news-title" th:text="${b.boardTitle}"></div>
 					</div>
-					<div class="news-row">
+					<div class="news-row" th:each="p : ${photo}">
 						<div class="news-category category-post">게시판</div>
-						<div class="news-title">살려줘...♥</div>
-					</div>
-					<div class="news-row">
-						<div class="news-category category-pic">사진첩</div>
-						<div class="news-title">살려줘...ㅠ</div>
-					</div>
-					<div class="news-row">
-						<div class="news-category category-post">게시판</div>
-						<div class="news-title">일상...♥</div>
+						<div class="news-title" th:text="${p.photoTitle}"></div>
 					</div>
 				</div>
 			</div>
@@ -121,22 +132,158 @@
 	<th:block th:include="/common/bottom"></th:block>
 </body>
 <script>
-						document.addEventListener('DOMContentLoaded', function () {
-							var textarea = document.getElementById('profileContent');
 
-							textarea.addEventListener('input', function () {
-								var maxHeight = textarea.clientHeight;
-								var scrollHeight = textarea.scrollHeight;
+	function submitFunction(obj){
+		$("#profileFrm").submit();
+	}
 
-								if (scrollHeight > maxHeight) {
-									// 문자 추가 방지
-									textarea.value = textarea.value.slice(0, textarea.value.length - 1);
-								}
-							});
-						});
+	document.addEventListener('DOMContentLoaded', function () {
+		var textarea = document.getElementById('profileContent');
+			textarea.addEventListener('input', function () {
+					var maxHeight = textarea.clientHeight;
+					var scrollHeight = textarea.scrollHeight;
 
 					function.addGuestBookEntry(){
 						location.href="/friend/friendrequest";
 					}
-					</script>
+					
+					if (scrollHeight > maxHeight) {
+						// 문자 추가 방지
+						textarea.value = textarea.value.slice(0, textarea.value.length - 1);
+					}
+			});
+		});
+	
+const profileImage = document.getElementById("profileImage"); // img 태그
+const imageInput = document.getElementById("imageInput"); // input 태그
+	
+	let initCheck; // 초기 프로필 이미지 상태를 저장하는 변수
+    // false == 기본 이미지, true == 이전 업로드 이미지
+	
+	let originalImage; // 초기 프로필 이미지 파일 경로 저장
+	
+	if(imageInput != null){ // 화면에 imageInput이 있을 경우
+	
+	// 프로필 이미지가 출력되는 img 태그의 src 속성을 저장
+	originalImage = profileImage.getAttribute("src");
+	
+	// 회원 프로필 화면 진입 시 
+	// 현재 회원의 프로필 이미지 상태를 확인
+	if(originalImage == "${member.profilePhoto}"){
+	// 기본 이미지인 경우
+	initCheck = false;
+	
+	} else {
+	initCheck = true;
+	}
+	
+	// change 이벤트 : 값이 변했을 때
+	// - input type="file", "checkbox", "radio"에서 많이 사용
+	// - text/number 형식 사용 가능
+	//  -> 이때 input값 입력 후 포커스를 잃었을 때
+	//     이전 값과 다르면 change 이벤트 발생
+	
+	imageInput.addEventListener("change", e => {
+	
+	// 2MB로 최대 크기 제한
+	const maxSize = 1 * 1024 * 1024 * 2; // 파일의 최대 크기 지정(바이트 단위)
+	
+	console.log(e.target); // input
+	console.log(e.target.value); // 업로드된 파일 경로
+	console.log(e.target.files); // 업로드된 파일의 정보가 담긴 배열
+	
+	const file = e.target.files[0]; // 업로드한 파일의 정보가 담긴 객체
+	
+	// 파일을 한 번 선택한 후 취소했을 때
+	if(file == undefined){
+	 console.log("파일 선택이 취소됨");
+	 deleteCheck = -1; // 취소 == 파일 없음 == 초기 상태
+	
+	 // 취소 시 기존 프로필 이미지로 변경
+	 profileImage.setAttribute("src", originalImage);
+	
+	 return;
+	}
+	
+	if(file.size > maxSize){ // 선택된 파일의 크기가 최대 크기를 초과한 경우
+	 alert("2MB 이하의 이미지를 선택해 주세요.");
+	 imageInput.value = "";
+	 // input type="file" 태그에 대입할 수 있는 value는 ""(빈칸) 뿐이다!
+	 
+	 deleteCheck = -1; // 취소 == 파일 없음 == 초기 상태
+	
+	 // 기존 프로필 이미지로 변경
+	 profileImage.setAttribute("src", originalImage);
+	 
+	 return;
+	}
+	
+	// JS에서 파일을 읽는 객체
+	// - 파일을 읽고 클라이언트 컴퓨터에 파일을 저장할 수 있음
+	const reader = new FileReader();
+	
+	reader.readAsDataURL(file);
+	// 매개변수에 작성된 파일을 읽어서 저장 후
+	// 파일을 나타내는 URL을 result 속성으로 얻어올 수 있게 함
+	
+	// 다 읽었을 때
+	reader.onload = e => {
+	 // console.log(e.target);
+	 // console.log(e.target.result); // 읽은 파일의 URL
+	
+	 const url = e.target.result;
+	
+	 // 프로필 이미지(img) 태그에 src 속성으로 추가
+	 profileImage.setAttribute("src", url);
+	
+	 deleteCheck = 1;
+	}
+	
+	});
+	
+	 // #profileFrm이 제출되었을 때
+    document.getElementById("profileFrm").addEventListener("submit", e=>{
+
+        // let initCheck;
+        // 초기 프로필 이미지 상태를 저장하는 변수
+        // false == 기본 이미지, true == 이전 업로드 이미지
+
+        // let deleteCheck = -1;
+        // 프로필 이미지가 새로 업로드되거나 삭제되었음을 나타내는 변수
+        // -1 == 초기값, 0 == 프로필 삭제(x버튼), 1 == 새 업로드 이미지
+
+        let flag = true;
+
+        // 프로필 이미지가 없다 -> 있다
+        if(!initCheck && deleteCheck == 1) flag = false;
+
+        // 이전 프로필 이미지가 있다 -> 삭제
+        if(initCheck && deleteCheck == 0) flag = false;
+
+        // 이전 프로필 이미지가 있다 -> 새 이미지
+        if(initCheck && deleteCheck == 1) flag = false;
+
+        if(flag) { // flag == true -> 제출하면 안 되는 경우
+            e.preventDefault(); // form 기본 이벤트 제거
+            swal({
+            	title:"이미지 변경 후 클릭해 주세요!",
+            	icon : "warning",
+            	buttons : {
+	    			cancel:{
+	    				text: "돌아가기",
+	            		value: false,
+	    	        	visible : true	    				
+	    			}
+            	}
+            	
+            });
+        }
+    });
+}
+	
+	$("#name").on("click",function(){
+		
+		
+	})
+</script>
 </html>

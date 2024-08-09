@@ -117,7 +117,7 @@
 
     .board-content{
         width: 100%;
-        height: 430px;
+        height: 420px;
         /* background-color: aqua; */
         border-top: 1px solid rgb(58, 58, 58);
         overflow: hidden;
@@ -152,7 +152,7 @@
     .pageNavi{
         /* background-color: bisque; */
         width: 100%;
-        height: 40px;
+        height: 33px;
         overflow: hidden;
     }
 
@@ -314,7 +314,7 @@
 
             <div class="board-td" th:each="board : ${list}">
                 <a th:href="@{/board/view(boardNo=${board.boardNo})}">
-                    <div class="board-list" style="width:10%; text-indent: 15px;" th:text="${board.boardNo}"></div>
+                    <div class="board-list" style="width:10%; text-indent: 5px;" th:text="${board.boardNo}"></div>
                     <div class="board-list" style="width:43%; overflow: hidden; text-overflow: ellipsis;" th:text="${board.boardTitle}"></div>
                     <div class="board-list" style="width:10%;" th:text="${board.boardWriter}"></div>
                     <div class="board-list" style="width:10%; text-align: center;" th:text="${board.readCount}"></div>

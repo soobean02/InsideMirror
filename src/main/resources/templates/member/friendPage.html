@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>친구 페이지</title>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="/css/minihomepage.css">
+<link rel="stylesheet" href="/css/layout.css">
+<link rel="stylesheet" href="/css/font.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="/summernote/summernote-lite.js"></script>
+<script src="/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/summernote/summernote-lite.css">
+<script src="/js/sweetalert.min.js"></script>
+
+</head>
+<body>
+	<th:block th:include="/common/friendTop"></th:block>
+			<div class="box-title">Updated news ></div>
+			<div class="news-flex-box">
+				<div class="news-box">
+					<div class="news-row">
+						<div class="news-category category-pic">사진첩</div>
+						<div class="news-title"></div><!-- th:text="${getTitle.photo.photoTitle}" -->
+					</div>
+					<div class="news-row">
+						<div class="news-category category-post">게시판</div>
+						<div class="news-title">살려줘...♥</div>
+					</div>
+					<div class="news-row">
+						<div class="news-category category-pic">사진첩</div>
+						<div class="news-title">살려줘...ㅠ</div>
+					</div>
+					<div class="news-row">
+						<div class="news-category category-post">게시판</div>
+						<div class="news-title">일상...♥</div>
+					</div>
+				</div>
+			</div>
+			<div class="swiper picture-room">
+				<!-- Additional required wrapper -->
+				<div class="box-title">추억이 방울방울 ></div>
+				<div class="swiper-wrapper">
+					<!-- Slides -->
+					<div class="swiper-slide slide-image" >
+						<a href="javascript:void(0)"> <img src="/image/cyworld1.png"
+							alt="">
+						</a>
+					</div>
+					<div class="swiper-slide slide-image">
+						<a href="javascript:void(0)"> <img src="/image/cyworld2.png"
+							alt="">
+						</a>
+					</div>
+					<div class="swiper-slide slide-image">
+						<a href="javascript:void(0)"> <img src="/image/cyworld2.png"
+							alt="">
+						</a>
+					</div>
+				</div>
+				<!-- If we need pagination -->
+				<div class="swiper-pagination"></div>
+				<!-- If we need navigation buttons -->
+				<div class="swiper-button-prev"></div>
+				<div class="swiper-button-next"></div>
+			</div>
+	<th:block th:include="/common/friendBottom"></th:block>
+</body>

@@ -16,6 +16,9 @@
         margin: 0;
         list-style-type: none;
     }
+    li{
+        list-style-type: none;
+    }
     a{
         text-decoration: none;
         color: black;
@@ -27,23 +30,23 @@
     .right{
         float: right;
     }
+    .box-title{
+        width: 97.5%;
+    }
 
     .photo-header{
         width: 100%;
         height: 80px;
-        background-color: aliceblue;
     }
     .order-wrap{
         width: 40%;
         height: 80px;
-        /* background-color: aqua; */
         text-align: center;
         line-height: 80px;
     }
     .write-wrap{
         width: 60%;
         height: 80px;
-        /* background-color: aquamarine; */
         display: flex;
         align-items: center;
         justify-content: right;
@@ -53,6 +56,10 @@
         height: 40px;
         cursor: pointer;
         border: none;
+        border-radius: 20px;
+        background-color: #96e6ff;
+        margin-left: 5px;
+
     }
     .write-wrap>.material-icons{
         font-size: 40px;
@@ -65,8 +72,62 @@
         width: 100%;
         height: auto;
         min-height: 400px;
-        background-color: beige;
         overflow: auto;
+        margin-top: 20px;
+        border-top: 1px solid #ccc;
+    }
+
+    img{
+        min-width: 200px;
+        min-height: 200px;
+        max-width: 600px;
+        max-height: 600px;
+    }
+
+    .post-img{
+        text-align: center;
+    }
+
+    .content-box{
+        overflow-y: hidden;
+    }
+
+
+    .photo-wrap{
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+
+    #more-btn{
+        /* opacity: 0; */
+        width: 0px;
+        height: 0px;
+    }
+    
+    .post-title{
+        width: 50%;
+    }
+
+    .post-sub-info{
+        width: 50%;
+        text-align: right;
+        padding-right: 10px;
+        box-sizing: border-box;
+    }
+
+    .post-info{
+        height: 40px;
+    }
+
+    .post-sub-info>.push-tag{
+        font-size: 30px;
+    }
+
+    .like{
+        cursor: pointer;
+    }
+    .bookmark{
+        margin-right: 10px;
     }
 
 </style>
@@ -92,6 +153,7 @@
 
         </div>
 
+
         <div class="photo-content">
 
         </div>
@@ -109,8 +171,81 @@
         $(".write-wrap>.material-icons").on("click",function(){
             location.href = "/photo/writeFrm";
         })
-            
+
+
+        const totalCount = [[${totalCount}]];
+        let currentCount = 0;
+        let start = 1;
+        $(".photo-wrap").scroll(function(e) {
+            if ($(".photo-wrap").scrollTop() + $(".photo-wrap").height() >= $(".photo-content").height()) {
+                getMore();
+            }
+        });  
+
+        getMore();
+        function getMore(){
+            const amount = 4;
+            $.ajax({
+                url : "/photo/more",
+                type : "get",
+                data : {start : start, amount : amount},
+                success : function(data){
+                    for(let i = 0; i < data.length; i++){
+
+                        const p = data[i];
+                        const li = $("<li>");
+    
+                        li.addClass("post-li");
+                        const imgDiv = $("<div>");
+                        imgDiv.addClass("post-img");
+    
+                            
+                        const infoDiv = $("<div>");
+                        infoDiv.addClass("post-info");
+                        
+                        const titleDiv = $("<div>");
+                        titleDiv.addClass("post-title").addClass("left");
+                        titleDiv.text(p.photoTitle);
+                        
+                        const subInfoDiv = $("<div>");
+                        subInfoDiv.addClass("post-sub-info").addClass("left");
+                        subInfoDiv.append(`<span class="material-icons push-tag like" onclick="likePush(this,[[${session.member.memberNo}]])">favorite_border</span>`);
+                        subInfoDiv.append(`<span class="material-icons push-tag bookmark" onclick="bookMark(this,[[${session.member.memberNo}]])">bookmark_border</span>`);
+                        
+                        const img = $("<img>");
+                        img.attr("src","/photo/"+p.photoContent);
+                        
+                        imgDiv.append(img);
+                        
+    
+                        infoDiv.append(titleDiv).append(subInfoDiv);
+    
+                        li.append(infoDiv).append(imgDiv);
+    
+                        $(".photo-content").append(li);
+                        likeSetting();
+                    }
+
+                    start += amount;
+                    currentCount = currentCount + data.length;
+                    
+                    if(currentCount == totalCount){
+                        $("#more-btn").remove();
+                    }
+                },
+                error : function(){
+                    alert("error");
+                }
+            });
+        }
+
+        function likeSetting(obj){
+
+        }
         
+        function likePush(obj, memberNo){
+
+        }
 
     </script>
 
