@@ -16,4 +16,12 @@ public class Photo {
 	private String photoContent;
 	private Date photoDate;
 
+	private int isLike;
+
+	private int likeCount;
+
+	private int isBookmark;
+
+
+
 }
