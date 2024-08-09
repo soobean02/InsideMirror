@@ -414,13 +414,25 @@ public class ProductService {
 	@Transactional
 	public int updateUseProduct(int productNo, int productListNo, Member member) {
 		// 적용하기 누른 상품의 리스트 번호 0으로...
-		int result = productDao.updateZeroProduct(member, productListNo);
+		int result = productDao.updateZeroProduct(member, productListNo, 0);
 		if(result > 0) { // 기존 상품 초기화에 성공하면
 			int r = productDao.updateUseProduct(productNo, productListNo, member);
 			return r;
 		}else { // 기존 상품 초기화 성공 실패시...
 			return 0;
 		}
+	}
+
+	// 모두 초기화
+	public int updateZeroProduct(Member member) {
+//		int result = productDao.updateAllZeroProduct(member);
+		return 0;
+	}
+	
+	// 하나만 초기화
+	public int updateOneZeroProduct(Member member, int productNo, int productListNo) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 

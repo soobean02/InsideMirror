@@ -141,12 +141,12 @@ public class ProductController {
 	
 	// 상품 초기화
 	@GetMapping(value="/canProduct")
-	public String canProduct(Model model, int productNo, int all) {
+	public String canProduct(Model model,  int productNo, int productListNo, int all, @SessionAttribute Member member) {
 		// 전체 초기화
 		if(all == 1) {
-			
+			int result = productService.updateZeroProduct(member);
 		}else { // 일부 초기화
-			
+			int result = productService.updateOneZeroProduct(member, productNo, productListNo);
 		}
 		return "/common/msg"; // 상품 초기화 시 -> 메세지 띄우기
 	}
@@ -155,7 +155,6 @@ public class ProductController {
 	public String useP(Model model, int productNo, int productListNo, @SessionAttribute Member member) { // 상품 번호, 상품 리스트 번호  
 		int result = productService.updateUseProduct(productNo, productListNo, member);
 		if(result > 0) {
-			// 현재 적용 중인 상품 정보 들고 오기
 			List sp = productService.selectUseProductInfo(member);
 			
 			model.addAttribute("title", "성공!");
@@ -165,7 +164,7 @@ public class ProductController {
 			model.addAttribute("loc", "/product/appProductList");
 		}else {
 			model.addAttribute("title", "실패");
-			model.addAttribute("msg", "결제 실패");
+			model.addAttribute("msg", "적용 실패");
 			model.addAttribute("icon", "error");
 			model.addAttribute("loc", "/product/buyProductPage");
 		}
