@@ -93,7 +93,11 @@ public class AdminController {
 	public String productUpdate(SellProduct sp, Model model) {
 		int result = productService.productUpdate(sp);
 		if(result>0) {
-			return "redirect:/admin/adminProductList?reqPage=1";
+			model.addAttribute("title", "수정 완료");
+			model.addAttribute("msg", "상품 정보가 수정되었습니다.");
+			model.addAttribute("icon", "success");
+			model.addAttribute("loc", "/admin/adminProductList?reqPage=1");
+			return "common/msg";
 		}else {
 			return "redirect:/";
 		}//else
@@ -111,18 +115,26 @@ public class AdminController {
 		sp.setProductImg(filepath);
 		int result = productService.adminAddProduct(sp);
 		if(result>0) {
-			return "redirect:/admin/adminProductList?reqPage=1";
+			model.addAttribute("title", "추가 완료");
+			model.addAttribute("msg", "상품이 추가되었습니다.");
+			model.addAttribute("icon", "success");
+			model.addAttribute("loc", "/admin/adminProductList?reqPage=1");
+			return "common/msg";
 		}else {
 			return "redirect:/";
 		}//else
 	}//adminProductAdd
 	
 	@GetMapping(value = "/productDelete")
-	public String productDelete(SellProduct sp) {
+	public String productDelete(SellProduct sp, Model model) {
 		int productNo = sp.getProductNo();
 		int result = productService.productDelete(productNo);
 		if(result>0) {
-			return "redirect:/admin/adminProductList?reqPage=1";
+			model.addAttribute("title", "삭제 완료");
+			model.addAttribute("msg", "상품이 삭제되었습니다.");
+			model.addAttribute("icon", "success");
+			model.addAttribute("loc", "/admin/adminProductList?reqPage=1");
+			return "common/msg";
 		}else {
 			return "redirect:/";
 		}//else

@@ -42,10 +42,14 @@ public class ReportController {
 	}//reportView
 	
 	@PostMapping(value = "/updateStatus")
-	public String updateStatus(Customer c) {
+	public String updateStatus(Customer c, Model model) {
 		int result = customerService.updateStatus(c);
 		if(result>0) {
-			return "redirect:/report/reportList?reqPage=1";
+			model.addAttribute("title", "처리 완료");
+			model.addAttribute("msg", "요청이 처리되었습니다.");
+			model.addAttribute("icon", "success");
+			model.addAttribute("loc", "/report/reportList?reqPage=1");
+			return "common/msg";
 		}else {
 			return "redirect:/";
 		}//else
