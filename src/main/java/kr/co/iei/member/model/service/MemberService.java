@@ -113,4 +113,31 @@ public class MemberService {
 		Member member = memberDao.selectAdminOneMember(memberNo);
 		return member;
 	}//selectAdminOneMember
+
+
+	public List findMember(String findMember) {
+		List memberList = memberDao.findMember(findMember);
+		return memberList;
+	}
+
+
+	public List viewAllMember() {
+		List list = memberDao.viewAllMember();
+		return null;
+	}
+
+
+	public List getTitle(Member member) {
+		List title = memberDao.title(member);
+		return title;
+	}
+
+
+
+
+
+	
+
+
+	
 }

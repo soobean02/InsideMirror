@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.MemberRowMapper;
+import kr.co.iei.member.model.dto.TitleRowMapper;
 
 @Repository
 public class MemberDao {
@@ -16,6 +17,8 @@ public class MemberDao {
 	
 	@Autowired
 	private MemberRowMapper memberRowMapper;
+	@Autowired
+	private TitleRowMapper titleRowMapper;
 
 	public List selectAllMember(int start, int end) {
 		String query = "select * from(select rownum as rnum, m.* from (select * from member order by 1 desc)m)where rnum between ? and ?";
@@ -46,7 +49,7 @@ public class MemberDao {
 
 	public int insertMember(Member m) {
 		String query = "insert into member values(member_seq.nextval,?,?,?,?,?,?,?,2,to_char(sysdate,'yyyy-mm-dd'),'InsideMirror에 메세지를 적어보세요','이미지첨부',0,0)";
-		Object[] params = {m.getMemberId(),m.getMemberPw(),m.getMemberNickname(),m.getMemberName(),m.getMemberGender(),m.getMemberPhone(),m.getMemberAddr()};
+		Object[] params = {m.getMemberId(),m.getMemberPw(),m.getMemberNickName(),m.getMemberName(),m.getMemberGender(),m.getMemberPhone(),m.getMemberAddr()};
 		System.out.println(m);
 		int result = jdbc.update(query, params);
 		return result;
@@ -100,4 +103,42 @@ public class MemberDao {
 			return (Member)member.get(0);
 		}//else
 	}//selectAdminOneMember
+
+
+	public List findMember(String findMember) {
+		String query = "select * from member where member_nickname || member_name like ?";
+		String searchKeyword = "%" + findMember+"%"; 
+		Object[] params = {searchKeyword};
+		List memberList = jdbc.query(query, memberRowMapper, params);
+		System.out.println(memberList);
+		if(memberList.isEmpty()) {
+			return null;
+		}else {
+			return memberList;
+		}
+	}
+
+
+	public List viewAllMember() {
+		String query = "select * from member order by total_count";
+		return null;
+	}
+
+
+	public List title(Member member) {
+		String query = "select p.photo_title, b.board_title"
+				+ "from member m"
+				+ "left join photo p using(member_no)"
+				+ "left join board b using(member_no)"
+				+ "where member_no =? and rownum <=2"
+				+ "order by p.photo_date desc";
+		Object[] params = {member.getMemberNo()};
+		List title = jdbc.query(query, titleRowMapper, query);
+		System.out.println(title);
+		if(title.isEmpty()) {
+			return null;			
+		}else {
+			return title;
+		}
+	}
 }

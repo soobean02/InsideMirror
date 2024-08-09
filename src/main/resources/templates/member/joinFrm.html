@@ -23,8 +23,8 @@ body {
 		<div class="join-all-wrap">
 			<div class="join-content">
 				<div class="join-info">
-					<form action="/member/checkNickname" name="checkNicknameFrm" method="post">
-						<input type="hidden" name="memberNickname">
+					<form action="/member/checkNickName" name="checkNickNameFrm" method="post">
+						<input type="hidden" name="memberNickName">
 					</form>
 					<form action="/member/join" method="post" autocomplete="off">
 						<table>
@@ -49,7 +49,7 @@ body {
 							</tr>
 							<tr>
 								<td><label for="nickName">닉네임(별명)<sup>*</sup></label></td>
-								<td class="td-2"><input type="text" name="memberNickname"
+								<td class="td-2"><input type="text" name="memberNickName"
 									id="nickName" required aria-required="true">
 									<p class="nickName-check-msg"></p>
 								</td>

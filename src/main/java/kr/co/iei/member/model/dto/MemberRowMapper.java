@@ -19,7 +19,7 @@ public class MemberRowMapper implements RowMapper<Member> {
 		m.setMemberId(rs.getString("member_id"));
 		m.setMemberLevel(rs.getInt("member_level"));
 		m.setMemberName(rs.getString("member_name"));
-		m.setMemberNickname(rs.getString("member_nickname"));
+		m.setMemberNickName(rs.getString("member_nickname"));
 		m.setMemberNo(rs.getInt("member_no"));
 		m.setMemberPhone(rs.getString("member_phone"));
 		m.setMemberPw(rs.getString("member_pw"));
