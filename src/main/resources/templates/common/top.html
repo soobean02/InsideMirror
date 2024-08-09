@@ -1,17 +1,40 @@
 <!DOCTYPE html>
 
 
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="/css/minihomepage.css">
+<link rel="stylesheet" href="/css/layout.css">
+<link rel="stylesheet" href="/css/font.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="/summernote/summernote-lite.js"></script>
+<script src="/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/summernote/summernote-lite.css">
+<script src="/js/sweetalert.min.js"></script>
 
-    <link rel="stylesheet" href="/css/minihomepage.css">
-    <link rel="stylesheet" href="/css/layout.css">
-    <link rel="stylesheet" href="/css/font.css">
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<script src="/summernote/summernote-lite.js"></script>
-	<script src="/summernote/lang/summernote-ko-KR.js"></script>
-	<link rel="stylesheet" href="/summernote/summernote-lite.css">
-	<script src="/js/sweetalert.min.js"></script>
+<style>
+	.profile-text>textarea {
+		width: 100%;
+		height: 180px;
+		border: none;
+		resize: none;
+		padding: 0;
+		overflow: hidden;
+	}
 
+	.profile-image-img {
+		width: 100%;
+		height: 230px;
+	}
+
+	.follow-btn {
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		padding-bottom: 5px;
+	}
+</style>
 
 <div class="bookcover">
 	<div class="bookdot">
@@ -21,14 +44,35 @@
 					TOTAL <span class="color-red">28</span>
 				</div>
 				<div class="box profile-box">
-					<div class="profile-image">
-						<img class="profile-image-img" src="" alt="프로필 이미지">
+					<form action="/member/memberPage" method="post" enctype="multipart/form-data">
+						<div class="profile-image">
+							<img class="profile-image-img" src="/image/cyworld1.png" alt="프로필 이미지">
+						</div>
+					</form>
+					<div class="profile-text">
+						<th:block th:if="${session.member !=null && session.member.memberNo != member.memberNo}">
+							<textarea id="profileContent" name="profileContent" placeholder="자유롭게 전하고싶은 메세지를 적어주세요..♥"
+								readonly></textarea>
+						</th:block>
+						<th:block th:if="${session.member.memberNo == member.memberNo}">
+							<textarea id="profileContent" name="profileContent"
+								placeholder="자유롭게 전하고싶은 메세지를 적어주세요..♥"></textarea>
+						</th:block>
 					</div>
-					<div class="profile-text">ㄴr는.. 오늘도.. 눈물을.. 흘린ㄷr..★</div>
 					<div class="profile-username">
 						<span style="color: #0f1b5c" th:text="${session.member.memberName}"></span>(♪♬)
 					</div>
-					<div class="profile-dropdown">
+					<div class="follow-btn-content">
+						<form action="/friend" method="post">
+							<div class="follow-btn">
+								<button type="button">일촌하기</button>
+							</div>
+							<div class="follow-btn">
+								<button type="button">일촌목록</button>
+							</div>
+						</form>
+					</div>
+					<!-- <div class="profile-dropdown">
 						<div class="dropdown-button">
 							<div class="dropdown-title">일촌 파도타기</div>
 							<div class="triangle-down"></div>
@@ -37,17 +81,17 @@
 							<a href="#"></a>
 							<a href="#">ㅁㅁㅁ의 홈피</a> <a href="#">ㅁㅁㅁ의 홈피</a>
 						</div>
-					</div>
+						</div> -->
 				</div>
 			</div>
 			<div class="content-container">
 				<div class="header content-title">
-					<div class="content-title-name" th:text="${session.member.memberName}"></div>
+					<div class="content-title-name" th:text="${session.member.memberName}+님의홈피"></div>
 				</div>
 				<div class="box content-box">
-				
-			<!-- 세션 검사 후에 여기에 값을 넣어야함 header에 -->
-			<!-- 
+
+					<!-- 세션 검사 후에 여기에 값을 넣어야함 header에 -->
+					<!-- 
 			<script> 
 				$(function(){
 					$("body").css("background-color","blue");
@@ -55,3 +99,20 @@
 				});
 			</script>
 		         -->
+					<script>
+						document.addEventListener('DOMContentLoaded', function () {
+							var textarea = document.getElementById('profileContent');
+
+							textarea.addEventListener('input', function () {
+								var maxHeight = textarea.clientHeight;
+								var scrollHeight = textarea.scrollHeight;
+
+								if (scrollHeight > maxHeight) {
+									// 문자 추가 방지
+									textarea.value = textarea.value.slice(0, textarea.value.length - 1);
+								}
+							});
+						});
+
+
+					</script>
