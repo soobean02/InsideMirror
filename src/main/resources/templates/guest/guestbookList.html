@@ -256,7 +256,7 @@ body {
 									                          
 	                                <textarea id="guestbookInput" name="guestbookInput" placeholder="댓글을 입력하세요"></textarea>
 	                               	
-	                               <input type="hidden" name="memberNo" th:value="${session.member.memberNo}">
+	                               <input type="hidden" name="memberNo" th:value="${friendMember.memberNo}">
 	                               <input type="hidden" name="guestWriterNo" th:value="${session.member.memberNo}">
 	                                <button class="guestbook-button" onclick="addGuestbookEntry()">전송</button> 
 	                            </div>
