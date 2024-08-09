@@ -56,6 +56,10 @@
         height: 40px;
         cursor: pointer;
         border: none;
+        border-radius: 20px;
+        background-color: #96e6ff;
+        margin-left: 5px;
+
     }
     .write-wrap>.material-icons{
         font-size: 40px;
@@ -98,6 +102,32 @@
         /* opacity: 0; */
         width: 0px;
         height: 0px;
+    }
+    
+    .post-title{
+        width: 50%;
+    }
+
+    .post-sub-info{
+        width: 50%;
+        text-align: right;
+        padding-right: 10px;
+        box-sizing: border-box;
+    }
+
+    .post-info{
+        height: 40px;
+    }
+
+    .post-sub-info>.push-tag{
+        font-size: 30px;
+    }
+
+    .like{
+        cursor: pointer;
+    }
+    .bookmark{
+        margin-right: 10px;
     }
 
 </style>
@@ -174,26 +204,26 @@
                         infoDiv.addClass("post-info");
                         
                         const titleDiv = $("<div>");
-                        titleDiv.addClass("post-title");
+                        titleDiv.addClass("post-title").addClass("left");
                         titleDiv.text(p.photoTitle);
                         
                         const subInfoDiv = $("<div>");
-                        subInfoDiv.addClass("post-sub-info");
+                        subInfoDiv.addClass("post-sub-info").addClass("left");
+                        subInfoDiv.append(`<span class="material-icons push-tag like" onclick="likePush(this,[[${session.member.memberNo}]])">favorite_border</span>`);
+                        subInfoDiv.append(`<span class="material-icons push-tag bookmark" onclick="bookMark(this,[[${session.member.memberNo}]])">bookmark_border</span>`);
                         
                         const img = $("<img>");
                         img.attr("src","/photo/"+p.photoContent);
                         
                         imgDiv.append(img);
-                        const writerSpan = $("<span>");
-                        writerSpan.text(p.memberNo);
-    
-                        subInfoDiv.append(writerSpan);
+                        
     
                         infoDiv.append(titleDiv).append(subInfoDiv);
     
                         li.append(infoDiv).append(imgDiv);
     
                         $(".photo-content").append(li);
+                        likeSetting();
                     }
 
                     start += amount;
@@ -208,8 +238,14 @@
                 }
             });
         }
+
+        function likeSetting(obj){
+
+        }
         
-        
+        function likePush(obj, memberNo){
+
+        }
 
     </script>
 

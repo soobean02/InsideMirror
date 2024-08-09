@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.photo.model.dao.PhotoDao;
 import kr.co.iei.photo.model.dto.Photo;
 
@@ -25,9 +26,9 @@ public class PhotoService {
 		return totalCount;
 	}
 
-	public List selectPhotoList(int start, int amount) {
+	public List selectPhotoList(int start, int amount, Member member) {
 		int end = start + amount - 1;
-		List photoList = photoDao.selectPhotoList(start, end);
+		List photoList = photoDao.selectPhotoList(start, end, member);
 		return photoList;
 	}
 }

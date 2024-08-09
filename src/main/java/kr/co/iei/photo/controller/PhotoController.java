@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.photo.model.dto.Photo;
 import kr.co.iei.photo.model.service.PhotoService;
 import kr.co.iei.utils.FileUtils;
@@ -64,8 +66,8 @@ public class PhotoController {
 
 	@ResponseBody
 	@GetMapping(value="/more")
-	public List photoMore(int start, int amount){
-		List photoList = photoService.selectPhotoList(start, amount);
+	public List photoMore(int start, int amount, @SessionAttribute(required = false) Member member){
+		List photoList = photoService.selectPhotoList(start, amount, member);
 		return photoList;
 	}
 

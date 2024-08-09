@@ -16,5 +16,4 @@ public class Photo {
 	private String photoContent;
 	private Date photoDate;
 
-	private String photoWriter;
 }
