@@ -43,20 +43,20 @@ public class BoardService {
 		String pageNavi = "<ul class='page-wrap'>";
 
 		if(pageNo != 1){
-			pageNavi += "<li><a class='page-index' href='/board/list?reqPage="+(pageNo - 1)+"'><span> < </span></a></li>";
+			pageNavi += "<li><button type='button' class='page-btn' onclick='pageBtn(this)'><a class='page-index' href='/board/list?reqPage="+(pageNo - 1)+"'><span> < </span></a></button></li>";
 		}
 
 		for(int i = 0; i < pageNaviSize; i++){
 			pageNavi += "<li>";
 			if(pageNo == reqPage){
-				pageNavi += "<a class='page-index active-page' href='/board/list?reqPage="+pageNo+"'>";
+				pageNavi += "<button type='button' class='page-btn' onclick='pageBtn(this)'><a class='page-index active-page' href='/board/list?reqPage="+pageNo+"'>";
 			}
 			else{
-				pageNavi += "<a class='page-index' href='/board/list?reqPage="+pageNo+"'>";
+				pageNavi += "<button type='button' class='page-btn' onclick='pageBtn(this)'><a class='page-index' href='/board/list?reqPage="+pageNo+"'>";
 			}
 			
 			pageNavi += pageNo;
-			pageNavi += "</a></li>";
+			pageNavi += "</a></button></li>";
 			pageNo++;
 			
 			if(pageNo > totalPage) break;
@@ -64,9 +64,9 @@ public class BoardService {
 
 		if(pageNo <= totalPage){
 			pageNavi += "<li>";
-			pageNavi += "<a class='page-index' href='/board/list?reqPage="+pageNo+"'>";
+			pageNavi += "<button type='button' class='page-btn' onclick='pageBtn(this)'><a class='page-index' href='/board/list?reqPage="+pageNo+"'>";
 			pageNavi += "<span> > </span>";
-			pageNavi += "</a></li>";
+			pageNavi += "</a></button></li>";
 		}
 
 		pageNavi += "</ul>";
@@ -211,26 +211,26 @@ public class BoardService {
 		String pageNavi = "<ul class='page-wrap'>";
 
 		if(pageNo != 1){
-			pageNavi += "<li><a class='page-index' href='/board/search?type="+type+"&keyword="+keyword+"&reqPage="+(pageNo - 1)+"'><span> < </span></a></li>";
+			pageNavi += "<li><button type='button' class='page-btn' onclick='pageBtn(this)'><a class='page-index' href='/board/search?type="+type+"&keyword="+keyword+"&reqPage="+(pageNo - 1)+"'><span> < </span></a></button></li>";
 		}
 
 		for(int i = 0; i < pageNaviSize; i++){
 			pageNavi += "<li>";
 			if(pageNo == reqPage){
-				pageNavi += "<a class='page-index active-page' href='/board/search?type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'>";
+				pageNavi += "<button type='button' class='page-btn' onclick='pageBtn(this)'><a class='page-index active-page' href='/board/search?type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'>";
 			}
 			else{
-				pageNavi += "<a class='page-index' href='/board/search?type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'>";
+				pageNavi += "<button type='button' class='page-btn' onclick='pageBtn(this)'><a class='page-index' href='/board/search?type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'>";
 			}
 
 			pageNavi += pageNo;
-			pageNavi += "</a></li>";
+			pageNavi += "</a></button></li>";
 			pageNo++;
 			if(pageNo > totalPage) break;
 		}//for
 
 		if(pageNo <= totalPage){
-			pageNavi += "<li><a class='page-index' href='/board/search?type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'><span> > </span></a></li>";
+			pageNavi += "<li><button type='button' class='page-btn' onclick='pageBtn(this)'><a class='page-index' href='/board/search?type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'><span> > </span></a></button></li>";
 		}
 		pageNavi += "</ul>";
 
@@ -316,26 +316,26 @@ public class BoardService {
 
 
 		if(pageNo != 1){
-			pageNavi += "<li><a class='page-index' href='/board/order?orderDate="+orderDate+"&orderFriend="+orderFriend+"&type="+type+"&keyword="+keyword+"&reqPage="+(pageNo - 1)+"'><span> < </span></a></li>";
+			pageNavi += "<li><button type='button' class='page-btn' onclick='pageBtn(this)'><a class='page-index' href='/board/order?orderDate="+orderDate+"&orderFriend="+orderFriend+"&type="+type+"&keyword="+keyword+"&reqPage="+(pageNo - 1)+"'><span> < </span></a></button></li>";
 		}
 
 		for(int i = 0; i < pageNaviSize; i++){
 			pageNavi += "<li>";
 			if(pageNo == reqPage){
-				pageNavi += "<a class='page-index active-page' href='/board/order?orderDate="+orderDate+"&orderFriend="+orderFriend+"&type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'>";
+				pageNavi += "<button type='button' class='page-btn' onclick='pageBtn(this)'><a class='page-index active-page' href='/board/order?orderDate="+orderDate+"&orderFriend="+orderFriend+"&type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'>";
 			}
 			else{
-				pageNavi += "<a class='page-index' href='/board/order?orderDate="+orderDate+"&orderFriend="+orderFriend+"&type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'>";
+				pageNavi += "<button type='button' class='page-btn' onclick='pageBtn(this)'><a class='page-index' href='/board/order?orderDate="+orderDate+"&orderFriend="+orderFriend+"&type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'>";
 			}
 
 			pageNavi += pageNo;
-			pageNavi += "</a></li>";
+			pageNavi += "</a></button></li>";
 			pageNo++;
 			if(pageNo > totalPage) break;
 		}//for
 
 		if(pageNo <= totalPage){
-			pageNavi += "<li><a class='page-index' href='/board/order?orderDate="+orderDate+"&orderFriend="+orderFriend+"&type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'><span> > </span></a></li>";
+			pageNavi += "<li><button type='button' class='page-btn' onclick='pageBtn(this)'><a class='page-index' href='/board/order?orderDate="+orderDate+"&orderFriend="+orderFriend+"&type="+type+"&keyword="+keyword+"&reqPage="+pageNo+"'><span> > </span></a></button></li>";
 		}
 		pageNavi += "</ul>";
 

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>마이 페이지</title>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+</head>
+<body>
+
+	<th:block th:include="/common/top"></th:block>
+	<div class="content-container">
+		<div class="header1 content-title">
+			<div class="content-title-name"></div>
+		</div>
+		<div class="box content-box">
+			<div class="box-title">Updated news ></div>
+			<div class="news-flex-box">
+				<div class="news-box">
+					<div class="news-row">
+						<div class="news-category category-pic">사진첩</div>
+						<div class="news-title" th:text="${getTitle.photo.photoTitle}"></div>
+					</div>
+					<div class="news-row">
+						<div class="news-category category-post">게시판</div>
+						<div class="news-title">살려줘...♥</div>
+					</div>
+					<div class="news-row">
+						<div class="news-category category-pic">사진첩</div>
+						<div class="news-title">살려줘...ㅠ</div>
+					</div>
+					<div class="news-row">
+						<div class="news-category category-post">게시판</div>
+						<div class="news-title">일상...♥</div>
+					</div>
+				</div>
+			</div>
+			<div class="swiper picture-room">
+				<!-- Additional required wrapper -->
+				<div class="box-title">추억이 방울방울 ></div>
+				<div class="swiper-wrapper">
+					<!-- Slides -->
+					<div class="swiper-slide slide-image" >
+						<a href="javascript:void(0)"> <img src="/image/cyworld1.png"
+							alt="">
+						</a>
+					</div>
+					<div class="swiper-slide slide-image">
+						<a href="javascript:void(0)"> <img src="/image/cyworld2.png"
+							alt="">
+						</a>
+					</div>
+					<div class="swiper-slide slide-image">
+						<a href="javascript:void(0)"> <img src="/image/cyworld2.png"
+							alt="">
+						</a>
+					</div>
+				</div>
+				<!-- If we need pagination -->
+				<div class="swiper-pagination"></div>
+				<!-- If we need navigation buttons -->
+				<div class="swiper-button-prev"></div>
+				<div class="swiper-button-next"></div>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="/common/bottom"></th:block>
+</body>
+</html>

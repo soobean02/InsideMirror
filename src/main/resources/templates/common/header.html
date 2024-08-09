@@ -2,59 +2,74 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>header</title>
-    <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/footer.css">
-    <script src="/js/sweetalert.min.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>header</title>
+	<link rel="stylesheet" href="/css/header.css">
+	<link rel="stylesheet" href="/css/footer.css">
+	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+	<script src="/js/sweetalert.min.js"></script>
 
 </head>
 
 <body>
-    <header class="header">
-        <div class="left-group">
-            <div class="logo">
-                <a href="/">IM</a>
-            </div>
-            <nav class="nav">
-                <ul>
-                    <li class="li"><a href="/member/minihomepage">미니홈피</a></li>
-                </ul>
-            </nav>
-        </div>
-        <div class="right-group">
-            <ul class="user-menu">
-                <li class="li"><a href="javascript:void(0)" class="nonMember">비회원</a></li>
-                <li class="li"><a href="/member/login">로그인</a></li>
-            </ul>
-        </div>
-    </header>
+	<header class="header">
+		<div class="left-group">
+			<div class="logo">
+				<a href="/">IM</a>
+			</div>
+			<nav class="nav">
+				<ul>
+					<li class="li"><a href="/member/homelist">미니홈피</a></li>
+				</ul>
+			</nav>
+		</div>
+		<div class="search-group">
+			<form action="/member/search" method="get">
+				<input type="text" id="searchInput" name="findFriend" placeholder="친구를 검색해보세요!">
+				<button type="submit">Search</button>
+			</form>
+		</div>
+		<div class="right-group">
+			<ul class="user-menu">
+				<th:block th:if="${session.member == null}">
+					<li class="li"><a href="javascript:void(0)" class="nonMember">비회원</a></li>
+					<li class="li"><a href="/member/login">로그인</a></li>
+				</th:block>
+				<th:block th:if="${session.member != null}">
+					<li><a href="/member/memberPage" th:text="${session.member.memberNickName}"></a></li>
+					<li><a href="/member/logout">로그아웃</a></li>
+				</th:block>
+			</ul>
+		</div>
+	</header>
 </body>
 <script>
-	$(".nonMember").on("click",function(){
-		$(".nonMember").hide();
+	$(".nonMember").on("click", function () {
 		swal({
 			title: "회원가입하시겠습니까?",
-	        text: "회원가입을 원치 않으시면 뒤로가기 눌러주세요.",
-	   		buttons:{
-	   			confirm:{
-	   				text:"회원가입",
-	   				value:true,
-	   				visible:true
-	   			},
-	   			cancel:{
-	   				text:"뒤로가기",
-	   				value:false,
-	   				visible:true,
-	   			}
-	   		}
-		}).then(function(isConfirm){
-			if(isConfirm){
+			text: "회원가입을 원치 않으시면 둘러보기를 눌러주세요.",
+			buttons: {
+				confirm: {
+					text: "회원가입",
+					value: true,
+					visible: true,
+				},
+				cancel: {
+					text: "둘러보기",
+					value: false,
+					visible: true,
+				}
+			}
+		}).then(function (isConfirm) {
+			if (isConfirm) {
 				location.href = "/member/joinFrm";
+			} else {
+				location.href = "/member/homelist";
 			}
 		});
 	})
-</script>
-</html>
 
+</script>
+
+</html>

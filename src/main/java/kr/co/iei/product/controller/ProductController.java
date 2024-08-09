@@ -104,8 +104,9 @@ public class ProductController {
 	
 	/*구매 상품 리스트 - 타입 검사 추가*/
 	@GetMapping(value="/buyProductList")
-	public String buyProductList(Model model, int reqPage, @SessionAttribute Member member, int type) {
+	public String buyProductList(Model model, int reqPage, @SessionAttribute Member member, int type, String product) {
 		ProductListData pld = productService.selectBuyProduct(reqPage, member, type);
+		model.addAttribute("product", product);
 		model.addAttribute("list", pld.getList());
 		model.addAttribute("pageNavi", pld.getNaviPage());
 		model.addAttribute("ty", type);
@@ -129,7 +130,8 @@ public class ProductController {
 	}
 	
 	@GetMapping(value="/appProductList")
-	public String appProductList() {
+	public String appProductList(Model model, String product) {
+		model.addAttribute("product", product);
 		return "/product/appProductList";
 	}
 }

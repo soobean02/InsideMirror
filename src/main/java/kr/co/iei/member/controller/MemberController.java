@@ -1,19 +1,23 @@
 package kr.co.iei.member.controller;
 
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import jakarta.servlet.http.HttpSession;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.service.MemberService;
 import kr.co.iei.utils.EmailSender;
+import kr.co.iei.utils.FileUtils;
 
 @Controller
 @RequestMapping(value = "/member")
@@ -23,11 +27,16 @@ public class MemberController {
 	@Autowired
 	private EmailSender emailSender;
 	
+	@Value("${file.root}")
+	private String root;
+	@Autowired
+	private FileUtils fileUtils;//파일 업로드용
+	
 	@GetMapping(value="/login")
 	public String login() {
 		return "member/login";
 	}
-	@PostMapping(value="/login")
+	@PostMapping(value="/loginin")
 	public String login(Member m, HttpSession session) {
 		Member member = memberService.selectOneMember(m);
 		if(member == null) {
@@ -35,16 +44,45 @@ public class MemberController {
 		}else {
 			if(member.getMemberLevel() == 2) {
 				session.setAttribute("member", member);
-				return "common/minihomepage";
+				return "common/memberPage";
 			}else if(member.getMemberLevel() == 1) {
 				session.setAttribute("member", member);
 				return "redirect:/admin/adminHome";
-			}
-			else {
+			}else {
 				session.setAttribute("member", member);
 				return "redirect:/";
 			}
 		}
+	}
+	@GetMapping(value="/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
+	}
+	@GetMapping(value="/homelist")
+	public String homelist(Model model) {
+		List member = memberService.viewAllMember();
+		model.addAttribute("member", member);
+		return "common/homelist";
+	}
+	@GetMapping(value="/search")
+	public String search(String findFriend, Model model) {
+		System.out.println(findFriend);
+		if(findFriend.equals("")) {
+			System.out.println(findFriend);
+			
+			model.addAttribute("title","검색을 입력해주세요");
+			model.addAttribute("icon", "error");
+		}else {
+			List memberList = memberService.findMember(findFriend);
+			model.addAttribute("memberList", memberList);
+			return "/common/searchlist";				
+		}
+		model.addAttribute("loc","/");
+		return "common/msg";
+		
+		
+			
 	}
 	@GetMapping(value="/minihomepage")
 		public String minihomepage() {
@@ -93,10 +131,19 @@ public class MemberController {
 			return "redirect:/";			
 		}
 	}
+	@GetMapping(value="/memberPage")
+	public String memberPage(@SessionAttribute(required=false) Member member,Model model) {
+		Member m = member;
+		List getTitle = memberService.getTitle(member);
+		model.addAttribute("member",m);
+		model.addAttribute("getTitle",getTitle);
+		return "member/memberPage";
+	}
+	
 	@ResponseBody
 	@GetMapping(value="/ajaxCheckNickname")
-	public int ajaxCheckNickname(String memberNickname) {
-		Member member = memberService.selectOneMember(memberNickname);
+	public int ajaxCheckNickname(String memberNickName) {
+		Member member = memberService.selectOneMember(memberNickName);
 		if(member == null) {
 			return 0;
 		}else {
