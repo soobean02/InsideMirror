@@ -56,17 +56,27 @@ a {
 }
 
 .select_op {
-	padding: 20px;
-	float: right;
-}
+            width: 200px; /* 전체 드롭다운 너비 */
+            margin-left: 450px; 
+            padding: 10px;
+            box-sizing: border-box;
+            float: left;
+        }
 
-.select_op>select {
-	width: 100px;
-	height: 30px;
-	border-radius: 10px;
-	text-align: center;
-	font-weight: bold;
-}
+        .select_op select {
+            width: 100%; /* 드롭다운 너비를 부모 요소에 맞춤 */
+            padding: 10px; /* 내부 패딩 */
+            border: 1px solid #ccc; /* 테두리 색상 */
+            border-radius: 5px; /* 둥근 테두리 */
+            background-color: #f9f9f9; /* 배경 색상 */
+            font-size: 16px; /* 글꼴 크기 */
+            color: #333; /* 글꼴 색상 */
+            cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+        }
+
+        .select_op select:focus {
+            outline: none; /* 선택 시 기본 외곽선 제거 */
+        }
 
 .product_list_box {
 	margin-top: 70px;
@@ -100,7 +110,6 @@ a {
 }
 
 .client_btn>a {
-
 	background-color: skyblue;
 	border: none;
 	font-weight: bold;
@@ -120,11 +129,15 @@ a {
 	</div>
 	<div class="wrap">
 		<div class="select_op">
-			<select>
-				<option value="1">배경</option>
-				<option value="2">폰트</option>
-				<option value="3">커서</option>
-			</select>
+			<form action="/admin/adminProductList" method="get" id="category">
+				<input type="hidden" name="reqPage" value="1">
+				<select name="type">
+					<option value="0"  th:selected="${ty == 0}">전체</option>
+					<option value="1" th:selected="${ty == 1}">배경</option>
+					<option value="2" th:selected="${ty == 2}">커서</option>
+					<option value="3" th:selected="${ty == 3}">폰트</option>
+				</select>
+			</form>
 		</div>
 		<div class="product_list_box">
 			<th:block th:each="pr : ${list}">
