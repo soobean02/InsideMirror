@@ -54,6 +54,20 @@ public class ReportController {
 			return "redirect:/";
 		}//else
 	}//updateStatus
+	
+	@GetMapping(value = "/updateStatusReject")
+	public String updateStatusReject(Customer c, Model model) {
+		int result = customerService.updateStatusReject(c);
+		if(result>0) {
+			model.addAttribute("title", "처리 완료");
+			model.addAttribute("msg", "요청이 반려되었습니다.");
+			model.addAttribute("icon", "success");
+			model.addAttribute("loc", "/report/reportList?reqPage=1");
+			return "common/msg";
+		}else {
+			return "redirect:/";
+		}//else
+	}//updateStatusReject
 }
 
 

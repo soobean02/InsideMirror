@@ -64,7 +64,7 @@ public class GuestBookController {
             model.addAttribute("msg", "댓글 수정 중 문제가 발생했습니다.");
             model.addAttribute("icon", "warning");
         }
-        model.addAttribute("loc", "/guestbook");
+        model.addAttribute("loc", "/guest/guestbookList");
         return "common/msg";
     }
 
@@ -82,7 +82,7 @@ public class GuestBookController {
             model.addAttribute("msg", "댓글 삭제 중 문제가 발생했습니다.");
             model.addAttribute("icon", "warning");
         }
-        model.addAttribute("loc", "/guestbook");
+        model.addAttribute("loc", "/guest/guestbookList");
         return "common/msg";
     }
 
