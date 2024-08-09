@@ -11,6 +11,7 @@ import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.MemberListData;
 import kr.co.iei.member.model.dto.Title;
+import kr.co.iei.product.dao.ProductDao;
 
 @Service
 public class MemberService {
