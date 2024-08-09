@@ -83,9 +83,9 @@ input[name=product]:checked+label {
 		<div class="box-title">
 		<div>적용한 상품 목록</div>
 		<form action="/product/buyProductList" class="form_radio" method="get">
-			<input type="radio" name="product" id="product_app" value="적용" checked>
+			<input type="radio" name="product" id="product_app" value="적용" th:checked="${product == '적용'}">
 			<label for="product_app">적용한 상품</label>
-			<input type="radio" name="product" id="product_ok" value="구매">
+			<input type="radio" name="product" id="product_ok" value="구매" th:checked="${product == '구매'}">
 			<label for="product_ok">구매한 상품</label>
 			<input type="hidden" name="reqPage" value="1">
 			<input type="hidden" name="type" value="0">
