@@ -9,12 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.MemberListData;
+import kr.co.iei.product.dao.ProductDao;
 
 @Service
 public class MemberService {
 	@Autowired
 	private MemberDao memberDao;
-
+	@Autowired ProductDao productDao;
 	
 	public MemberListData selectAllMember(int reqPage) {
 		int numPerPage = 5;
@@ -133,6 +134,18 @@ public class MemberService {
 	public List getTitle(Member member) {
 		List title = memberDao.title(member);
 		return title;
+	}
+
+
+	public int joinProduct(Member m) {
+//		Member listNum = memberDao.selectMemberNo(m);
+		Member member = memberDao.selectOneMember(m);
+		int num = member.getMemberNo();
+		/*회원가입 끝나면 기본 배경, 커서 강제 주입*/
+		int b = productDao.joinProductB(num);
+		int c = productDao.joinProductC(num);
+		int f =  productDao.joinProductF(num);
+		return 0;
 	}
 
 

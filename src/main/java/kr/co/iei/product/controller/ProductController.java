@@ -130,7 +130,9 @@ public class ProductController {
 	}
 	
 	@GetMapping(value="/appProductList")
-	public String appProductList(Model model, String product) {
+	public String appProductList(Model model, String product, @SessionAttribute Member member) {
+		List sp = productService.selectUseProductInfo(member);
+		model.addAttribute("sp");
 		model.addAttribute("product", product);
 		return "/product/appProductList";
 	}

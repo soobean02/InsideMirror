@@ -405,5 +405,10 @@ public class ProductService {
 		return threeProductList;
 	}//selectThreeProduce
 
+	public List selectUseProductInfo(Member member) {
+		List list = productDao.selectUseProductInfo(member);
+		return list;
+	}
+
 
 }

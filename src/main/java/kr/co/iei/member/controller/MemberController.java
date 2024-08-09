@@ -101,6 +101,8 @@ public class MemberController {
 		m.setMemberPhone(memberPhone);
 		int result = memberService.insertMember(m);
 		if(result>0) {
+			/*회원가입 성공 시 - 배경, 커서, 폰트 정리*/
+			int r = memberService.joinProduct(m);
 			return "redirect:/";
 		}else {
 			return "redirect:/member/joinFrm";

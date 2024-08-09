@@ -217,6 +217,33 @@ public class ProductDao {
 		List threeProductList = jdbc.query(query, sellProductRowMapper);
 		return threeProductList;
 	}//selectThreeProduct
+	
+	// 회원가입을 하는 순간 기본 배경 커서 폰트 insert 해주기 -> 내 상품에 있음
+	public int joinProductB(int num) { // 기본 배경이 41번
+		String query = "INSERT INTO buy_product VALUES(buy_product_seq.nextval, 41, ?, TO_CHAR(SYSDATE,'yyyy-mm-dd'), '사용',null, 1)";
+		Object[] params = {num};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+	public int joinProductC(int num) {// 기본 커서가 43번
+		String query = "INSERT INTO buy_product VALUES(buy_product_seq.nextval, 43, ?, TO_CHAR(SYSDATE,'yyyy-mm-dd'), '사용',null, 1)";
+		Object[] params = {num};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+	public int joinProductF(int num) { // 기본 폰트가 42번
+		//String query = "INSERT INTO buy_product VALUES(buy_product_seq.nextval, ?, ?, TO_CHAR(SYSDATE,'yyyy-mm-dd'), '사용',null, 0)";
+		String query = "INSERT INTO buy_product VALUES(buy_product_seq.nextval, 42, ?, TO_CHAR(SYSDATE,'yyyy-mm-dd'), '사용',null, 1)";
+		Object[] params = {num};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+	public List selectUseProductInfo(Member member) {
+		String query = "select * from buy_product join sell_product using(product_no) where member_no=? and use_product=?";
+		Object[] params = {member.getMemberNo(),1};
+		List list = jdbc.query(query, buyInfoRowMapper, params);
+		return list;
+	}
 
 
 
