@@ -253,16 +253,21 @@ public class ProductDao {
 		return list;
 	}
 
-//	public List selectUseBuyProduct(Member member) {
-//		String query = "select * from buy_product where member_no=? and use_product=1";
-//		Object[] params = { member.getMemberNo() };
-//		List list = jdbc.query(query, buyInfoRowMapper, params);
-//		if (list.isEmpty()) { // 사용자가 구매하지 않음
-//			return null;
-//		} else {
-//			return list;
-//		}
-//
-//	}
+	// 상품 적용하기 전에 기존 상품 초기화
+	public int updateZeroProduct(Member member, int productListNo) {
+		String query = "update (select * from buy_product join sell_product using(product_no)) set use_product=? where member_no=? and product_list_no=?";
+		Object[] params = {0,member.getMemberNo(), productListNo};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+	
+	// 상품 적용하기
+	public int updateUseProduct(int productNo, int productListNo, Member member) {
+		String query = "update (select * from buy_product join sell_product using(product_no)) set use_product=1 where member_no=? and product_list_no=? and product_no = ?";
+		Object[] params = {member.getMemberNo(), productListNo, productNo};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+
 
 }

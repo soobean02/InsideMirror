@@ -411,12 +411,17 @@ public class ProductService {
 		return list;
 	}
 
-//	public BuyProduct selectUseBuyProduct(Member member) {
-//		// 사용 중인 상품의 모든 정보 조회
-//		List list = productDao.selectUseBuyProduct(member);
-//		System.out.println(list);
-//		return null;
-//	}
+	@Transactional
+	public int updateUseProduct(int productNo, int productListNo, Member member) {
+		// 적용하기 누른 상품의 리스트 번호 0으로...
+		int result = productDao.updateZeroProduct(member, productListNo);
+		if(result > 0) { // 기존 상품 초기화에 성공하면
+			int r = productDao.updateUseProduct(productNo, productListNo, member);
+			return r;
+		}else { // 기존 상품 초기화 성공 실패시...
+			return 0;
+		}
+	}
 
 
 }

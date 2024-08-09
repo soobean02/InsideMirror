@@ -150,4 +150,25 @@ public class ProductController {
 		}
 		return "/common/msg"; // 상품 초기화 시 -> 메세지 띄우기
 	}
+	// 상품 적용하기
+	@GetMapping(value="/useP")
+	public String useP(Model model, int productNo, int productListNo, @SessionAttribute Member member) { // 상품 번호, 상품 리스트 번호  
+		int result = productService.updateUseProduct(productNo, productListNo, member);
+		if(result > 0) {
+			// 현재 적용 중인 상품 정보 들고 오기
+			List sp = productService.selectUseProductInfo(member);
+			
+			model.addAttribute("title", "성공!");
+			model.addAttribute("msg", "상품 적용 성공");
+			model.addAttribute("icon", "success");
+			model.addAttribute("sp", sp);
+			model.addAttribute("loc", "/product/appProductList");
+		}else {
+			model.addAttribute("title", "실패");
+			model.addAttribute("msg", "결제 실패");
+			model.addAttribute("icon", "error");
+			model.addAttribute("loc", "/product/buyProductPage");
+		}
+		return "/common/msg";
+	}
 }
