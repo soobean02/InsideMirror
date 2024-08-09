@@ -82,9 +82,13 @@ public class BoardController {
 		int result = boardService.insertBoard(board, fileList);
 		if(result > 0){
 			//작성 성공로직
+			model.addAttribute("title", "작성");
+			model.addAttribute("msg", "게시글을 작성했습니다!");
+			model.addAttribute("icon", "success");
+			model.addAttribute("loc", "/board/list?reqPage=1");
 		}
 
-		return "redirect:/board/list?reqPage=1";
+		return "common/msg";
 	}//게시글 작성
 
 	@GetMapping(value="/editFrm")
