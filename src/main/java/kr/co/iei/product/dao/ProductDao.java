@@ -211,6 +211,12 @@ public class ProductDao {
 		int refundListTotalCount = jdbc.queryForObject(query, Integer.class);	
 		return refundListTotalCount;
 	}//selectRefundListTotalCount
+	
+	public List selectThreeProduct() {
+		String query = "select * from (select rownum as rnum, n.* from (select * from sell_product order by 1 desc)n) where rnum between 1 and 3";
+		List threeProductList = jdbc.query(query, sellProductRowMapper);
+		return threeProductList;
+	}//selectThreeProduct
 
 
 

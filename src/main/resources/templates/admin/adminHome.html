@@ -147,14 +147,14 @@ a {
 	<div class="picture-room">
 		<div class="box-title">상품 관리 ></div>
 		<div class="product_list_box">
-			<th:block th:each="pr : ${list}">
-				<a th:href="@{/admin/adminProductView(productNo=${pr.productNo})}">
+			<th:block th:each="p : ${threeProductList}">
+				<a th:href="@{/admin/adminProductView(productNo=${p.productNo})}">
 					<!--타임리프 들어갈 자리-->
 					<div class="product_box">
 						<div class="product_img">
-							<img th:src="@{'/product/editor/'+${pr.productImg}}">
+							<img th:src="@{'/product/editor/'+${p.productImg}}" alt="상품 사진">
 						</div>
-						<div class="product_name" th:text="${pr.productName}">상품이름</div>
+						<div class="product_name" th:text="${p.productName}">상품이름</div>
 					</div>
 				</a>
 			</th:block>

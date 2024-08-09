@@ -399,5 +399,11 @@ public class ProductService {
 		return sp;
 	}
 
+	//관리자 메인 홈피에서 상품 3개 출력
+	public List selectThreeProduct() {
+		List threeProductList = productDao.selectThreeProduct();
+		return threeProductList;
+	}//selectThreeProduce
+
 
 }

@@ -56,6 +56,10 @@ public class AdminController {
 		List fiveReportList = customerService.selectFiveReport();
 		model.addAttribute("fiveReportList", fiveReportList);
 		
+		//상품 3개 조회
+		List threeProductList = productService.selectThreeProduct();
+		model.addAttribute("threeProductList", threeProductList);
+		
 		return "admin/adminHome";
 	}//adminHome
 	
