@@ -27,6 +27,10 @@ public class GuestBookController {
 	public String guestbookList(Model model) {
 		return "guest/guestbookList";
 	}
+    @GetMapping(value="/guestList")
+    public String guestList(Model model) {
+    	return "guest/guestList";
+    }
 
     @PostMapping(value="/insertComment")
     public String insertComment(int guestBookType,String guestbookInput,int memberNo,int guestWriterNo ,Model model) {
@@ -77,7 +81,7 @@ public class GuestBookController {
     }
 
     @GetMapping(value="/deleteComment")
-    public String deleteComment(@RequestParam int guestCommentNo, Model model) {
+    public String deleteComment(int guestCommentNo, Model model) {
         GuestBook gb = new GuestBook();
         gb.setGuestCommentNo(guestCommentNo);
         int result = guestBookService.deleteComment(gb);

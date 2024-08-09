@@ -254,9 +254,9 @@ body {
 	                            </div>
 	                            <div class="guestbook-writer">
 									                          
-	                                <textarea id="guestbookInput" name="guestbookInput" placeholder="댓글을 입력하세요"></textarea>
+	                                <textarea id="guestbookInput" name="guestbookInput" placeholder="방문록을 입력해주세요."></textarea>
 	                               	
-	                               <input type="hidden" name="memberNo" th:value="${friendMember.memberNo}">
+	                               <input type="hidden" name="memberNo">
 	                               <input type="hidden" name="guestWriterNo" th:value="${session.member.memberNo}">
 	                                <button class="guestbook-button" onclick="addGuestbookEntry()">전송</button> 
 	                            </div>
@@ -437,6 +437,6 @@ body {
     });
     
     </script>
-    
+    <th:block th:include="common/bottom"></th:block>
 </body>
 </html>

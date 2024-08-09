@@ -30,6 +30,16 @@ public class FriendController {
 	@Autowired
 	private FriendService friendService; 	
 	
+	  @GetMapping(value="/friendList")
+		public String guestfriendList(Model model) {
+			return "friend/friendList";
+		}
+	  
+	  @GetMapping(value="/friendrequest")
+		public String friendrequest(Model model) {
+			return "friend/friendrequest";
+		}
+	
 	@GetMapping(value="/friendRequest")
 	public String friendrequest(Model model, @SessionAttribute Member member) {
 		int memberNo = member.getMemberNo();

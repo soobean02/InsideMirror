@@ -36,12 +36,14 @@ public class GuestBookDao {
     public int deleteComment(GuestBook gb) {
         String query = "DELETE FROM guest_book WHERE GUEST_COMMENT_NO = ?";
         Object[] params = {gb.getGuestCommentNo()};
-        return jdbcTemplate.update(query, params);
+        int result = jdbcTemplate.update(query, guestBookRowMapper,params);
+        return result;
     }
 
     public List<GuestBook> getAllComments() {
         String query = "SELECT * FROM guest_book ORDER BY GUEST_COMMENT_DATE DESC";
-        return jdbcTemplate.query(query, guestBookRowMapper);
+        List list = jdbcTemplate.query(query, guestBookRowMapper);
+        return list;
     }
 
 }

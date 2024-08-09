@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+ <th:block th:include="common/friendTop"></th:block>
+ 	 <div class="guestbook-scrollbox" id="guestbook-scrollbox">
+                                    <div class="guest-text">방명록 ></div>
+                                    <div class="guestbook-box" data-comment-no="1">
+                                        <div class="guestbook-title">No. 1
+                                            <span>이름</span>
+                                           <button class="material-icons" data-url="#">home</button>
+                                            <div class="guestbook-date">(2024.00.00)
+                                                <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
+                                                <button class="btn-primary" onclick="editComment(this)">수정</button>
+                                            </div>
+                                        </div>
+                                        <div class="guestbook-contents">
+                                            <div class="guestbook-text">
+                                                <p>이 글귀 좋더라.. 읽어봐..<br><br><br>울ㅈ1않ㄱㅣ<br>아프ㅈ1않ㄱㅣ<br>씩씩ㅎrㄱㅣ<br>억ㅈㅣ로ㄹr도 웃ㄱㅣ<br>ㅌ1 ㄴㅐㅈㅣ 말ㄱㅣ<br>.<br>.<br>.<br>오늘도 괜찮은 듯<br>그렇ㄱㅔ ㅈ1ㄴㅐㄱㅣ</p>
+                                                <textarea class="edit-textarea" style="display: none;"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="guestbook-box" data-comment-no="2">
+                                        <div class="guestbook-title">No. 2
+                                            <span>이름</span>
+                                           <button class="material-icons" data-url="#">home</button>
+                                            <div class="guestbook-date">(2024.00.00)
+                                                <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
+                                                <button class="btn-primary" onclick="editComment(this)">수정</button>
+                                            </div>
+                                        </div>
+                                        <div class="guestbook-contents">
+                                            <div class="guestbook-text">
+                                                <p>너 내가 보내준 인소 봤냐 이 부분 개쩐다<br><br><br>"누구한테 문자하냐?"<br>"사랑하는 사람한테"<br><br><br>"나한테 문자를 왜 보내"</p>
+                                                <textarea class="edit-textarea" style="display: none;"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="guestbook-box" data-comment-no="3">
+                                        <div class="guestbook-title">No. 3
+                                            <span>이름</span>
+                                           <button class="material-icons" data-url="#">home</button>
+                                            <div class="guestbook-date">(2024.00.00)
+                                                <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
+                                                <button class="btn-primary" onclick="editComment(this)">수정</button>
+                                            </div>
+                                        </div>
+                                        <div class="guestbook-contents">
+                                            <div class="guestbook-text">
+                                                <p>야 내일 캔모아 갈래?</p>
+                                                <textarea class="edit-textarea" style="display: none;"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="guestbook-box" data-comment-no="4">
+                                        <div class="guestbook-title">No. 4
+                                            <span>이름</span>
+                                           <button class="material-icons" data-url="#">home</button>
+                                            <div class="guestbook-date">(2024.00.00)
+                                                <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
+                                                <button class="btn-primary" onclick="editComment(this)">수정</button>
+                                            </div>
+                                        </div>
+                                        <div class="guestbook-contents">
+                                            <div class="guestbook-text">
+                                                <p>나랑 찍은 사진은 왜 안 올려 ㅡ.ㅡ</p>
+                                                <textarea class="edit-textarea" style="display: none;"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <form action="/guest/insertComment" method="post">
+	                            <div class="guest-check-box">
+	                                <input type="radio" name="guestBookType" id="anonymous" value="0">
+	                                <label for="anonymous">익명</label>
+	                                <input type="radio" name="guestBookType" id="nickname" value="1">
+	                                <label for="nickname">닉네임</label>
+	                            </div>
+	                            <div class="guestbook-writer">
+									                          
+	                                <textarea id="guestbookInput" name="guestbookInput" placeholder="방문록을 작성해주세요."></textarea>
+	                               	
+	                               <input type="hidden" name="memberNo" th:value="${friendMember.memberNo}">
+	                               <input type="hidden" name="guestWriterNo" th:value="${session.member.memberNo}">
+	                                <button class="guestbook-button" onclick="addGuestbookEntry()">전송</button> 
+	                            </div>
+                            </form>
+ <th:block th:include="common/friendBottom"></th:block>
+ 
+</body>
+</html>
