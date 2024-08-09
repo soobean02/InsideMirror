@@ -17,10 +17,14 @@ public class FriendDao {
     @Autowired
     private FriendRowMapper friendRowMapper;
 
-    public List<Friend> findAllFriend() {
-        String sql = "SELECT * FROM friend"; 
-        return jdbcTemplate.query(sql, new FriendRowMapper()); 
-    }
+	public List selectAllList() {
+		String query = "select friend_member_no, member_no from friend join member on (friend_member_no = member_no) where friend_member_name = ?";
+		
+		return null;
+	}
+
+  
+  
 }
 
 

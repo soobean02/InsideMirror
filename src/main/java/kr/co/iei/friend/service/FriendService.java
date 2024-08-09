@@ -13,10 +13,14 @@ public class FriendService {
     @Autowired
     private FriendDao friendDao;
 
-    public List<Friend> getAllFriend() {
-        return friendDao.findAllFriend(); 
-    }
+	public List selectAllList() {
+		List list = friendDao.selectAllList();
+		return null;
+	}
+
+   
 }
 
 
 
+ 

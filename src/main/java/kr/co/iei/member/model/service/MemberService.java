@@ -5,16 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.MemberListData;
+import kr.co.iei.member.model.dto.Title;
 
 @Service
 public class MemberService {
 	@Autowired
 	private MemberDao memberDao;
-
+	@Autowired ProductDao productDao;
 	
 	public MemberListData selectAllMember(int reqPage) {
 		int numPerPage = 5;
@@ -130,9 +132,38 @@ public class MemberService {
 	}
 
 
-	public List getTitle(Member member) {
-		List title = memberDao.title(member);
+	public Title getTitle(Member member) {
+		List board = memberDao.board(member);
+		List photo = memberDao.photo(member);
+		
+		Title title = new Title();
+		title.setBoard(board);
+		title.setPhoto(photo);
 		return title;
+	}
+
+	@Transactional
+	public int updateProfile(Member member) {
+		int result = memberDao.updateProfile(member);
+		return result;
+	}
+
+
+	public Member selectFriendPage(Member m) {
+		Member friendMember = memberDao.selectFriendPage(m);
+		return friendMember;
+	}
+
+
+	public int joinProduct(Member m) {
+//		Member listNum = memberDao.selectMemberNo(m);
+		Member member = memberDao.selectOneMember(m);
+		int num = member.getMemberNo();
+		/*회원가입 끝나면 기본 배경, 커서 강제 주입*/
+		int b = productDao.joinProductB(num);
+		int c = productDao.joinProductC(num);
+		int f =  productDao.joinProductF(num);
+		return 0;
 	}
 
 

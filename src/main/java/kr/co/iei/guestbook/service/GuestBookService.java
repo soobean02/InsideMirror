@@ -31,7 +31,6 @@ public class GuestBookService {
 		int result = guestBookDao.deleteComment(gb);
 		return result;
 	}
-	@Transactional
 	public List<GuestBook> getAllComments() {
 		return guestBookDao.getAllComments();
     }
