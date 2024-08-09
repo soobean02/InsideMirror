@@ -16,10 +16,15 @@ public class PhotoController {
 	@Autowired
 	private PhotoService photoService;
 
-	@GetMapping(value="list")
+	@GetMapping(value="/list")
 	public String list(Model model){
 
-		return "/photo/list";
+		return "/photo/photoList";
+	}
+
+	@GetMapping(value="/writeFrm")
+	public String writeFrm(){
+		return "/photo/writeFrm";
 	}
 	@Value("${file.root}")
 	private String root;

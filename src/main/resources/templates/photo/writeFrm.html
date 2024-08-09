@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>minihomepage</title>
+
+<style>
+    .board-wrap{
+        width: 100%;
+        height: 700px;
+        font-size: 18px;
+        /* background-color: #92a2ff; */
+    }
+
+    ul{
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+    }
+    a{
+        text-decoration: none;
+        color: black;
+    }
+
+    .left{
+        float: left;
+    }
+    .right{
+        float: right;
+    }
+
+    .photo-wrap{
+        overflow: hidden;
+    }
+
+    .photo-header{
+        width: 100%;
+        height: 40px;
+        margin-top: 15px;
+    }
+
+    .photo-title{
+        width: 70%;
+        height: 40px;
+    }
+    .photo-title>input{
+        width: 90%;
+        height: 30px;
+        border: none;
+        border-bottom: 1px solid black;
+        padding-left: 5px;
+        outline: none;
+        font-size: 18px;
+    }
+
+    .photo-file{
+        width: 30%;
+        height: 40px;
+    }
+
+
+    .photo-submit{
+        width: 100%;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+    }
+
+
+    .photo-content{
+        width: 100%;
+        max-height: 1000px;
+    }
+    
+    .photo-content>#img-view{
+        width: auto;
+        height: auto;
+        overflow: auto;
+    }
+
+</style>
+
+</head>
+<body>
+
+    <th:block th:include="common/top"></th:block>
+    <div class="box-title">사진첩 ></div>
+    
+    <div class="photo-wrap">
+
+        <div class="photo-header">
+            <form action="/photo/write" method="post" enctype="multipart/form-data">
+                
+                <div class="photo-title left">
+                    <input type="text" name="photoTitle" placeholder="사진첩 제목을 입력해주세요!" id="photoTitle">
+                </div>
+
+                
+                <div class="photo-file left">
+                    <input type="file" name="upfile" accept=".jpg,.png,.jpeg" onchange="loadImg(this)">
+                </div>
+                
+                <div class="photo-submit left">
+                    <button type="submit">사진첩 작성</button>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="photo-content">
+            <img id="img-view">
+        </div>
+
+    </div>
+
+
+    <th:block th:include="common/bottom"></th:block>
+
+
+    <script>
+
+
+        $("#photoTitle").on("keydown",function(e){
+            const enter = e.key;
+            if(enter === "Enter"){
+                event.preventDefault();
+            }
+        });
+
+        function loadImg(obj){
+
+			if(obj.files.length != 0 && obj.files[0] != 0){
+				const reader = new FileReader(); 
+				reader.readAsDataURL(obj.files[0]);
+				reader.onload = function(e){
+					$("#img-view").attr("src",e.target.result);
+				}
+			}//if
+			else{
+				$("#img-view").attr("src","");
+			}//else
+		}//    파일불러오기
+
+
+    </script>
+
+</body>
+</html>
