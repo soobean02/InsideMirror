@@ -29,8 +29,9 @@ public class TitleRowMapper implements RowMapper<Title>{
 		b.setMemberNo(rs.getInt("member_no"));
 				
 		Title title = new Title();
-		title.setBoard(b);
-		title.setPhoto(p);
+		/*
+		 * title.setBoard(b); title.setPhoto(p);
+		 */
 		
 		return title;
 	}

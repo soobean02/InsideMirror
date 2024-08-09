@@ -44,7 +44,7 @@
 				<div class="box profile-box">
 					<form action="/member/memberPage" method="post" enctype="multipart/form-data">
 					<div class="profile-image">
-						<img class="profile-image-img" src="/image/cyworld1.png" alt="프로필 이미지">
+						<img class="profile-image-img" th:src="@{/member/}+${session.member.profilePhoto}" alt="프로필 이미지">
 					</div>
 					</form>
 					<div class="profile-text">

@@ -153,11 +153,14 @@ public class MemberController {
 	public String updateProfile(MultipartFile profilePhoto, @SessionAttribute(required=false) Member member, Model model ) {
 		String savePath = root+"/member/";
 		String filePath = fileUtils.upload(savePath, profilePhoto);
+		
 		member.setProfilePhoto(filePath);
+		model.addAttribute("member", member);
 		
 		
 		int result = memberService.updateProfile(member);
 		if(result>0) {
+			member.setProfilePhoto(filePath);
 			model.addAttribute("title", "변경 완료!");
 			model.addAttribute("msg","프로필 변경되었습니다.");
 			model.addAttribute("icon","success");
