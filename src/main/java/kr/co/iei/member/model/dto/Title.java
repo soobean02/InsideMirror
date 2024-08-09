@@ -1,5 +1,7 @@
 package kr.co.iei.member.model.dto;
 
+import java.util.List;
+
 import kr.co.iei.board.model.dto.Board;
 import kr.co.iei.photo.model.dto.Photo;
 import lombok.AllArgsConstructor;
@@ -10,6 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class Title {
-	private Photo photo;
-	private Board board;
+	private List<Photo> photo;
+	private List<Board> board;
 }

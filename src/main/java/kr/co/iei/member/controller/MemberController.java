@@ -1,5 +1,6 @@
 package kr.co.iei.member.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
@@ -10,8 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
 import kr.co.iei.member.model.dto.Member;
@@ -38,14 +42,15 @@ public class MemberController {
 		return "member/login";
 	}
 	@PostMapping(value="/loginin")
-	public String login(Member m, HttpSession session) {
+	public String login(Member m, HttpSession session, Model model) {
 		Member member = memberService.selectOneMember(m);
 		if(member == null) {
 			return "member/login";
 		}else {
 			if(member.getMemberLevel() == 2) {
 				session.setAttribute("member", member);
-				return "member/memberPage";
+				model.addAttribute("member", member);
+				return "redirect:/member/memberPage";
 			}else if(member.getMemberLevel() == 1) {
 				session.setAttribute("member", member);
 				return "redirect:/admin/adminHome";
@@ -68,14 +73,14 @@ public class MemberController {
 	}
 	@GetMapping(value="/search")
 	public String search(String findFriend, Model model) {
-		System.out.println(findFriend);
 		if(findFriend.equals("")) {
-			System.out.println(findFriend);
+		
 			
 			model.addAttribute("title","검색을 입력해주세요");
 			model.addAttribute("icon", "error");
 		}else {
 			List memberList = memberService.findMember(findFriend);
+			
 			model.addAttribute("memberList", memberList);
 			return "/common/searchlist";				
 		}
@@ -135,12 +140,43 @@ public class MemberController {
 	@GetMapping(value="/memberPage")
 	public String memberPage(@SessionAttribute(required=false) Member member,Model model) {
 		Member m = member;
-		List getTitle = memberService.getTitle(member);
+		Title getTitle = memberService.getTitle(member);
 		model.addAttribute("member",m);
-		model.addAttribute("getTitle",getTitle);
+		model.addAttribute("board",getTitle.getBoard());
+		model.addAttribute("photo",getTitle.getPhoto());
+		System.out.println(getTitle);
+		
 		return "member/memberPage";
 	}
 	
+	@PostMapping(value="/profile")
+	public String updateProfile(MultipartFile profilePhoto, @SessionAttribute(required=false) Member member, Model model ) {
+		String savePath = root+"/member/";
+		String filePath = fileUtils.upload(savePath, profilePhoto);
+		member.setProfilePhoto(filePath);
+		
+		
+		int result = memberService.updateProfile(member);
+		if(result>0) {
+			model.addAttribute("title", "변경 완료!");
+			model.addAttribute("msg","프로필 변경되었습니다.");
+			model.addAttribute("icon","success");
+		}else {
+			model.addAttribute("title", "변경 실패ㅠㅠ");
+			model.addAttribute("msg","다시 시도해 주세요.");
+			model.addAttribute("icon","error");
+		}
+		model.addAttribute("loc","/member/memberPage");
+		return "common/msg";
+	}
+	
+	@GetMapping(value="/friendPage")
+	public String selectFriendPage(Member m, Model model) {
+		Member member = memberService.selectFriendPage(m);
+		model.addAttribute("friendMember", member);
+		return "/member/friendPage";
+		
+	}
 	@ResponseBody
 	@GetMapping(value="/ajaxCheckNickname")
 	public int ajaxCheckNickname(String memberNickName) {
@@ -156,7 +192,7 @@ public class MemberController {
 	@PostMapping(value="/sendCode")
 	public String sendCode(String receiver) {
 		String emailTitle = "InsideMirror 인증메일 입니다.";
-		System.out.println(receiver);
+		
 		Random r = new Random();
 		StringBuffer sb = new StringBuffer();
 		for(int i=0;i<6;i++) {

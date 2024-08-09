@@ -39,27 +39,16 @@
 	<th:block th:include="/common/header"></th:block>
 		<main>
 			<section>
-				<div class="profile-row" th:each="p: ${memberList}">
+				<div class="profile-row" th:each="friendMember: ${memberList}">
+					<a th:href="@{/member/friendPage(memberNo=${friendMember.memberNo})}">
 					<div class="profile">
-					<p th:text="${p.memberName}"></p>
-					<p th:text="${p.profilePhoto}"></p>
-					<p th:text="${p.totalCount}"></p>					
+					<p th:text="${friendMember.memberName}"></p>
+					<p th:text="${friendMember.profilePhoto}"></p>
+					<p th:text="${friendMember.totalCount}"></p>
 					</div>
+					</a>					
 				</div>
-				<div class="profile-row" th:each="p: ${memberList}">
-					<div class="profile">
-					<p th:text="${p.memberName}"></p>
-					<p th:text="${p.profilePhoto}"></p>
-					<p th:text="${p.totalCount}"></p>					
-					</div>
-				</div>
-				<div class="profile-row" th:each="p: ${memberList}">
-					<div class="profile">
-					<p th:text="${p.memberName}"></p>
-					<p th:text="${p.profilePhoto}"></p>
-					<p th:text="${p.totalCount}"></p>					
-					</div>
-				</div>
+				
 			</section>
 		</main>
 	<th:block th:include="/common/footer"></th:block>
