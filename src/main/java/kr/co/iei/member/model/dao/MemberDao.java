@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.MemberRowMapper;
+import kr.co.iei.member.model.dto.Title;
 import kr.co.iei.member.model.dto.TitleRowMapper;
 
 @Repository
@@ -126,14 +127,14 @@ public class MemberDao {
 
 
 	public List title(Member member) {
-		String query = "select p.photo_title, b.board_title"
+		String query = "select *"
 				+ "from member m"
 				+ "left join photo p using(member_no)"
 				+ "left join board b using(member_no)"
 				+ "where member_no =? and rownum <=2"
 				+ "order by p.photo_date desc";
 		Object[] params = {member.getMemberNo()};
-		List title = jdbc.query(query, titleRowMapper, query);
+		List title = jdbc.query(query, titleRowMapper, params);
 		System.out.println(title);
 		if(title.isEmpty()) {
 			return null;			

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import jakarta.servlet.http.HttpSession;
 import kr.co.iei.member.model.dto.Member;
+import kr.co.iei.member.model.dto.Title;
 import kr.co.iei.member.model.service.MemberService;
 import kr.co.iei.utils.EmailSender;
 import kr.co.iei.utils.FileUtils;
@@ -44,7 +45,7 @@ public class MemberController {
 		}else {
 			if(member.getMemberLevel() == 2) {
 				session.setAttribute("member", member);
-				return "common/memberPage";
+				return "member/memberPage";
 			}else if(member.getMemberLevel() == 1) {
 				session.setAttribute("member", member);
 				return "redirect:/admin/adminHome";
