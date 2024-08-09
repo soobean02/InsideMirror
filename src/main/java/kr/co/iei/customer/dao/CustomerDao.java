@@ -71,13 +71,20 @@ public class CustomerDao {
 		Object[] params = {start,end};
 		List list = jdbc.query(query,customerRowMapper, params);
 		return list;
-	}//selectAdminCustomerLis
+	}//selectAdminCustomerList
 
 	public int selectAdminCustomerTotalCount() {
 		String query = "select count(*) from customer";
 		int totalCount = jdbc.queryForObject(query, Integer.class); // 이 쿼리문 실행해서 바로 Inter.class로 바로 꺼내줘
 		return totalCount;
 	}//selectAdminCustomerTotalCount
+
+	public int updateStatusReject(Customer c) {
+		String query = "update customer set status='반려' where inq_no=?";
+		Object[] params = {c.getInqNo()};
+		int result = jdbc.update(query, params);
+		return result;
+	}//updateStatusReject
 
 
 }

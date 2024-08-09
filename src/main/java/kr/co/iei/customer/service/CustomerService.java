@@ -181,4 +181,10 @@ public class CustomerService {
 		return cld;
 	}
 
+	@Transactional
+	public int updateStatusReject(Customer c) {
+		int result = customerDao.updateStatusReject(c);
+		return result;
+	}//updateStatusReject
+
 }

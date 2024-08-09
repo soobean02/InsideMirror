@@ -6,6 +6,13 @@
 <title>신고글 상세보기</title>
 </head>
 <style>
+:root {
+	--point_color: lightskyblue;
+	--btn_primary: skyblue;
+	--btn_secondary: #eee;
+	--table_line: #333;
+}
+
 .customerPage_tb {
 	background-color: lightblue;
 	width: 90%;
@@ -53,6 +60,36 @@
 	border-radius: 5px;
 	cursor: pointer;
 }
+
+.product-btn {
+	text-align: center;
+	margin-top: 20px;
+}
+
+.product-btn button {
+	background-color: var(--btn_primary);
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-weight: bold;
+	margin-right: 10px;
+}
+
+.product-btn button:hover {
+	background-color: var(--point_color);
+}
+
+.product-delete-btn {
+	background-color: #f44336;
+	color: white;
+    text-decoration: none;
+}
+
+.product-delete-btn:hover {
+	background-color: #d32f2f;
+}
 </style>
 <body>
 	<th:block th:include="common/top"></th:block>
@@ -60,46 +97,41 @@
 	<div class="box-title">고객 센터</div>
 	<div class="client_wrap">
 		<div class="customerPage_wrap">
-		
-		<form th:action="@{/report/updateStatus}" method="post">
-			<table class="customerPage_tb">
-				<tr>
-					<th>번호</th>
-					<td th:text="${customer.inqNo}"></td>
-					<th>상태</th>
-					<td th:text="${customer.status}" id="status">승인중</td>
-					<th>작성일</th>
-					<td th:text="${customer.inqDate}"></td>
-				</tr>
-				<tr>
-					<th colspan="2" class="cu_title">제목</th>
-					<td th:text="${customer.inqTitle}"></td>
-					<th>분류</th>
-					<th:block th:switch="${customer.customerList}">
-						<td th:case="1">환불</td>
-						<td th:case="2">기타</td>
-					</th:block>
-				</tr>
-			</table>
-			<div class="customerPage_content">
-				<div th:text="${customer.inqContent}"></div>
-			</div>
 
-				<div class="status">
-					<div class="profile-dropdown">
-						<div class="dropdown-button">
-							<div class="dropdown-title">승인 처리</div>
-							<div class="triangle-down"></div>
-						</div>
-						<div class="dropdown-content">
-						<input type="hidden" name="inqNo" th:value="${customer.inqNo}">
-							<a href="#" id="approval"><button type="submit">승인</button></a> <a
-								href="#" id="reject"><button type="submit">반려</button></a>
-						</div>
-					</div>
+			<form action="/report/updateStatus" method="post">
+				<table class="customerPage_tb">
+					<tr>
+						<th>번호</th>
+						<td th:text="${customer.inqNo}"></td>
+						<th>상태</th>
+						<td th:text="${customer.status}" id="status">승인중</td>
+						<th>작성일</th>
+						<td th:text="${customer.inqDate}"></td>
+					</tr>
+					<tr>
+						<th colspan="2" class="cu_title">제목</th>
+						<td th:text="${customer.inqTitle}"></td>
+						<th>분류</th>
+						<th:block th:switch="${customer.customerList}">
+							<td th:case="1">환불</td>
+							<td th:case="2">기타</td>
+						</th:block>
+					</tr>
+				</table>
+				<div class="customerPage_content">
+					<div th:text="${customer.inqContent}"></div>
+				</div>
+
+				<div class="product-btn">
+					<input type="hidden" name="inqNo" th:value="${customer.inqNo}">
+					<button type="submit" id="approval" class="product-add-btn">승인</button>
+					<a th:href="@{/report/updateStatusReject(inqNo=${customer.inqNo})}">
+					<button type="button" id="reject" class="product-delete-btn">반려</button>
+					</a>
 				</div>
 			</form>
 		</div>
+
 	</div>
 
 
