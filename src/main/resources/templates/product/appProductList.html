@@ -109,12 +109,11 @@ input[name=product]:checked+label {
 						</div>
 					</div>
 					<h3 th:text="${sp.sellProduct.productName}"></h3>
-					<button><a th:href="@{/product/canProduct(productNo=${sp.buyProduct.productNo},all=0)}">적용 취소</a></button>
+					<button><a th:href="@{/product/canProduct(productNo=${sp.buyProduct.productNo},productListNo=${sp.sellProduct.productListNo},all=0)}">적용 취소</a></button>
 					<h4>구입일 : <th:block th:text="${sp.buyProduct.buyDate}"></th:block></h4>
 				</div>
 			</th:block>
 		</div>
-
 	</div>
 	<!--끝-->
 	<th:block th:include="common/bottom"></th:block>
@@ -125,6 +124,12 @@ input[name=product]:checked+label {
 		$("#product_ok").on("click", function() {
 			$(".form_radio").submit();
 		});
+		/*
+		$(function(){
+			$("body").css("background-color","blue");
+			$(".bookcover").css("background-color","");
+		});
+		*/
 	</script>
 </body>
 

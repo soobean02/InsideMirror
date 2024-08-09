@@ -254,9 +254,9 @@ public class ProductDao {
 	}
 
 	// 상품 적용하기 전에 기존 상품 초기화
-	public int updateZeroProduct(Member member, int productListNo) {
+	public int updateZeroProduct(Member member, int productListNo, int num) {
 		String query = "update (select * from buy_product join sell_product using(product_no)) set use_product=? where member_no=? and product_list_no=?";
-		Object[] params = {0,member.getMemberNo(), productListNo};
+		Object[] params = {num,member.getMemberNo(), productListNo};
 		int result = jdbc.update(query, params);
 		return result;
 	}
