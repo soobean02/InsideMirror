@@ -85,7 +85,7 @@ a {
 }
 
 .product_list_box>a {
-	width: 100px;
+	width: 150px;
 	border: 1px solid #eee;
 	border-radius: 5px;
 	float: left;
@@ -96,10 +96,11 @@ a {
 /*--------------------------------------------*/
 .client_btn {
 	margin-top: 10px;
-	padding: 20px;
+	padding: 15px;
 }
 
 .client_btn>a {
+
 	background-color: skyblue;
 	border: none;
 	font-weight: bold;
@@ -138,8 +139,10 @@ a {
 				</a>
 			</th:block>
 		</div>
-		<div id="pageNavi" th:utext="${pageNavi}"></div>
+		
 	</div>
+	
+	<div id="pageNavi" th:utext="${pageNavi}"></div>
 
 	<th:block th:include="common/adminBottom"></th:block>
 	</div>
