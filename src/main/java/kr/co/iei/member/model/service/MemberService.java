@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.MemberListData;
 import kr.co.iei.member.model.dto.Title;
+import kr.co.iei.product.dao.ProductDao;
 
 @Service
 public class MemberService {
