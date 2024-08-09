@@ -424,9 +424,17 @@ public class ProductService {
 	}
 
 	// 모두 초기화
+	@Transactional
 	public int updateZeroProduct(Member member) {
-//		int result = productDao.updateAllZeroProduct(member);
-		return 0;
+		// 지금 적용 중인 상품 모두 0으로
+		int result = productDao.updateAllZeroProduct(member);
+		if(result > 0) {
+			// 기본 배경, 커서, 폰트 지정
+			int r = productDao.updateProductB(member); // 기본 배경
+			int c = productDao.updateProductC(member); // 기본 배경
+			int f = productDao.updateProductF(member); // 기본 배경
+		}
+		return result;
 	}
 	
 	// 하나만 초기화

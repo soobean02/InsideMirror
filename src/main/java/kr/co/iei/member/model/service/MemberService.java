@@ -154,7 +154,7 @@ public class MemberService {
 		return friendMember;
 	}
 
-
+	@Transactional
 	public int joinProduct(Member m) {
 //		Member listNum = memberDao.selectMemberNo(m);
 		Member member = memberDao.selectOneMember(m);

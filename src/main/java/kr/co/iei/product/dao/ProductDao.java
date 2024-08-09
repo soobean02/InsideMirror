@@ -269,5 +269,32 @@ public class ProductDao {
 		return result;
 	}
 
+	// 상품 전체 초기화
+	public int updateAllZeroProduct(Member member) {
+		String query = "update (select * from buy_product join sell_product using(product_no)) set use_product=0 where member_no=?";
+		Object[] params = {member.getMemberNo()};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+
+	// 기본 배경으로 초기화
+	public int updateProductB(Member member) {
+		String query = "update (select * from buy_product join sell_product using(product_no)) set use_product=1 where member_no=? and product_no=41";
+		Object[] params = {member.getMemberNo()};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+	public int updateProductC(Member member) {
+		String query = "update (select * from buy_product join sell_product using(product_no)) set use_product=1 where member_no=? and product_no=43";
+		Object[] params = {member.getMemberNo()};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+	public int updateProductF(Member member) {
+		String query = "update (select * from buy_product join sell_product using(product_no)) set use_product=1 where member_no=? and product_no=42";
+		Object[] params = {member.getMemberNo()};
+		int result = jdbc.update(query, params);
+		return result;
+	}
 
 }
