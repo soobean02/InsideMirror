@@ -45,7 +45,7 @@ public class MemberController {
 		}else {
 			if(member.getMemberLevel() == 2) {
 				session.setAttribute("member", member);
-				return "member/memberPage";
+				return "common/minihomepage";
 			}else if(member.getMemberLevel() == 1) {
 				session.setAttribute("member", member);
 				return "redirect:/admin/adminHome";
