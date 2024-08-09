@@ -103,9 +103,14 @@
         width: 0px;
         height: 0px;
     }
+    .post-li{
+        border-bottom: 1px solid #ccc;
+    }
     
     .post-title{
         width: 50%;
+        height: 50px;
+        line-height: 50px;
     }
 
     .post-sub-info{
@@ -113,6 +118,9 @@
         text-align: right;
         padding-right: 10px;
         box-sizing: border-box;
+        display: flex;
+        justify-content: right;
+        align-items: center;
     }
 
     .post-info{
@@ -121,13 +129,17 @@
 
     .post-sub-info>.push-tag{
         font-size: 30px;
-    }
-
-    .like{
         cursor: pointer;
     }
+
+
     .bookmark{
         margin-right: 10px;
+    }
+
+    .like-count{
+        font-size: 18px;
+        line-height: 50px;
     }
 
 </style>
@@ -182,6 +194,8 @@
             }
         });  
 
+        const memberNo = [[${session.member.memberNo}]];
+
         getMore();
         function getMore(){
             const amount = 4;
@@ -191,7 +205,6 @@
                 data : {start : start, amount : amount},
                 success : function(data){
                     for(let i = 0; i < data.length; i++){
-
                         const p = data[i];
                         const li = $("<li>");
     
@@ -209,21 +222,26 @@
                         
                         const subInfoDiv = $("<div>");
                         subInfoDiv.addClass("post-sub-info").addClass("left");
-                        subInfoDiv.append(`<span class="material-icons push-tag like" onclick="likePush(this,[[${session.member.memberNo}]])">favorite_border</span>`);
-                        subInfoDiv.append(`<span class="material-icons push-tag bookmark" onclick="bookMark(this,[[${session.member.memberNo}]])">bookmark_border</span>`);
+                        subInfoDiv.append(`<span class="material-icons push-tag temp-like-tag like" onclick="likePush(this, ${memberNo}, ${p.photoNo})">favorite_border</span>`);
+                        subInfoDiv.append(`<span class="like-count">${p.likeCount}</span>`);
+                        subInfoDiv.append(`<span class="material-icons push-tag temp-bookmark-tag bookmark" onclick="pushBookmark(this, ${memberNo}, ${p.photoNo})">bookmark_border</span>`);
                         
                         const img = $("<img>");
                         img.attr("src","/photo/"+p.photoContent);
                         
                         imgDiv.append(img);
                         
-    
+                        
                         infoDiv.append(titleDiv).append(subInfoDiv);
-    
+
                         li.append(infoDiv).append(imgDiv);
-    
+                        
                         $(".photo-content").append(li);
-                        likeSetting();
+
+                        const like = $(".temp-like-tag");
+                        likeSetting(p.isLike, like);
+                        const bookmark = $(".temp-bookmark-tag");
+                        bookmarkSetting(p.isBookmark, bookmark);
                     }
 
                     start += amount;
@@ -239,12 +257,80 @@
             });
         }
 
-        function likeSetting(obj){
-
+        function likeSetting(isLike, obj){
+            //기본에 무조건 border로 되어있기때문에
+            //isLike로 체크 후 바꿔주기
+            if(isLike == 0){
+                //좋아요 누를 수 있는 상태
+                obj.text("favorite_border")
+            }
+            else{
+                //좋아요 취소 누를 수 있는 상태
+                obj.text("favorite")
+            }
+            $(obj).removeClass("temp-like-tag");
         }
         
-        function likePush(obj, memberNo){
+        
 
+        function likePush(obj, memberNo, photoNo){
+            const text = $(obj).text();
+            //좋아요 누르면0 취소면 1
+            const isLike = (text == "favorite_border") ? 0 : 1;
+            
+            $.ajax({
+                url : "/photo/like",
+                type : "post",
+                data : {isLike : isLike , photoNo : photoNo},
+                success : function(data){
+                    if(data == -1){
+                        alert("로그인 후 이용 가능합니다.");
+                    }
+                    else if(data == 1){
+                        if(isLike == 0) $(obj).text("favorite");
+                        else $(obj).text("favorite_border");
+                    }
+                    else if(data == 0){
+                        alert("실패")
+                    }
+                },
+                error : function(){
+                    console.log("error");
+                }
+            });
+        }
+
+        function bookmarkSetting(isBookmark, obj){
+            if(isBookmark == 0){
+                obj.text("bookmark_border")
+            }
+            else{
+                obj.text("bookmark")
+            }
+            $(obj).removeClass("temp-bookmark-tag");
+        }
+
+        function pushBookmark(obj, memberNo, photoNo){
+            const textBookMark = $(obj).text();
+            const isBookMark = (textBookMark == "bookmark_border") ? 0 : 1;
+            $.ajax({
+                url : "/photo/bookmark",
+                type : "post",
+                data : {isBookmark : isBookMark, photoNo : photoNo},
+                // 키값이랑 밸류값 다름 m , M
+                success : function(data){
+                    if(data == -1){
+                        alert("로그인 후 이용가능합니다.");
+                    }
+                    else if(data == 1){
+                        if(isBookMark == 0) $(obj).text("bookmark");
+                        else $(obj).text("bookmark_border");
+                    }
+                },
+                error : function(){
+                    console.log("error");
+                }
+            })
         }
 
     </script>

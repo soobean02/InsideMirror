@@ -160,4 +160,5 @@ public class MemberDao {
 		List photo = jdbc.query(query, photoRowMapper, params);
 		return photo;
 	}
+
 }

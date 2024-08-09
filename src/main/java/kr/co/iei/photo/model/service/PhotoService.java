@@ -31,4 +31,31 @@ public class PhotoService {
 		List photoList = photoDao.selectPhotoList(start, end, member);
 		return photoList;
 	}
+
+	@Transactional
+	public int pushLike(int isLike, int photoNo, Member member) {
+		int result = 0;
+		if(isLike == 0){
+			//좋아요 누른 경우
+			result = photoDao.pushLike(photoNo, member);
+		}
+		else{
+			//취소
+			result = photoDao.deleteLike(photoNo, member);
+		}
+		return result;
+	}
+
+	@Transactional
+	public int pushBookmark(int isBookmark, int photoNo, Member member) {
+		int result = 0;
+		String boardNo = null;
+		if(isBookmark == 0){
+			result = photoDao.pushBookmark(photoNo, boardNo, member);
+		}
+		else{
+			result = photoDao.deleteBookmark(photoNo, member);
+		}
+		return result;
+	}
 }

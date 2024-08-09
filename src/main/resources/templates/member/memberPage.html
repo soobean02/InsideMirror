@@ -76,7 +76,7 @@
 								<button type="button">일촌하기</button>
 							</div>
 							<div class="follow-btn">
-								<button type="button">일촌목록</button>
+								<button type="button" onclick ="addGuestbookEntry()">일촌목록</button>
 							</div>
 						</form>
 					</div>	
@@ -147,6 +147,10 @@
 					var maxHeight = textarea.clientHeight;
 					var scrollHeight = textarea.scrollHeight;
 
+					function.addGuestBookEntry(){
+						location.href="/friend/friendrequest";
+					}
+					
 					if (scrollHeight > maxHeight) {
 						// 문자 추가 방지
 						textarea.value = textarea.value.slice(0, textarea.value.length - 1);

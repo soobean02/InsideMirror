@@ -16,4 +16,5 @@ public class GuestBook {
 	private String guestCommentContent;
 	private Date guestCommentDate;
 	private int memberNo;
+	private int guestBookType;
 }

@@ -18,6 +18,16 @@ public class PhotoRowMapper implements RowMapper<Photo> {
 		p.setPhotoNo(rs.getInt("photo_no"));
 		p.setPhotoTitle(rs.getString("photo_title"));
 
+		try {
+			p.setIsLike(rs.getInt("is_like"));
+			p.setLikeCount(rs.getInt("like_count"));
+			p.setIsBookmark(rs.getInt("is_bookmark"));
+		} catch (Exception e) {
+			p.setIsLike(0);
+			p.setLikeCount(0);
+
+			p.setIsBookmark(0);
+		}
 
 		return p;
 	}
