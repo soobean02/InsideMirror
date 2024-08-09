@@ -29,14 +29,17 @@ public class GuestBookController {
 	}
 
     @PostMapping(value="/insertComment")
-    public String insertComment(
-        @RequestParam("guestWriterNo") int guestWriterNo, 
-        @RequestParam("guestCommentContent") String guestCommentContent,
-        Model model) {
-        
+    public String insertComment(int guestBookType,String guestbookInput,int memberNo,int guestWriterNo ,Model model) {
+    	//System.out.println(guestBookType);
+    	//System.out.println(guestWriterNo);
+    	//System.out.println(guestbookInput);
+    	//System.out.println(memberNo);
+
         GuestBook gb = new GuestBook();
+        gb.setGuestBookType(guestBookType);
         gb.setGuestWriterNo(guestWriterNo);
-        gb.setGuestCommentContent(guestCommentContent);
+        gb.setMemberNo(memberNo);
+        gb.setGuestCommentContent(guestbookInput);
         
         int result = guestBookService.insertComment(gb);
         if(result > 0) {
@@ -47,7 +50,12 @@ public class GuestBookController {
             model.addAttribute("title", "댓글 작성 실패");
             model.addAttribute("msg", "댓글 작성 중 문제가 발생했습니다.");
             model.addAttribute("icon", "warning");
+            model.addAttribute("loc", "/guest/guestbookList");
         }
+        
+        model.addAttribute("title", "댓글 작성");
+        model.addAttribute("msg", "댓글이 작성되었습니다.");
+        model.addAttribute("icon", "success");
         model.addAttribute("loc", "/guest/guestbookList");
         return "common/msg";
     }

@@ -173,7 +173,7 @@ public class BoardController {
 
 	@ResponseBody
 	@PostMapping(value="/comment")
-	public Map<String, Object> comment(BoardComment comment, Model model, @SessionAttribute Member member){
+	public Map<String, Object> comment(BoardComment comment, Model model, 	@SessionAttribute Member member){
 		int result = boardService.insertBoardComment(comment);
 		BoardComment oneComment = boardService.selectOneComment(comment);
 		Board board = new Board();
