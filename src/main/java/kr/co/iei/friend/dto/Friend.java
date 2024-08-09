@@ -12,4 +12,6 @@ public class Friend {
 	private int friendNo;
 	private int memberNo;
 	private int friendMemberNo;
+	
+	
 }

@@ -91,7 +91,7 @@ body {
     margin-top: 10px;
 }
 
-#guestbook-input {
+#guestbookInput {
     flex: 1;
     padding: 0px;
     border: 1px solid #ddd;
@@ -245,16 +245,19 @@ body {
                                         </div>
                                     </div>
                                 </div>
-                            <form action="insertComment" method="post">
+                            <form action="/guest/insertComment" method="post">
 	                            <div class="guest-check-box">
-	                                <input type="radio" name="guestbook-identity" id="anonymous" value="anonymous">
+	                                <input type="radio" name="guestBookType" id="anonymous" value="0">
 	                                <label for="anonymous">익명</label>
-	                                <input type="radio" name="guestbook-identity" id="nickname" value="nickname">
+	                                <input type="radio" name="guestBookType" id="nickname" value="1">
 	                                <label for="nickname">닉네임</label>
 	                            </div>
 	                            <div class="guestbook-writer">
-	                                <textarea id="guestbook-input" placeholder="댓글을 입력하세요"></textarea>
-	                                <input type="hidden" name="memberNickName" class="nickName"> <!-- 사용자의 ID를 동적으로 설정해야 함 -->
+									                          
+	                                <textarea id="guestbookInput" name="guestbookInput" placeholder="댓글을 입력하세요"></textarea>
+	                               	
+	                               <input type="hidden" name="memberNo" th:value="${session.member.memberNo}">
+	                               <input type="hidden" name="guestWriterNo" th:value="${session.member.memberNo}">
 	                                <button class="guestbook-button" onclick="addGuestbookEntry()">전송</button> 
 	                            </div>
                             </form>

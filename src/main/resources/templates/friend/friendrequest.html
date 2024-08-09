@@ -11,80 +11,68 @@
     <script src="/js/sweetalert.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <style>
-.content-menu ul{
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-    overflow: hidden;
-    }
-    .content-menu>ul{
-        background-color: transparent;
-        display: block;
-    }
-    .content-menu ul>li{
-        float: left;
-        width: 70px;   
-    }
-    
-    .content-menu ul>li>a{
-        display: block;
-        height: 30px;
-        line-height: 30px;
-        text-decoration: none;
-        font-size: 18px;
-        border: 1px solid #000;
-        border-top-right-radius: 10px;
-        border-top-left-radius: 10px;
-        cursor: pointer;
-    }
-    .content-menu>ul>li>a{
-        color: #092e20;
-    }
-    
-    .content-menu>ul>li>:hover>a{
-        font-weight: 900;
-        background-color: #3b87ab;
-    }
-.content-menu>ul>li:nth-child(odd){
-    background-color: #bfe6fa;
-}
- .material-icons {
-        float: left;
-        margin-top: 30px;
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-    	margin-left: 30px;    
-    }
-    .request {
-    float: left;
-    margin-top: 30px;
-    margin-left: 30px;
-    margin-bottom:20px;
-    
-    }
-    .btn-secondary{
-    float: right;
-    margin-top: 30px;
-    margin-right: 50px;
-    background-color: transparent;
-    border: 1px solid gray;
-    cursor: pointer;
-    }
-    .btn-primary{
-    float: right;
-    margin-top: 30px;
-    margin-right: 50px;
-    background-color: transparent;
-    border: 1px solid gray;
-    cursor: pointer;
-    }
-    .friend-request{
-    border-bottom: 1px solid #000;
-    }
-     .content-menu > ul > li > a:hover {
-        font-weight: 1000;
-    }
+        .content-menu {
+            margin-left: 120px;
+            padding: 0;
+            border-bottom: 1px solid black;
+            width: 60%;
+        }
+        .content-menu ul>li {
+            width: 70px;
+        }
+        .content-menu ul>li>a {
+            display: block;
+            height: 30px;
+            line-height: 30px;
+            text-decoration: none;
+            font-size: 18px;
+            border: 1px solid #000;
+            border-top-right-radius: 10px;
+            border-top-left-radius: 10px;
+            cursor: pointer;
+        }
+        .submit-btn {
+            width: 400px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        .material-icons {
+            float: right;
+            margin-top: 30px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            margin-left: 30px;
+        }
+        .request {
+            float: left;
+            margin-top: 30px;
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+        .btn-secondary {
+            float: right;
+            margin-top: 30px;
+            margin-right: 50px;
+            background-color: transparent;
+            border: 1px solid gray;
+            cursor: pointer;
+        }
+        .btn-primary {
+            float: right;
+            margin-top: 30px;
+            margin-right: 50px;
+            background-color: transparent;
+            border: 1px solid gray;
+            cursor: pointer;
+        }
+        .friend-request {
+            border-bottom: 1px solid #000;
+        }
+        .content-menu > ul > li > a:hover {
+            font-weight: 1000;
+        }
     </style>
 </head>
 <body>
@@ -93,11 +81,11 @@
             <div class="page">
                 <div class="profile-container">
                     <div class="header1 profile-title">TOTAL
-                        <span class="color-red">0</span>
+                        <span class="color-red"></span>
                     </div>
                     <div class="box profile-box">
                         <div class="profile-image">
-                            <img class="profile-image-img" src="/image/cyworld1.png">
+                            <img class="profile-image-img" src="/image/cyworld1.png" alt="Profile Image">
                         </div>
                         <div class="profile-text">ㄴr는.. 오늘도.. 눈물을.. 흘린ㄷr..★</div>
                         <div class="profile-username">
@@ -119,38 +107,24 @@
                 </div>
                 <div class="content-container">
                     <div class="header1 content-title">
-                        <div class="content-title-name">ㅁㅁㅁ님의 홈피</div>
+                        <div class="content-title-name">000님의 홈피</div>
                     </div>
                     <div class="box content-box">
-                        <div class="box-title">일촌관리 ></div>
+                        <div class="box-title">일촌목록 ></div>
                         <div class="content-menu">
-                            <ul>
-                                <li><a href="/friend/friendList">일촌목록</a></li>
-                                <li><a href=" ">일촌신청</a></li>
-                                <li><a href="/friend/neighborrequest">이웃신청</a></li>
-                            </ul>
+                            <button type="button" class="submit-btn">
+                                <span class="material-icons">search</span>
+                            </button>
                         </div>
                         <br>
-                        <div>내가 받은 일촌신청</div>
-                        <div class="friend-request">
-                         <button class="material-icons" data-url="#">home</button>
-                         <div class="request">000 님과 일촌 맺기를 하시겠습니까?</div>
-                         <button type="submit" class="btn-secondary">거절</button>
-                         <button type="submit" class="btn-primary">수락</button>
-                        </div>	
-                        
-                        <div class="friend-request">
-                         <button class="material-icons" data-url="#">home</button>
-                         <div class="request">000 님과 일촌 맺기를 하시겠습니까?</div>
-                         <button type="submit" class="btn-secondary">거절</button>
-                         <button type="submit" class="btn-primary">수락</button>
-                        </div>
-                        
-                        <div class="friend-request">
-                         <button class="material-icons" data-url="#">home</button>
-                         <div class="request">000 님과 일촌 맺기를 하시겠습니까?</div>
-                         <button type="submit" class="btn-secondary">거절</button>
-                         <button type="submit" class="btn-primary">수락</button>
+                        <div id="friend-list">
+                            <!-- This will be populated with friend requests -->
+                            <c:forEach items="${friendRequests}" var="friendRequest">
+                                <div class="friend-request">
+                                    <div class="request">이름 : 000</div>
+                                    <button type="button" class="btn-secondary" onclick="handleFriendRequest(${friendRequest.memberNo})">일촌하기</button>
+                                </div>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>
@@ -170,5 +144,24 @@
             </div>
         </div>
     </div>
+    <script>
+        function handleFriendRequest(memberNo) {
+           
+            fetch(`/friend/add?memberNo=${memberNo}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      alert('Friend request sent!');
+                      location.reload(); 
+                  } else {
+                      alert('Error processing friend request');
+                  }
+              });
+        }
+    </script>
 </body>
 </html>
