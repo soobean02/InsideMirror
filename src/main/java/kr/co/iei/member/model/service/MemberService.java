@@ -5,18 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.MemberListData;
 import kr.co.iei.member.model.dto.Title;
+import kr.co.iei.product.dao.ProductDao;
 
 @Service
 public class MemberService {
 	@Autowired
 	private MemberDao memberDao;
-
+	@Autowired ProductDao productDao;
 	
 	public MemberListData selectAllMember(int reqPage) {
 		int numPerPage = 5;
@@ -152,6 +152,18 @@ public class MemberService {
 	public Member selectFriendPage(Member m) {
 		Member friendMember = memberDao.selectFriendPage(m);
 		return friendMember;
+	}
+
+
+	public int joinProduct(Member m) {
+//		Member listNum = memberDao.selectMemberNo(m);
+		Member member = memberDao.selectOneMember(m);
+		int num = member.getMemberNo();
+		/*회원가입 끝나면 기본 배경, 커서 강제 주입*/
+		int b = productDao.joinProductB(num);
+		int c = productDao.joinProductC(num);
+		int f =  productDao.joinProductF(num);
+		return 0;
 	}
 
 

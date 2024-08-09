@@ -27,16 +27,21 @@ public class BoardRowMapper implements RowMapper<Board> {
 		b.setBoardContent(rs.getString("board_content"));
 		
 		
+		
 		try {
 			b.setBoardLike(rs.getInt("board_like"));
 			
-			b.setBoardWriter(rs.getString("board_writer_nickname"));
 			b.setIsLike(rs.getInt("is_like"));
 			b.setIsBookMark(rs.getInt("is_book_mark"));
 		} catch (Exception e) {
 			b.setIsLike(0);
 			b.setIsBookMark(0);
 			b.setBoardLike(0);
+		}
+
+		try {
+			b.setBoardWriter(rs.getString("board_writer_nickname"));
+		} catch (Exception e) {
 			b.setBoardWriter(null);
 		}
 		return b;

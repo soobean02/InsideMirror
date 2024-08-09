@@ -71,6 +71,31 @@ public class PhotoController {
 		return photoList;
 	}
 
+	@ResponseBody
+	@PostMapping(value="/like")
+	public int pushLike(int isLike, int photoNo, @SessionAttribute(required = false) Member member, Model model){
+		if(member == null){
+			return -1;
+		}
 
+		int result = photoService.pushLike(isLike, photoNo, member);
+		return result;
+	}
 
+	@ResponseBody
+	@PostMapping(value="/bookmark")
+	public int pushBookmark(int isBookmark, int photoNo, @SessionAttribute(required = false) Member member, Model model) {
+		if(member == null){
+			return -1;
+		}
+		System.out.println(isBookmark);
+		int result = photoService.pushBookmark(isBookmark, photoNo, member);
+		return result;
+	}
+	
+	
+	
+	
+	
+	
 }

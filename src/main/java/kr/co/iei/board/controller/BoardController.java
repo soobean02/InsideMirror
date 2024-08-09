@@ -47,7 +47,6 @@ public class BoardController {
 
 	@GetMapping(value="/writeFrm")
 	public String writeFrm(){
-		System.out.println("writewrite");
 		return "/board/writeFrm";
 		//파일 올릴 수 있게 해야함
 	}//글 작성
@@ -199,7 +198,6 @@ public class BoardController {
 	@ResponseBody
 	@PostMapping(value = "/removeComment")
 	public int removeComment(String boardCommentNo){
-		System.out.println("controller");
 		int result = boardService.removeBoardComment(boardCommentNo);
 		return result;
 	}//댓글 삭제
