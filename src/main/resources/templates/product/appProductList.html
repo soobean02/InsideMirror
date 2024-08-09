@@ -6,6 +6,12 @@
 <title>적용한 상품 목록</title>
 </head>
 <style>
+a{
+	text-decoration: none;
+	font-weight: bold;
+	color: #fff;
+}
+
 .box-title>div {
 	float: left;
 }
@@ -80,52 +86,33 @@ input[name=product]:checked+label {
 <body>
 	<th:block th:include="common/top"></th:block>
 	<!--시작-->
-		<div class="box-title">
+	<div class="box-title">
 		<div>적용한 상품 목록</div>
 		<form action="/product/buyProductList" class="form_radio" method="get">
-			<input type="radio" name="product" id="product_app" value="적용" checked>
-			<label for="product_app">적용한 상품</label>
-			<input type="radio" name="product" id="product_ok" value="구매">
-			<label for="product_ok">구매한 상품</label>
-			<input type="hidden" name="reqPage" value="1">
-			<input type="hidden" name="type" value="0">
+			<input type="radio" name="product" id="product_app" value="적용"
+				checked> <label for="product_app">적용한 상품</label> <input
+				type="radio" name="product" id="product_ok" value="구매"> <label
+				for="product_ok">구매한 상품</label> <input type="hidden" name="reqPage"
+				value="1"> <input type="hidden" name="type" value="0">
 		</form>
 	</div>
 	<div class="wrap">
 		<div class="reset_btn">
-			<button>전체 초기화</button>
+			<button><a href="/product/canProduct?all=1">전체 초기화</a></button>
 		</div>
 		<div class="app_product_wrap">
-			<div class="app_product_item">
-				<div class="product_box">
-					<div class="product_img">
-						<img src="/img/acorn.png" width="100px">
+			<th:block th:each="sp : ${sp}">
+				<div class="app_product_item">
+					<div class="product_box">
+						<div class="product_img">
+							<img th:src="@{'/product/editor/'+${sp.sellProduct.productImg}}" width="100px">
+						</div>
 					</div>
+					<h3 th:text="${sp.sellProduct.productName}"></h3>
+					<button><a th:href="@{/product/canProduct(productNo=${sp.buyProduct.productNo},all=0)}">적용 취소</a></button>
+					<h4>구입일 : <th:block th:text="${sp.buyProduct.buyDate}"></th:block></h4>
 				</div>
-				<h3>상품 이름</h3>
-				<button>적용 취소</button>
-				<h4>구입일 : 0000-00-00</h4>
-			</div>
-			<div class="app_product_item">
-				<div class="product_box">
-					<div class="product_img">
-						<img src="/img/acorn.png" width="100px">
-					</div>
-				</div>
-				<h3>상품 이름</h3>
-				<button>적용 취소</button>
-				<h4>구입일 : 0000-00-00</h4>
-			</div>
-			<div class="app_product_item">
-				<div class="product_box">
-					<div class="product_img">
-						<img src="/img/acorn.png" width="100px">
-					</div>
-				</div>
-				<h3>상품 이름</h3>
-				<button>적용 취소</button>
-				<h4>구입일 : 0000-00-00</h4>
-			</div>
+			</th:block>
 		</div>
 
 	</div>
@@ -134,10 +121,10 @@ input[name=product]:checked+label {
 	</div>
 	</div>
 	</div>
-		<script>
-    	$("#product_ok").on("click",function(){
-    		$(".form_radio").submit();
-    	});
+	<script>
+		$("#product_ok").on("click", function() {
+			$(".form_radio").submit();
+		});
 	</script>
 </body>
 

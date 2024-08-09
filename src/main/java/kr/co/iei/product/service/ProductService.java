@@ -405,10 +405,18 @@ public class ProductService {
 		return threeProductList;
 	}//selectThreeProduce
 
+	// 사용중인 상품 출력
 	public List selectUseProductInfo(Member member) {
 		List list = productDao.selectUseProductInfo(member);
 		return list;
 	}
+
+//	public BuyProduct selectUseBuyProduct(Member member) {
+//		// 사용 중인 상품의 모든 정보 조회
+//		List list = productDao.selectUseBuyProduct(member);
+//		System.out.println(list);
+//		return null;
+//	}
 
 
 }

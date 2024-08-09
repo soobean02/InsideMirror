@@ -129,11 +129,25 @@ public class ProductController {
 		return "/product/buyProductPage";
 	}
 	
+	// 적용 중인 상품 조회 => use_product = 1 인 것 
 	@GetMapping(value="/appProductList")
 	public String appProductList(Model model, String product, @SessionAttribute Member member) {
+//		BuyProduct bp = productService.selectUseBuyProduct(member);
 		List sp = productService.selectUseProductInfo(member);
-		model.addAttribute("sp");
+		model.addAttribute("sp",sp);
 		model.addAttribute("product", product);
 		return "/product/appProductList";
+	}
+	
+	// 상품 초기화
+	@GetMapping(value="/canProduct")
+	public String canProduct(Model model, int productNo, int all) {
+		// 전체 초기화
+		if(all == 1) {
+			
+		}else { // 일부 초기화
+			
+		}
+		return "/common/msg"; // 상품 초기화 시 -> 메세지 띄우기
 	}
 }
