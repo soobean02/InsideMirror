@@ -145,10 +145,27 @@ public class ProductController {
 		// 전체 초기화
 		if(all == 1) {
 			int result = productService.updateZeroProduct(member);
+			if(result > 0) {
+				return "redirect:/product/appProductList";
+			}else {
+				model.addAttribute("title", "실패");
+				model.addAttribute("msg", "초기화 실패");
+				model.addAttribute("icon", "error");
+				model.addAttribute("loc", "/product/appProductList");
+				return "common/msg";
+			}
 		}else { // 일부 초기화
 			int result = productService.updateOneZeroProduct(member, productNo, productListNo);
+			if(result > 0) {
+				return "redirect:/product/appProductList";
+			}else {
+				model.addAttribute("title", "실패");
+				model.addAttribute("msg", "초기화 실패");
+				model.addAttribute("icon", "error");
+				model.addAttribute("loc", "/product/appProductList");
+				return "common/msg";
+			}
 		}
-		return "/common/msg"; // 상품 초기화 시 -> 메세지 띄우기
 	}
 	// 상품 적용하기
 	@GetMapping(value="/useP")
