@@ -44,7 +44,7 @@ input[name=product]:checked+label {
 	padding: 20px;
 }
 
-.reset_btn>button {
+.reset_btn button {
 	border: none;
 	background-color: skyblue;
 	padding: 5px 15px 5px 15px;
@@ -63,7 +63,7 @@ input[name=product]:checked+label {
 	padding: 0;
 }
 
-.app_product_item>button {
+.app_product_item button {
 	border: none;
 	background-color: skyblue;
 	padding: 5px 15px 5px 15px;
@@ -98,7 +98,8 @@ input[name=product]:checked+label {
 	</div>
 	<div class="wrap">
 		<div class="reset_btn">
-			<button><a href="/product/canProduct?all=1">전체 초기화</a></button>
+			<a th:href="@{/product/canProduct(productNo=0,productListNo=0,all=1)}"><button>전체 초기화</button></a>
+			<!-- <a href="/product/canProduct?all=1"><button>전체 초기화</button></a> -->
 		</div>
 		<div class="app_product_wrap">
 			<th:block th:each="sp : ${sp}">
@@ -109,7 +110,7 @@ input[name=product]:checked+label {
 						</div>
 					</div>
 					<h3 th:text="${sp.sellProduct.productName}"></h3>
-					<button><a th:href="@{/product/canProduct(productNo=${sp.buyProduct.productNo},productListNo=${sp.sellProduct.productListNo},all=0)}">적용 취소</a></button>
+					<a th:href="@{/product/canProduct(productNo=${sp.buyProduct.productNo},productListNo=${sp.sellProduct.productListNo},all=0)}"><button>적용 취소</button></a>
 					<h4>구입일 : <th:block th:text="${sp.buyProduct.buyDate}"></th:block></h4>
 				</div>
 			</th:block>
@@ -124,6 +125,7 @@ input[name=product]:checked+label {
 		$("#product_ok").on("click", function() {
 			$(".form_radio").submit();
 		});
+		
 		/*
 		$(function(){
 			$("body").css("background-color","blue");

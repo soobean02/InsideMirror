@@ -276,23 +276,31 @@ public class ProductDao {
 		int result = jdbc.update(query, params);
 		return result;
 	}
+	
+	// 상품 하나만 초기화
+	public int updateOneZeroProduct(Member member, int productListNo) {
+		String query = "update (select * from buy_product join sell_product using(product_no)) set use_product=0 where member_no=? and product_list_no=?";
+		Object[] params = {member.getMemberNo(),productListNo};
+		int result = jdbc.update(query, params);
+		return result;
+	}
 
 	// 기본 배경으로 초기화
-	public int updateProductB(Member member) {
-		String query = "update (select * from buy_product join sell_product using(product_no)) set use_product=1 where member_no=? and product_no=41";
-		Object[] params = {member.getMemberNo()};
+	public int updateProductB(Member member, int productNo) {
+		String query = "update (select * from buy_product join sell_product using(product_no)) set use_product=1 where member_no=? and product_no=?";
+		Object[] params = {member.getMemberNo(), productNo};
 		int result = jdbc.update(query, params);
 		return result;
 	}
-	public int updateProductC(Member member) {
-		String query = "update (select * from buy_product join sell_product using(product_no)) set use_product=1 where member_no=? and product_no=43";
-		Object[] params = {member.getMemberNo()};
+	public int updateProductC(Member member, int productNo) {
+		String query = "update (select * from buy_product join sell_product using(product_no)) set use_product=1 where member_no=? and product_no=?";
+		Object[] params = {member.getMemberNo(), productNo};
 		int result = jdbc.update(query, params);
 		return result;
 	}
-	public int updateProductF(Member member) {
-		String query = "update (select * from buy_product join sell_product using(product_no)) set use_product=1 where member_no=? and product_no=42";
-		Object[] params = {member.getMemberNo()};
+	public int updateProductF(Member member, int productNo) {
+		String query = "update (select * from buy_product join sell_product using(product_no)) set use_product=1 where member_no=? and product_no=?";
+		Object[] params = {member.getMemberNo(), productNo};
 		int result = jdbc.update(query, params);
 		return result;
 	}

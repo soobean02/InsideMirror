@@ -430,17 +430,38 @@ public class ProductService {
 		int result = productDao.updateAllZeroProduct(member);
 		if(result > 0) {
 			// 기본 배경, 커서, 폰트 지정
-			int r = productDao.updateProductB(member); // 기본 배경
-			int c = productDao.updateProductC(member); // 기본 배경
-			int f = productDao.updateProductF(member); // 기본 배경
+			int r = productDao.updateProductB(member, 41); // 기본 배경
+			int c = productDao.updateProductC(member, 43); // 기본 커서
+			int f = productDao.updateProductF(member, 42); // 기본 폰트
+			if(r > 0 && c > 0 && f>0) {
+				return result;
+			}else {
+				return 0;
+			}
+		}else {
+			return 0;
 		}
-		return result;
 	}
 	
 	// 하나만 초기화
+	@Transactional
 	public int updateOneZeroProduct(Member member, int productNo, int productListNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int r,c,f = 0;
+		// 누른 상품 리스트 0으로 만들기
+		int result = productDao.updateOneZeroProduct(member,productListNo);
+		if(result > 0) { // 누른 상품 리스트 0으로 초기화 시 성공 헤ㅐㅆ을 때
+			
+			if(productListNo==1) { // 배경 초기화
+				r = productDao.updateProductB(member, 41);
+			}else if(productListNo==2) { // 커서 초기화
+				c = productDao.updateProductC(member, 43);
+			}else { // 폰트 초기화
+				f = productDao.updateProductF(member, 42);
+			}
+		}else {
+			return 0;
+		}
+		return result;
 	}
 
 
