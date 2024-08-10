@@ -6,6 +6,9 @@
 <title>적용한 상품 목록</title>
 </head>
 <style>
+*{
+	margin: 0;
+}
 a{
 	text-decoration: none;
 	font-weight: bold;
@@ -55,6 +58,7 @@ input[name=product]:checked+label {
 }
 
 .app_product_item {
+	margin-top: 12px;
 	padding-left: 20px;
 	height: 150px;
 }
@@ -81,6 +85,17 @@ input[name=product]:checked+label {
 .product_box {
 	float: left;
 	padding: 20px;
+}
+.product_box img{
+	width: 100px;
+	height: 100px;
+}
+.product_box2{
+	float: left;
+	margin-top: 10px;
+}
+.product_box2 > *{
+	margin: 10px;
 }
 </style>
 <body>
@@ -109,9 +124,11 @@ input[name=product]:checked+label {
 							<img th:src="@{'/product/editor/'+${sp.sellProduct.productImg}}" width="100px">
 						</div>
 					</div>
-					<h3 th:text="${sp.sellProduct.productName}"></h3>
-					<a th:href="@{/product/canProduct(productNo=${sp.buyProduct.productNo},productListNo=${sp.sellProduct.productListNo},all=0)}"><button>적용 취소</button></a>
-					<h4>구입일 : <th:block th:text="${sp.buyProduct.buyDate}"></th:block></h4>
+					<div class="product_box2">
+						<h3 th:text="${sp.sellProduct.productName}"></h3>
+						<a th:href="@{/product/canProduct(productNo=${sp.buyProduct.productNo},productListNo=${sp.sellProduct.productListNo},all=0)}"><button>적용 취소</button></a>
+						<h4>구입일 : <th:block th:text="${sp.buyProduct.buyDate}"></th:block></h4>
+					</div>
 				</div>
 			</th:block>
 		</div>
