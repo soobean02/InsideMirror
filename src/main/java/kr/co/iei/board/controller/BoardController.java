@@ -228,4 +228,17 @@ public class BoardController {
 		return "/board/boardList";
 	}
 
+
+
+
+
+	//즐겨찾기
+	@GetMapping(value="/bookmark/list")
+	public String bookmark(int reqPage, @SessionAttribute(required = false) Member member, Model model){
+		BoardListData bld = boardService.selectBoardBookmarkList(reqPage, member);
+		model.addAttribute("list", bld.getList());
+		model.addAttribute("pageNavi", bld.getPageNavi());
+		return "/board/boardList";
+	}
+
 }

@@ -350,6 +350,64 @@ public class BoardService {
 
 	}
 
+	public BoardListData selectBoardBookmarkList(int reqPage, Member member) {
+
+		int numPerPage = 10;
+
+		int end = reqPage * numPerPage;
+		int start = end - numPerPage + 1;
+
+		List list = boardDao.selectBoardBookmarkList(start, end, member);
+
+		int totalCount = boardDao.selectBoardBookMarkTotalCount(member);
+
+		int totalPage = 0;
+		if(totalCount % numPerPage == 0){
+			totalPage = totalCount/numPerPage;
+		}
+		else{
+			totalPage = totalCount/numPerPage + 1;
+		}
+
+		int pageNaviSize = 5;
+		int pageNo = ((reqPage -1)/pageNaviSize) * pageNaviSize + 1;
+
+		String pageNavi = "<ul class='page-wrap'>";
+
+		if(pageNo != 1){
+			pageNavi += "<li><button type='button' class='page-btn' onclick='pageBtn(this)'><a class='page-index' href='/board/list?reqPage="+(pageNo - 1)+"'><span> < </span></a></button></li>";
+		}
+
+		for(int i = 0; i < pageNaviSize; i++){
+			pageNavi += "<li>";
+			if(pageNo == reqPage){
+				pageNavi += "<button type='button' class='page-btn' onclick='pageBtn(this)'><a class='page-index active-page' href='/board/list?reqPage="+pageNo+"'>";
+			}
+			else{
+				pageNavi += "<button type='button' class='page-btn' onclick='pageBtn(this)'><a class='page-index' href='/board/list?reqPage="+pageNo+"'>";
+			}
+			
+			pageNavi += pageNo;
+			pageNavi += "</a></button></li>";
+			pageNo++;
+			
+			if(pageNo > totalPage) break;
+		}//for
+
+		if(pageNo <= totalPage){
+			pageNavi += "<li>";
+			pageNavi += "<button type='button' class='page-btn' onclick='pageBtn(this)'><a class='page-index' href='/board/list?reqPage="+pageNo+"'>";
+			pageNavi += "<span> > </span>";
+			pageNavi += "</a></button></li>";
+		}
+
+		pageNavi += "</ul>";
+
+		BoardListData bld = new BoardListData(list, pageNavi);
+
+		return bld;
+	}//게시글 즐겨찾기 리스트 조회
+
 	
 
 	

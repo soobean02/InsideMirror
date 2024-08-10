@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.board.model.dto.Board;
 import kr.co.iei.board.model.dto.BoardComment;
@@ -374,6 +373,27 @@ public class BoardDao {
 		int totalCount = jdbc.queryForObject(query, Integer.class, params);
 		return totalCount;
 	}//작성자 조회중에 친구인 경우
+
+	public List selectBoardBookmarkList(int start, int end, Member member) {
+		String query = "select * from \r\n" + //
+						"    (select rownum as rnum, b2.*,\r\n" + //
+						"    (select member_nickname from member where member_no = b2.member_no) as board_writer_nickname\r\n" + //
+						"    from \r\n" + //
+						"        (select * from board b1 \r\n" + //
+						"        where board_no = (select board_no from book_mark where board_no = b1.board_no and member_no = ?) \r\n" + //
+						"        order by 1 desc)b2) \r\n" + //
+						"where rnum between ? and ?";
+		Object[] params = {member.getMemberNo(), start, end};
+		List list = jdbc.query(query, boardRowMapper, params);
+		return list;
+	}//즐겨찾기 리스트 10개 조회
+
+	public int selectBoardBookMarkTotalCount(Member member) {
+		String query = "select count(*) from book_mark where member_no = ? and board_no is not null";
+		Object[] params = {member.getMemberNo()};
+		int totalCount = jdbc.queryForObject(query, Integer.class, params);
+		return totalCount;
+	}
 
 	
 
