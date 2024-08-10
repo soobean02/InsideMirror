@@ -98,7 +98,7 @@ public class PhotoController {
 	public String bookmark(@SessionAttribute(required=false) Member member, Model model){
 		int totalCount = photoService.getTotalCount();
 		model.addAttribute("totalCount", totalCount);
-		return "/photo/photoList";
+		return "/photo/bookmarkPhoto";
 	}
 	
 	@ResponseBody
