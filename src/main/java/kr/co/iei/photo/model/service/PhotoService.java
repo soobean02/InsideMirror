@@ -21,8 +21,8 @@ public class PhotoService {
 		return result;
 	}
 
-	public int getTotalCount() {
-		int totalCount = photoDao.getTotalCount();
+	public int getTotalCount(Member member) {
+		int totalCount = photoDao.getTotalCount(member);
 		return totalCount;
 	}
 
@@ -57,5 +57,16 @@ public class PhotoService {
 			result = photoDao.deleteBookmark(photoNo, member);
 		}
 		return result;
+	}
+
+	public int geTBookmarkTotalCount(Member member) {
+		int totalCount = photoDao.getBookmarkTotalCount(member);
+		return totalCount;
+	}
+
+	public List selectBookmarkPhotoList(int start, int amount, Member member) {
+		int end = start + amount - 1;
+		List photoList = photoDao.selectBookmarkPhotoList(start, end, member);
+		return photoList;
 	}
 }

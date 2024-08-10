@@ -29,8 +29,8 @@ public class PhotoController {
 	private FileUtils fileUtils;//파일 업로드용
 
 	@GetMapping(value="/list")
-	public String list(Model model){
-		int totalCount = photoService.getTotalCount();
+	public String list(@SessionAttribute(required=false) Member member, Model model){
+		int totalCount = photoService.getTotalCount(member);
 		model.addAttribute("totalCount", totalCount);
 		return "/photo/photoList";
 	}
@@ -88,7 +88,6 @@ public class PhotoController {
 		if(member == null){
 			return -1;
 		}
-		System.out.println(isBookmark);
 		int result = photoService.pushBookmark(isBookmark, photoNo, member);
 		return result;
 	}
@@ -96,7 +95,7 @@ public class PhotoController {
 	
 	@GetMapping(value="/bookmark/list")
 	public String bookmark(@SessionAttribute(required=false) Member member, Model model){
-		int totalCount = photoService.getTotalCount();
+		int totalCount = photoService.geTBookmarkTotalCount(member);
 		model.addAttribute("totalCount", totalCount);
 		return "/photo/bookmarkPhoto";
 	}
@@ -104,7 +103,7 @@ public class PhotoController {
 	@ResponseBody
 	@GetMapping(value="/bookmark/more")
 	public List bookmarkMore(int start, int amount, @SessionAttribute(required = false) Member member){
-		List photoList = photoService.selectPhotoList(start, amount, member);
+		List photoList = photoService.selectBookmarkPhotoList(start, amount, member);
 		return photoList;
 	}
 	
