@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import kr.co.iei.member.model.dto.Member;
@@ -34,10 +35,8 @@ public class ProductController {
 	}
 	/*도토리 구매!*/
 	@PostMapping(value="/acornCount")
-	public String acornCount(Member m, @SessionAttribute Member member, Model model) { // acorns 도토리 받기 나중엔 세션도 받아야함 member쪽에서 회원가입 끝내면 세션 확인하고 도토리 update 해주기 [acorns = acorns+?]
-		System.out.println("gg");
+	public String acornCount(Member m, @SessionAttribute Member member, Model model, String merchant) { // acorns 도토리 받기 나중엔 세션도 받아야함 member쪽에서 회원가입 끝내면 세션 확인하고 도토리 update 해주기 [acorns = acorns+?]
 		int result = productService.updateAcorns(m);
-		
 		if(result > 0) {
 			// 도토리 잘 들어감 - 경고창 정하면 model 사용해서 만들기
 			System.out.println("성공");
@@ -49,14 +48,26 @@ public class ProductController {
 			model.addAttribute("loc", "/product/acornProduct");
 			return "common/msg";
 		}else {
-			// 도토리 실패 - 경고창 정하면 model 사용해서 만들기
+			// 도토리 insert 실패 시 api 연동
+			model.addAttribute("fail", 0);
+			model.addAttribute("failMerchant", merchant); // 주문 번호
+			model.addAttribute("failAcornPrice", m.getAcorns()*100); // 실패한 도토리 가격
+			return "/product/acornProduct";
+			/*
 			model.addAttribute("title", "실패");
 			model.addAttribute("msg", "결제 실패");
 			model.addAttribute("icon", "error");
 			model.addAttribute("loc", "/product/acornProduct");
 			return "common/msg";
+			*/
 		}
 	}
+//	@ResponseBody
+//	@PostMapping(value="/failAcorn")
+//	public String acornCount() {
+//		System.out.println("실패");
+//		return "";
+//	}
 	/*판매 상품 리스트*/
 	@GetMapping(value="/productList")
 	public String productList(Model model, int reqPage, int type) {
