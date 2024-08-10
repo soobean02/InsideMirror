@@ -393,7 +393,62 @@ public class BoardDao {
 		Object[] params = {member.getMemberNo()};
 		int totalCount = jdbc.queryForObject(query, Integer.class, params);
 		return totalCount;
-	}
+	}//즐겨찾기 총 개수 조회
+
+	public int removeBookmark(int boardNo, Member member) {
+		String query = "delete from book_mark where board_no = ? and member_no = ?";
+		Object[] params = {boardNo, member.getMemberNo()};
+		int result = jdbc.update(query, params);
+		return result;
+	}//즐겨찾기 삭제
+
+	public List selectBoardBookmarkSearchTitleList(String keyword, int start, int end, Member member) {
+		String query = "select * from \r\n" + //
+						"    (select rownum as rnum, b2.*,\r\n" + //
+						"        (select member_nickname from member where member_no = b2.member_no) as board_writer_nickname\r\n" + //
+						"        from \r\n" + //
+						"            (select * from board b1 where board_title like '%'||?||'%' and board_no = (select board_no from book_mark where board_no = b1.board_no and member_no = ?)\r\n" + //
+						"            order by 1 desc)b2)\r\n" + //
+						"where rnum between ? and ?";
+		Object[] params = {keyword, member.getMemberNo(), start, end};
+		List list = jdbc.query(query, boardRowMapper, params);
+		return list;
+	}//즐겨찾기 한 거중 제목으로 검색한 거 10개 조회
+
+	public int selectBoardBookmarkSearchTitleTotalCount(String keyword, Member member) {
+		String query = "select count(*) from book_mark where\r\n" + //
+						"    board_no in (select board_no from board where board_title like '%'||?||'%')\r\n" + //
+						"    and member_no = ? and board_no is not null";
+		Object[] params = {keyword, member.getMemberNo()};
+		int totalCount = jdbc.queryForObject(query, Integer.class, params);
+		return totalCount;
+	}//즐겨찾기 한 거중 제목으로 검색한거 총 개수 조회
+
+	public List selectBoardBookmarkSearchWriterList(String keyword, int start, int end, Member member) {
+		String query = "select * from \r\n" + //
+						"    (select rownum as rnum, b2.*,\r\n" + //
+						"        (select member_nickname from member where member_no = b2.member_no) as board_writer_nickname\r\n" + //
+						"        from \r\n" + //
+						"            (select * from board b1 where member_no in (select member_no from member where member_nickname like '%'||?||'%') and board_no = (select board_no from book_mark where board_no = b1.board_no and member_no = ?)\r\n" + //
+						"            order by 1 desc)b2)\r\n" + //
+						"where rnum between ? and ?";
+		Object[] params = {keyword, member.getMemberNo(), start, end};
+		List list = jdbc.query(query, boardRowMapper, params);
+		return list;
+	}//즐겨찾기 한 거중 작성자로 검색한거 10개 조회
+
+	public int selectBoardBookmarkSearchWriterTotalCount(String keyword, Member member) {
+		String query = "select count(*) from\r\n" + //
+						"    book_mark where board_no in \r\n" + //
+						"    (select board_no from board \r\n" + //
+						"        where member_no in \r\n" + //
+						"        (select member_no from \r\n" + //
+						"            member where member_nickname like '%'||?||'%'))\r\n" + //
+						"and member_no = ? and board_no is not null";
+		Object[] params = {keyword, member.getMemberNo()};
+		int totalCount = jdbc.queryForObject(query, Integer.class, params);
+		return totalCount;
+	}//즐겨찾기 한 거중 작성자로 검색한거 총 개수 조회
 
 	
 

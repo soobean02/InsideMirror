@@ -241,4 +241,23 @@ public class BoardController {
 		return "/board/bookmarkBoardList";
 	}
 
+	@ResponseBody
+	@PostMapping(value="/markRemove")
+	public int bookmarkRemove(int boardNo, @SessionAttribute(required=false) Member member){
+		int result = boardService.removeBookmark(boardNo, member);
+		return result;
+	} 
+
+	@GetMapping(value="/bookmark/search")
+	public String bookmarkSearch(String type, String keyword, int reqPage, Model model, @SessionAttribute(required=false) Member member){
+		if(keyword.equals("")) return "redirect:/board/bookmark/search?reqPage=1";
+
+		BoardListData bld = boardService.selectBookmarkSearchList(type,keyword,reqPage,member);
+		model.addAttribute("list", bld.getList());
+		model.addAttribute("pageNavi", bld.getPageNavi());
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("type", type);
+		return "board/bookmarkBoardList";
+	}
+
 }

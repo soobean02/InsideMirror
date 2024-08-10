@@ -94,8 +94,19 @@ public class PhotoController {
 	}
 	
 	
+	@GetMapping(value="/bookmark/list")
+	public String bookmark(@SessionAttribute(required=false) Member member, Model model){
+		int totalCount = photoService.getTotalCount();
+		model.addAttribute("totalCount", totalCount);
+		return "/photo/photoList";
+	}
 	
-	
+	@ResponseBody
+	@GetMapping(value="/bookmark/more")
+	public List bookmarkMore(int start, int amount, @SessionAttribute(required = false) Member member){
+		List photoList = photoService.selectPhotoList(start, amount, member);
+		return photoList;
+	}
 	
 	
 }

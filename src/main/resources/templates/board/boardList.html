@@ -84,7 +84,7 @@
         background-color: transparent;
         cursor: pointer;
         position: absolute;
-        right: 30px;
+        right: 35px;
         padding: 0;
         display: none;
         color: #ccc;
@@ -202,6 +202,9 @@
     .order-content [type=radio]{
         margin-top: 8px;
     }
+    .submit-btn>.material-icons{
+        font-size: 30px;
+    }
 
 </style>
 
@@ -222,7 +225,7 @@
         <div class="board-header">
             
             <div class="order-wrap left">
-                <span class="material-icons order-span">sort</span>
+                <span class="material-icons order-span order-submit">sort</span>
                 <div class="order-content">
                     <ul>
                         <form action="/board/order" method="get" class="order-form">
@@ -256,7 +259,7 @@
                                     <input class="left" type="radio" name="orderFriend" value="friend" checked><span class="left">일촌</span>
                                 </div>
                             </li>
-                            <li style="clear: left;" onclick="sorting()" class="sort-btn">정렬하기</li>
+                            <li style="clear: left;" onclick="order()" class="sort-btn">정렬하기</li>
                             <input type="hidden" name="reqPage" value="1">
                         </form>
                     </ul>
@@ -282,8 +285,8 @@
 
                     
                     <div class="input-wrap">
-                        <input type="text" name="keyword" class="search-input left" th:value="${keyword}">
-                        <button type="reset" class="reset-btn">
+                        <input type="text" name="keyword" class="search-input left" th:value="${keyword}" autocomplete="off">
+                        <button type="button" class="reset-btn">
                             <span class="material-icons">cancel</span>
                         </button>
                         <button type="submit" class="submit-btn">
@@ -292,7 +295,6 @@
                     </div>
                     
                     <input type="hidden" name="reqPage" value="1">
-                    <!-- 나중에 != 로 바꿔야 함 지금은 테스트를 위함 -->
                     <div class="write-wrap left">
                         <span class="material-icons write-btn" th:if="${session.member != null}" href="/board/writeFrm">create</span>
                     </div>
@@ -315,7 +317,7 @@
             <div class="board-td" th:each="board : ${list}">
                 <a th:href="@{/board/view(boardNo=${board.boardNo})}">
                     <div class="board-list" style="width:10%; text-indent: 5px;" th:text="${board.boardNo}"></div>
-                    <div class="board-list" style="width:43%; overflow: hidden; text-overflow: ellipsis;" th:text="${board.boardTitle}"></div>
+                    <div class="board-list" style="width:45%; overflow: hidden; text-overflow: ellipsis;" th:text="${board.boardTitle}"></div>
                     <div class="board-list" style="width:10%;" th:text="${board.boardWriter}"></div>
                     <div class="board-list" style="width:10%; text-align: center;" th:text="${board.readCount}"></div>
                     <div class="board-list" style="width:10%; text-align: center;" th:text="${board.boardLike}"></div>
@@ -333,28 +335,25 @@
 
 
     <script>
+
         $(".order-span").on("click",function(){
-            $(this).toggleClass("can-order");
             $(".order-content").toggle();
-            order(this);
         })
 
         //만약에 정렬을 눌러서 정렬 radio들을 보고 다시 정렬을 누르면 정렬을 바로 할 수 있게 세팅
-        function order(obj){
-            const item = $(obj);
-            if(!item.hasClass("can-order")){
-                // const orderDate = $("[name=orderDate]:checked");
-                // const orderFriend = $("[name=orderFriend]:checked");
-                const type = $("#searchBox").val();
-                const keyword = $(".search-input").val();
-                
-                const inputType = $("<input type='hidden' name='type' value="+type+">");
-                const keywordType = $("<input type='hidden' name='keyword' value="+keyword+">");
+        function order(){
+            // const orderDate = $("[name=orderDate]:checked");
+            // const orderFriend = $("[name=orderFriend]:checked");
+            const type = $("#searchBox").val();
+            const keyword = $(".search-input").val();
+            
+            const inputType = $("<input type='hidden' name='type' value="+type+">");
+            const keywordType = $("<input type='hidden' name='keyword' value="+keyword+">");
 
-                $(".order-form").append(inputType).append(keywordType);
-                //type이랑 keyword까지 같이 폼태그로 전송시켜서 현재 유저가 입력한거에서 order할 수 있게
-                $(".order-form").submit();
-            }
+            $(".order-form").append(inputType).append(keywordType);
+            //type이랑 keyword까지 같이 폼태그로 전송시켜서 현재 유저가 입력한거에서 order할 수 있게
+            $(".order-form").submit();
+            
         }
 
         $(".write-btn").on("click",function(){
@@ -370,6 +369,7 @@
             }
         })
         $(".reset-btn").on("click",function(){
+            $(".search-input").val("");
             $(".reset-btn").hide();
         })
 
@@ -377,10 +377,16 @@
             window.location.href = $(obj).children("a").attr("href");
         }
 
-        function sorting(){
-            $(".order-span").click();
-        }
+        
 
+
+        checkSearchInput();
+        function checkSearchInput(){
+            const searchInput = $(".search-input").val();
+            if(searchInput != ""){
+                $(".reset-btn").show();
+            }
+        }
     </script>
 
 </body>

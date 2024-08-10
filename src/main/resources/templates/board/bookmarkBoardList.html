@@ -84,7 +84,7 @@
         background-color: transparent;
         cursor: pointer;
         position: absolute;
-        right: 30px;
+        right: 35px;
         padding: 0;
         display: none;
         color: #ccc;
@@ -103,17 +103,25 @@
         font-weight: 500;
     }
 
-    .order-wrap{
+    .change-wrap{
         /* background-color: azure; */
         width: 20%;
         float: left;
         height: 30px;
         text-align: center;
     }
-    .order-wrap>span{
-        cursor: pointer;
+    .change-wrap>a>button{
+        width: 60px;
+        height: 25px;
+        border: 1px solid #ccc;
+        background-color: #a4b8ff;
+        border-radius: 10px;
     }
 
+    .change-wrap>a>button:hover{
+        background-color: #4d73ff;
+        color: white;
+    }
 
     .board-content{
         width: 100%;
@@ -203,6 +211,34 @@
         margin-top: 8px;
     }
 
+    .remove-border{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 35px;
+    }
+    
+    .remove-border>.remove-mark{
+        font-size: 30px;
+        cursor: pointer;
+    }
+
+    .empty-wrap{
+        width: 100%;
+        height: 400px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color : #8f8f8f;
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    .submit-btn>.material-icons{
+        font-size: 30px;
+    }
+
+
 </style>
 
 <head>
@@ -221,50 +257,12 @@
     <div class="board-wrap">
         <div class="board-header">
             
-            <div class="order-wrap left">
-                <!-- <span class="material-icons order-span">sort</span>
-                <div class="order-content">
-                    <ul>
-                        <form action="/board/order" method="get" class="order-form">
-                            <li th:switch="${orderDate}">
-                                <div th:case=null>
-                                    <input class="left" type="radio" name="orderDate" value="newest" checked><span class="left">최신순</span>
-                                    <input class="left" type="radio" name="orderDate" value="popular"><span class="left">인기순</span>
-                                </div>
-
-                                <div th:case="newest">
-                                    <input class="left" type="radio" name="orderDate" value="newest" checked><span class="left">최신순</span>
-                                    <input class="left" type="radio" name="orderDate" value="popular"><span class="left">인기순</span>
-                                </div>
-                                
-                                <div th:case="popular">
-                                    <input class="left" type="radio" name="orderDate" value="newest"><span class="left">최신순</span>
-                                    <input class="left" type="radio" name="orderDate" value="popular" checked><span class="left">인기순</span>
-                                </div>
-                            </li>
-                            <li th:switch="${orderFriend}">
-                                <div th:case=null>
-                                    <input class="left" type="radio" name="orderFriend" value="all" checked><span class="left" style="margin-right: 17px;">전체</span>
-                                    <input class="left" type="radio" name="orderFriend" value="friend"><span class="left">일촌</span>
-                                </div>
-                                <div th:case="all">
-                                    <input class="left" type="radio" name="orderFriend" value="all" checked><span class="left" style="margin-right: 17px;">전체</span>
-                                    <input class="left" type="radio" name="orderFriend" value="friend"><span class="left">일촌</span>
-                                </div>
-                                <div th:case="friend">
-                                    <input class="left" type="radio" name="orderFriend" value="all"><span class="left" style="margin-right: 17px;">전체</span>
-                                    <input class="left" type="radio" name="orderFriend" value="friend" checked><span class="left">일촌</span>
-                                </div>
-                            </li>
-                            <li style="clear: left;" onclick="sorting()" class="sort-btn">정렬하기</li>
-                            <input type="hidden" name="reqPage" value="1">
-                        </form>
-                    </ul>
-                </div> -->
+            <div class="change-wrap left">
+                <a href="/photo/bookmark/list"><button type="button">사진첩</button></a>
             </div>
 
             <div class="search-wrap left">
-                <form action="/board/search" method="get">
+                <form action="/board/bookmark/search" method="get">
                     <div class="select-wrap left" th:switch="${type}">
                         <select name="type" id="searchBox" th:case=null>
                             <option value="title" selected>제목</option>
@@ -282,8 +280,8 @@
 
                     
                     <div class="input-wrap">
-                        <input type="text" name="keyword" class="search-input left" th:value="${keyword}">
-                        <button type="reset" class="reset-btn">
+                        <input type="text" name="keyword" class="search-input left" th:value="${keyword}" autocomplete="off">
+                        <button type="button" class="reset-btn">
                             <span class="material-icons">cancel</span>
                         </button>
                         <button type="submit" class="submit-btn">
@@ -292,7 +290,6 @@
                     </div>
                     
                     <input type="hidden" name="reqPage" value="1">
-                    <!-- 나중에 != 로 바꿔야 함 지금은 테스트를 위함 -->
                     <div class="write-wrap left">
                         <!-- <span class="material-icons write-btn" th:if="${session.member != null}" href="/board/writeFrm">create</span> -->
                     </div>
@@ -313,18 +310,25 @@
                 <div style="width:10%; text-align: center;">즐겨찾기</div>
             </div>
 
+            <!-- 즐겨찾기 한 것이 없으면 뜨는 div -->
+            <div th:if="${list.isEmpty}" class="empty-wrap">
+                <span>마음에 드는 글들을 즐겨찾기 해보는 건 어떨까요?</span>
+            </div>
+
             <div class="board-td" th:each="board : ${list}">
                 <a th:href="@{/board/view(boardNo=${board.boardNo})}">
                     <!-- <div class="board-list" style="width:10%; text-indent: 5px;" th:text="${board.boardNo}"></div> -->
-                    <div class="board-list" style="width:43%; overflow: hidden; text-overflow: ellipsis;" th:text="${board.boardTitle}"></div>
+                    <div class="board-list" style="width:45%; overflow: hidden; text-overflow: ellipsis;" th:text="${board.boardTitle}"></div>
                     <div class="board-list" style="width:10%;" th:text="${board.boardWriter}"></div>
                     <div class="board-list" style="width:10%; text-align: center;" th:text="${board.readCount}"></div>
                     <div class="board-list" style="width:10%; text-align: center;" th:text="${board.boardLike}"></div>
                     <div class="board-list" style="width:15%;" th:text="${board.boardDate.substring(0,10)}"></div>
                 </a>
 
-                <div class="board-list" style="width: 10%; text-align: center;"><span class="material-icons">delete</span></div>
-
+                <div class="board-list remove-border" style="width: 10%; text-align: center;">
+                    <span class="material-icons remove-mark">delete</span>
+                </div>
+                <input type="hidden" th:value="${board.boardNo}">
             </div>
 
         </div>
@@ -373,7 +377,9 @@
                 $(".reset-btn").show();
             }
         })
+        
         $(".reset-btn").on("click",function(){
+            $(".search-input").val("");
             $(".reset-btn").hide();
         })
 
@@ -384,6 +390,41 @@
         function sorting(){
             $(".order-span").click();
         }
+
+        $(".remove-mark").on("click",function(){
+            const removeBtn = $(this);
+            const boardNo = removeBtn.parent().next().val();
+
+            $.ajax({
+                url : "/board/markRemove",
+                type : "post",
+                data : {boardNo : boardNo},
+                success : function(data){
+                    if(data > 0){
+                        removeBtn.parent().parent().remove();
+                        removeBtn.parent().next().remove();
+                        removeBtn.remove();
+                    }
+                    else{
+                        alert("삭제 실패");
+                    }
+                },
+                error : function(){
+                    console.log("error");
+                }
+            })
+        })
+
+        checkSearchInput();
+        function checkSearchInput(){
+            const searchInput = $(".search-input").val();
+            if(searchInput != ""){
+                $(".reset-btn").show();
+            }
+        }
+
+
+        
 
     </script>
 

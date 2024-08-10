@@ -77,7 +77,7 @@
         border-top: 1px solid #ccc;
     }
 
-    img{
+    .img-box{
         min-width: 200px;
         min-height: 200px;
         max-width: 600px;
@@ -226,7 +226,7 @@
                         subInfoDiv.append(`<span class="like-count">${p.likeCount}</span>`);
                         subInfoDiv.append(`<span class="material-icons push-tag temp-bookmark-tag bookmark" onclick="pushBookmark(this, ${memberNo}, ${p.photoNo})">bookmark_border</span>`);
                         
-                        const img = $("<img>");
+                        const img = $("<img class='img-box'>");
                         img.attr("src","/photo/"+p.photoContent);
                         
                         imgDiv.append(img);
