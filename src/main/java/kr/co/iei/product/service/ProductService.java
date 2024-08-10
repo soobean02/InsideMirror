@@ -446,17 +446,16 @@ public class ProductService {
 	// 하나만 초기화
 	@Transactional
 	public int updateOneZeroProduct(Member member, int productNo, int productListNo) {
-		int r,c,f = 0;
 		// 누른 상품 리스트 0으로 만들기
 		int result = productDao.updateOneZeroProduct(member,productListNo);
 		if(result > 0) { // 누른 상품 리스트 0으로 초기화 시 성공 헤ㅐㅆ을 때
 			
 			if(productListNo==1) { // 배경 초기화
-				r = productDao.updateProductB(member, 41);
+				int r = productDao.updateProductB(member, 41);
 			}else if(productListNo==2) { // 커서 초기화
-				c = productDao.updateProductC(member, 43);
+				int c = productDao.updateProductC(member, 43);
 			}else { // 폰트 초기화
-				f = productDao.updateProductF(member, 42);
+				int f = productDao.updateProductF(member, 42);
 			}
 		}else {
 			return 0;
