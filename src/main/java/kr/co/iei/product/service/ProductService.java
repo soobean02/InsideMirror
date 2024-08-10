@@ -32,7 +32,7 @@ public class ProductService {
 		/* 도토리 구매 이력 테이블에 도토리 정보 넣어주기 */
 		int result2 = productDao.insertAcorns(m);
 
-		if (result1 > 0 && result2 > 0) { // 도토리 insert 성공 1 반환
+		if (result1 > 0 && result2 > 0) { // 도토리 update / insert 성공 1 반환
 			return 1;
 		} else { // 도토리 insert 실패 0 반환
 			return 0;
@@ -146,6 +146,7 @@ public class ProductService {
 	public int productAdd(Member m, SellProduct sp) {
 		// 회원 정보에서 가지고 있는 도토리 개수 확인하기
 		Member member = memberDao.selectOneMember(m);
+		
 		if (member.getAcorns() >= sp.getProductPrice()) { // 판매중인 도토리 수 보다 멤버가 가지고 있는 도토리 개수가 같거나 많다면 성공
 			// 상품 구매 회원 지갑에서 도토리 빼내기 => 성공하면 insert / 실패시 0 반환
 			int result = productDao.updateAcornMinus(m, sp);
@@ -241,7 +242,7 @@ public class ProductService {
 		return result;
 	}// productUpdate
 
-	public ProductListData selectBuyProduct(int reqPage,  Member member, int type) {
+	public ProductListData selectBuyProduct(int reqPage,  Member member, int type, String product) {
 		// 한 페이지당 10개의 글 조회
 		int numPerPage = 10;
 		// 시작번호
@@ -284,7 +285,7 @@ public class ProductService {
 		// 이전 버튼(1페이지로 시작하지 않으면)
 		if (pageNo != 1) {
 			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/product/buyProductList?reqPage=" + (pageNo - 1) + "'>";
+			pageNavi += "<a class='page-item' href='/product/buyProductList?reqPage=" + (pageNo - 1) + "&type="+type+"&product="+product+ "'>";
 			pageNavi += "<span class='material-icons'>chevron_left</span>";
 			pageNavi += "</a></li>";
 		}
@@ -292,9 +293,9 @@ public class ProductService {
 		for (int i = 0; i < pageNaviSize; i++) {
 			pageNavi += "<li>";
 			if (pageNo == reqPage) {
-				pageNavi += "<a class='page-item active-page' href='/product/buyProductList?reqPage=" + pageNo + "'>";
+				pageNavi += "<a class='page-item active-page' href='/product/buyProductList?reqPage=" + pageNo + "&type="+type+"&product="+product+ "'>";
 			} else {
-				pageNavi += "<a class='page-item' href='/product/buyProductList?reqPage=" + pageNo + "'>";
+				pageNavi += "<a class='page-item' href='/product/buyProductList?reqPage=" + pageNo + "&type="+type+"&product="+product+ "'>";
 			}
 			pageNavi += pageNo;
 			pageNavi += "</a></li>";
@@ -308,7 +309,7 @@ public class ProductService {
 		// 다음 버튼(최종 페이지를 출력하지 않았으면)
 		if (pageNo <= totalPage) {
 			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/product/buyProductList?reqPage=" + pageNo + "'>";
+			pageNavi += "<a class='page-item' href='/product/buyProductList?reqPage=" + pageNo + "&type="+type+"&product="+product+ "'>";
 			pageNavi += "<span class='material-icons'>chevron_right</span>";
 			pageNavi += "</a></li>";
 		}
