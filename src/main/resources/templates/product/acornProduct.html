@@ -289,9 +289,9 @@ form {
 		});
 
 		function pay_start(acornPay, pay) {
-			const memberName = [[${session.member.memberName}]];
-			const memberTel = [[${session.member.memberPhone}]];
-			const memberAddr = [[${session.member.memberAddr}]];
+			const memberName = [[${session.member.memberName}]]; // 멤버 이름
+			const memberTel = [[${session.member.memberPhone}]]; // 멤버 전화번호
+			const memberAddr = [[${session.member.memberAddr}]]; // 멤버 주소
 			console.log(memberName);
 			const date = new Date();
 			const dateString = date.getFullYear() + "" + (date.getMonth() + 1)
@@ -316,7 +316,7 @@ form {
 				amount : acornPay, // 결제 금액
 				buyer_name : memberName,
 				buyer_tel : memberTel, //필수 파라미터 입니다.
-				buyer_addr : memberAddr
+				buyer_addr : memberAddr // 멤버 주소
 			}, function(rsp) {
 				if (rsp.success) {
 					/*결제 성공 시 도토리 개수 컨트롤러로 보내기*/
@@ -325,7 +325,7 @@ form {
 				} else {
 					alert("결제 실패");
 				}
-			})
+			});
 		}
 	</script>
 </body>

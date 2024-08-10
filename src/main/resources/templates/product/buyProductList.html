@@ -135,6 +135,7 @@ input[name=product]:checked+label {
 		<div class="select_op">
 			<form action="/product/buyProductList" method="get" id="category">
 				<input type="hidden" name="reqPage" value="1">
+				<input type="hidden" name="product" value="구매">
 				<select name="type">
 					<option value="0"  th:selected="${ty == 0}">전체</option>
 					<option value="1" th:selected="${ty == 1}">배경</option>

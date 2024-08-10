@@ -93,7 +93,6 @@ public class ProductController {
 	/*상품 구매하기*/
 	@PostMapping(value="/userBuyProduct")
 	public String userBuyProduct(@SessionAttribute Member member,SellProduct sp, Model model) { // 상품번호, 상품 가격, 상품 리스트 정보, 멤버 정보 받기
-		// 로직 : 멤버 update를 사용해서 상품 가격 만큼 도토리 빼기 -> 성공하면 구매 상품에 추가 insert, 실패 시 알림창(알림창 우짬..)
 		int result = productService.productAdd(member, sp);
 		model.addAttribute("prdouctPrice", result);
 		if(result > 0) {
@@ -105,7 +104,7 @@ public class ProductController {
 	/*구매 상품 리스트 - 타입 검사 추가*/
 	@GetMapping(value="/buyProductList")
 	public String buyProductList(Model model, int reqPage, @SessionAttribute Member member, int type, String product) {
-		ProductListData pld = productService.selectBuyProduct(reqPage, member, type);
+		ProductListData pld = productService.selectBuyProduct(reqPage, member, type, product);
 		model.addAttribute("product", product);
 		model.addAttribute("list", pld.getList());
 		model.addAttribute("pageNavi", pld.getNaviPage());
