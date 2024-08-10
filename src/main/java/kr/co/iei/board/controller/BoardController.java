@@ -238,7 +238,7 @@ public class BoardController {
 		BoardListData bld = boardService.selectBoardBookmarkList(reqPage, member);
 		model.addAttribute("list", bld.getList());
 		model.addAttribute("pageNavi", bld.getPageNavi());
-		return "/board/boardList";
+		return "/board/bookmarkBoardList";
 	}
 
 }

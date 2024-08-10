@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ko">
+<style>
+    .board-wrap{
+        width: 100%;
+        height: 700px;
+        font-size: 18px;
+        /* background-color: #92a2ff; */
+    }
+
+    ul{
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+    }
+    a{
+        text-decoration: none;
+        color: black;
+    }
+
+    .left{
+        float: left;
+    }
+
+    .board-header{
+        overflow: hidden;
+        margin-top: 10px;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .order-content{
+        position: absolute;
+        display: none;
+        padding: 0;
+        border: 1px solid black;
+        background-color: aliceblue;
+    }
+
+    .write-wrap{
+        /* background-color: #92fffd; */
+        width: 30%;
+        height: 30px;
+        text-align: center;
+    }
+    .write-wrap>span{
+        font-size: 30px;
+
+    }
+    .search-wrap{
+        /* background-color: aqua; */
+        width: 80%;
+        overflow: hidden;
+        height: 30px;
+        /* background-color: aquamarine; */
+    }
+    .select-wrap{
+        /* background-color: aquamarine; */
+        width: 20%;
+        float: left;
+        height: 30px;
+        text-align: center;
+    }
+    .select-wrap>select{
+        width: 70px;
+        height: 25px;
+        outline: none;
+    }
+    .input-wrap{
+        /* background-color: antiquewhite; */
+        width: 50%;
+        float: left;
+        position: relative;
+        border-bottom: 1px solid black;
+    }
+    .input-wrap>input[type=text]{
+        border: none;
+        /* border-bottom: 1px solid #000000; */
+        width: 200px;
+        margin-top: 5px;
+    }
+    .reset-btn{
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        position: absolute;
+        right: 30px;
+        padding: 0;
+        display: none;
+        color: #ccc;
+    }
+    .submit-btn{
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        position: absolute;
+        right: 0px;
+        padding: 0;
+    }
+    .search-input{
+        outline: none;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .order-wrap{
+        /* background-color: azure; */
+        width: 20%;
+        float: left;
+        height: 30px;
+        text-align: center;
+    }
+    .order-wrap>span{
+        cursor: pointer;
+    }
+
+
+    .board-content{
+        width: 100%;
+        height: 420px;
+        /* background-color: aqua; */
+        border-top: 1px solid rgb(58, 58, 58);
+        overflow: hidden;
+    }
+    
+    .board-tr>div{
+        margin: 5px 0px;
+        float: left;
+    }
+    .board-td:hover{
+        background-color: rgb(104, 185, 255);
+    }
+    .board-tr{
+        height: 40px;
+    }
+    .board-td{
+        height: 35px;
+        line-height: 35px;
+        border-top: 1px solid rgb(158, 158, 158);
+        /* padding-top: 10px; */
+    }
+    
+    .board-list{
+        box-sizing: border-box;
+        float: left;
+    }
+    
+    .write-btn{
+        cursor: pointer;
+    }
+
+    .pageNavi{
+        /* background-color: bisque; */
+        width: 100%;
+        height: 33px;
+        overflow: hidden;
+    }
+
+    .page-wrap{
+        width: 50%;
+        margin: 0 auto;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .page-wrap>li{
+        height: 50px;
+        margin-left: 10px;
+    }
+    
+    .active-page{
+        color: rgb(255, 255, 255);
+    }
+
+    .page-btn:has(.active-page){
+        background-color: #4d73ff;
+    }
+    
+    .page-btn{
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        border: none;
+        background-color: #c0eeff;
+    }
+
+    .page-btn:hover:not(:has(.active-page)){
+        background-color: #a4b8ff;
+    }
+    .page-btn:hover>a{
+        color: white;
+    }
+
+    .sort-btn{
+        cursor: pointer;
+    }
+
+    .order-content>ul{
+        overflow: hidden;
+    }
+    .order-content [type=radio]{
+        margin-top: 8px;
+    }
+
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>minihomepage</title>
+
+
+</head>
+
+<body>
+    <th:block th:include="common/top"></th:block>
+                    
+    <div class="box-title">자유 게시판 ></div>
+    
+    <div class="board-wrap">
+        <div class="board-header">
+            
+            <div class="order-wrap left">
+                <!-- <span class="material-icons order-span">sort</span>
+                <div class="order-content">
+                    <ul>
+                        <form action="/board/order" method="get" class="order-form">
+                            <li th:switch="${orderDate}">
+                                <div th:case=null>
+                                    <input class="left" type="radio" name="orderDate" value="newest" checked><span class="left">최신순</span>
+                                    <input class="left" type="radio" name="orderDate" value="popular"><span class="left">인기순</span>
+                                </div>
+
+                                <div th:case="newest">
+                                    <input class="left" type="radio" name="orderDate" value="newest" checked><span class="left">최신순</span>
+                                    <input class="left" type="radio" name="orderDate" value="popular"><span class="left">인기순</span>
+                                </div>
+                                
+                                <div th:case="popular">
+                                    <input class="left" type="radio" name="orderDate" value="newest"><span class="left">최신순</span>
+                                    <input class="left" type="radio" name="orderDate" value="popular" checked><span class="left">인기순</span>
+                                </div>
+                            </li>
+                            <li th:switch="${orderFriend}">
+                                <div th:case=null>
+                                    <input class="left" type="radio" name="orderFriend" value="all" checked><span class="left" style="margin-right: 17px;">전체</span>
+                                    <input class="left" type="radio" name="orderFriend" value="friend"><span class="left">일촌</span>
+                                </div>
+                                <div th:case="all">
+                                    <input class="left" type="radio" name="orderFriend" value="all" checked><span class="left" style="margin-right: 17px;">전체</span>
+                                    <input class="left" type="radio" name="orderFriend" value="friend"><span class="left">일촌</span>
+                                </div>
+                                <div th:case="friend">
+                                    <input class="left" type="radio" name="orderFriend" value="all"><span class="left" style="margin-right: 17px;">전체</span>
+                                    <input class="left" type="radio" name="orderFriend" value="friend" checked><span class="left">일촌</span>
+                                </div>
+                            </li>
+                            <li style="clear: left;" onclick="sorting()" class="sort-btn">정렬하기</li>
+                            <input type="hidden" name="reqPage" value="1">
+                        </form>
+                    </ul>
+                </div> -->
+            </div>
+
+            <div class="search-wrap left">
+                <form action="/board/search" method="get">
+                    <div class="select-wrap left" th:switch="${type}">
+                        <select name="type" id="searchBox" th:case=null>
+                            <option value="title" selected>제목</option>
+                            <option value="writer">작성자</option>
+                        </select>
+                        <select name="type" id="searchBox" th:case="title">
+                            <option value="title" selected>제목</option>
+                            <option value="writer">작성자</option>
+                        </select>
+                        <select name="type" id="searchBox" th:case="writer">
+                            <option value="title">제목</option>
+                            <option value="writer" selected>작성자</option>
+                        </select>
+                    </div>
+
+                    
+                    <div class="input-wrap">
+                        <input type="text" name="keyword" class="search-input left" th:value="${keyword}">
+                        <button type="reset" class="reset-btn">
+                            <span class="material-icons">cancel</span>
+                        </button>
+                        <button type="submit" class="submit-btn">
+                            <span class="material-icons">search</span>
+                        </button>
+                    </div>
+                    
+                    <input type="hidden" name="reqPage" value="1">
+                    <!-- 나중에 != 로 바꿔야 함 지금은 테스트를 위함 -->
+                    <div class="write-wrap left">
+                        <!-- <span class="material-icons write-btn" th:if="${session.member != null}" href="/board/writeFrm">create</span> -->
+                    </div>
+                    
+
+                </form>
+            </div>
+        </div>
+
+        <div class="board-content">
+            <div class="board-tr">
+                <!-- <div style="width:10%;">글번호</div> -->
+                <div style="width:40%;">제목</div>
+                <div style="width:15%; text-align: center;">작성자</div>
+                <div style="width:10%; text-align: center;">조회수</div>
+                <div style="width:10%; text-align: center;">좋아요</div>
+                <div style="width:15%; text-align: center;">작성일</div>
+                <div style="width:10%; text-align: center;">즐겨찾기</div>
+            </div>
+
+            <div class="board-td" th:each="board : ${list}">
+                <a th:href="@{/board/view(boardNo=${board.boardNo})}">
+                    <!-- <div class="board-list" style="width:10%; text-indent: 5px;" th:text="${board.boardNo}"></div> -->
+                    <div class="board-list" style="width:43%; overflow: hidden; text-overflow: ellipsis;" th:text="${board.boardTitle}"></div>
+                    <div class="board-list" style="width:10%;" th:text="${board.boardWriter}"></div>
+                    <div class="board-list" style="width:10%; text-align: center;" th:text="${board.readCount}"></div>
+                    <div class="board-list" style="width:10%; text-align: center;" th:text="${board.boardLike}"></div>
+                    <div class="board-list" style="width:15%;" th:text="${board.boardDate.substring(0,10)}"></div>
+                </a>
+
+                <div class="board-list" style="width: 10%; text-align: center;"><span class="material-icons">delete</span></div>
+
+            </div>
+
+        </div>
+
+        <div class="pageNavi" th:utext="${pageNavi}"></div>
+
+    </div>
+    
+    <th:block th:include="common/bottom"></th:block>
+
+
+    <script>
+        $(".order-span").on("click",function(){
+            $(this).toggleClass("can-order");
+            $(".order-content").toggle();
+            order(this);
+        })
+
+        //만약에 정렬을 눌러서 정렬 radio들을 보고 다시 정렬을 누르면 정렬을 바로 할 수 있게 세팅
+        function order(obj){
+            const item = $(obj);
+            if(!item.hasClass("can-order")){
+                // const orderDate = $("[name=orderDate]:checked");
+                // const orderFriend = $("[name=orderFriend]:checked");
+                const type = $("#searchBox").val();
+                const keyword = $(".search-input").val();
+                
+                const inputType = $("<input type='hidden' name='type' value="+type+">");
+                const keywordType = $("<input type='hidden' name='keyword' value="+keyword+">");
+
+                $(".order-form").append(inputType).append(keywordType);
+                //type이랑 keyword까지 같이 폼태그로 전송시켜서 현재 유저가 입력한거에서 order할 수 있게
+                $(".order-form").submit();
+            }
+        }
+
+        $(".write-btn").on("click",function(){
+            location.href = "/board/writeFrm";
+        })
+
+        $(".search-input").on("keyup",function(){
+            if($(this).val() === ""){
+                $(".reset-btn").hide();
+            }
+            else{
+                $(".reset-btn").show();
+            }
+        })
+        $(".reset-btn").on("click",function(){
+            $(".reset-btn").hide();
+        })
+
+        function pageBtn(obj){
+            window.location.href = $(obj).children("a").attr("href");
+        }
+
+        function sorting(){
+            $(".order-span").click();
+        }
+
+    </script>
+
+</body>
+
+</html>
