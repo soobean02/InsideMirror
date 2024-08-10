@@ -95,9 +95,9 @@ public class ProductService {
 		for (int i = 0; i < pageNaviSize; i++) {
 			pageNavi += "<li>";
 			if (pageNo == reqPage) {
-				pageNavi += "<a class='page-item active-page' href='/product/productList?reqPage=" + pageNo + "'>";
+				pageNavi += "<a class='page-item active-page' href='/product/productList?reqPage=" + pageNo + "&type="+type+ "'>";
 			} else {
-				pageNavi += "<a class='page-item' href='/product/productList?reqPage=" + pageNo + "'>";
+				pageNavi += "<a class='page-item' href='/product/productList?reqPage=" + pageNo + "&type="+type+ "'>";
 			}
 			pageNavi += pageNo;
 			pageNavi += "</a></li>";
@@ -111,7 +111,7 @@ public class ProductService {
 		// 다음 버튼(최종 페이지를 출력하지 않았으면)
 		if (pageNo <= totalPage) {
 			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/product/productList?reqPage=" + pageNo + "'>";
+			pageNavi += "<a class='page-item' href='/product/productList?reqPage=" + pageNo + "&type="+type+ "'>";
 			pageNavi += "<span class='material-icons'>chevron_right</span>";
 			pageNavi += "</a></li>";
 		}
