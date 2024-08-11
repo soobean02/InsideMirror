@@ -48,10 +48,11 @@ public class MemberController {
 		if(member == null) {
 			return "member/login";
 		}else {
-//			List sp = productService.selectUseProductInfo(member); <= 로그인 하면 top에 있는 css가 적용되게끔.. include 안되어있어서 일단 빼둠...
+			List sp = productService.selectUseProductInfo(member); //<= 로그인 하면 top에 있는 css가 적용되게끔.. include 안되어있어서 일단 빼둠...
+			System.out.println(sp);
 			if(member.getMemberLevel() == 2) {
-//				 model.addAttribute("spCss", sp); css 적용 시키기
 				session.setAttribute("member", member);
+				session.setAttribute("spCss", sp); // css 적용 시키기
 				model.addAttribute("member", member);
 				return "redirect:/member/memberPage";
 			}else if(member.getMemberLevel() == 1) {
