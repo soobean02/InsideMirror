@@ -144,7 +144,7 @@ public class BoardService {
 			Pattern pattern = Pattern.compile("<img[^>]*src=\"([^\"]+)\"[^>]*>");
 			System.out.println(pattern);
 			Matcher matcher = pattern.matcher(boardContent);
-			System.out.println(matcher);
+			System.out.println(matcher); 
 			List<String> imagePaths = new ArrayList<>();
 			while (matcher.find()) {
 				imagePaths.add(matcher.group(1));
