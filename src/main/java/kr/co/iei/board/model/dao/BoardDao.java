@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import kr.co.iei.board.model.dto.Board;
 import kr.co.iei.board.model.dto.BoardComment;
 import kr.co.iei.board.model.dto.BoardCommentRowMapper;
-import kr.co.iei.board.model.dto.BoardFile;
 import kr.co.iei.board.model.dto.BoardFileRowMapper;
 import kr.co.iei.board.model.dto.BoardRowMapper;
 import kr.co.iei.board.model.dto.OneBoardRowMapper;
@@ -148,12 +147,12 @@ public class BoardDao {
 		return result;
 	}//즐겨찾기 취소
 
-	public int insertBoardFile(BoardFile boardFile) {
-		String query = "insert into board_file values(board_file_seq.nextval,?,?)";
-		Object[] params = {boardFile.getBoardNo(),boardFile.getFilepath()};
-		int result = jdbc.update(query, params);
-		return result;
-	}//파일 insert
+	// public int insertBoardFile(BoardFile boardFile) {
+	// 	String query = "insert into board_file values(board_file_seq.nextval,?,?)";
+	// 	Object[] params = {boardFile.getBoardNo(),boardFile.getFilepath()};
+	// 	int result = jdbc.update(query, params);
+	// 	return result;
+	// }//파일 insert
 
 	public int insertBoardComment(BoardComment comment) {
 		String query = "insert into board_comment values(board_comment_seq.nextval,?,?,?,sysdate,?,0)";

@@ -1,8 +1,6 @@
 package kr.co.iei.board.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.board.model.dto.Board;
 import kr.co.iei.board.model.dto.BoardComment;
-import kr.co.iei.board.model.dto.BoardFile;
 import kr.co.iei.board.model.dto.BoardListData;
 import kr.co.iei.board.model.service.BoardService;
 import kr.co.iei.member.model.dto.Member;
@@ -68,17 +65,13 @@ public class BoardController {
 
 	@PostMapping(value="/write")
 	public String write(Board board, Model model){
-		List<BoardFile> fileList = new ArrayList<BoardFile>();
-		// if(!upfile[0].isEmpty()){
-		// 	String savepath = root+"/board/";
-		// 	for(MultipartFile file : upfile){
-		// 		String filepath = fileUtils.upload(savepath, file);
-		// 		BoardFile boardFile = new BoardFile();
-		// 		boardFile.setFilepath(filepath);
-		// 		fileList.add(boardFile);
-		// 	}
-		// }
-		int result = boardService.insertBoard(board, fileList);
+		if(board.getBoardTitle().equals("")){
+			board.setBoardTitle("제목");
+		}
+		if(board.getBoardContent().equals("")){
+			board.setBoardContent(" ");
+		}
+		int result = boardService.insertBoard(board);
 		if(result > 0){
 			//작성 성공로직
 			model.addAttribute("title", "작성");

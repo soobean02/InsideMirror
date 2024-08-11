@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.iei.board.model.dao.BoardDao;
 import kr.co.iei.board.model.dto.Board;
 import kr.co.iei.board.model.dto.BoardComment;
-import kr.co.iei.board.model.dto.BoardFile;
 import kr.co.iei.board.model.dto.BoardListData;
 import kr.co.iei.member.model.dto.Member;
 
@@ -113,17 +112,17 @@ public class BoardService {
 	}//수정하기 위해서 데이터를 가져오는 작업 (게시글 수정)
 
 	@Transactional
-	public int insertBoard(Board board, List<BoardFile> fileList) {
+	public int insertBoard(Board board) {
 		int result = boardDao.insertBoard(board);
 
-		if(result > 0){
-			int boardNo = boardDao.selectBoardNo();
+		// if(result > 0){
+		// 	int boardNo = boardDao.selectBoardNo();
 
-			for(BoardFile boardFile : fileList){
-				boardFile.setBoardNo(boardNo);
-				result += boardDao.insertBoardFile(boardFile);
-			}
-		}
+		// 	for(BoardFile boardFile : fileList){
+		// 		boardFile.setBoardNo(boardNo);
+		// 		result += boardDao.insertBoardFile(boardFile);
+		// 	}
+		// }
 		return result;
 	}//게시판 insert
 
@@ -139,19 +138,15 @@ public class BoardService {
 		Board board = boardDao.selectOneBoardForFile(boardNo);
 		if(board != null){
 			String boardContent = board.getBoardContent();
-			System.out.println(boardContent);
 			//경로 먼저 추출
 			Pattern pattern = Pattern.compile("<img[^>]*src=\"([^\"]+)\"[^>]*>");
-			System.out.println(pattern);
 			Matcher matcher = pattern.matcher(boardContent);
-			System.out.println(matcher); 
 			List<String> imagePaths = new ArrayList<>();
 			while (matcher.find()) {
 				imagePaths.add(matcher.group(1));
 			}
 
 			for (String imagePath : imagePaths){
-				System.out.println(imagePath);
 				deleteFile(imagePath);
 			}
 
@@ -166,7 +161,6 @@ public class BoardService {
 	}//게시글 삭제
 
 	public void deleteFile(String filePath){
-		System.out.println(filePath);
 		File file = new File(root + filePath);
 		if (file.exists()) {
 			file.delete();

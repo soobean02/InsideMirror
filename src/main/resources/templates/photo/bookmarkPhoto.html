@@ -325,6 +325,7 @@
                             subInfoDiv.append(`<span class="material-icons push-tag temp-like-tag like" onclick="likePush(this, ${memberNo}, ${p.photoNo})">favorite_border</span>`);
                             subInfoDiv.append(`<span class="like-count">${p.likeCount}</span>`);
                             subInfoDiv.append(`<span class="material-icons push-tag temp-bookmark-tag bookmark" onclick="pushBookmark(this, ${memberNo}, ${p.photoNo})">bookmark_border</span>`);
+                            subInfoDiv.append(`<span class="photo-date">${p.photoDate}</span>`);
                             
                             const img = $("<img class='img-box'>");
                             img.attr("src","/photo/"+p.photoContent);

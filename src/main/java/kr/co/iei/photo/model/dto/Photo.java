@@ -14,7 +14,7 @@ public class Photo {
 	private int memberNo;
 	private String photoTitle;
 	private String photoContent;
-	private Date photoDate;
+	private String photoDate;
 
 	private int isLike;
 

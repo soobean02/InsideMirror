@@ -418,7 +418,7 @@
                         </th:block>
                     </div>
                     
-                    <div class="content-both comment-list-content content-hover left" th:text="${bc.boardCommentContent}"></div>
+                    <div class="content-both comment-list-content content-hover left" style="white-space: pre-line;" th:text="${bc.boardCommentContent}"></div>
 
                 </div>
                     <!-- 답글 -->
@@ -445,7 +445,7 @@
                                     <a href="javascript:void(0)" class="edit right" th:onclick="editComment(this,[[${bcc.boardCommentNo}]],[[${board.boardNo}]],[[${bcc.boardCommentRef}]])">수정</a>
                                 </th:block>
                             </p>
-                            <p class="content-both reComment-content-list content-hover" th:text="${bcc.boardCommentContent}"></p>
+                            <p class="content-both reComment-content-list content-hover" style="white-space: pre-line;" th:text="${bcc.boardCommentContent}"></p>
                         </div>
 
                     </div>
@@ -743,7 +743,7 @@
                                         <a href="javascript:void(0)" class="remove right" onclick="removeComment(this, ${comment.boardCommentNo}, ${boardNo})">삭제</a>
                                         <a href="javascript:void(0)" class="edit right" onclick="editComment(this, ${comment.boardCommentNo}, ${boardNo})">수정</a>
                                         </div>
-                                        <div class="content-both comment-list-content content-hover left short-content">${comment.boardCommentContent}</div>
+                                        <div class="content-both comment-list-content content-hover left short-content" style="white-space: pre-line;">${comment.boardCommentContent}</div>
                                     </div>`;
     
                                 const reComment = `
@@ -784,7 +784,7 @@
                                                 <a href="javascript:void(0)" class="remove right" onclick="removeComment(this,${comment.boardCommentNo},${boardNo},${comment.boardCommentRef})">삭제</a>
                                                 <a href="javascript:void(0)" class="edit right" onclick="editComment(this,${comment.boardCommentNo},${boardNo},${comment.boardCommentRef})">수정</a>
                                             </p>
-                                            <p class="content-both reComment-content-list content-hover short-content">${comment.boardCommentContent}</p>
+                                            <p class="content-both reComment-content-list content-hover short-content" style="white-space: pre-line;">${comment.boardCommentContent}</p>
                                         </div>
                                     </div>`;
                                     const reCommentBox = $(item).parent().parent();
