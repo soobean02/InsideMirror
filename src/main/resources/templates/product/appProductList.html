@@ -113,7 +113,7 @@ input[name=product]:checked+label {
 	</div>
 	<div class="wrap">
 		<div class="reset_btn">
-			<a th:href="@{/product/canProduct(productNo=0,productListNo=0,all=1)}"><button>전체 초기화</button></a>
+			<a th:href="@{/product/canProduct(productNo=0,productListNo=0,all=1)}" class="canBtn"><button>전체 초기화</button></a>
 			<!-- <a href="/product/canProduct?all=1"><button>전체 초기화</button></a> -->
 		</div>
 		<div class="app_product_wrap">
@@ -126,7 +126,7 @@ input[name=product]:checked+label {
 					</div>
 					<div class="product_box2">
 						<h3 th:text="${sp.sellProduct.productName}"></h3>
-						<button class="oneBtn"><a th:href="@{/product/canProduct(productNo=${sp.buyProduct.productNo},productListNo=${sp.sellProduct.productListNo},all=0)}" id="One">적용 취소</a></button>
+						<a th:href="@{/product/canProduct(productNo=${sp.buyProduct.productNo},productListNo=${sp.sellProduct.productListNo},all=0)}" class="canBtn"><button class="oneBtn">적용 취소</button></a>
 						<h4>구입일 : <th:block th:text="${sp.buyProduct.buyDate}"></th:block></h4>
 					</div>
 				</div>
@@ -143,9 +143,10 @@ input[name=product]:checked+label {
 			$(".form_radio").submit();
 		});
 		
-		$("a").on("click",function(){
+		$(".canBtn").on("click",function(event){
 			event.preventDefault(); // a태그 눌러도 동작 몬하게..!
 			const href = $(this).prop("href"); // 링크 가져오기
+			console.log(href);
 			swal({
 				title: "초기화",
 				text: "초기화하시겠습니까?",
