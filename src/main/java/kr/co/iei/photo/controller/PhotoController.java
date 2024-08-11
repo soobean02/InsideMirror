@@ -1,5 +1,6 @@
 package kr.co.iei.photo.controller;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,6 +99,24 @@ public class PhotoController {
 		}
 		int result = photoService.pushBookmark(isBookmark, photoNo, member);
 		return result;
+	}
+
+	@ResponseBody
+	@PostMapping(value="/remove")
+	public int removePhoto(int memberNo, int photoNo, @SessionAttribute(required=false) Member member){
+		if(member == null){
+			return -1;
+		}
+		Photo photo = photoService.removePhoto(memberNo, photoNo);
+
+		if(photo == null){
+			return 0;
+		}
+		String savepath = root + "/photo/";
+			File delFile = new File(savepath + photo.getPhotoContent());
+			delFile.delete();
+			
+		return 1;
 	}
 
 	

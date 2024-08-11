@@ -168,7 +168,7 @@ public class BoardController {
 		}
 		int result = boardService.pushBookMark(isBookMark, boardNo, member);
 		return result;
-	}
+	}//즐겨찾기하면
 
 	@ResponseBody
 	@PostMapping(value="/comment")

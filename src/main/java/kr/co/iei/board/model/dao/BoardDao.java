@@ -102,6 +102,16 @@ public class BoardDao {
 		return result;
 	}//게시글 삭제
 
+	public Board selectOneBoardForFile(int boardNo) {
+		String query = "select * from board where board_no = ?";
+		Object[] params = {boardNo};
+		List list = jdbc.query(query, boardRowMapper, params);
+		if(list.isEmpty()){
+			return null;
+		}
+		return (Board)list.get(0);
+	}//게시글 하나 조회 for 파일
+
 	public int selectBoardNo() {
 		String qeury = "select max(board_no) from board";
 		int result = jdbc.queryForObject(qeury, Integer.class);
@@ -449,6 +459,10 @@ public class BoardDao {
 		int totalCount = jdbc.queryForObject(query, Integer.class, params);
 		return totalCount;
 	}//즐겨찾기 한 거중 작성자로 검색한거 총 개수 조회
+
+	
+
+	
 
 	
 

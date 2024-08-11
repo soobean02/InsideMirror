@@ -71,16 +71,28 @@ public class PhotoService {
 		return result;
 	}
 
+	@Transactional
+	public Photo removePhoto(int memberNo, int photoNo) {
+		Photo photo = photoDao.selectOnePhoto(photoNo);
+
+		int result = photoDao.removePhoto(memberNo, photoNo);
+		if(result > 0){
+			return photo;
+		}
+		return null;
+	}//사진첩 삭제
+
+
 	public int geTBookmarkTotalCount(Member member) {
 		int totalCount = photoDao.getBookmarkTotalCount(member);
 		return totalCount;
-	}
+	}//즐겨찾기 한 거 개수 조회
 
 	public List selectBookmarkPhotoList(int start, int amount, Member member) {
 		int end = start + amount - 1;
 		List photoList = photoDao.selectBookmarkPhotoList(start, end, member);
 		return photoList;
-	}
+	}//즐겨찾기 조회
 
 	public List selectBookmarkPhotoSort(int start, int amount, int sort, Member member) {
 		int end = start + amount - 1;
@@ -92,7 +104,9 @@ public class PhotoService {
 			photoList = photoDao.bookmarkPhotoSortPopular(start, end, member);
 		}
 		return photoList;
-	}
+	}//즐겨찾기 정렬
+
+	
 
 	
 }

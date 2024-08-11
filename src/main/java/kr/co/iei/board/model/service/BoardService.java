@@ -1,8 +1,13 @@
 package kr.co.iei.board.model.service;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +23,9 @@ public class BoardService {
 
 	@Autowired
 	private BoardDao boardDao;
+
+	@Value("${file.root}")
+	private String root;
 
 	public BoardListData selectBoardList(int reqPage) {
 		int numPerPage = 10;
@@ -127,9 +135,43 @@ public class BoardService {
 
 	@Transactional
 	public int deleteBoard(int boardNo) {
+		//먼저 조회
+		Board board = boardDao.selectOneBoardForFile(boardNo);
+		if(board != null){
+			String boardContent = board.getBoardContent();
+			System.out.println(boardContent);
+			//경로 먼저 추출
+			Pattern pattern = Pattern.compile("<img[^>]*src=\"([^\"]+)\"[^>]*>");
+			System.out.println(pattern);
+			Matcher matcher = pattern.matcher(boardContent);
+			System.out.println(matcher);
+			List<String> imagePaths = new ArrayList<>();
+			while (matcher.find()) {
+				imagePaths.add(matcher.group(1));
+			}
+
+			for (String imagePath : imagePaths){
+				System.out.println(imagePath);
+				deleteFile(imagePath);
+			}
+
+		}
+		else{
+			//조회 실패시
+			return 0;
+		}
+
 		int result = boardDao.deleteBoard(boardNo);
 		return result;
 	}//게시글 삭제
+
+	public void deleteFile(String filePath){
+		System.out.println(filePath);
+		File file = new File(root + filePath);
+		if (file.exists()) {
+			file.delete();
+		}
+	}//파일 삭제
 
 	@Transactional
 	public int pushLike(int isLike, int boardNo, Member member) {

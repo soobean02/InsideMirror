@@ -216,6 +216,11 @@
         font-size: 18px;
         font-weight: 500;
     }
+    .post-sub-info>.delete-tag{
+        font-size: 30px;
+        cursor: pointer;
+        margin-right: 20px;
+    }
 
 </style>
 
@@ -269,7 +274,7 @@
         let url = "/photo/bookmark/more";
         let sort = 1;
 
-        const totalCount = [[${totalCount}]];
+        let totalCount = [[${totalCount}]];
         let currentCount = 0;
         let start = 1;
         $(".photo-wrap").scroll(function(e) {
@@ -314,6 +319,9 @@
                             
                             const subInfoDiv = $("<div>");
                             subInfoDiv.addClass("post-sub-info").addClass("left");
+                            if(p.memberNo == 1){
+                                subInfoDiv.append(`<span class="material-icons delete-tag" onclick="removePhoto(this, ${memberNo}, ${p.photoNo})">delete</span>`);
+                            }
                             subInfoDiv.append(`<span class="material-icons push-tag temp-like-tag like" onclick="likePush(this, ${memberNo}, ${p.photoNo})">favorite_border</span>`);
                             subInfoDiv.append(`<span class="like-count">${p.likeCount}</span>`);
                             subInfoDiv.append(`<span class="material-icons push-tag temp-bookmark-tag bookmark" onclick="pushBookmark(this, ${memberNo}, ${p.photoNo})">bookmark_border</span>`);
@@ -339,7 +347,7 @@
                         start += amount;
                         currentCount = currentCount + data.length;
                         
-                        if(currentCount == totalCount){
+                        if(currentCount >= totalCount){
                             done = 1;
                         }
                     },
@@ -432,6 +440,65 @@
             })
         }
 
+        function removePhoto(obj, memberNo, photoNo){
+
+            swal({
+				title:"사진첩 삭제",
+				text:"이 사진첩을 삭제하시겠습니까?",
+				icon:"info",
+				buttons:{
+					cancel:{
+						text:"취소",
+						value:false,
+						visible:true,
+						className:"btn-secondary",
+						closeModal:true
+					},
+					confirm:{
+						text:"삭제",
+						value:true,
+						visible:true,
+						className:"btn-primary",
+						closeModal:true
+					}
+				}
+			}).then(function(isConfirm){
+				if(isConfirm){
+					$.ajax({
+                        url : "/photo/remove",
+                        type : "post",
+                        data : {memberNo : memberNo, photoNo : photoNo},
+                        success : function(data){
+                            if(data == -1){
+                                alert("로그인 후 이용 가능");
+                            }
+                            if(data > 0){
+                                $(obj).parents(".post-li").remove();
+                                if($(".post-li").length == 0){
+                                    emptyPhoto();
+                                }
+                                else if($(".post-li").length <= 3){
+                                    currentCount = $(".post-li").length;
+                                    start = start - 1;
+                                    done = 0;
+                                    totalCount = totalCount - 1;
+                                    getMore(false,sort);
+                                }
+                            }
+                            else {
+                                alert("삭제실패");
+                            }
+                        },
+                        error : function(){
+                            console.log("error");
+                        }
+                    })
+                }
+            });
+
+            
+        }
+
 
         function newest(obj){
             $(obj).addClass("active-sort");
@@ -440,6 +507,7 @@
 
                 $(".photo-content>.post-li").remove();
                 let moreUrl = true;
+                currentCount = 0;
                 start = 1;
                 sort = 1; //1이 newest 2가 popular
                 done = 0;
@@ -454,6 +522,7 @@
 
                 $(".photo-content>.post-li").remove();
                 let moreUrl = true;
+                currentCount = 0;
                 start = 1;
                 sort = 2; //1이 newest 2가 popular
                 done = 0;
