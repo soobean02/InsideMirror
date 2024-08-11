@@ -37,6 +37,9 @@
     .photo-header{
         width: 100%;
         height: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .change-wrap{
@@ -59,13 +62,7 @@
         cursor: pointer;
     }
 
-    .order-wrap{
-        width: 70%;
-        height: 80px;
-        text-align: center;
-        text-indent: -70px;
-        line-height: 80px;
-    }
+
     .write-wrap{
         width: 10%;
         height: 80px;
@@ -220,18 +217,13 @@
 
         <div class="photo-header">
 
-            <div class="change-wrap left">
-                <a href="/board/bookmark/list?reqPage=1"><button type="button">게시글</button></a>
-            </div>
 
             <div class="order-wrap left">
                 <button class="order-btn active-sort" onclick="newest(this)">최신순</button>
                 <button class="order-btn" onclick="popular(this)">인기순</button>
             </div>
 
-            <div class="write-wrap left">
-                <span class="material-icons photo-btn" th:if="${session.member != null}">add_a_photo</span>
-            </div>
+
 
         </div>
 
@@ -250,9 +242,7 @@
 
     <script>
 
-        $(".write-wrap>.material-icons").on("click",function(){
-            location.href = "/photo/writeFrm";
-        })
+        
 
         let done = 0;
         let url = "/member/more";

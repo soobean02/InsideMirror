@@ -316,6 +316,9 @@
             <div th:if="${list.isEmpty}" class="empty-wrap">
                 <span>마음에 드는 글들을 즐겨찾기 해보는 건 어떨까요?</span>
             </div>
+            <div class="empty-wrap" style="display: none;">
+                <span>마음에 드는 글들을 즐겨찾기 해보는 건 어떨까요?</span>
+            </div>
 
             <div class="board-td" th:each="board : ${list}">
                 <a th:href="@{/board/view(boardNo=${board.boardNo})}">
@@ -406,6 +409,12 @@
                         removeBtn.parent().parent().remove();
                         removeBtn.parent().next().remove();
                         removeBtn.remove();
+
+                        //즐겨찾기 한 게 아무 것도 없으면 다시 그 글 띄우기
+                        const boardTd = $(".board-td");
+                        if(boardTd.length == 0){
+                            $(".empty-wrap").show();
+                        }
                     }
                     else{
                         alert("삭제 실패");
