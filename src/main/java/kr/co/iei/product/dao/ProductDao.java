@@ -54,9 +54,9 @@ public class ProductDao {
 		return result;
 	}
 
-	/* 구매 상품 출력 - 3개 짜리 */
+	/* 구매 상품 출력 - 최신순으로 3개 짜리 */
 	public List selectProductPhoto() {
-		String query = "SELECT * FROM sell_product WHERE ROWNUM <= 3";
+		String query = "SELECT * FROM sell_product WHERE ROWNUM <= 3 order by 1 desc";
 		List list = jdbc.query(query, sellProductRowMapper);
 		if (list.isEmpty()) {
 			return null;

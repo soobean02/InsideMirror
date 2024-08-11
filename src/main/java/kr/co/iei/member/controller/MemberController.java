@@ -21,6 +21,7 @@ import jakarta.servlet.http.HttpSession;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.Title;
 import kr.co.iei.member.model.service.MemberService;
+import kr.co.iei.product.service.ProductService;
 import kr.co.iei.utils.EmailSender;
 import kr.co.iei.utils.FileUtils;
 
@@ -31,6 +32,8 @@ public class MemberController {
 	private MemberService memberService;
 	@Autowired
 	private EmailSender emailSender;
+	@Autowired
+	private ProductService productService;
 	
 	@Value("${file.root}")
 	private String root;
@@ -44,10 +47,13 @@ public class MemberController {
 	@PostMapping(value="/loginin")
 	public String login(Member m, HttpSession session, Model model) {
 		Member member = memberService.selectOneMember(m);
+		
 		if(member == null) {
 			return "member/login";
 		}else {
+//			List sp = productService.selectUseProductInfo(member); <= 로그인 하면 top에 있는 css가 적용되게끔.. include 안되어있어서 일단 빼둠...
 			if(member.getMemberLevel() == 2) {
+//				 model.addAttribute("spCss", sp); css 적용 시키기
 				session.setAttribute("member", member);
 				model.addAttribute("member", member);
 				return "redirect:/member/memberPage";
