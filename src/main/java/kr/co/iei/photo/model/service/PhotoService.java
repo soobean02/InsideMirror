@@ -69,4 +69,16 @@ public class PhotoService {
 		List photoList = photoDao.selectBookmarkPhotoList(start, end, member);
 		return photoList;
 	}
+
+	public List selectBookmarkPhotoSort(int start, int amount, int sort, Member member) {
+		int end = start + amount - 1;
+		List photoList = null;
+		if(sort == 1){
+			photoList = photoDao.selectBookmarkPhotoList(start, end, member);
+		}
+		else if (sort == 2){
+			photoList = photoDao.bookmarkPhotoSortPopular(start, end, member);
+		}
+		return photoList;
+	}
 }

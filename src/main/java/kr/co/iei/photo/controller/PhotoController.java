@@ -107,5 +107,12 @@ public class PhotoController {
 		return photoList;
 	}
 	
+	@ResponseBody
+	@GetMapping(value="/bookmark/sort")
+	public List bookmarkSort(int start, int amount, int sort, @SessionAttribute(required=false) Member member){
+		System.out.println("its SORT"+sort);
+		List photoList = photoService.selectBookmarkPhotoSort(start, amount, sort, member);
+		return photoList;
+	}
 	
 }

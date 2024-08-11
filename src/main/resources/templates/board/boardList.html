@@ -194,6 +194,7 @@
 
     .sort-btn{
         cursor: pointer;
+        padding-top: 5px;
     }
 
     .order-content>ul{
@@ -204,6 +205,10 @@
     }
     .submit-btn>.material-icons{
         font-size: 30px;
+    }
+
+    .order-content label{
+        cursor: pointer;
     }
 
 </style>
@@ -231,32 +236,32 @@
                         <form action="/board/order" method="get" class="order-form">
                             <li th:switch="${orderDate}">
                                 <div th:case=null>
-                                    <input class="left" type="radio" name="orderDate" value="newest" checked><span class="left">최신순</span>
-                                    <input class="left" type="radio" name="orderDate" value="popular"><span class="left">인기순</span>
+                                    <input class="left" type="radio" name="orderDate" id="newest" value="newest" checked><label for="newest"><span class="left">최신순</span></label>
+                                    <input class="left" type="radio" name="orderDate" id="popular" value="popular"><label for="popular"><span class="left">인기순</span></label>
                                 </div>
 
                                 <div th:case="newest">
-                                    <input class="left" type="radio" name="orderDate" value="newest" checked><span class="left">최신순</span>
-                                    <input class="left" type="radio" name="orderDate" value="popular"><span class="left">인기순</span>
+                                    <input class="left" type="radio" name="orderDate" id="newest" value="newest" checked><label for="newest"><span class="left">최신순</span></label>
+                                    <input class="left" type="radio" name="orderDate" id="popular" value="popular"><label for="popular"><span class="left">인기순</span></label>
                                 </div>
                                 
                                 <div th:case="popular">
-                                    <input class="left" type="radio" name="orderDate" value="newest"><span class="left">최신순</span>
-                                    <input class="left" type="radio" name="orderDate" value="popular" checked><span class="left">인기순</span>
+                                    <input class="left" type="radio" name="orderDate" id="newest" value="newest"><label for="newest"><span class="left">최신순</span></label>
+                                    <input class="left" type="radio" name="orderDate" id="popular" value="popular" checked><label for="popular"><span class="left">인기순</span></label>
                                 </div>
                             </li>
                             <li th:switch="${orderFriend}">
                                 <div th:case=null>
-                                    <input class="left" type="radio" name="orderFriend" value="all" checked><span class="left" style="margin-right: 17px;">전체</span>
-                                    <input class="left" type="radio" name="orderFriend" value="friend"><span class="left">일촌</span>
+                                    <input class="left" type="radio" name="orderFriend" id="all" value="all" checked><label for="all"><span class="left" style="margin-right: 17px;">전체</span></label>
+                                    <input class="left" type="radio" name="orderFriend" id="friend" value="friend"><label for="friend"><span class="left">일촌</span></label>
                                 </div>
                                 <div th:case="all">
-                                    <input class="left" type="radio" name="orderFriend" value="all" checked><span class="left" style="margin-right: 17px;">전체</span>
-                                    <input class="left" type="radio" name="orderFriend" value="friend"><span class="left">일촌</span>
+                                    <input class="left" type="radio" name="orderFriend" id="all" value="all" checked><label for="all"><span class="left" style="margin-right: 17px;">전체</span></label>
+                                    <input class="left" type="radio" name="orderFriend" id="friend" value="friend"><label for="friend"><span class="left">일촌</span></label>
                                 </div>
                                 <div th:case="friend">
-                                    <input class="left" type="radio" name="orderFriend" value="all"><span class="left" style="margin-right: 17px;">전체</span>
-                                    <input class="left" type="radio" name="orderFriend" value="friend" checked><span class="left">일촌</span>
+                                    <input class="left" type="radio" name="orderFriend" id="all" value="all"><label for="all"><span class="left" style="margin-right: 17px;">전체</span></label>
+                                    <input class="left" type="radio" name="orderFriend" id="friend" value="friend" checked><label for="friend"><span class="left">일촌</span></label>
                                 </div>
                             </li>
                             <li style="clear: left;" onclick="order()" class="sort-btn">정렬하기</li>

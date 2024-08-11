@@ -31,12 +31,21 @@ public class BoardRowMapper implements RowMapper<Board> {
 		try {
 			b.setBoardLike(rs.getInt("board_like"));
 			
+		} catch (Exception e) {
+			b.setBoardLike(0);
+		}
+		
+		try {
 			b.setIsLike(rs.getInt("is_like"));
-			b.setIsBookMark(rs.getInt("is_book_mark"));
 		} catch (Exception e) {
 			b.setIsLike(0);
+		}
+		
+		try {
+			b.setIsBookMark(rs.getInt("is_book_mark"));
+		} catch (Exception e) {
+			// TODO: handle exception
 			b.setIsBookMark(0);
-			b.setBoardLike(0);
 		}
 
 		try {
