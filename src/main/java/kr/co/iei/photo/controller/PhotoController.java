@@ -72,6 +72,14 @@ public class PhotoController {
 	}
 
 	@ResponseBody
+	@GetMapping(value="/sort")
+	public List Sort(int start, int amount, int sort, @SessionAttribute(required=false) Member member){
+		System.out.println("its SORT"+sort);
+		List photoList = photoService.selectPhotoSort(start, amount, sort, member);
+		return photoList;
+	}
+
+	@ResponseBody
 	@PostMapping(value="/like")
 	public int pushLike(int isLike, int photoNo, @SessionAttribute(required = false) Member member, Model model){
 		if(member == null){
@@ -91,6 +99,8 @@ public class PhotoController {
 		int result = photoService.pushBookmark(isBookmark, photoNo, member);
 		return result;
 	}
+
+	
 	
 	
 	@GetMapping(value="/bookmark/list")
@@ -110,7 +120,6 @@ public class PhotoController {
 	@ResponseBody
 	@GetMapping(value="/bookmark/sort")
 	public List bookmarkSort(int start, int amount, int sort, @SessionAttribute(required=false) Member member){
-		System.out.println("its SORT"+sort);
 		List photoList = photoService.selectBookmarkPhotoSort(start, amount, sort, member);
 		return photoList;
 	}

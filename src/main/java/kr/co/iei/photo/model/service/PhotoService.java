@@ -32,6 +32,18 @@ public class PhotoService {
 		return photoList;
 	}
 
+	public List selectPhotoSort(int start, int amount, int sort, Member member) {
+		int end = start + amount - 1;
+		List photoList = null;
+		if(sort == 1){
+			photoList = photoDao.selectPhotoList(start, end, member);
+		}
+		else if (sort == 2){
+			photoList = photoDao.PhotoSortPopular(start, end, member);
+		}
+		return photoList;
+	}
+
 	@Transactional
 	public int pushLike(int isLike, int photoNo, Member member) {
 		int result = 0;
@@ -81,4 +93,6 @@ public class PhotoService {
 		}
 		return photoList;
 	}
+
+	
 }

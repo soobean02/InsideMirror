@@ -44,6 +44,23 @@ public class PhotoDao {
 		return list;
 	}
 
+	public List PhotoSortPopular(int start, int end, Member member) {
+		String query = "select * from\r\n" + //
+						"    (select rownum as rnum, p.*,\r\n" + //
+						"        (select count(*) from photo_like where photo_no = p.photo_no and member_no = ?) as is_like,\r\n" + //
+						"        (select count(*) from photo_like where photo_no = p.photo_no) as like_count,\r\n" + //
+						"        (select count(*) from book_mark where photo_no = p.photo_no and member_no = ?) as is_bookmark\r\n" + //
+						"    from\r\n" + //
+						"        (select *\r\n" + //
+						"            from photo p2\r\n" + //
+						"                where member_no = (select member_no from member where member_no = ?)\r\n" + //
+						"                order by (select count(*) from photo_like where photo_no = p2.photo_no) desc)p)\r\n" + //
+						"where rnum between ? and ?";
+		Object[] params = {member.getMemberNo(), member.getMemberNo(), member.getMemberNo(), start, end};
+		List list = jdbc.query(query, photoRowMapper, params);
+		return list;
+	}
+
 	public int pushLike(int photoNo, Member member) {
 		String query = "insert into photo_like values(photo_like_seq.nextval,?,?)";
 		Object[] params = {member.getMemberNo(), photoNo};
@@ -74,7 +91,7 @@ public class PhotoDao {
 	}
 
 	public int getBookmarkTotalCount(Member member) {
-		String query = "select count(*) from photo p1 where member_no = ? and photo_no in (select photo_no from book_mark where photo_no = p1.photo_no)";
+		String query = "select count(*) from book_mark where member_no = ? and photo_no is not null";
 		Object[] params = {member.getMemberNo()};
 		int totalCount = jdbc.queryForObject(query, Integer.class, params);
 		return totalCount;
@@ -89,8 +106,8 @@ public class PhotoDao {
 						"    from \r\n" + //
 						"        (select * \r\n" + //
 						"            from photo p2 \r\n" + //
-						"                where member_no = (select member_no from member where member_no = ?) and\r\n" + //
-						"                photo_no = (select photo_no from book_mark where photo_no = p2.photo_no)\r\n" + //
+						"                where\r\n" + //
+						"                photo_no in (select photo_no from book_mark where member_no = ?)\r\n" + //
 						"                order by 1 desc)p)\r\n" + //
 						"where rnum between ? and ?";
 		Object[] params = {member.getMemberNo(), member.getMemberNo(), member.getMemberNo(), start, end};
@@ -107,12 +124,14 @@ public class PhotoDao {
 						"    from\r\n" + //
 						"        (select *\r\n" + //
 						"            from photo p2\r\n" + //
-						"                where member_no = (select member_no from member where member_no = ?) and\r\n" + //
-						"                photo_no = (select photo_no from book_mark where photo_no = p2.photo_no)\r\n" + //
+						"                where\r\n" + //
+						"                photo_no in (select photo_no from book_mark where member_no = ?)\r\n" + //
 						"                order by (select count(*) from photo_like where photo_no = p2.photo_no) desc)p)\r\n" + //
 						"where rnum between ? and ?";
-		Object[] params = {member.getMemberNo(), member.getMemberNo(), member.getMemberNo(), start, end};
+		Object[] params = {member.getMemberNo(), member.getMemberNo(), member.getMemberNo(),start, end};
 		List list = jdbc.query(query, photoRowMapper, params);
 		return list;
 	}
+
+	
 }

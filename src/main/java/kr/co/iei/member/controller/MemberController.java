@@ -1,6 +1,5 @@
 package kr.co.iei.member.controller;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
@@ -11,11 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
 import kr.co.iei.member.model.dto.Member;
@@ -226,4 +223,42 @@ public class MemberController {
 		emailSender.sendMail(emailTitle, receiver, emailContent);
 		return sb.toString();
 	}
+
+
+
+
+
+
+
+
+
+
+	///사진첩
+	@GetMapping(value="/photo")
+	public String friendPhoto(int memberNo, Model model){
+		int totalCount = memberService.getTotalCount(memberNo);
+		Member friendMember = memberService.getFriendMember(memberNo);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("memberNo", memberNo);
+		model.addAttribute("friendMember", friendMember);
+		return "/member/friendPhotoList";
+	}//다른 사람 사진첩 조회
+
+	@ResponseBody
+	@GetMapping(value="/more")
+	public List friendPhotoMore(int start, int amount, int friendMemberNo, @SessionAttribute(required = false) Member member){
+		//memberNo는 친구 고유번호 session은 나
+		List photoList = memberService.selectPhotoList(start, amount, friendMemberNo, member);
+		return photoList;
+	}//사진첩 조회
+	//친구 정렬 만들기
+
+	@ResponseBody
+	@GetMapping(value="/sort")
+	public List friendPhotoSort(int start, int amount, int sort, int friendMemberNo, @SessionAttribute(required = false) Member member){
+		List photoList = memberService.selectFriendPhotoSort(start, amount, sort, friendMemberNo, member);
+		return photoList;
+	}
+
+
 }

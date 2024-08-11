@@ -167,6 +167,39 @@ public class MemberService {
 	}
 
 
+	//사진첩
+	public int getTotalCount(int memberNo) {
+		int totalCount = memberDao.getTotalCount(memberNo);
+		return totalCount;
+	}
+
+
+	public List selectPhotoList(int start, int amount, int friendMemberNo, Member member) {
+		int end = start + amount - 1;
+		List photoList = memberDao.selectPhotoList(start, end, friendMemberNo, member);
+		return photoList;
+	}
+
+
+	public Member getFriendMember(int memberNo) {
+		Member member = memberDao.getFriendMember(memberNo);
+		return member;
+	}//친구 조회 (with memberNo)
+
+
+	public List selectFriendPhotoSort(int start, int amount, int sort, int friendMemberNo, Member member) {
+		int end = start + amount - 1;
+		List photoList = null;
+		if(sort == 1){
+			photoList = memberDao.selectPhotoList(start, end, friendMemberNo, member);
+		}
+		else if (sort == 2){
+			photoList = memberDao.PhotoSortPopular(start, end, friendMemberNo, member);
+		}
+		return photoList;
+	}//친구 sort
+
+
 
 
 

@@ -206,12 +206,14 @@
         }
     }
 
+    
+
 </style>
 
 </head>
 <body>
 
-    <th:block th:include="common/top"></th:block>
+    <th:block th:include="common/friendTop"></th:block>
     <div class="box-title">사진첩 ></div>
     
     <div class="photo-wrap">
@@ -219,6 +221,7 @@
         <div class="photo-header">
 
             <div class="change-wrap left">
+                <a href="/board/bookmark/list?reqPage=1"><button type="button">게시글</button></a>
             </div>
 
             <div class="order-wrap left">
@@ -241,18 +244,18 @@
     </div>
 
 
-    <th:block th:include="common/bottom"></th:block>
+    <th:block th:include="common/friendBottom"></th:block>
 
 
 
     <script>
 
-$(".write-wrap>.material-icons").on("click",function(){
+        $(".write-wrap>.material-icons").on("click",function(){
             location.href = "/photo/writeFrm";
         })
 
         let done = 0;
-        let url = "/photo/more";
+        let url = "/member/more";
         let sort = 1;
 
         const totalCount = [[${totalCount}]];
@@ -265,19 +268,20 @@ $(".write-wrap>.material-icons").on("click",function(){
         });  
 
         const memberNo = [[${session.member.memberNo}]];
+        const friendMemberNo = [[${memberNo}]];
         
         
         getMore();
         function getMore(moreUrl, sort){
             const amount = 4;
             if(moreUrl){
-                url = "/photo/sort";
+                url = "/member/sort";
             }
             if(done != 1){
                 $.ajax({
                     url : url,
                     type : "get",
-                    data : {start : start , amount : amount , sort : sort},
+                    data : {start : start , amount : amount , sort : sort, friendMemberNo : friendMemberNo},
                     success : function(data){
                         for(let i = 0; i < data.length; i++){
                             const p = data[i];

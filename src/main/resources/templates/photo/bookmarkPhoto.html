@@ -403,7 +403,10 @@
                     }
                     else if(data == 1){
                         if(isBookMark == 0) $(obj).text("bookmark");
-                        else $(obj).text("bookmark_border");
+                        else {
+                            $(obj).parents(".post-li").remove();
+                            $(obj).text("bookmark_border");
+                        }
                     }
                 },
                 error : function(){
