@@ -250,7 +250,7 @@ public class BoardController {
 
 	@GetMapping(value="/bookmark/search")
 	public String bookmarkSearch(String type, String keyword, int reqPage, Model model, @SessionAttribute(required=false) Member member){
-		if(keyword.equals("")) return "redirect:/board/bookmark/search?reqPage=1";
+		if(keyword.equals("")) return "redirect:/board/bookmark/list?reqPage=1";
 
 		BoardListData bld = boardService.selectBookmarkSearchList(type,keyword,reqPage,member);
 		model.addAttribute("list", bld.getList());

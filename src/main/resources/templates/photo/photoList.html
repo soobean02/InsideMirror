@@ -206,6 +206,17 @@
         }
     }
 
+    .photo-empty{
+        width: 100%;
+        height: 400px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #a0a0a0;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
 </style>
 
 </head>
@@ -234,7 +245,9 @@
 
 
         <div class="photo-content">
-
+            <div class="photo-empty" style="display: none;">
+                <span>나만의 멋진 사진이 있다면 업로드를 해서 자랑하는 건 어떨까요?</span>
+            </div>
         </div>
 
 
@@ -246,8 +259,9 @@
 
 
     <script>
+        
 
-$(".write-wrap>.material-icons").on("click",function(){
+        $(".write-wrap>.material-icons").on("click",function(){
             location.href = "/photo/writeFrm";
         })
 
@@ -279,6 +293,9 @@ $(".write-wrap>.material-icons").on("click",function(){
                     type : "get",
                     data : {start : start , amount : amount , sort : sort},
                     success : function(data){
+                        if(start == 1 && data.length == 0){
+                            emptyPhoto();
+                        }
                         for(let i = 0; i < data.length; i++){
                             const p = data[i];
                             const li = $("<li>");
@@ -436,6 +453,11 @@ $(".write-wrap>.material-icons").on("click",function(){
                 done = 0;
                 getMore(moreUrl, sort);
             }
+        }
+
+
+        function emptyPhoto(){
+            $(".photo-empty").show();
         }
 
     </script>

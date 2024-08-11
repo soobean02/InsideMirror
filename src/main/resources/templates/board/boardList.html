@@ -211,6 +211,19 @@
         cursor: pointer;
     }
 
+    .board-empty{
+        width: 100%;
+        height: 350px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .board-empty span{
+        color: #9e9e9e;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
 </style>
 
 <head>
@@ -317,6 +330,13 @@
                 <div style="width:10%; text-align: center;">조회수</div>
                 <div style="width:10%; text-align: center;">좋아요</div>
                 <div style="width:15%; text-align: center;">작성일</div>
+            </div>
+
+            <div class="board-empty" th:if="${list.isEmpty}">
+                <div th:switch="${type}">
+                    <span th:case="title" th:text="${'이런! ' + {keyword} + '은(는) 존재하지 않는 게시글인가봐요!'}"></span>
+                    <span th:case="writer" th:text="${'이런! ' + {keyword} + '은(는) 존재하지 않는 사람인가봐요!'}"></span>
+                </div>
             </div>
 
             <div class="board-td" th:each="board : ${list}">

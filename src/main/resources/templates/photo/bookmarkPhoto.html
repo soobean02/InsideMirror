@@ -206,7 +206,16 @@
         }
     }
 
-    
+    .photo-empty{
+        width: 100%;
+        height: 400px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #a0a0a0;
+        font-size: 18px;
+        font-weight: 500;
+    }
 
 </style>
 
@@ -214,7 +223,7 @@
 <body>
 
     <th:block th:include="common/top"></th:block>
-    <div class="box-title">사진첩 ></div>
+    <div class="box-title">즐겨찾기 ></div>
     
     <div class="photo-wrap">
 
@@ -237,7 +246,9 @@
 
 
         <div class="photo-content">
-
+            <div class="photo-empty" style="display: none;">
+                <span>다른 멋진 사진들을 즐겨찾기 해서 보고 싶을때 언제든 보는 건 어떨까요?</span>
+            </div>
         </div>
 
 
@@ -282,6 +293,9 @@
                     type : "get",
                     data : {start : start , amount : amount , sort : sort},
                     success : function(data){
+                        if(start == 1 && data.length == 0){
+                            emptyPhoto();
+                        }
                         for(let i = 0; i < data.length; i++){
                             const p = data[i];
                             const li = $("<li>");
@@ -406,6 +420,9 @@
                         else {
                             $(obj).parents(".post-li").remove();
                             $(obj).text("bookmark_border");
+                            if($(".post-li").length == 0){
+                                emptyPhoto();
+                            }
                         }
                     }
                 },
@@ -442,6 +459,10 @@
                 done = 0;
                 getMore(moreUrl, sort);
             }
+        }
+
+        function emptyPhoto(){
+            $(".photo-empty").show();
         }
 
     </script>
