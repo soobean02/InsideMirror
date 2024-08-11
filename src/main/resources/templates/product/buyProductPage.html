@@ -187,14 +187,14 @@ h4 {
 	margin-top: 20px;
 }
 
-.pay_acorn>button {
+.pay_acorn button {
 	margin-left: 35px;
 }
 
 .btn {
 	color: #fff;
 	cursor: pointer;
-	background-color: var(- -btn_primary);
+	background-color: skyblue;
 	padding: 0;
 	width: 120px;
 	height: 30px;
@@ -238,7 +238,7 @@ h4 {
 			<div class="acorn_tx acorn_box">
 				<h3>구입일 <th:block th:text="${sp.buyProduct.buyDate}"></th:block></h3>
 				<!-- 적용하기 버튼을 누르면 상품 번호와 상품 리스트 번호를 같이 전송 -->
-				<button class="btn"><a th:href="@{/product/useP(productNo=${sp.buyProduct.productNo},productListNo=${sp.sellProduct.productListNo})}">적용하기</a></button>
+				<a th:href="@{/product/useP(productNo=${sp.buyProduct.productNo},productListNo=${sp.sellProduct.productListNo})}"><button class="btn">적용하기</button></a>
 				<a href="/customer/customerFrm" class="refund">환불하기 > </a>
 			</div>
 		</div>

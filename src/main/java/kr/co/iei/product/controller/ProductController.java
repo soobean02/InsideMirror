@@ -48,18 +48,16 @@ public class ProductController {
 			model.addAttribute("loc", "/product/acornProduct");
 			return "common/msg";
 		}else {
-			// 도토리 insert 실패 시 api 연동
-			model.addAttribute("fail", 0);
-			model.addAttribute("failMerchant", merchant); // 주문 번호
-			model.addAttribute("failAcornPrice", m.getAcorns()*100); // 실패한 도토리 가격
-			return "/product/acornProduct";
-			/*
-			model.addAttribute("title", "실패");
-			model.addAttribute("msg", "결제 실패");
+//			// 도토리 insert 실패 시 api 연동해보기..
+//			model.addAttribute("fail", 0);
+//			model.addAttribute("failMerchant", merchant); // 주문 번호
+//			model.addAttribute("failAcornPrice", m.getAcorns()*100); // 실패한 도토리 가격
+//			return "/product/acornProduct";
+			model.addAttribute("title", "결제 실패");
+			model.addAttribute("msg", "관리자에게 문의해주세요");
 			model.addAttribute("icon", "error");
 			model.addAttribute("loc", "/product/acornProduct");
 			return "common/msg";
-			*/
 		}
 	}
 //	@ResponseBody
