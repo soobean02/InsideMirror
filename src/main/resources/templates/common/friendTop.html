@@ -86,6 +86,7 @@
 						th:text="${friendMember.memberName}+님의홈피"></div>
 				</div>
 				<div class="box content-box">
+				
 					<script th:inline="javascript">
 					// 추출된 값들을 페이지에 적용
 					$(function(){
@@ -94,7 +95,7 @@
 						let font;
 
 						// session.spCss 배열의 크기를 가져옴
-						const len = [[${session.spCss}]];
+						const len = [[${spCss}]];
 						// session.spCss 배열을 순회하면서 필요한 값을 추출
 
 						for(let i=0; i<len.length; i++){
