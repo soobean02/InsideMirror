@@ -1,50 +1,52 @@
 <!DOCTYPE html>
 
 
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<link rel="stylesheet"
+	href="https://unpkg.com/swiper/swiper-bundle.min.css">
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <link rel="stylesheet" href="/css/minihomepage.css">
 <link rel="stylesheet" href="/css/header.css">
 <link rel="stylesheet" href="/css/layout.css">
 <link rel="stylesheet" href="/css/font.css">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 <script src="/summernote/summernote-lite.js"></script>
 <script src="/summernote/lang/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="/summernote/summernote-lite.css">
 
 <style>
-	.profile-text>textarea {
-		width: 100%;
-		height: 100px;
-		border: none;
-		resize: none;
-		padding: 0;
-		overflow: hidden;
-	}
+.profile-text>textarea {
+	width: 100%;
+	height: 100px;
+	border: none;
+	resize: none;
+	padding: 0;
+	overflow: hidden;
+}
 
-	.profile-image-area {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
+.profile-image-area {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
-	.profile-image-img {
-		width: 200px;
-		height: 200px;
-		border-radius: 15px;
-	}
+.profile-image-img {
+	width: 200px;
+	height: 200px;
+	border-radius: 15px;
+}
 
-	.follow-btn {
-		display: flex;
-		justify-content: center;
-		align-content: center;
-		padding-bottom: 5px;
-	}
+.follow-btn {
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	padding-bottom: 5px;
+}
 
-	.profile-btn-area {
-		visibility: hidden;
-	}
+.profile-btn-area {
+	visibility: hidden;
+}
 </style>
 <th:block th:include="/common/header"></th:block>
 <div class="bookcover">
@@ -55,15 +57,16 @@
 					TOTAL <span class="color-red" th:text="${friendMember.totalCount}"></span>
 				</div>
 				<div class="box profile-box">
-					<form action="/member/memberPage" method="post" enctype="multipart/form-data">
+					<form action="/member/memberPage" method="post"
+						enctype="multipart/form-data">
 						<div class="profile-image">
-							<img class="profile-image-img" th:src="@{/member/}+${friendMember.profilePhoto}"
-								alt="프로필 이미지">
+							<img class="profile-image-img"
+								th:src="@{/member/}+${friendMember.profilePhoto}" alt="프로필 이미지">
 						</div>
 					</form>
 					<div class="profile-text">
-						<textarea id="profileContent" name="profileContent" th:text="${friendMember.profileMsg}"
-							readonly></textarea>
+						<textarea id="profileContent" name="profileContent"
+							th:text="${friendMember.profileMsg}" readonly></textarea>
 					</div>
 					<div class="profile-username">
 						<span style="color: #0f1b5c" th:text="${friendMember.memberName}"></span>(♪♬)
@@ -79,7 +82,8 @@
 			</div>
 			<div class="content-container">
 				<div class="header1 content-title">
-					<div class="content-title-name" th:text="${friendMember.memberName}+님의홈피"></div>
+					<div class="content-title-name"
+						th:text="${friendMember.memberName}+님의홈피"></div>
 				</div>
 				<div class="box content-box">
 					<script th:inline="javascript">
