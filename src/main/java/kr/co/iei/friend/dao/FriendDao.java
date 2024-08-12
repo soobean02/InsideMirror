@@ -20,7 +20,7 @@ public class FriendDao {
 
 	public List<Friend> selectAllList(Friend f) {
 
-		String query = "SELECT * FROM friend WHERE member_no = ? ORDER by friend_nickname ASC";
+		String query = "SELECT * FROM friend WHERE member_no = ? ORDER by friend_nickname ";
 	    Object[] params = { f.getMemberNo() };
 	    List<Friend> list = jdbc.query(query, friendRowMapper, params);
 		return list;
@@ -31,5 +31,12 @@ public class FriendDao {
 		String query = "delete from friend where friend_No = ?";
 		Object[] params = { f.getFriendNo()};
 		return jdbc.update(query, params);
+	}
+
+	public int friendRequest(Friend f) {
+		String query = "insert into friend values (friend_seq.nextval,?,?,?)";
+		Object[] params = {f.getMemberNo(),f.getFriendNo(),f.getFriendNickName()};
+		int result = jdbc.update(query,params);
+		return result;
 	}
 }

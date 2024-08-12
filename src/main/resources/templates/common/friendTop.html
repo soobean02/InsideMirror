@@ -1,47 +1,50 @@
 <!DOCTYPE html>
 
 
-	<link rel="stylesheet"
-	href="https://unpkg.com/swiper/swiper-bundle.min.css">
-	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <link rel="stylesheet" href="/css/minihomepage.css">
-    <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/layout.css">
-    <link rel="stylesheet" href="/css/font.css">
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<script src="/summernote/summernote-lite.js"></script>
-	<script src="/summernote/lang/summernote-ko-KR.js"></script>
-	<link rel="stylesheet" href="/summernote/summernote-lite.css">
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="/css/minihomepage.css">
+<link rel="stylesheet" href="/css/header.css">
+<link rel="stylesheet" href="/css/layout.css">
+<link rel="stylesheet" href="/css/font.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="/summernote/summernote-lite.js"></script>
+<script src="/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/summernote/summernote-lite.css">
 
 <style>
-  .profile-text> textarea{
- 	width: 100%;
-    height: 100px;  
-    border: none;
-    resize: none;
-    padding: 0;
-    overflow: hidden;
- }
- .profile-image-area{
- 	display: flex;
- 	justify-content: center;
- 	align-items: center;
- }
- .profile-image-img{
- 	width: 200px;
- 	height: 200px;
- 	border-radius: 15px;
- }
- .follow-btn{
- 	display: flex;
- 	justify-content: center;
- 	align-content: center;
- 	padding-bottom: 5px;
- }
- .profile-btn-area{
- 	visibility: hidden;
- }
+	.profile-text>textarea {
+		width: 100%;
+		height: 100px;
+		border: none;
+		resize: none;
+		padding: 0;
+		overflow: hidden;
+	}
+
+	.profile-image-area {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.profile-image-img {
+		width: 200px;
+		height: 200px;
+		border-radius: 15px;
+	}
+
+	.follow-btn {
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		padding-bottom: 5px;
+	}
+
+	.profile-btn-area {
+		visibility: hidden;
+	}
 </style>
 <th:block th:include="/common/header"></th:block>
 <div class="bookcover">
@@ -53,32 +56,34 @@
 				</div>
 				<div class="box profile-box">
 					<form action="/member/memberPage" method="post" enctype="multipart/form-data">
-					<div class="profile-image">
-						<img class="profile-image-img" th:src="@{/member/}+${friendMember.profilePhoto}" alt="프로필 이미지">
-					</div>
+						<div class="profile-image">
+							<img class="profile-image-img" th:src="@{/member/}+${friendMember.profilePhoto}"
+								alt="프로필 이미지">
+						</div>
 					</form>
 					<div class="profile-text">
-							<textarea id="profileContent" name="profileContent" th:text="${friendMember.profileMsg}"
-								readonly></textarea>
+						<textarea id="profileContent" name="profileContent" th:text="${friendMember.profileMsg}"
+							readonly></textarea>
 					</div>
 					<div class="profile-username">
 						<span style="color: #0f1b5c" th:text="${friendMember.memberName}"></span>(♪♬)
 					</div>
 					<div class="follow-btn-content">
-					<th:block th:if="${bestFriend == 0}">
-						<form action="/friend" method="post">
-							<div class="follow-btn">
-							<button type="button">일촌하기</button>
-							</div>
-						</form>	
-					</th:block>
-					<th:block th:if="${bestFriend == 1}">
-						<form action="/friend" method="post">
-							<div class="follow-remove-btn">
-							<button type="button">일촌취소</button>
-							</div>
-						</form>	
-					</th:block>
+						<th:block th:if="${bestFriend == 0}">
+							<form action="/friend" method="post">
+								<div class="follow-btn">
+									<button type="button" onclick="friendRequest()">일촌하기</button>
+								</div>
+							</form>
+						</th:block>
+						<th:block th:if="${bestFriend == 1}">
+							<form action="/friend" method="post">
+								<div class="follow-remove-btn">
+									<button type="button">일촌취소</button>
+								</div>
+							</form>
+						</th:block>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -87,47 +92,56 @@
 					<div class="content-title-name" th:text="${friendMember.memberName}+님의홈피"></div>
 				</div>
 				<div class="box content-box">
-<script th:inline="javascript">
-//추출된 값들을 페이지에 적용
-$(function(){
-	let cover;
-	let cursor;
-	let font;
+					<script th:inline="javascript">
+						//추출된 값들을 페이지에 적용
+						$(function () {
+							let cover;
+							let cursor;
+							let font;
 
-	// session.spCss 배열의 크기를 가져옴
-	const len = [[${session.spCss}]];
-	// session.spCss 배열을 순회하면서 필요한 값을 추출
+							// session.spCss 배열의 크기를 가져옴
+							const len = [[${ session.spCss }]];
+							// session.spCss 배열을 순회하면서 필요한 값을 추출
 
-	for(let i=0; i<len.length; i++){
-		let no = len[i].sellProduct.productListNo;
-		let url = len[i].sellProduct.productUrl;
-		if(no == 1){
-			cover = url; // 배경 이미지
-		} else if(no == 2){
-			cursor = url; // 커서 이미지
-		} else if(no == 3){
-			font = url; // 폰트
-		}
-	}
-	
-	console.log(cover);
-	console.log(cursor);
-	console.log(font);
-	$(function(){
-	// 폰트 적용
-	$("body").css("font-family", font);
-	// 커서 이미지 적용
-	if(cursor!='default'){
-		$("body *").css("cursor", "url('/img/" + cursor + "') 16 16, auto");
-	}
-	// 배경 색상 또는 이미지 적용 (필요에 따라 변경)
-	$(".bookcover").css("background-color", cover);
-});
-	
-	
-	
+							for (let i = 0; i < len.length; i++) {
+								let no = len[i].sellProduct.productListNo;
+								let url = len[i].sellProduct.productUrl;
+								if (no == 1) {
+									cover = url; // 배경 이미지
+								} else if (no == 2) {
+									cursor = url; // 커서 이미지
+								} else if (no == 3) {
+									font = url; // 폰트
+								}
+							}
 
-	
-	</script>
-				
-				
+							console.log(cover);
+							console.log(cursor);
+							console.log(font);
+
+
+
+							function friendRequest() {
+								const friendNo = [[${ friendMember.memberNo }]];
+								const friendNickName = [[${ friendMember.memberNickName }]];
+
+
+								location.href = "/friend/friendRequest?friendMemberNo=" + friendNo + "&friendNickName=" + friendNickName;
+
+
+
+
+							}
+
+							$(function () {
+								// 폰트 적용
+								$("body").css("font-family", font);
+								// 커서 이미지 적용
+								if (cursor != 'default') {
+									$("body *").css("cursor", "url('/img/" + cursor + "') 16 16, auto");
+								}
+								// 배경 색상 또는 이미지 적용 (필요에 따라 변경)
+								$(".bookcover").css("background-color", cover);
+							});
+						});
+					</script>

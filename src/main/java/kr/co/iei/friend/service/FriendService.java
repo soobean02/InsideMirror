@@ -26,5 +26,10 @@ public class FriendService {
 		
 	}
 
+	public int friendRequest(Friend f) {
+		int result = friendDao.friendRequest(f);
+		return result;
+	}
+
    
 }
