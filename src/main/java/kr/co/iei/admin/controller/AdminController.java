@@ -102,7 +102,7 @@ public class AdminController {
 			model.addAttribute("title", "수정 완료");
 			model.addAttribute("msg", "상품 정보가 수정되었습니다.");
 			model.addAttribute("icon", "success");
-			model.addAttribute("loc", "/admin/adminProductList?reqPage=1");
+			model.addAttribute("loc", "/admin/adminProductList?reqPage=1&type=0");
 			return "common/msg";
 		}else {
 			return "redirect:/";
@@ -116,7 +116,7 @@ public class AdminController {
 	
 	@PostMapping(value = "/adminProductAdd")
 	public String adminProductAdd(SellProduct sp, Model model, @RequestParam("addProductImg") MultipartFile addProductImg) {
-		String savepath = root+"/adminProduct/";
+		String savepath = root+"/product/editor/";
 		String filepath = fileUtils.upload(savepath, addProductImg);
 		sp.setProductImg(filepath);
 		int result = productService.adminAddProduct(sp);
