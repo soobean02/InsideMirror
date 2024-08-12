@@ -23,8 +23,7 @@ public class GuestBookController {
     @Autowired
     private GuestBookService guestBookService; 
     
-    @Autowired
-    private MemberService memberService; 
+
     
     public GuestBookController(GuestBookService guestBookService)
     {

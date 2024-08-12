@@ -1,179 +1,123 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>일촌목록</title>
-    <link rel="stylesheet" href="/css/font.css">
-    <link rel="stylesheet" href="/css/minihomepage.css">
-    <link rel="stylesheet" href="/css/layout.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="/js/sweetalert.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <style>
-    .content-menu ul {
-        margin: 5px;
-        padding: 0;
-        list-style-type: none;
-        overflow: hidden;
-    }
-    .content-menu > ul {
-        background-color: transparent;
-        display: block;
-    }
-    .content-menu ul > li {
-        float: left;
-        width: 70px;   
-    }
-    .content-menu ul > li > a {
-        display: block;
-        height: 30px;
-        line-height: 30px;
-        text-decoration: none;
-        font-size: 18px;
-        border: 1px solid #000;
-        border-top-right-radius: 10px;
-        border-top-left-radius: 10px;
-        cursor: pointer;
-    }
-    .content-menu > ul > li > a {
-        color: #092e20;
-    }
-    .content-menu > ul > li > a:hover {
-        font-weight: 1000;
-    }
-    .Ilchon-list > div {
-        list-style-type: none;    
-        margin-left: 100px;
-    }
-    .list {
-        float: left;
-        margin-top: 30px;
-    }
-    .list2 {
-        float: right;
-        margin-top: 7px;
-    }
-    .content-menu > ul > li:nth-child(n+2) {
-        background-color: #bfe6fa;
-    }
-    .Ilchon-list {
-        border-bottom: 1px solid gray;
-        margin-bottom: 25px;
-    }
-    .material-icons {
-        float: left;
-        margin-top: 30px;
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-    }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일촌목록</title>
+<link rel="stylesheet" href="/css/font.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<script src="/js/sweetalert.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<style>
+.material-icons {
+	float: left;
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	margin-right: 50px;
+}
+
+.friend-header {
+	border-bottom: 1px solid gray;
+	padding: 20px;
+	margin-bottom: 15px;
+}
+
+.btn-cancel {
+	float: right;
+}
+
+.search-group {
+	margin-bottom: 50px;
+}
+
+.input#searchInput {
+	margin-left: 50px;
+}
+
+.btn-secondary {
+	float: right;
+}
+
+.friend-scrollbox {
+	max-height: 450px;
+	overflow-y: auto;
+}
+</style>
 </head>
 <body>
-    <div class="bookcover">
-        <div class="bookdot">
-            <div class="page">
-                <div class="profile-container">
-                    <div class="header1 profile-title">TOTAL
-                        <span class="color-red">0</span>
-                    </div>
-                    <div class="box profile-box">
-                        <div class="profile-image">
-                            <img class="profile-image-img" src="/image/cyworld1.png" alt="Profile Image">
-                        </div>
-                        <div class="profile-text">ㄴr는.. 오늘도.. 눈물을.. 흘린ㄷr..★</div>
-                        <div class="profile-username">
-                            <span style="color: #0f1b5c">채연</span>
-                            (♪♬)
-                        </div>
-                        <div class="profile-dropdown">
-                            <div class="dropdown-button">
-                                <div class="friend-Ilchon">일촌하기</div>
-                                <div class="friend-title">일촌목록</div>
-                                <div class="triangle-down"></div>
-                            </div>
-                            <div class="dropdown-content">
-                                <a href="#">ㅁㅁㅁ의 홈피</a>
-                                <a href="#">ㅁㅁㅁ의 홈피</a>
-                                <a href="#">ㅁㅁㅁ의 홈피</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="content-container">
-                    <div class="header1 content-title">
-                        <div class="content-title-name">ㅁㅁㅁ님의 홈피</div>
-                    </div>
-                    <div class="box content-box">
-                        <div class="box-title">일촌관리 ></div>
-                        <div class="content-menu">
-                            <ul>
-                                <li><a href=" ">일촌목록</a></li>
-                                <li><a href="/friend/friendrequest">일촌신청</a></li>
-                                <li><a href="/friend/neighborrequest">이웃신청</a></li>
-                            </ul>
-                        </div> 
-                        <div id="friend-list-container" class="Ilchon-list">
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="menu-container">
-                    <div class="menu-button">
-                        <a href="/member/minihomepage"><button>홈</button></a>
-                        <a href="/board/list?reqPage=1"><button>자유게시판</button></a>
-                        <a href="#"><button>사진첩</button></a>
-                        <a href="/guest/guestbookList"><button>방명록</button></a>
-                        <a href="#"><button>선물가게</button></a>
-                        <a href="#"><button>구매목록</button></a>
-                        <a href="#"><button>일촌관리</button></a>
-                        <a href="#"><button>고객센터</button></a>
-                        <a href="#"><button>즐겨찾기</button></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-	<!--
-    $(document).ready(function() {
-        // Fetch friend list data
-        $.ajax({
-            url: '/friend/friendList',
-            method: 'GET',
-            success: function(data) {
-                // Call function to render friends
-                renderFriends(data);
-            },
-            error: function(error) {
-                console.log('Error fetching friend list:', error);
-            }
-        });
-        function renderFriends(friends) {
-            const container = $('#friend-list-container');
-            container.empty(); 
+	<th:block th:include="common/top"></th:block>
+	<div class="content-container">
+		<div class="header1 content-title">
+			<div class="content-title-name">ㅁㅁㅁ님의 홈피</div>
+		</div>
+		<div class="box content-box">
+			<div class="box-title">일촌목록 ></div>
+			<div class="friend-title">
+				<div class="search-group">
+					<form action="/friend/search" method="get">
+						<input type="text" id="searchInput" name="findFriend">
+						<button class="submit">검색</button>
+					</form>
+				</div>
+			</div>
+			<div class="friend-scrollbox" id="friend-scrollbox">
+				<th:block th:each="friendList : ${friendList}">
+					<div class="friend-box">
+						<div class="friend-header">
+							<span th:text="${friendList.friendNickName}"></span>
+							<button class="material-icons" onclick="navigateToHome(this)"
+								data-url="#"
+								th:data-url="'/friend/home?friendNo=' + ${friendList.friendNo}">home</button>
+							<button class="btn-secondary"
+								th:onclick="friendCancel(this,[[${friendList.friendNo}]]);">일촌취소</button>
+						</div>
+					</div>
+				</th:block>
+			</div>
+			<th:block th:include="common/bottom"></th:block>
+			<script>
+				function friendCancel(obj, friendNo) {
 
-            friends.forEach(friend => {
-                
-                const friendHtml = `
-                    <div class="Ilchon-list">
-                        <button class="material-icons" data-url="${friend.homeUrl}">home</button>
-                        <div class="list">친구 : ${friend.name}</div><br>
-                        <div class="list2">${friend.status}</div>
-                    </div>
-                `;
-                container.append(friendHtml);
-            });
-        }
+					const btn = $(obj);
+					console.log(friendNo);
+					$.ajax({
+						type : 'GET',
+						url : `/friend/friendCancel`,
+						data : {
+							friendNo : friendNo
+						},
+						success : function(response) {
+							btn.parent().parent().remove();
+						},
+						error : function(error) {
+							alter: ('삭제중 에러가 나왔습니다.')
+						}
+					})
 
-        $(document).on('click', '.material-icons', function() {
-            var url = $(this).data('url');
-            if (url) {
-                window.location.href = url;
-            }
-        });
-    });-->
-    </script>
+					/*
+					const friendheader == button.closest('.friend-header');
+					const friendNo = $('#friendNo').text();
+					
+					if(!friendNo){
+					 console.log('일촌 번호가 없습니다');
+					 return;
+					}
+					
+					$ajax({
+					 type: 'GET',
+					 url: `/friend/friendCancel`,
+					 data : {friendNo : friendNo},
+					 success : function(response){
+						 friendheader.remove();
+					 },
+					 error : function(error){
+						 alert('일촌 삭제 중 에러가 발생했습니다')
+					 }
+					})
+					 */
+				}
+			</script>
 </body>
 </html>
