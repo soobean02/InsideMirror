@@ -42,6 +42,9 @@
  .profile-btn-area{
  	visibility: hidden;
  }
+ .follow{
+ 	border-radius: 5px;
+ }
 </style>
 <th:block th:include="/common/header"></th:block>
 <div class="bookcover">
@@ -64,7 +67,7 @@
 					<div class="profile-username">
 						<span style="color: #0f1b5c" th:text="${friendMember.memberNickName}"></span>(♪♬)
 					</div>
-					<div class="follow-btn-content">
+					<div class="follow-btn-content" th:if="${session.member != null}">
 					<th:block th:if="${bestFriend == 0}">
 						<form action="/friend" method="post">
 							<div class="follow-btn">
