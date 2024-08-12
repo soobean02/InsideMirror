@@ -141,6 +141,11 @@
         height: 100px;
         margin-left: 15px;
         margin-top: 10px;
+        border-radius: 10px;
+        background-color: #5c7cff;
+        cursor: pointer;
+        color: white;
+        border: none;
     }
     .view-content-wrap>div{
         padding-top: 5px;
@@ -222,9 +227,14 @@
         overflow: hidden;
     }
     .reComment-submit{
-        width: 10%;
+        width: 15%;
         height: 90px;
         margin-left: 20px;
+        border: none;
+        background-color: #718dff;
+        border-radius: 10px;
+        cursor: pointer;
+        color: white;
     }
     
     .reComment-content>textarea{
@@ -641,7 +651,6 @@
                             const ifEdited = $(item).prevAll(".edited").is(".edited");
                             if(!ifEdited){
                                 //만약에 이미 수정된 적이 있는 글이면 (수정) 이라는 글씨를 안 붙이기 위함
-                                console.log(boardCommentRef);
                                 if(boardCommentRef === undefined){
                                     //댓글인 경우 left를 넣어야 함
                                     writer.after("<div class='edited left'>(수정)</div>");
@@ -652,12 +661,12 @@
                             }
                         }
                         else{
-                            console.log("댓글 수정 실패");
+                            alert("댓글 수정에 실패했습니다");
                         }
                     },
                     error : function(){
                         //에러
-                        console.log("에렁");
+                        alert("서버 에러");
                     }
                 });
         }
@@ -707,7 +716,7 @@
                     }
                 },
                 error : function(){
-                    console.log("error");
+                    alert("서버 에러")
                 }
             });
         }
@@ -738,7 +747,7 @@
                 data : {memberNo : memberNo , boardNo : boardNo, boardCommentContent : content, boardCommentRef : boardCommentRef},
                 success : function(data){
                         if(data != null){
-                            alert("댓글 추가 성공");
+                            // alert("댓글 추가 성공");
                             $(item).prev().prev().prev().val("");
                             const comment = data.comment;
 
@@ -816,7 +825,7 @@
                         }
                 },
                 error : function(){
-                    console.log("error");
+                    alert("서버 에러");
                 }
             })
         }//댓글 추가
@@ -869,7 +878,6 @@
                         alert("로그인 후 이용 가능합니다.");
                     }
                     else if(data == 1){
-                        console.log("성공");
                         if(isLike == 0) $(obj).text("favorite");
                         else $(obj).text("favorite_border");
                     }
@@ -878,7 +886,7 @@
                     }
                 },
                 error : function(){
-                    console.log("error");
+                    alert("서버 에러");
                 }
             });
         }
@@ -896,13 +904,12 @@
                         alert("로그인 후 이용가능합니다.");
                     }
                     else if(data == 1){
-                        console.log("성공");
                         if(isBookMark == 0) $(obj).text("bookmark");
                         else $(obj).text("bookmark_border");
                     }
                 },
                 error : function(){
-                    console.log("error");
+                    alert("서버 에러")
                 }
             })
 

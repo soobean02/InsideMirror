@@ -38,6 +38,7 @@ body {
 	border-radius: 15px;
 }
 
+
 </style>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <body>
@@ -128,11 +129,11 @@ body {
 							<tr>
 								<td><label for="phone">전화번호<sup>*</sup></label></td>
 								<td class="td-2 phone-insert">
-								<input type="text" name="phone" id="phone" required aria-required="true" maxlength="3" placeholder="010">
+								<input type="text" name="phone" id="phone" class="phone1" required aria-required="true" maxlength="3" placeholder="010">
 								<span class="dash">-</span>
-								<input type="text" name="phone" id="phone" required aria-required="true" maxlength="4" placeholder="0000">
+								<input type="text" name="phone" id="phone" class="phone2" required aria-required="true" maxlength="4" placeholder="0000">
 								<span class="dash">-</span>
-								<input type="text" name="phone" id="phone" required aria-required="true" maxlength="4" placeholder="0000">
+								<input type="text" name="phone" id="phone" class="phone3" required aria-required="true" maxlength="4" placeholder="0000">
 								</td>
 							</tr>
 							<tr>
@@ -215,6 +216,7 @@ body {
 			    }
 			    if(ok===5){
 			    	 $(".pw-check-msg").text("사용가능한 비밀번호 입니다.");
+			            $(".pw-check-msg").remove("invalid");
 			            $(".pw-check-msg").addClass("valid");
 			    }else{
 			    	$(".pw-check-msg").text("영문 대소문자/숫자/특수문자(!@#$%) 조합이 필요합니다 (8~12자이내)");
@@ -254,5 +256,18 @@ body {
 	        }
 	    }).open();
 	});
+
+	///
+	$(".phone1").on("keyup",function(){
+		if($(".phone1").val().length == 3){
+			$(".phone2").focus();
+		}
+	})
+	$(".phone2").on("keyup",function(){
+		if($(".phone2").val().length == 4){
+			$(".phone3").focus();
+		}
+	})
+
 </script>
 </html>

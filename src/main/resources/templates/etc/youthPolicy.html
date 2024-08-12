@@ -4,6 +4,29 @@
 <meta charset="UTF-8">
 <title>청소년 보호정책</title>
 </head>
+<style>
+	li{
+		  list-style-type: none;
+	}
+	.wrap-all{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		border-radius: 10px;
+		border: 1px solid #ddd;
+	}
+	h2{
+		color: #ccc;
+	}
+	.wrap-all>div{
+		padding: 30px;
+	}
+	.policy-header{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+</style>
 <body>
 	<th:block th:include="/common/header"></th:block>
 		<div class="wrap-all">
@@ -12,7 +35,7 @@
 					<h1>청소년보호정책</h1>
 				</div>
 				<div class="section-box">
-					<span class="section-num">01</span>
+					<h2 class="section-num">01</h2>
 					<div class="section-content">
 						<h3>유해정보에 대한 청소년접근제한 및 관리조치</h3>
 						<ul>
@@ -23,7 +46,7 @@
 					</div>
 				</div>
 				<div class="section-box">
-					<span class="section-num">02</span>
+					<h2 class="section-num">02</h2>
 					<div class="section-content">
 						<h3>유해정보로부터의 청소년보호를 위한 업무 담당자 교육 시행</h3>
 						<ul>
@@ -34,7 +57,7 @@
 					</div>
 				</div>
 				<div class="section-box">
-					<span class="section-num">03</span>
+					<h2 class="section-num">03</h2>
 					<div class="section-content">
 						<h3>유해정보로 인한 피해상담 및 고충처리</h3>
 						<ul>
@@ -45,7 +68,7 @@
 					</div>
 				</div>
 				<div class="section-box">
-					<span class="section-num">04</span>
+					<h2 class="section-num">04</h2>
 					<div class="section-content">
 						<h3>인사이드미러 청소년보호 책임자 및 담당자의 소속, 성명 및 연락처</h3>
 						<ul>

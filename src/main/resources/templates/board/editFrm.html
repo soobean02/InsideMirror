@@ -174,10 +174,9 @@
                 contentType : false,
                 success : function(data){
                     $(editor).summernote("insertImage",data);
-                    console.log("suc");
                 },
                 error : function(){
-                    console.log("error");
+                    alert("서버 에러")
                     //에러 메세지 띄우기
                 }
             });

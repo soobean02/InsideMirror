@@ -251,10 +251,7 @@
 
 
 
-    <script>
-
-        
-
+    <script>        
         let done = 0;
         let url = "/member/more";
         let sort = 1;
@@ -268,8 +265,9 @@
             }
         });  
 
-        const memberNo = [[${session.member.memberNo}]];
-        const friendMemberNo = [[${memberNo}]];
+        
+        const memberNo = [[${sessionMemberNo}]];
+        const friendMemberNo = [[${friendMember.memberNo}]];
         
         
         getMore();
@@ -305,9 +303,22 @@
                             
                             const subInfoDiv = $("<div>");
                             subInfoDiv.addClass("post-sub-info").addClass("left");
-                            subInfoDiv.append(`<span class="material-icons push-tag temp-like-tag like" onclick="likePush(this, ${memberNo}, ${p.photoNo})">favorite_border</span>`);
+                            //여기서 if는 로그인 여부
+                            if(memberNo == 0){
+                                subInfoDiv.append(`<span class="material-icons push-tag temp-like-tag like" onclick="needLogin()">favorite_border</span>`);
+                            }
+                            else{
+                                subInfoDiv.append(`<span class="material-icons push-tag temp-like-tag like" onclick="likePush(this, ${memberNo}, ${p.photoNo})">favorite_border</span>`);
+                            }
+
                             subInfoDiv.append(`<span class="like-count">${p.likeCount}</span>`);
-                            subInfoDiv.append(`<span class="material-icons push-tag temp-bookmark-tag bookmark" onclick="pushBookmark(this, ${memberNo}, ${p.photoNo})">bookmark_border</span>`);
+                            
+                            if(memberNo == 0){
+                                subInfoDiv.append(`<span class="material-icons push-tag temp-bookmark-tag bookmark" onclick="needLogin()">bookmark_border</span>`);
+                            }
+                            else{
+                                subInfoDiv.append(`<span class="material-icons push-tag temp-bookmark-tag bookmark" onclick="pushBookmark(this, ${memberNo}, ${p.photoNo})">bookmark_border</span>`);
+                            }
                             
                             const img = $("<img class='img-box'>");
                             img.attr("src","/photo/"+p.photoContent);
@@ -339,6 +350,10 @@
                     }
                 });       
             }
+        }
+
+        function needLogin(){
+            alert("로그인 후 이용가능합니다!");
         }
 
         function likeSetting(isLike, obj){
