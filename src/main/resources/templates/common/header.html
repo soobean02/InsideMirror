@@ -7,14 +7,12 @@
 	<title>header</title>
 	<link rel="stylesheet" href="/css/header.css">
 	<link rel="stylesheet" href="/css/footer.css">
+	<link rel="stylesheet" href="/css/font.css">
 	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 	<script src="/js/sweetalert.min.js"></script>
 
 </head>
 <style>
-	.search-group>#searchInput{
-		border-style: none;
-	}
 	.home-list-img{
 		width: 35px;
 		height: 35px;
@@ -26,10 +24,12 @@
 	#searchInput{
 		outline: none;
 		border: none;
+		border-bottom: 1px solid black; 
 		width: 300px;
 		height: 30px;
-		border-radius: 15px;
 		text-align: center;
+		background-color: transparent;
+		color: white;
 		
 	}
 	.search-group button{
@@ -49,6 +49,9 @@
 		display: flex;
 		justify-content: space-between;
 	}
+	#searchInput::placeholder {
+	color:white
+	};
 </style>
 
 <body>
@@ -82,7 +85,7 @@
 				<th:block th:if="${session.member != null}">
 					<li><a href="/member/memberPage" th:if="${session.member.memberLevel == 2}" th:text="${session.member.memberNickName}"></a></li>
 					<li><a href="/admin/adminHome" th:if="${session.member.memberLevel == 1}" th:text="${session.member.memberNickName}"></a></li>
-					<li><a href="/member/logout">로그아웃</a></li>
+					<li class="li"><a href="/member/logout">로그아웃</a></li>
 				</th:block>
 			</ul>
 		</div>
