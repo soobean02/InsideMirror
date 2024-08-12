@@ -15,26 +15,64 @@
 	.search-group>#searchInput{
 		border-style: none;
 	}
+	.home-list-img{
+		width: 35px;
+		height: 35px;
+		margin-left: 5px;
+	}
+	.home-list-img:hover{
+		opacity: 0.5;
+	}
+	#searchInput{
+		outline: none;
+		border: none;
+		width: 300px;
+		height: 30px;
+		border-radius: 15px;
+		text-align: center;
+		
+	}
+	.search-group button{
+		text-decoration: none;
+		background-color: transparent;
+		border-style: none;
+	}
+	.search-member-img{
+		width: 30px;
+		height: 30px;
+		margin-left: 10px;
+	}
+	.search-member-img:hover{
+		opacity: 0.5;
+	}
+	.search-group{
+		display: flex;
+		justify-content: space-between;
+	}
 </style>
 
 <body>
 	<header class="header">
 		<div class="left-group">
 			<div class="logo">
-				<a href="/">IM</a>
+				<a href="/">INSIDEMIRROR</a>
 			</div>
 			<nav class="nav">
 				<ul>
-					<li class="li"><a href="/member/homelist">미니홈피</a></li>
+					<li class="li"><a href="/member/homelist"><img class="home-list-img" src="/image/homelist.png"></a></li>
 				</ul>
 			</nav>
 		</div>
-		<div class="search-group">
-			<form action="/member/search" method="get">
-				<input type="text" id="searchInput" name="findFriend" placeholder="친구를 검색해보세요!">
-				<button type="submit">Search</button>
-			</form>
-		</div>
+		<form action="/member/search" method="get">
+			<div class="search-group">
+					<div class="search-input">
+						<input type="text" id="searchInput" name="findFriend" placeholder="친구를 검색해보세요!">
+					</div>
+					<div>
+						<button type="submit"><img class="search-member-img" src="/image/gis--search-home.png"></button>
+					</div>
+			</div>
+		</form>
 		<div class="right-group">
 			<ul class="user-menu">
 				<th:block th:if="${session.member == null}">
