@@ -76,6 +76,7 @@ tr td input{
     width: 80%;
     border: none;
     border-bottom: 1px solid black;
+    outline: none;
 }
 
 .nickName-check-btn{
@@ -104,4 +105,6 @@ tr td input{
 .td-2 input[name=memberGender]:checked+label{
     background-color: black;
     color:  white;
+    border-radius: 15px;
+    padding: 3px 10px;
 }

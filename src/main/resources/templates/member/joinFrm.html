@@ -18,11 +18,20 @@ body {
 }
 .valid{
 	margin: 0;
+	font-size: 10px;
+	color: green;
 }
 .invalid{
 	margin: 0;
+	font-size: 10px;
+	color: red;
 }
-
+.phone-insert{
+	width: 402px;
+}
+#memberAddr{
+	width: 402px;
+}
 </style>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <body>
@@ -112,7 +121,7 @@ body {
 							</tr>
 							<tr>
 								<td><label for="phone">전화번호<sup>*</sup></label></td>
-								<td class="td-2">
+								<td class="td-2 phone-insert">
 								<input type="text" name="phone" id="phone" required aria-required="true" maxlength="3" placeholder="010">
 								<span class="dash">-</span>
 								<input type="text" name="phone" id="phone" required aria-required="true" maxlength="4" placeholder="0000">
@@ -129,7 +138,7 @@ body {
 							</tr>
 							<tr>
 								<td></td>
-								<td>
+								<td class="detail-addr">
 									<input type="text" name="memberAddr" id="addrDetail" placeholder="상세주소">							
 								</td>
 							</tr>
