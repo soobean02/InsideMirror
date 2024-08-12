@@ -72,7 +72,6 @@
 	display: none;
 }
 </style>
-
 	<th:block th:include="/common/header"></th:block>
 	<div class="bookcover">
 	<div class="bookdot">
@@ -103,7 +102,7 @@
 								<button type="button">일촌하기</button>
 							</div>
 							<div class="follow-btn">
-								<button type="button" onclick ="addGuestbookEntry()">일촌목록</button>
+								<button type="button" onclick ="friendList()">일촌목록</button>
 							</div>
 						</form>
 					</div>	
@@ -165,5 +164,8 @@ $("#profileContent").on("change",function(){
 	});
 });
 
-
+function friendList(){
+	location.href="/friend/friendList";
+	
+}
 </script>

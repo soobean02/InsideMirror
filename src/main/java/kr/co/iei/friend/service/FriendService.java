@@ -19,10 +19,10 @@ public class FriendService {
 		List<Friend> list = friendDao.selectAllList(f);
 		return list;
 	}
-	@Transactional
-	public int deleteComment(Friend f) {
-		return friendDao.deleteComment(f);
 	
+	@Transactional
+	public int friendCancel(Friend f) {
+		return friendDao.friendCancel(f);
 		
 	}
 

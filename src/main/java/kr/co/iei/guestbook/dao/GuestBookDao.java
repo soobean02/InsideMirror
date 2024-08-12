@@ -19,21 +19,8 @@ public class GuestBookDao {
     private GuestBookRowMapper guestBookRowMapper;
 
     public int insertComment(GuestBook gb) {
-    	System.out.println(gb);
-    	/*
-    	if (!doesMemberExist(gb.getMemberNo())) {
-            System.out.println("존재하지 않는 memberNo입니다.");
-            return 0;
-        }
-
-        if (!doesGuestWriterExist(gb.getGuestWriterNo())) {
-            System.out.println("존재하지 않는 guestWriterNo입니다.");
-            return 0;
-        }*/
-        
         String query = "INSERT INTO guest_book VALUES (GUEST_BOOK_SEQ.NEXTVAL, ?, ?, ?, SYSDATE,?, ?)";		
-        Object[] params = 
-        	{ gb.getMemberNo(), gb.getGuestWriterNo(), gb.getGuestCommentContent(),gb.getGuestBookType(), gb.getGuestNickname()};
+        Object[] params = { gb.getMemberNo(), gb.getGuestWriterNo(), gb.getGuestCommentContent(),gb.getGuestBookType(), gb.getGuestNickname()};
         int result = jdbc.update(query, params);
         return result;
     }
@@ -64,7 +51,6 @@ public class GuestBookDao {
 
     public List<GuestBook> getAllComments(GuestBook gb) {
         String query = "SELECT * FROM guest_book WHERE member_no = ? ORDER BY GUEST_COMMENT_DATE ASC";
-        System.out.println("dao : " + gb.getMemberNo());
         Object[] params = {gb.getMemberNo()};
         List list = jdbc.query(query, guestBookRowMapper, params);
         return list;

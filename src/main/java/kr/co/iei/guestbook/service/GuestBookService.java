@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.guestbook.dao.GuestBookDao;
 import kr.co.iei.guestbook.dto.GuestBook;
-import kr.co.iei.member.model.dto.Member;
 
 @Service
 public class GuestBookService {

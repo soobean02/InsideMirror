@@ -327,8 +327,7 @@ body {
 	 
      if ($('#edit-textarea').css('display') === 'none') {
          textarea.value = document.getElementById("edit-textarea").value;
-         $('#edit-textarea').css('display', 'block');
-         $('#edit-textarea').css('display', 'block');
+         $('#edit-textarea').css('display', 'block');         
          button.textContent = '저장';
          button.setAttribute('onclick', 'saveComment(this)');
      }
@@ -389,7 +388,7 @@ body {
         }
 
         // 닉네임 사용자의 경우 URL로 이동
-        window.location.href = url;
+        window.location.href = "/member/minihomepage";
     }
     
     $(document).ready(function() {
