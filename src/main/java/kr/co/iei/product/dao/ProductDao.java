@@ -190,8 +190,8 @@ public class ProductDao {
 	}// productUpdate
 
 	public int adminAddProduct(SellProduct sp) {
-		String query = "insert into sell_product values(sell_product_seq.nextval,?,?,?,?,'url','이미지 경로')";
-		Object[] params = { sp.getProductListNo(), sp.getProductPrice(), sp.getProductName(), sp.getProductImg() };
+		String query = "insert into sell_product values(sell_product_seq.nextval,?,?,?,?,?,'이미지 경로')";
+		Object[] params = {sp.getProductListNo(), sp.getProductPrice(), sp.getProductName(), sp.getProductImg(), sp.getProductUrl()};
 		int result = jdbc.update(query, params);
 		return result;
 	}// adminAddProduct

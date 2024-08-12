@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -114,7 +115,7 @@ public class AdminController {
 	}//adminProductAddFrm
 	
 	@PostMapping(value = "/adminProductAdd")
-	public String adminProductAdd(SellProduct sp, Model model, MultipartFile addProductImg) {
+	public String adminProductAdd(SellProduct sp, Model model, @RequestParam("addProductImg") MultipartFile addProductImg) {
 		String savepath = root+"/adminProduct/";
 		String filepath = fileUtils.upload(savepath, addProductImg);
 		sp.setProductImg(filepath);
@@ -123,7 +124,7 @@ public class AdminController {
 			model.addAttribute("title", "추가 완료");
 			model.addAttribute("msg", "상품이 추가되었습니다.");
 			model.addAttribute("icon", "success");
-			model.addAttribute("loc", "/admin/adminProductList?reqPage=1");
+			model.addAttribute("loc", "/admin/adminProductList?reqPage=1&type=0");
 			return "common/msg";
 		}else {
 			return "redirect:/";
@@ -138,7 +139,7 @@ public class AdminController {
 			model.addAttribute("title", "삭제 완료");
 			model.addAttribute("msg", "상품이 삭제되었습니다.");
 			model.addAttribute("icon", "success");
-			model.addAttribute("loc", "/admin/adminProductList?reqPage=1");
+			model.addAttribute("loc", "/admin/adminProductList?reqPage=1&type=0");
 			return "common/msg";
 		}else {
 			return "redirect:/";
