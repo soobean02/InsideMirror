@@ -641,7 +641,6 @@
                             const ifEdited = $(item).prevAll(".edited").is(".edited");
                             if(!ifEdited){
                                 //만약에 이미 수정된 적이 있는 글이면 (수정) 이라는 글씨를 안 붙이기 위함
-                                console.log(boardCommentRef);
                                 if(boardCommentRef === undefined){
                                     //댓글인 경우 left를 넣어야 함
                                     writer.after("<div class='edited left'>(수정)</div>");
@@ -652,12 +651,12 @@
                             }
                         }
                         else{
-                            console.log("댓글 수정 실패");
+                            alert("댓글 수정에 실패했습니다");
                         }
                     },
                     error : function(){
                         //에러
-                        console.log("에렁");
+                        alert("서버 에러");
                     }
                 });
         }
@@ -707,7 +706,7 @@
                     }
                 },
                 error : function(){
-                    console.log("error");
+                    alert("서버 에러")
                 }
             });
         }
@@ -816,7 +815,7 @@
                         }
                 },
                 error : function(){
-                    console.log("error");
+                    alert("서버 에러");
                 }
             })
         }//댓글 추가
@@ -869,7 +868,6 @@
                         alert("로그인 후 이용 가능합니다.");
                     }
                     else if(data == 1){
-                        console.log("성공");
                         if(isLike == 0) $(obj).text("favorite");
                         else $(obj).text("favorite_border");
                     }
@@ -878,7 +876,7 @@
                     }
                 },
                 error : function(){
-                    console.log("error");
+                    alert("서버 에러");
                 }
             });
         }
@@ -896,13 +894,12 @@
                         alert("로그인 후 이용가능합니다.");
                     }
                     else if(data == 1){
-                        console.log("성공");
                         if(isBookMark == 0) $(obj).text("bookmark");
                         else $(obj).text("bookmark_border");
                     }
                 },
                 error : function(){
-                    console.log("error");
+                    alert("서버 에러")
                 }
             })
 

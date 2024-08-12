@@ -235,14 +235,14 @@ public class MemberDao {
 	}//친구 사진첩 개수 조회
 
 
-	public List selectPhotoList(int start, int end, int friendMemberNo, Member member) {
+	public List selectPhotoList(int start, int end, int friendMemberNo, int memberNo) {
 		String query = "select * from (select rownum as rnum, p.*,\r\n" + //
 						"(select count(*) from photo_like where photo_no = p.photo_no and member_no = ?) as is_like,\r\n" + //
 						"(select count(*) from photo_like where photo_no = p.photo_no) as like_count,\r\n" + //
 						"(select count(*) from book_mark where photo_no = p.photo_no and member_no = ?) as is_bookmark\r\n" + //
 						"from (select * from photo p2 where member_no = (select member_no from member where member_no = ?) order by 1 desc)p)\r\n" + //
 						"where rnum between ? and ?";
-		Object[] params = {member.getMemberNo(), member.getMemberNo(), friendMemberNo, start, end};
+		Object[] params = {memberNo, memberNo, friendMemberNo, start, end};
 		List list = jdbc.query(query, photoRowMapper, params);
 		return list;
 	}//친구 사진첩 조회
@@ -259,7 +259,7 @@ public class MemberDao {
 	}//친구 조회 with memberNo
 
 
-	public List PhotoSortPopular(int start, int end, int friendMemberNo, Member member) {
+	public List PhotoSortPopular(int start, int end, int friendMemberNo, int memberNo) {
 		String query = "select * from\r\n" + //
 						"    (select rownum as rnum, p.*,\r\n" + //
 						"        (select count(*) from photo_like where photo_no = p.photo_no and member_no = ?) as is_like,\r\n" + //
@@ -271,7 +271,7 @@ public class MemberDao {
 						"                where member_no = (select member_no from member where member_no = ?)\r\n" + //
 						"                order by (select count(*) from photo_like where photo_no = p2.photo_no) desc)p)\r\n" + //
 						"where rnum between ? and ?";
-		Object[] params = {member.getMemberNo(), member.getMemberNo(), friendMemberNo, start, end};
+		Object[] params = {memberNo, memberNo, friendMemberNo, start, end};
 		List list = jdbc.query(query, photoRowMapper, params);
 		return list;
 	}

@@ -200,9 +200,9 @@ public class MemberService {
 	}
 
 
-	public List selectPhotoList(int start, int amount, int friendMemberNo, Member member) {
+	public List selectPhotoList(int start, int amount, int friendMemberNo, int memberNo) {
 		int end = start + amount - 1;
-		List photoList = memberDao.selectPhotoList(start, end, friendMemberNo, member);
+		List photoList = memberDao.selectPhotoList(start, end, friendMemberNo, memberNo);
 		return photoList;
 	}
 
@@ -213,14 +213,14 @@ public class MemberService {
 	}//친구 조회 (with memberNo)
 
 
-	public List selectFriendPhotoSort(int start, int amount, int sort, int friendMemberNo, Member member) {
+	public List selectFriendPhotoSort(int start, int amount, int sort, int friendMemberNo, int memberNo) {
 		int end = start + amount - 1;
 		List photoList = null;
 		if(sort == 1){
-			photoList = memberDao.selectPhotoList(start, end, friendMemberNo, member);
+			photoList = memberDao.selectPhotoList(start, end, friendMemberNo, memberNo);
 		}
 		else if (sort == 2){
-			photoList = memberDao.PhotoSortPopular(start, end, friendMemberNo, member);
+			photoList = memberDao.PhotoSortPopular(start, end, friendMemberNo, memberNo);
 		}
 		return photoList;
 	}//친구 sort
