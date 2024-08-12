@@ -65,7 +65,6 @@
 			<section class="profile-list-wrap">
 				<div class="profile-list-div"> 
 					<div class="profile-row" th:each="friendMember: ${memberList}">
-						<th:block th:if="${session.member != null &&  session.member.memberNo} != ${friendMember.memberNo}">
 							<div class="profile-row-div">
 								<a th:href="@{/member/friendPage(memberNo=${friendMember.memberNo})}">
 									<div class="profile">
@@ -78,8 +77,7 @@
 										</div>
 									</div>
 								</a>
-							</div>
-						</th:block>				
+							</div>			
 					</div>
 				</div>
 				
