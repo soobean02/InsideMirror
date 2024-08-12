@@ -14,7 +14,7 @@ body {
 	margin: 0;
 }
 .wrapper{
-	height: 795px;
+	height: 810px;
 }
 .valid{
 	margin: 0;
@@ -29,9 +29,15 @@ body {
 .phone-insert{
 	width: 402px;
 }
-#memberAddr{
-	width: 402px;
+#addrDetail{
+	width: 400px;
 }
+.email-choice,#searchBtn{
+	background-color: black;
+	color: white;
+	border-radius: 15px;
+}
+
 </style>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <body>
@@ -54,17 +60,17 @@ body {
 							</tr>
 							<tr>
 								<td><label for="emailLocal">아이디(이메일)<sup>*</sup></label></td>
-								<td class="td-2"><input type="text" name="memberId"
-									id="emailLocal" class="short-input" required
-									autocomplete="username"> <span class="mail-center">@</span>
-									<input type="text" name="memberId2" id="emailDomain"
-									class="short-input" required autocomplete="email"> <select
-									class="email-choice">
+								<td class="td-2">
+									<input type="text" name="memberId" id="emailLocal" class="short-input" required autocomplete="username"> 
+									<span class="mail-center">@</span>
+									<input type="text" name="memberId2" id="emailDomain" class="short-input" required autocomplete="email"> 
+									<select class="email-choice">
 										<option value="">직접입력</option>
 										<option value="naver.com">naver</option>
 										<option value="gmail.com">google</option>
 										<option value="kakao.com">kakao</option>
-								</select></td>
+									</select>
+								</td>
 							</tr>
 							<tr>
 								<td><label for="nickName">닉네임(별명)<sup>*</sup></label></td>
