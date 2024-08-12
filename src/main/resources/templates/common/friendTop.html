@@ -5,6 +5,7 @@
 	href="https://unpkg.com/swiper/swiper-bundle.min.css">
 	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="/css/minihomepage.css">
+    <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/layout.css">
     <link rel="stylesheet" href="/css/font.css">
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
@@ -14,17 +15,23 @@
 	<link rel="stylesheet" href="/summernote/summernote-lite.css">
 
 <style>
- .profile-text> textarea{
+  .profile-text> textarea{
  	width: 100%;
-    height: 180px;
+    height: 100px;  
     border: none;
     resize: none;
     padding: 0;
     overflow: hidden;
  }
+ .profile-image-area{
+ 	display: flex;
+ 	justify-content: center;
+ 	align-items: center;
+ }
  .profile-image-img{
- 	width: 100%;
- 	height: 230px;
+ 	width: 200px;
+ 	height: 200px;
+ 	border-radius: 15px;
  }
  .follow-btn{
  	display: flex;
@@ -32,14 +39,17 @@
  	align-content: center;
  	padding-bottom: 5px;
  }
+ .profile-btn-area{
+ 	visibility: hidden;
+ }
 </style>
-
+<th:block th:include="/common/header"></th:block>
 <div class="bookcover">
 	<div class="bookdot">
 		<div class="page">
 			<div class="profile-container">
-				<div class="header profile-title">
-					TOTAL <span class="color-red">28</span>
+				<div class="header1 profile-title">
+					TOTAL <span class="color-red" th:text="${friendMember.totalCount}"></span>
 				</div>
 				<div class="box profile-box">
 					<form action="/member/memberPage" method="post" enctype="multipart/form-data">
@@ -48,7 +58,8 @@
 					</div>
 					</form>
 					<div class="profile-text">
-						<span id="profileContent" name="profileContent" placeholder="자유롭게 전하고싶은 메세지를 적어주세요..♥"></span>
+							<textarea id="profileContent" name="profileContent" th:text="${friendMember.profileMsg}"
+								readonly></textarea>
 					</div>
 					<div class="profile-username">
 						<span style="color: #0f1b5c" th:text="${friendMember.memberName}"></span>(♪♬)
@@ -63,7 +74,7 @@
 				</div>
 			</div>
 			<div class="content-container">
-				<div class="header content-title">
+				<div class="header1 content-title">
 					<div class="content-title-name" th:text="${friendMember.memberName}+님의홈피"></div>
 				</div>
 				<div class="box content-box">

@@ -30,6 +30,7 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addResourceHandler("/board/**").addResourceLocations("file:///"+root+"/board/");
 		
 		registry.addResourceHandler("/member/**").addResourceLocations("file:///"+root+"/member/");
+		
 		registry.addResourceHandler("/photo/**").addResourceLocations("file:///"+root+"/photo/");
 	}
 

@@ -3,11 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>마이 페이지</title>
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <link rel="stylesheet" href="/css/minihomepage.css">
+<link rel="stylesheet" href="/css/header.css">
 <link rel="stylesheet" href="/css/layout.css">
 <link rel="stylesheet" href="/css/font.css">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
@@ -15,20 +12,28 @@
 <script src="/summernote/summernote-lite.js"></script>
 <script src="/summernote/lang/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="/summernote/summernote-lite.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="/js/sweetalert.min.js"></script>
 </head>
 <style>
- .profile-text> textarea{
+ .profile-text> input{
  	width: 100%;
-    height: 180px;
+    height: 100px;  
     border: none;
     resize: none;
     padding: 0;
     overflow: hidden;
  }
+ .profile-image-area{
+ 	display: flex;
+ 	justify-content: center;
+ 	align-items: center;
+ }
  .profile-image-img{
- 	width: 100%;
- 	height: 230px;
+ 	width: 200px;
+ 	height: 200px;
+ 	border-radius: 15px;
  }
  .follow-btn{
  	display: flex;
@@ -36,15 +41,56 @@
  	align-content: center;
  	padding-bottom: 5px;
  }
+ .profile-btn-area{
+ 	visibility: hidden;
+ }
+ .swiper{
+ 	width:500px;
+ 	height:300px;
+ 	
+ }
+ .slide-image{
+ 
+ 	
+ 	
+ }
+ .swiper-img-wrap{
+ 	height:300px;
+ 	display: flex;
+ 	align-items: center;
+ 	justify-content: center 
+ }
+ .slide-image .slide{
+	height : 100%;
+	object-fit : contain;
+	}
+/* .slide-image{
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	padding: 10px 10px;
+}
+*/
+ .swiper-button-prev{
+	display: none;
+}
+.swiper-button-next{
+	display: none;
+}
+.swiper-scrollbar{
+	display: none;
+}
+ 
 </style>
-<body>
 
+<body>
+	<th:block th:include="/common/header"></th:block>
 	<div class="bookcover">
 	<div class="bookdot">
 		<div class="page">
 			<div class="profile-container">
-				<div class="header profile-title">
-					TOTAL <span class="color-red">28</span>
+				<div class="header1 profile-title">
+					TOTAL <span class="color-red" th:text="${member.totalCount}"></span>
 				</div>
 				<div class="box profile-box">
 					<form action="/member/profile" method="POST" name="myPageFrm" id="profileFrm" enctype="multipart/form-data">
@@ -53,19 +99,11 @@
                             <img class="profile-image-img" th:src="@{/member/}+${member.profilePhoto}" id="profileImage">
                     </div>
                     <div class="profile-btn-area">
-                        <label for="imageInput">이미지 선택</label>
                         <input type="file" name="profilePhoto" id="imageInput" accept=".jpg,.png,.jpeg" onchange="submitFunction(this)">
                     </div>
                     </form>
 					<div class="profile-text">
-						<th:block th:if="${session.member !=null && session.member.memberNo != member.memberNo}">
-							<textarea id="profileContent" name="profileContent" placeholder="자유롭게 전하고싶은 메세지를 적어주세요..♥"
-								readonly></textarea>
-						</th:block>
-						<th:block th:if="${session.member.memberNo == member.memberNo}">
-							<textarea id="profileContent" name="profileContent"
-								placeholder="자유롭게 전하고싶은 메세지를 적어주세요..♥"></textarea>
-						</th:block>
+							<input id="profileContent" name="profileMsg" th:value="${member.profileMsg}">
 					</div>
 					<div class="profile-username">
 						<span style="color: #0f1b5c" th:text="${session.member.memberName}"></span>(♪♬)
@@ -83,7 +121,7 @@
 					</div>
 			</div>
 			<div class="content-container">
-				<div class="header content-title">
+				<div class="header1 content-title">
 					<div class="content-title-name" th:text="${session.member.memberName}+님의홈피"></div>
 				</div>
 				<div class="box content-box">
@@ -95,68 +133,114 @@
 			<div class="box-title">Updated news ></div>
 			<div class="news-flex-box">
 				<div class="news-box">
-					<div class="news-row" th:each="b : ${board}">
-						<div class="news-category category-pic">사진첩</div>
-						<div class="news-title" th:text="${b.boardTitle}"></div>
-					</div>
 					<div class="news-row" th:each="p : ${photo}">
-						<div class="news-category category-post">게시판</div>
+						<div class="news-category category-pic">사진첩</div>
 						<div class="news-title" th:text="${p.photoTitle}"></div>
 					</div>
+					<div class="news-row" th:each="b : ${board}">
+						<div class="news-category category-post">게시판</div>
+						<div class="news-title" th:text="${b.boardTitle}"></div>
+					</div>
 				</div>
 			</div>
-			<div class="swiper picture-room">
-				<!-- Additional required wrapper -->
+			<div>
 				<div class="box-title">추억이 방울방울 ></div>
-				<div class="swiper-wrapper">
-					<!-- Slides -->
-					<div class="swiper-slide slide-image" >
-						<a href="javascript:void(0)"> <img src="/image/cyworld1.png"
-							alt="">
-						</a>
-					</div>
-					<div class="swiper-slide slide-image">
-						<a href="javascript:void(0)"> <img src="/image/cyworld2.png"
-							alt="">
-						</a>
-					</div>
-					<div class="swiper-slide slide-image">
-						<a href="javascript:void(0)"> <img src="/image/cyworld2.png"
-							alt="">
-						</a>
-					</div>
-				</div>
-				<!-- If we need pagination -->
-				<div class="swiper-pagination"></div>
-				<!-- If we need navigation buttons -->
-				<div class="swiper-button-prev"></div>
-				<div class="swiper-button-next"></div>
+				
+					<div class="swiper">
+						<div class="swiper-wrapper slide-image" >
+							<div class="swiper-slide" th:each="p : ${photo1}">
+								<div class="swiper-img-wrap">
+									<img class="slide" th:src="@{/photo/}+${p.photoContent}">
+								</div>
+							</div>
+						</div>
+						<div class="swiper-pagination"></div>
+						<div class="swiper-button-prev"></div>
+						<div class="swiper-button-next"></div>
+						<div class="swiper-scrollbar"></div>
+					</div>			
+					
 			</div>
-		</div>
+	</div>
 	</div>
 	<th:block th:include="/common/bottom"></th:block>
 </body>
 <script>
-	function submitFunction(obj){
-		$("#profileFrm").submit();
-	}
 
-	document.addEventListener('DOMContentLoaded', function () {
-		var textarea = document.getElementById('profileContent');
-			textarea.addEventListener('input', function () {
-					var maxHeight = textarea.clientHeight;
-					var scrollHeight = textarea.scrollHeight;
-
-					function.addGuestBookEntry(){
-						location.href="/friend/friendrequest";
-					}
-					
-					if (scrollHeight > maxHeight) {
-						// 문자 추가 방지
-						textarea.value = textarea.value.slice(0, textarea.value.length - 1);
-					}
-			});
+	$(document).ready(function () {
+	    var $textarea = $('#profileContent');
+	    
+	    $textarea.on('input', function () {
+	        var maxHeight = $textarea[0].clientHeight;
+	        var scrollHeight = $textarea[0].scrollHeight;
+	        
+	        function addGuestBookEntry() {
+	            window.location.href = "/friend/friendrequest";
+	        }
+	        
+	        if (scrollHeight > maxHeight) {
+	            // 문자 추가 방지
+	            $textarea.val($textarea.val().slice(0, -1));
+	        }
+	    });
+	});
+	$("#profileContent").on("change",function(){
+		const profileMsg = $("#profileContent").val();
+		console.log(profileMsg);
+		$.ajax({
+			url : "/member/updateMsg",
+			data : {profileMsg : profileMsg},
+			type : "post",
+			success : function(data){
+				$("#profileContent").text(data);
+			},
+			error : function(){
+				console.log("에러");
+			}
 		});
+	});
+	
+	const swiper = new Swiper('.swiper', {
+	    // Optional parameters
+	    direction: "horizontal",
+	     autoplay: {
+	         delay : 2500
+	    }, 
+	    loop: true,    
+	    // If we need pagination
+	    pagination: {
+	      el: '.swiper-pagination',
+	    },
+	  
+	    // Navigation arrows
+	    navigation: {
+	      nextEl: '.swiper-button-next',
+	      prevEl: '.swiper-button-prev',
+	    },
+	  
+	    
+
+	    // And if we need scrollbar
+
+
+	  });
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/* $("#profileContent").on("change",function(){
+		const memberNo = [[${member.memberNo}]];
+		const profileContent = $("#profileContent").val();
+		console.log(memberNo + profileContent);
+		location.href="/member/updateProfileContent?memberNo="+memberNo+"&profileMsg="+profileContent;
+	}); */
+	
+	
 	
 
 </script>

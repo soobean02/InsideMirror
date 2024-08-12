@@ -125,17 +125,17 @@ body {
 
 	$("#nickName").on("change",function() {
 				$(".nickName-check-msg").removeClass("valid").removeClass("invalid");
-				const memberNickname = $(this).val();
+				const memberNickName = $(this).val();
 				const nicknameReg = /^[가-힣a-zA-Z0-9]{4,20}$/;
-				if (nicknameReg.test(memberNickname)) {
+				if (nicknameReg.test(memberNickName)) {
 					$.ajax({
 						url : "/member/ajaxCheckNickname",
 						type : "get",
-						data : {memberNickname : memberNickname},
+						data : {memberNickName : memberNickName},
 						success : function(data) {
 							if(data == 0){
 							$(".nickName-check-msg").text("사용 가능한 닉네임 입니다.");
-							$(".nickName-check-msg").addClass("valid");								
+							$(".nickName-check-msg").addClass("valid").remove("invalid");
 						}else{
 							$(".nickName-check-msg").text("이미 사용중인 닉네임 입니다.");
 							$(".nickName-check-msg").addClass("invalid");		
@@ -153,6 +153,7 @@ body {
 			});
 							
 		$("#pw").on("keyup",function(){
+			$(".nickName-check-msg").removeClass("valid").removeClass("invalid").text("");
 			    const pwValue = $(this).val();
 			    const regArr = [
 			        /^.{8,12}$/,
@@ -178,6 +179,7 @@ body {
 			});
 
 	$("#pwRe").on("change", function() {
+		$(".pw-check-msg").removeClass("valid").removeClass("invalid").text("");
 		$(".pwRe-check-msg").removeClass("valid").removeClass("invalid");
 		const pwValue = $("#pw").val();
 		const pwReValue = $("#pwRe").val();

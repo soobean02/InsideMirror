@@ -45,7 +45,11 @@ public class MemberController {
 	public String login(Member m, HttpSession session, Model model) {
 		Member member = memberService.selectOneMember(m);
 		if(member == null) {
-			return "member/login";
+			model.addAttribute("title", "로그인 실패");
+			model.addAttribute("msg", "아이디 또는 비밀번호를 확인하세요.");
+			model.addAttribute("icon","error");
+			model.addAttribute("loc","/member/login");
+			return "common/msg";
 		}else {
 			if(member.getMemberLevel() == 2) {
 				session.setAttribute("member", member);
@@ -61,25 +65,35 @@ public class MemberController {
 		}
 	}
 	@GetMapping(value="/logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session, Model model) {
 		session.invalidate();
-		return "redirect:/";
+		model.addAttribute("title", "로그아웃");
+		model.addAttribute("msg","안녕히 가세요~");
+		model.addAttribute("icon","success");
+		model.addAttribute("loc","/");
+		return "common/msg";
 	}
 	@GetMapping(value="/homelist")
-	public String homelist(Model model) {
-		List member = memberService.viewAllMember();
-		model.addAttribute("member", member);
+	public String homelist(@SessionAttribute(required=false) Member member,Model model) {
+		int memberNo = 0;
+		if(member != null) {
+			memberNo = member.getMemberNo();
+		}
+		List memberList = memberService.viewAllMember(memberNo);
+		model.addAttribute("memberList", memberList);
 		return "common/homelist";
 	}
 	@GetMapping(value="/search")
-	public String search(String findFriend, Model model) {
+	public String search(@SessionAttribute(required=false) Member member, String findFriend, Model model) {
+		int memberNo = 0;
+		if(member != null) {
+			memberNo = member.getMemberNo();
+		}
 		if(findFriend.equals("")) {
-		
-			
 			model.addAttribute("title","검색을 입력해주세요");
 			model.addAttribute("icon", "error");
 		}else {
-			List memberList = memberService.findMember(findFriend);
+			List memberList = memberService.findMember(memberNo,findFriend);
 			
 			model.addAttribute("memberList", memberList);
 			return "/common/searchlist";				
@@ -141,12 +155,12 @@ public class MemberController {
 	}
 	@GetMapping(value="/memberPage")
 	public String memberPage(@SessionAttribute(required=false) Member member,Model model) {
-		Member m = member;
+		Member m = memberService.selectFriendPage(member);
 		Title getTitle = memberService.getTitle(member);
 		model.addAttribute("member",m);
 		model.addAttribute("board",getTitle.getBoard());
 		model.addAttribute("photo",getTitle.getPhoto());
-		System.out.println(getTitle);
+		model.addAttribute("photo1",getTitle.getPhoto1());
 		
 		return "member/memberPage";
 	}
@@ -178,7 +192,11 @@ public class MemberController {
 	@GetMapping(value="/friendPage")
 	public String selectFriendPage(Member m, Model model) {
 		Member member = memberService.selectFriendPage(m);
+		Title getTitle = memberService.getTitle(member);
 		model.addAttribute("friendMember", member);
+		model.addAttribute("board",getTitle.getBoard());
+		model.addAttribute("photo",getTitle.getPhoto());
+		model.addAttribute("photo1",getTitle.getPhoto1());
 		return "/member/friendPage";
 		
 	}
@@ -220,4 +238,34 @@ public class MemberController {
 		emailSender.sendMail(emailTitle, receiver, emailContent);
 		return sb.toString();
 	}
+	
+	@ResponseBody
+	@PostMapping(value="/updateMsg")
+	public int updateMsg(String profileMsg, @SessionAttribute(required=false)Member member) {
+		int result = memberService.updateMsg(profileMsg, member);
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	 * @GetMapping(value="/updateProfileContent") public String
+	 * updateProfileContent(Member m,Model model) { System.out.println("프로필 테스트"+m);
+	 * int test = 1; Member member = memberService.updateProfileContent(m);
+	 * model.addAttribute("member2",member); return "redirect:/member/memberPage";
+	 * 
+	 * }
+	 */
 }

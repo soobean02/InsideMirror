@@ -14,4 +14,5 @@ import lombok.NoArgsConstructor;
 public class Title {
 	private List<Photo> photo;
 	private List<Board> board;
+	private List<Photo> photo1;
 }

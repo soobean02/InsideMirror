@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회사 소개</title>
+</head>
+<style>
+	.companyInfo-all-wrap{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 170px;
+	min-height: 252px;
+	}
+	.companyInfo-title h2{
+		color: #ccc;
+	}
+	.companyInfo-info pre{
+		color: #ccc;
+		font-weight: bold;
+		font-size: 18px;
+	}
+	.companyInfo-img{
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		margin: 30px 0;
+	}
+</style>
+<body>
+	<th:block th:include="/common/header"></th:block>
+	
+	<div class="companyInfo-all-wrap">
+		<div class="companyInfo-title">
+		<h2>InsideMirror 회사소개</h2>
+		</div>
+		<div class="companyInfo-info">
+		<pre>
+
+			인터넷 커뮤니티 인사이드미러의 대해서
+			
+			자신의 모습을 비추어 볼 수 있고, 스스로를 되돌아볼 수 있는 공간을 제공한다는 의미
+
+			실명제 인맥 기반의 가상사회, 신뢰기반의 정보공유를 컨셉으로, 사람과 사람 사이의 친분관계를 형성하고 도와주는 범용 커뮤니티 서비스
+			
+			개인과 개인의 관계를 정의하며 시작되는 인맥, 각종 모임과 만남을 가능하게 하는 클럽,
+			 
+			개인과 개인의 관계에서 자신의 정보와 지인의 정보를 효율적으로 관리할 수 있는 도구인 미니홈피,
+			 
+			나의 기분과 감정을 드러내고 자유롭게 표현하는 상태메세지, 방명록, 자유게시판  등 아는 사람끼리 더욱 친해지는 서비스를 제공
+		</pre>		
+		</div>
+	</div>
+	<div class="companyInfo-img">
+		<img alt="사람들 프로필1" src="/image/pixel-art-12601_256.gif">
+		<img alt="사람들 프로필2" src="/image/pixel-art-12601_256.gif">
+		<img alt="사람들 프로필3" src="/image/pixel-art-12601_256.gif">
+		<img alt="사람들 프로필4" src="/image/pixel-art-12601_256.gif">
+	</div>
+	<th:block th:include="/common/footer"></th:block>
+</body>
+</html>

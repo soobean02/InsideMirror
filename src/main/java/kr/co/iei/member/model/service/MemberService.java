@@ -16,7 +16,8 @@ import kr.co.iei.product.dao.ProductDao;
 public class MemberService {
 	@Autowired
 	private MemberDao memberDao;
-	@Autowired ProductDao productDao;
+	@Autowired 
+	private ProductDao productDao;
 	
 	public MemberListData selectAllMember(int reqPage) {
 		int numPerPage = 5;
@@ -120,25 +121,27 @@ public class MemberService {
 	}//selectAdminOneMember
 
 
-	public List findMember(String findMember) {
-		List memberList = memberDao.findMember(findMember);
+	public List findMember(int memberNo,String findMember) {
+		List memberList = memberDao.findMember(memberNo,findMember);
 		return memberList;
 	}
 
 
-	public List viewAllMember() {
-		List list = memberDao.viewAllMember();
-		return null;
+	public List viewAllMember(int memberNo) {
+		List list = memberDao.viewAllMember(memberNo);
+		return list;
 	}
 
 
 	public Title getTitle(Member member) {
 		List board = memberDao.board(member);
 		List photo = memberDao.photo(member);
+		List photo1 = memberDao.photo1(member);
 		
 		Title title = new Title();
 		title.setBoard(board);
 		title.setPhoto(photo);
+		title.setPhoto1(photo1);
 		return title;
 	}
 
@@ -151,6 +154,9 @@ public class MemberService {
 
 	public Member selectFriendPage(Member m) {
 		Member friendMember = memberDao.selectFriendPage(m);
+			
+		int result = memberDao.updateTotalCount(m.getMemberNo());				
+			
 		return friendMember;
 	}
 
@@ -165,6 +171,28 @@ public class MemberService {
 		int f =  productDao.joinProductF(num);
 		return 0;
 	}
+
+
+	public int updateMsg(String profileMsg, Member member) {
+		int result = memberDao.updateMsg(profileMsg, member);
+		return result;
+	}
+
+
+
+	
+	
+	
+	/*
+	 * @Transactional 
+	 * public Member updateProfileContent(Member m) { 
+	 * int result = memberDao.updateProfileContent(m);
+	 *  if(result>0) { Member member = memberDao.selectOneMember(m); 
+	 *  return member; 
+	 *  } 
+	 *  return null; 
+	 *  }
+	 */
 
 
 
