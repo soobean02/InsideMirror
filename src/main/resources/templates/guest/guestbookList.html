@@ -1,66 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
 <style>
-body {
-    margin: 0;
-    padding: 0;
-    
-}
-
-.bookcover {
-    width: 80%;
-    margin: auto;
-    padding: 20px;
-}
-
-
-.profile-container, .content-container, .menu-container {
-    display: flex;
-    flex-direction: column;
-    margin: 10px 0;
-}
-
-.profile-title, .content-title {
-    margin: 10px 0px;
-    font-size: 1.2em;
-}
-
-
-.profile-box, .content-box {
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 8px;
-}
-
-.profile-image-img {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-}
-
-.profile-text, .profile-username, .profile-dropdown {
-    margin: 10px 0;
-}
-
-.dropdown-button {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-}
-
-.dropdown-title {
-    font-size: 1em;
-}
-
-.triangle-down {
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid black;
-    margin-left: 10px;
-}
 
 .guestbook-scrollbox {
     max-height: 450px;
@@ -180,21 +120,21 @@ body {
 <th:block th:include="common/top"></th:block>
                                 <div class="guestbook-scrollbox" id="guestbook-scrollbox">
                                     <div class="guest-text">방명록 ></div>
-                                    <th:block th:each="guestbookList : ${guestbookList}">
+                                    <th:block th:each="guestbook : ${guestbookList}">
                                     <div class="guestbook-box">
                                         <div class="guestbook-title">
-                                        	NO.<span id = "guestCommentNo" th:text="${guestbookList.guestCommentNo}"></span>
-                                            <span th:text="${guestbookList.guestNickname}"></span>
-                                            <span th:text="${guestbookList.guestCommentDate}"></span>
-                                           <button class="material-icons" onclick="navigateToHome(this)" data-url="#" th:data-url="'/guest/home?guestCommentNo=' + ${guestbookList.guestCommentNo}">home</button>
+                                        	NO.<span id = "guestCommentNo" th:text="${guestbook.guestCommentNo}"></span>
+                                            <span th:text="${guestbook.guestNickName}"></span>
+                                            <span th:text="${guestbook.guestCommentDate}"></span>
+                                           <button class="material-icons" onclick="navigateToHome(this)">home</button>
                                             <div class="guestbook-date">
                                                 <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
-                                                <button class="btn-primary" onclick="editComment(this)">수정</button>
+                                                <button class="btn-primary" th:onclick="editComment(this);">수정</button>
                                             </div>
                                         </div>
                                         <div class="guestbook-contents">
                                             <div class="guestbook-text">
-                                                <span id = "guestCommentContent" th:text="${guestbookList.guestCommentContent}"/>
+                                                <span id = "guestCommentContent" th:text="${guestbook.guestCommentContent}"></span>
                                                 <textarea id ="edit-textarea" class="edit-textarea" style="display: none;"></textarea>
                                             </div>
                                         </div>
@@ -248,36 +188,7 @@ body {
         
 
   }
-	//댓글 리스트
- function addCommentToList(comment) {
-	    const guestBook = {
-	        guestCommentNo: comment.guestCommentNo,
-	        guestWriterNo: comment.guestWriterNo,
-	        guestCommentContent: comment.guestCommentContent,
-	        guestCommentDate: comment.guestCommentDate,
-	        memberNo: comment.memberNo,
-	        guestBookType: comment.guestBookType
-	    };
-	 const commentHtml = `
-		    <div class="guestbook-box" data-comment-no="${guestBook.guestCommentNo}">
-		        <div class="guestbook-title">No. ${guestBook.guestCommentNo}
-		            <span>${guestBook.guestWriterNo}</span>
-		            <button class="material-icons" onclick="goToHomePage(this)">home</button>
-		            <div class="guestbook-date">${guestBook.guestCommentDate}
-		                <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
-		                <button class="btn-primary" onclick="editComment(this)">수정</button>
-		            </div>
-		        </div>
-		        <div class="guestbook-contents">
-		            <div class="guestbook-text">
-		                <p>${guestBook.guestCommentContent}</p>
-		                <textarea class="edit-textarea" style="display: none;"></textarea>
-		            </div>
-		        </div>
-		    </div>
-		`;
-     $('#guestbook-scrollbox').prepend(commentHtml);
- }
+
 
 //댓글 삭제 확인
  function confirmDeleteComment(button) {
@@ -318,63 +229,39 @@ body {
      });
  }
 
- // 댓글 수정
- function editComment(button) {
-     const guestbookBox = button.closest('.guestbook-box');
-     const textElement = guestbookBox.querySelector('.guestbook-text span');
-     const textarea =  document.getElementById("edit-textarea").value;
-	 console.log("textarea");
-	 
-     if ($('#edit-textarea').css('display') === 'none') {
-         textarea.value = document.getElementById("edit-textarea").value;
-         $('#edit-textarea').css('display', 'block');         
-         button.textContent = '저장';
-         button.setAttribute('onclick', 'saveComment(this)');
-     }
- }
+ 	// 댓글 수정
+	
+ 	function editComment(obj){
+ 		const btn = $(obj);
+ 		const textarea = btn.parent().parent().next().children().children().eq(1);
+ 		textarea.show();
+ 		const content = btn.parent().parent().next().children().children().eq(0);
+ 		textarea.text(content.text());
+ 		//수정 버튼을 ->수정 완료 버튼으로 전환 
+ 		btn.text("수정 완료");
+ 		btn.attr("onclick","saveComment(this);");
+ 		
+ 		//삭제 버튼을 -> 수정 취소 버튼으로 전환
+ 		btn.prev().text("수정 취소");
+ 		btn.prev().attr("onclick","saveCancel(this);");
+ 		
+ 		
+ 	}
+ 	
     // 댓글 저장
-    function saveComment(button) {
-        const guestbookBox = button.closest('.guestbook-box');
-        const textarea = document.getElementById("edit-textarea").value;
-        const textElement = guestbookBox.querySelector('.guestbook-text p');
-        const newText = document.getElementById("edit-textarea").value;
-        const guestCommentNo = $('#guestCommentNo').text();
-        
-        
-        console.log(guestbookBox);
-        console.log(textarea);
-        console.log(textElement);
-        console.log(newText);
-        console.log(guestCommentNo);
-
-        if (newText === '') {
-            alert('댓글 내용이 비어있습니다.');
-            return;
-        }
-
-
-        if (!guestCommentNo) {
-            console.error('댓글 번호가 없습니다.');
-            return;
-        }
-
-
-
-        $.ajax({
-            type: 'POST',
-            url: '/guest/updateComment',
-            data : JSON.stringify ({
-            	guestCommentNo : guestCommentNo,
-            	guestCommentContent : newText
-            }),
-            contentType: 'application/json',
-            success: function(response) {
-            	
-            },
-            error: function(error) {
-                alert('댓글 수정 중 오류가 발생했습니다.');
-            }
-        });
+    function saveCancel(obj) {
+    	const btn = $(obj);
+    	const textarea = btn.parent().parent().next().children().children().eq(1);
+    	textarea.hide();
+    
+    	//수정완료에서-> 수정버튼으로 전환
+    	btn.next().text("수정");
+    	btn.next().attr("onclick","editComment(this);");
+    	//수정취소에서 -> 삭제버튼으로전환
+    	btn.text("삭제");
+    	btn.attr("onclick","confirmDeleteComment(this);");
+    	
+      
     }
  // 홈 버튼 클릭 시 호출되는 함수
     function navigateToHome(button) {

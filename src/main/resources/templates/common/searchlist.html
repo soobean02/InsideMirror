@@ -5,84 +5,96 @@
 <title>미니홈피 리스트</title>
 </head>
 <style>
-	body {
+body {
 	background: linear-gradient(rgba(255, 255, 255, 0.3),
 		rgba(255, 255, 255, 0.3)), url("/image/Up Pixar.gif");
 	background-repeat: no-repeat;
 	background-size: cover;
 	margin: 0;
-	}
-	.profile-list-div{
-		overflow:hidden;
-		margin : 0 auto;
-		width: 1200px;
-	}
-	.profile-row{
-		float : left;
-		width: 400px;
-	}
-	.profile-list-wrap{
-		width: 1200px;
-		margin: 30px auto;
-		background: linear-gradient(rgba(255, 255, 255, 0.3),rgba(255, 255, 255, 0.3));
-		border-radius: 45px;
-		min-height: 752px;
-	}
-	.profile {
-        margin: 30px 50px;
-    }
-    .profile-img{
-       	height: 300px;
-       	width: 300px;
-       	border-top-left-radius: 10px;
-       	border-top-right-radius: 10px;
-     }
-    .profile-info{
-       	display: flex;
-       	justify-content: space-between;
-        background-color: white;
-        width: 300px;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px; 
-     }
-     .profile-info p{
-     	font-weight: bold;
-       	padding: 0 20px;
-       	margin: 10px 0;
-       	color: black;
-     }
-     .profile-row-div a{
-     	text-decoration: none;     
-     }
-     .profile-info:hover {
-        background: linear-gradient(rgba(255, 255, 255, 0.3),rgba(255, 255, 255, 0.3));
-     }
+}
 
+.profile-list-div {
+	overflow: hidden;
+	margin: 0 auto;
+	width: 1200px;
+}
+
+.profile-row {
+	float: left;
+	width: 400px;
+}
+
+.profile-list-wrap {
+	width: 1200px;
+	margin: 30px auto;
+	background: linear-gradient(rgba(255, 255, 255, 0.3),
+		rgba(255, 255, 255, 0.3));
+	border-radius: 45px;
+	min-height: 752px;
+}
+
+.profile {
+	margin: 30px 50px;
+}
+
+.profile-img {
+	height: 300px;
+	width: 300px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.profile-info {
+	display: flex;
+	justify-content: space-between;
+	background-color: white;
+	width: 300px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.profile-info p {
+	font-weight: bold;
+	padding: 0 20px;
+	margin: 10px 0;
+	color: black;
+}
+
+.profile-row-div a {
+	text-decoration: none;
+}
+
+.profile-info:hover {
+	background: linear-gradient(rgba(255, 255, 255, 0.3),
+		rgba(255, 255, 255, 0.3));
+}
 </style>
 <body>
 	<th:block th:include="/common/header"></th:block>
-		<main class="profile-list-main">
-			<section class="profile-list-wrap">
-				<div class="profile-list-div"> 
-					<div class="profile-row" th:each="friendMember: ${memberList}">
-							<div class="profile-row-div">
-								<a th:href="@{/member/friendPage(memberNo=${friendMember.memberNo})}">
-									<div class="profile">
-										<div class="profile-img">
-											<img class="profile-img" th:src="@{/member/}+${friendMember.profilePhoto}">				
-										</div>
-										<div class="profile-info">
-											<p th:text="${friendMember.memberName}"></p>
-											<p th:text="${friendMember.totalCount}"></p>					
-										</div>
-									</div>
-								</a>
-							</div>			
+	<main class="profile-list-main">
+		<section class="profile-list-wrap">
+			<div class="profile-list-div">
+				<div class="profile-row" th:each="friendMember: ${memberList}">
+					<div class="profile-row-div">
+						<a
+							th:href="@{/member/friendPage(memberNo=${friendMember.memberNo})}">
+							<div class="profile">
+								<div class="profile-img">
+									<img class="profile-img"
+										th:src="@{/member/}+${friendMember.profilePhoto}">
+								</div>
+								<div class="profile-info">
+									<p th:text="${friendMember.memberName}"></p>
+									<p th:text="${friendMember.totalCount}"></p>
+								</div>
+							</div>
+						</a>
 					</div>
 				</div>
-				
-			</section>
-		</main>
+			</div>
+
+		</section>
+	</main>
 	<th:block th:include="/common/footer"></th:block>
 </body>
 </html>
