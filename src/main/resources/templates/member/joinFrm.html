@@ -215,6 +215,7 @@ body {
 			    }
 			    if(ok===5){
 			    	 $(".pw-check-msg").text("사용가능한 비밀번호 입니다.");
+			            $(".pw-check-msg").remove("invalid");
 			            $(".pw-check-msg").addClass("valid");
 			    }else{
 			    	$(".pw-check-msg").text("영문 대소문자/숫자/특수문자(!@#$%) 조합이 필요합니다 (8~12자이내)");
