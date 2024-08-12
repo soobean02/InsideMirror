@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import jakarta.servlet.http.HttpSession;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.service.MemberService;
 import kr.co.iei.product.dto.BuyProduct;
@@ -149,11 +150,13 @@ public class ProductController {
 	
 	// 상품 초기화
 	@GetMapping(value="/canProduct")
-	public String canProduct(Model model,  int productNo, int productListNo, int all, @SessionAttribute Member member) {
+	public String canProduct(Model model,  int productNo, int productListNo, int all, @SessionAttribute Member member,HttpSession session) {
 		// 전체 초기화
 		if(all == 1) {
 			int result = productService.updateZeroProduct(member);
+			List sp = productService.selectUseProductInfo(member);
 			if(result > 0) {
+				session.setAttribute("spCss", sp);
 				return "redirect:/product/appProductList";
 			}else {
 				model.addAttribute("title", "실패");
@@ -164,7 +167,9 @@ public class ProductController {
 			}
 		}else { // 일부 초기화
 			int result = productService.updateOneZeroProduct(member, productNo, productListNo);
+			List sp = productService.selectUseProductInfo(member);
 			if(result > 0) {
+				session.setAttribute("spCss", sp);
 				return "redirect:/product/appProductList";
 			}else {
 				model.addAttribute("title", "실패");
@@ -177,7 +182,7 @@ public class ProductController {
 	}
 	// 상품 적용하기
 	@GetMapping(value="/useP")
-	public String useP(Model model, int productNo, int productListNo, @SessionAttribute Member member) { // 상품 번호, 상품 리스트 번호  
+	public String useP(Model model, int productNo, int productListNo, @SessionAttribute Member member, HttpSession session) { // 상품 번호, 상품 리스트 번호  
 		int result = productService.updateUseProduct(productNo, productListNo, member);
 		if(result > 0) {
 			List sp = productService.selectUseProductInfo(member);
@@ -186,6 +191,7 @@ public class ProductController {
 			model.addAttribute("msg", "상품 적용 성공");
 			model.addAttribute("icon", "success");
 			model.addAttribute("sp", sp);
+			session.setAttribute("spCss", sp);
 			model.addAttribute("loc", "/product/appProductList");
 		}else {
 			model.addAttribute("title", "실패");
