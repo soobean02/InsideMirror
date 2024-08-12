@@ -237,6 +237,15 @@ input[type="file"] {
 	<th:block th:include="common/adminBottom"></th:block>
 </body>
 <script>
+function previewImage(event) {
+    var reader = new FileReader();
+    reader.onload = function() {
+        var output = document.getElementById('productImg');
+        output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
+
 function handleSelectionChange() {
     var selectElement = document.getElementById('productListNo');
     var selectedValue = selectElement.value;

@@ -184,7 +184,7 @@ public class ProductDao {
 
 	public int productUpdate(SellProduct sp) {
 		String query = "update sell_product set product_name=?, product_list_no=?, product_price=? where product_no=?";
-		Object[] params = { sp.getProductName(), sp.getProductListNo(), sp.getProductPrice(), sp.getProductNo() };
+		Object[] params = {sp.getProductName(), sp.getProductListNo(), sp.getProductPrice(), sp.getProductNo() };
 		int result = jdbc.update(query, params);
 		return result;
 	}// productUpdate
