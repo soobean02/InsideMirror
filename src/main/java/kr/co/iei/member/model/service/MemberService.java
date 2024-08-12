@@ -226,13 +226,32 @@ public class MemberService {
 	}//친구 sort
 
 
-	public int selectFriend(Member m, Member member) {
-		int selectFriend = memberDao.selectFriend(m, member);
+	public int selectFriend(Member m, int memberNo) {
+		int selectFriend = memberDao.selectFriend(m, memberNo);
 		if(selectFriend == 1) {
 			return selectFriend;
 		}else {
 			return 0;			
 		}
+	}
+
+
+	@Transactional
+	public int insertFriendMember(int friendMemberNo, String friendMemberNickName, Member member) {
+		int result = memberDao.insertFriendMember(friendMemberNo, friendMemberNickName, member);
+		if(result > 0) {
+			result = memberDao.insertFriendMember(friendMemberNo, member);
+		}
+		return result;
+	}
+
+	@Transactional
+	public int deleteFriendMember(int friendMemberNo, Member member) {
+		int result = memberDao.deleteFriendMember(friendMemberNo, member);
+		if(result > 0) {
+			result = memberDao.deleteFriendMember2(friendMemberNo, member);
+		}
+		return result;
 	}
 
 

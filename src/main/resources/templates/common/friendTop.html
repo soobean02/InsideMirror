@@ -62,20 +62,20 @@
 								readonly></textarea>
 					</div>
 					<div class="profile-username">
-						<span style="color: #0f1b5c" th:text="${friendMember.memberName}"></span>(♪♬)
+						<span style="color: #0f1b5c" th:text="${friendMember.memberNickName}"></span>(♪♬)
 					</div>
 					<div class="follow-btn-content">
 					<th:block th:if="${bestFriend == 0}">
 						<form action="/friend" method="post">
 							<div class="follow-btn">
-							<button type="button">일촌하기</button>
+							<button type="button" class="follow" th:onclick="follow(this)">일촌하기</button>
 							</div>
 						</form>	
 					</th:block>
 					<th:block th:if="${bestFriend == 1}">
 						<form action="/friend" method="post">
-							<div class="follow-remove-btn">
-							<button type="button">일촌취소</button>
+							<div class="follow-btn">
+							<button type="button" class="follow-remove" th:onclick="followRemove(this)">일촌취소</button>
 							</div>
 						</form>	
 					</th:block>
@@ -136,6 +136,55 @@
 
 
 							}
+							
+							const friendMemberNo = [[${friendMember.memberNo}]];
+							const friendMemberNickName = [[${friendMember.memberNickName}]];
+							
+							function follow(obj){
+								$(obj).text("일촌취소");
+								$(obj).attr("onclick","followRemove(this)");
+								$.ajax({
+									url : "/member/insertMember",
+									type : "post",
+									data : {friendMemberNo : friendMemberNo, friendMemberNickName : friendMemberNickName},
+									success : function(data){
+										if(data > 0){
+											alert("친추 성공");
+										}
+										else {
+											alert("실패");
+										}
+									},
+									error : function(){
+										alert("에러");
+									}
+								})
+								
+							}
+							
+							
+							function followRemove(obj){
+								$(obj).text("일촌하기");
+								$(obj).attr("onclick","follow(this)");
+								$.ajax({
+									url : "/member/deleteMember",
+									type : "post",
+									data : {friendMemberNo : friendMemberNo, friendMemberNickName : friendMemberNickName},
+									success : function(data){
+										if(data > 0){
+											alert("친추 삭제")
+										}
+										else{
+											alert("실패")
+										}
+									},
+									error : function(){
+										alert("실패 에러")
+									}
+								})
+							}
+							
+							
 
 					</script>
 				

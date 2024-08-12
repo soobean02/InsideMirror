@@ -280,12 +280,48 @@ public class MemberDao {
 	}
 
 
-	public int selectFriend(Member m, Member member) {
+	public int selectFriend(Member m, int memberNo) {
 		System.out.println("dsasdsadasdasadsdasdasdasas");
 		String query = "select count(*) from friend where member_no = ? and friend_member_no = ?";
-		Object[] params = {member.getMemberNo(),m.getMemberNo()};
+		Object[] params = {memberNo,m.getMemberNo()};
 		int selectFriend = jdbc.queryForObject(query, Integer.class,params);
 		return selectFriend;
 	}
+
+
+	public int insertFriendMember(int friendMemberNo, String friendMemberNickName, Member member) {
+		String query = "insert into friend values(friend_seq.nextval,?,?,?)";
+		Object[] params = {member.getMemberNo(), friendMemberNo, friendMemberNickName};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+
+
+	public int insertFriendMember(int friendMemberNo, Member member) {
+		String query = "insert into friend values(friend_seq.nextval,?,?,?)";
+		Object[] params = {friendMemberNo, member.getMemberNo(), member.getMemberNickName()};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+
+
+	public int deleteFriendMember(int friendMemberNo, Member member) {
+		String query = "delete from friend where member_no = ? and friend_member_no = ?";
+		Object[] params = {member.getMemberNo(), friendMemberNo};
+		int result = jdbc.update(query, params);
+		
+		return result;
+	}
+
+
+	public int deleteFriendMember2(int friendMemberNo, Member member) {
+		String query = "delete from friend where member_no = ? and friend_member_no = ?";
+		Object[] params = {friendMemberNo, member.getMemberNo()};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+	
+	
+	
 
 }
