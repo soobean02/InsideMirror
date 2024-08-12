@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class Friend {
 	private int friendNo;
-	private int memberNo;
+	private Integer memberNo;
 	private int friendMemberNo;
-	
+	private String friendNickName;
 	
 }

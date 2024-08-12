@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.guestbook.dao.GuestBookDao;
 import kr.co.iei.guestbook.dto.GuestBook;
+import kr.co.iei.member.model.dto.Member;
 
 @Service
 public class GuestBookService {
@@ -23,16 +24,25 @@ public class GuestBookService {
 	
 	@Transactional
 	public int updateComment(GuestBook gb) {
-		int result = guestBookDao.updateComment(gb);
-		return result;
+		return guestBookDao.updateComment(gb);
+		
 	}
 	@Transactional
 	public int deleteComment(GuestBook gb) {
-		int result = guestBookDao.deleteComment(gb);
-		return result;
+		return guestBookDao.deleteComment(gb);
 	}
-	public List<GuestBook> getAllComments() {
-		return guestBookDao.getAllComments();
+	public List<GuestBook> getAllComments(GuestBook gb) {
+		return guestBookDao.getAllComments(gb);
     }
+
+	public GuestBook getCommentByNo(Integer guestCommentNo) {
+		 return guestBookDao.getCommentByNo(guestCommentNo);
+		
+	}
+
+
+	
+	
+	
 
 }

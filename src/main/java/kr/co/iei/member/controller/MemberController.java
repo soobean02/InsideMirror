@@ -198,7 +198,9 @@ public class MemberController {
 	public String selectFriendPage(Member m, Model model) {
 		Member member = memberService.selectFriendPage(m);
 		Title getTitle = memberService.getTitle(member);
+		List sp = productService.selectUseProductInfo(member); // css 적용
 		model.addAttribute("friendMember", member);
+		model.addAttribute("spCss",sp);
 		model.addAttribute("board",getTitle.getBoard());
 		model.addAttribute("photo",getTitle.getPhoto());
 		model.addAttribute("photo1",getTitle.getPhoto1());

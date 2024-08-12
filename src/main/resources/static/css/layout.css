@@ -43,7 +43,7 @@ body {
     right: 10px;
     bottom: 10px;
     display: flex;
-    flex-wrap:wrap;
+   /*  flex-wrap:wrap; */
     padding: 15px;
     margin-bottom : 20px
   }

@@ -78,4 +78,18 @@
 					<div class="content-title-name" th:text="${friendMember.memberName}+님의홈피"></div>
 				</div>
 				<div class="box content-box">
+<script th:inline="javascript">
+	const cover = [[${spCss[0].sellProduct.productUrl}]];
+	const cursor = [[${spCss[1].sellProduct.productUrl}]];
+	const font = [[${spCss[2].sellProduct.productUrl}]];
+	console.log(cover);
+	console.log(cursor);
+	console.log(font);
+	$(function(){
+    	$("body").css("font-family",font);
+    	$("body").css("cursor",cursor);
+    	$(".bookcover").css("background-color",cover);
+ 	});
+	</script>
+				
 				

@@ -180,70 +180,26 @@ body {
 <th:block th:include="common/top"></th:block>
                                 <div class="guestbook-scrollbox" id="guestbook-scrollbox">
                                     <div class="guest-text">방명록 ></div>
-                                    <div class="guestbook-box" data-comment-no="1">
-                                        <div class="guestbook-title">No. 1
-                                            <span>이름</span>
-                                           <button class="material-icons" data-url="#">home</button>
-                                            <div class="guestbook-date">(2024.00.00)
+                                    <th:block th:each="guestbookList : ${guestbookList}">
+                                    <div class="guestbook-box">
+                                        <div class="guestbook-title">
+                                        	NO.<span id = "guestCommentNo" th:text="${guestbookList.guestCommentNo}"></span>
+                                            <span th:text="${guestbookList.guestNickname}"></span>
+                                            <span th:text="${guestbookList.guestCommentDate}"></span>
+                                           <button class="material-icons" onclick="navigateToHome(this)" data-url="#" th:data-url="'/guest/home?guestCommentNo=' + ${guestbookList.guestCommentNo}">home</button>
+                                            <div class="guestbook-date">
                                                 <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
                                                 <button class="btn-primary" onclick="editComment(this)">수정</button>
                                             </div>
                                         </div>
                                         <div class="guestbook-contents">
                                             <div class="guestbook-text">
-                                                <p>이 글귀 좋더라.. 읽어봐..<br><br><br>울ㅈ1않ㄱㅣ<br>아프ㅈ1않ㄱㅣ<br>씩씩ㅎrㄱㅣ<br>억ㅈㅣ로ㄹr도 웃ㄱㅣ<br>ㅌ1 ㄴㅐㅈㅣ 말ㄱㅣ<br>.<br>.<br>.<br>오늘도 괜찮은 듯<br>그렇ㄱㅔ ㅈ1ㄴㅐㄱㅣ</p>
-                                                <textarea class="edit-textarea" style="display: none;"></textarea>
+                                                <span id = "guestCommentContent" th:text="${guestbookList.guestCommentContent}"/>
+                                                <textarea id ="edit-textarea" class="edit-textarea" style="display: none;"></textarea>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="guestbook-box" data-comment-no="2">
-                                        <div class="guestbook-title">No. 2
-                                            <span>이름</span>
-                                           <button class="material-icons" data-url="#">home</button>
-                                            <div class="guestbook-date">(2024.00.00)
-                                                <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
-                                                <button class="btn-primary" onclick="editComment(this)">수정</button>
-                                            </div>
-                                        </div>
-                                        <div class="guestbook-contents">
-                                            <div class="guestbook-text">
-                                                <p>너 내가 보내준 인소 봤냐 이 부분 개쩐다<br><br><br>"누구한테 문자하냐?"<br>"사랑하는 사람한테"<br><br><br>"나한테 문자를 왜 보내"</p>
-                                                <textarea class="edit-textarea" style="display: none;"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="guestbook-box" data-comment-no="3">
-                                        <div class="guestbook-title">No. 3
-                                            <span>이름</span>
-                                           <button class="material-icons" data-url="#">home</button>
-                                            <div class="guestbook-date">(2024.00.00)
-                                                <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
-                                                <button class="btn-primary" onclick="editComment(this)">수정</button>
-                                            </div>
-                                        </div>
-                                        <div class="guestbook-contents">
-                                            <div class="guestbook-text">
-                                                <p>야 내일 캔모아 갈래?</p>
-                                                <textarea class="edit-textarea" style="display: none;"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="guestbook-box" data-comment-no="4">
-                                        <div class="guestbook-title">No. 4
-                                            <span>이름</span>
-                                           <button class="material-icons" data-url="#">home</button>
-                                            <div class="guestbook-date">(2024.00.00)
-                                                <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
-                                                <button class="btn-primary" onclick="editComment(this)">수정</button>
-                                            </div>
-                                        </div>
-                                        <div class="guestbook-contents">
-                                            <div class="guestbook-text">
-                                                <p>나랑 찍은 사진은 왜 안 올려 ㅡ.ㅡ</p>
-                                                <textarea class="edit-textarea" style="display: none;"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </th:block>
                                 </div>
                             <form action="/guest/insertComment" method="post">
 	                            <div class="guest-check-box">
@@ -254,188 +210,197 @@ body {
 	                            </div>
 	                            <div class="guestbook-writer">
 									                          
-	                                <textarea id="guestbookInput" name="guestbookInput" placeholder="방문록을 입력해주세요."></textarea>
-	                               	
-	                               <input type="hidden" name="memberNo">
-	                               <input type="hidden" name="guestWriterNo" th:value="${session.member.memberNo}">
-	                                <button class="guestbook-button" onclick="addGuestbookEntry()">전송</button> 
+	                                <textarea id="guestbookInput" name="guestbookInput" placeholder="방명록을 입력해주세요."></textarea>
+	                               <input type="hidden" id = "guestNickname" name="guestNickname" th:value="${session.member.memberNickName}">	                               	
+	                               <input type="hidden" id = "memberNo" name="memberNo" th:value="${session.member.memberNo}">
+	                               <input type="hidden" id = "guestWriterNo" name="guestWriterNo" th:value="${session.member.memberNo}">
+	                                <button type="guestbook-button" onclick="addGuestbookEntry()">전송</button>
+
 	                            </div>
                             </form>
                         <th:block th:include="common/bottom"></th:block>
     <script>
-    // 날짜 가져오기
-    function getCurrentDate() {
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const day = String(now.getDate()).padStart(2, '0');
-        const hour = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        return `(${year}년${month}월${day}일${hour}시${minutes}분)`;
-    }
-    
+
     getNickName();
     function getNickName(){
     	const memberNickNameValue = $(".profile-username>span").text();
     	$(".nickName").val(memberNickNameValue);
     }
+   
     
-	//댓글추가
+  //댓글추가
     function addGuestbookEntry() {
-        const input = document.getElementById('guestbook-input');
+        const input = document.getElementById('guestbookInput');
         const text = input.value.trim();
-        const identity = document.querySelector('input[name="guestbook-identity"]:checked');
-        
+        const identity = document.querySelector('input[name="guestBookType"]:checked');
+        const guestBookType = identity ? identity.value : null;
+        const memberNo = $("#memberNo").val();
+        const error = "/guest/guestbookList";
         if (text === '') {
             alert('댓글 내용을 입력하세요.');
             return;
         }
 
-        if (!identity) {
+        if (!guestBookType) {
             alert('익명 또는 닉네임을 선택하세요.');
-            return;
+            return error;
         }
         
-        const memberNickName = $(".profile-username>span").text();
-        
 
-        const guestWriterNo = document.getElementById('guestWriterNo');
-        const memberNo = document.getElementById('memberNo');
+  }
+	//댓글 리스트
+ function addCommentToList(comment) {
+	    const guestBook = {
+	        guestCommentNo: comment.guestCommentNo,
+	        guestWriterNo: comment.guestWriterNo,
+	        guestCommentContent: comment.guestCommentContent,
+	        guestCommentDate: comment.guestCommentDate,
+	        memberNo: comment.memberNo,
+	        guestBookType: comment.guestBookType
+	    };
+	 const commentHtml = `
+		    <div class="guestbook-box" data-comment-no="${guestBook.guestCommentNo}">
+		        <div class="guestbook-title">No. ${guestBook.guestCommentNo}
+		            <span>${guestBook.guestWriterNo}</span>
+		            <button class="material-icons" onclick="goToHomePage(this)">home</button>
+		            <div class="guestbook-date">${guestBook.guestCommentDate}
+		                <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
+		                <button class="btn-primary" onclick="editComment(this)">수정</button>
+		            </div>
+		        </div>
+		        <div class="guestbook-contents">
+		            <div class="guestbook-text">
+		                <p>${guestBook.guestCommentContent}</p>
+		                <textarea class="edit-textarea" style="display: none;"></textarea>
+		            </div>
+		        </div>
+		    </div>
+		`;
+     $('#guestbook-scrollbox').prepend(commentHtml);
+ }
 
-       
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = '/guest/insertComment';
+//댓글 삭제 확인
+ function confirmDeleteComment(button) {
+     const guestbookBox = button.closest('.guestbook-box');
+     const guestCommentNo = document.getElementById('guestCommentNo'); 
+     console.log(guestCommentNo);
 
-        // 댓글 작성자 ID 입력 필드
-        const writerInput = document.createElement('input');
-        writerInput.type = 'hidden';
-        writerInput.name = 'guestWriterNo';
-        writerInput.value = 39;
-        form.appendChild(writerInput);
+     if (!guestCommentNo) {
+         console.error('댓글 번호가 없습니다.');
+         return;
+     }
 
-        // 댓글 내용 입력 필드
-        const contentInput = document.createElement('input');
-        contentInput.type = 'hidden';
-        contentInput.name = 'guestCommentContent';
-        contentInput.value = text;
-        form.appendChild(contentInput);
+     if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
+         deleteComment(button);
+     }
+ }
+ 
+// 댓글 삭제
+ function deleteComment(button) {
+     const guestbookBox = button.closest('.guestbook-box');
+     const guestCommentNo = $('#guestCommentNo').text();
 
-        // 회원 ID 입력 필드
-        const memberInput = document.createElement('input');
-        memberInput.type = 'hidden';
-        memberInput.name = 'memberNo';
-        memberInput.value = test22; 
-        form.appendChild(memberInput);
+     if (!guestCommentNo) {
+         console.error('댓글 번호가 없습니다.');
+         return;
+     }
 
-        // 폼을 문서에 추가하고 제출
-        document.body.appendChild(form);
-        form.submit();
-    }
+     $.ajax({
+         type: 'GET',
+         url: `/guest/deleteComment`,
+         data: {guestCommentNo: guestCommentNo},
+         success: function(response) {
+             guestbookBox.remove();
+         },
+         error: function(error) {
+             alert('댓글 삭제 중 오류가 발생했습니다.');
+         }
+     });
+ }
 
-    
-    // 댓글 삭제 확인
-    function confirmDeleteComment(button) {
-        const guestbookBox = button.closest('.guestbook-box');
-        const guestCommentNo = guestbookBox.dataset.commentNo;
-
-        if (!guestCommentNo) {
-            console.error('댓글 번호가 없습니다.');
-            return;
-        }
-
-        if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
-            deleteComment(button);
-        }
-    }
-    
- // 댓글 삭제
-    function deleteComment(button) {
-        const guestbookBox = button.closest('.guestbook-box');
-        const guestCommentNo = guestbookBox.dataset.commentNo;
-
-        if (!guestCommentNo) {
-            console.error('댓글 번호가 없습니다.');
-            return;
-        }
-
-        $.ajax({
-            type: 'GET',
-            url: `/guest/deleteComment?guestCommentNo=${guestCommentNo}`,
-            success: function(response) {
-                guestbookBox.remove();
-            },
-            error: function(error) {
-                alert('댓글 삭제 중 오류가 발생했습니다.');
-            }
-        });
-    }
-
-    // 댓글 수정
-    function editComment(button) {
-        const guestbookBox = button.closest('.guestbook-box');
-        const textElement = guestbookBox.querySelector('.guestbook-text p');
-        const textarea = guestbookBox.querySelector('.edit-textarea');
-
-        if (textarea.style.display === 'none') {
-            textarea.value = textElement.innerText;
-            textarea.style.display = 'block';
-            textElement.style.display = 'none';
-            button.textContent = '저장';
-            button.setAttribute('onclick', 'saveComment(this)');
-        }
-    }
-
+ // 댓글 수정
+ function editComment(button) {
+     const guestbookBox = button.closest('.guestbook-box');
+     const textElement = guestbookBox.querySelector('.guestbook-text span');
+     const textarea =  document.getElementById("edit-textarea").value;
+	 console.log("textarea");
+	 
+     if ($('#edit-textarea').css('display') === 'none') {
+         textarea.value = document.getElementById("edit-textarea").value;
+         $('#edit-textarea').css('display', 'block');
+         $('#edit-textarea').css('display', 'block');
+         button.textContent = '저장';
+         button.setAttribute('onclick', 'saveComment(this)');
+     }
+ }
     // 댓글 저장
     function saveComment(button) {
         const guestbookBox = button.closest('.guestbook-box');
-        const textarea = guestbookBox.querySelector('.edit-textarea');
+        const textarea = document.getElementById("edit-textarea").value;
         const textElement = guestbookBox.querySelector('.guestbook-text p');
-        const newText = textarea.value.trim();
+        const newText = document.getElementById("edit-textarea").value;
+        const guestCommentNo = $('#guestCommentNo').text();
+        
+        
+        console.log(guestbookBox);
+        console.log(textarea);
+        console.log(textElement);
+        console.log(newText);
+        console.log(guestCommentNo);
 
         if (newText === '') {
             alert('댓글 내용이 비어있습니다.');
             return;
         }
 
-        const guestCommentNo = guestbookBox.dataset.commentNo;
 
         if (!guestCommentNo) {
             console.error('댓글 번호가 없습니다.');
             return;
         }
 
-        const data = {
-            guestCommentNo: guestCommentNo,
-            guestCommentContent: newText
-        };
+
 
         $.ajax({
             type: 'POST',
             url: '/guest/updateComment',
-            data: JSON.stringify(data),
+            data : JSON.stringify ({
+            	guestCommentNo : guestCommentNo,
+            	guestCommentContent : newText
+            }),
             contentType: 'application/json',
             success: function(response) {
-                textElement.innerText = newText;
-                textElement.style.display = 'block';
-                textarea.style.display = 'none';
-                button.textContent = '수정';
-                button.setAttribute('onclick', 'editComment(this)');
+            	
             },
             error: function(error) {
                 alert('댓글 수정 중 오류가 발생했습니다.');
             }
         });
     }
+ // 홈 버튼 클릭 시 호출되는 함수
+    function navigateToHome(button) {
+        const guestCommentNo = $(button).closest('.guestbook-box').find('#guestCommentNo').text();
+        const url = $(button).attr('data-url');
 
-    // 댓글 엔터로 전송
-    document.getElementById('guestbook-input').addEventListener('keypress', function(event) {
-        if (event.key === 'Enter' && !event.shiftKey) {
-            event.preventDefault();
-            addGuestbookEntry();
+        if (!url || url === '#') {
+            alert('익명의 사용자로 접근 불가');
+            history.back(); // 이전 페이지로 돌아가기
+            return;
         }
-    });
+
+        // 닉네임 사용자의 경우 URL로 이동
+        window.location.href = url;
+    }
     
+    $(document).ready(function() {
+        document.getElementById('guestbookInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                addGuestbookEntry();
+            }
+        });
+    });
+
     </script>
     <th:block th:include="common/bottom"></th:block>
 </body>
