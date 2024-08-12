@@ -76,6 +76,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>글 작성하기</title>
     
+    
 </head>
 
 <body>
@@ -110,8 +111,10 @@
 
     <th:block th:include="common/bottom"></th:block>
 
-
-
+    
+    <script src="/summernote/summernote-lite.js"></script>
+	<script src="/summernote/lang/summernote-ko-KR.js"></script>
+	<link rel="stylesheet" href="/summernote/summernote-lite.css">
     <script>
         
         $("#content").summernote({

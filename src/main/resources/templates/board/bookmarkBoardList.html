@@ -303,12 +303,12 @@
         <div class="board-content">
             <div class="board-tr">
                 <!-- <div style="width:10%;">글번호</div> -->
-                <div style="width:40%;">제목</div>
+                <div style="width:35%;">제목</div>
                 <div style="width:15%; text-align: center;">작성자</div>
                 <div style="width:10%; text-align: center;">조회수</div>
                 <div style="width:10%; text-align: center;">좋아요</div>
                 <div style="width:15%; text-align: center;">작성일</div>
-                <div style="width:10%; text-align: center;">즐겨찾기</div>
+                <div style="width:15%; text-align: center;">즐겨찾기</div>
             </div>
 
             <!-- 즐겨찾기 한 것이 없으면 뜨는 div -->
@@ -329,14 +329,14 @@
             <div class="board-td" th:each="board : ${list}">
                 <a th:href="@{/board/view(boardNo=${board.boardNo})}">
                     <!-- <div class="board-list" style="width:10%; text-indent: 5px;" th:text="${board.boardNo}"></div> -->
-                    <div class="board-list" style="width:45%; overflow: hidden; text-overflow: ellipsis;" th:text="${board.boardTitle}"></div>
+                    <div class="board-list" style="width:40%; overflow: hidden; text-overflow: ellipsis;" th:text="${board.boardTitle}"></div>
                     <div class="board-list" style="width:10%;" th:text="${board.boardWriter}"></div>
                     <div class="board-list" style="width:10%; text-align: center;" th:text="${board.readCount}"></div>
                     <div class="board-list" style="width:10%; text-align: center;" th:text="${board.boardLike}"></div>
                     <div class="board-list" style="width:15%;" th:text="${board.boardDate.substring(0,10)}"></div>
                 </a>
 
-                <div class="board-list remove-border" style="width: 10%; text-align: center;">
+                <div class="board-list remove-border" style="width: 15%; text-align: center;">
                     <span class="material-icons remove-mark">delete</span>
                 </div>
                 <input type="hidden" th:value="${board.boardNo}">

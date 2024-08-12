@@ -4,12 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>관리자 메인 홈피</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <link rel="stylesheet" href="/css/minihomepage.css">
 <link rel="stylesheet" href="/css/layout.css">
 <link rel="stylesheet" href="/css/font.css">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="/summernote/summernote-lite.js"></script>
+<script src="/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/summernote/summernote-lite.css">
+<script src="/js/sweetalert.min.js"></script>
 </head>
 <style>
 /*-----------------페이징 관련---------------------*/
@@ -121,6 +128,24 @@ a {
 .box-title {
 	padding-bottom: 10px;
 }
+ .profile-text> textarea{
+ 	width: 100%;
+    height: 180px;
+    border: none;
+    resize: none;
+    padding: 0;
+    overflow: hidden;
+ }
+ .profile-image-img{
+ 	width: 100%;
+ 	height: 230px;
+ }
+ .follow-btn{
+ 	display: flex;
+ 	justify-content: center;
+ 	align-content: center;
+ 	padding-bottom: 5px;
+ }
 </style>
 <body>
 
