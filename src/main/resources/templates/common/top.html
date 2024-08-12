@@ -79,20 +79,20 @@
 		<div class="page">
 			<div class="profile-container">
 				<div class="header1 profile-title">
-					TOTAL <span class="color-red" th:text="${member.totalCount}"></span>
+					TOTAL <span class="color-red" th:text="${session.member.totalCount}"></span>
 				</div>
 				<div class="box profile-box">
 					<form action="/member/profile" method="POST" name="myPageFrm" id="profileFrm" enctype="multipart/form-data">
 
                     <div class="profile-image-area">
-                            <img class="profile-image-img" th:src="@{/member/}+${member.profilePhoto}" id="profileImage">
+                            <img class="profile-image-img" th:src="@{/member/}+${session.member.profilePhoto}" id="profileImage">
                     </div>
                     <div class="profile-btn-area">
                         <input type="file" name="profilePhoto" id="imageInput" accept=".jpg,.png,.jpeg" onchange="submitFunction(this)">
                     </div>
                     </form>
 					<div class="profile-text">
-							<input id="profileContent" name="profileMsg" th:value="${member.profileMsg}">
+							<input id="profileContent" name="profileMsg" th:value="${session.member.profileMsg}">
 					</div>
 					<div class="profile-username">
 						<span style="color: #0f1b5c" th:text="${session.member.memberName}"></span>(♪♬)
