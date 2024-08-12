@@ -38,6 +38,7 @@
  	justify-content: center;
  	align-content: center;
  	padding-bottom: 5px;
+ 	margin-top: 10px;
  }
  .profile-btn-area{
  	visibility: hidden;
@@ -71,6 +72,13 @@
 .swiper-scrollbar{
 	display: none;
 }
+.friend-list-btn{
+	border-radius: 15px;
+	padding: 5px 10px;
+	background-color: #3B87AB;
+	color: white;
+	border:none;
+}
 </style>
 	<th:block th:include="/common/header"></th:block>
 	<div class="bookcover">
@@ -99,7 +107,7 @@
 					<div class="follow-btn-content">
 						<form action="/friend" method="post">
 							<div class="follow-btn">
-								<button type="button" onclick ="friendList()">일촌목록</button>
+								<button type="button" class="friend-list-btn" onclick ="friendList()">일촌목록</button>
 							</div>
 						</form>
 					</div>	
@@ -107,7 +115,7 @@
 			</div>
 			<div class="content-container">
 				<div class="header1 content-title">
-					<div class="content-title-name" th:text="${session.member.memberName}+님의홈피"></div>
+					<div class="content-title-name" th:text="${session.member.memberNickName}+님의홈피"></div>
 				</div>
 				<div class="box content-box">
 				

@@ -204,7 +204,7 @@ public class MemberController {
 		List sp = productService.selectUseProductInfo(selectMember); // css 적용
 		
 		//로그인 한 회원번호, 친구 번호로 -> 로그인 한 회원기준으로 일촌인 조회 -> model에 등록 -> 등록된값으로 일촌신청/일촌취소 버튼 선택할 수 있게
-		int selectFriend = memberService.selectFriend(m, memberNo);	//이게 문제임
+		int selectFriend = memberService.selectFriend(m, memberNo);
 		model.addAttribute("bestFriend",selectFriend);			
 		System.out.println(memberNo);
 		
