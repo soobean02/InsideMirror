@@ -9,5 +9,6 @@ public class HomeController {
 	@GetMapping(value="/")
 	public String main() {
 		return "index";
+		
 	}
 }

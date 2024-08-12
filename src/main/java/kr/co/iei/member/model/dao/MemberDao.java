@@ -54,7 +54,7 @@ public class MemberDao {
 
 
 	public int insertMember(Member m) {
-		String query = "insert into member values(member_seq.nextval,?,?,?,?,?,?,?,2,to_char(sysdate,'yyyy-mm-dd'),'InsideMirror에 메세지를 적어보세요','cyworld1.png',0,0)";
+		String query = "insert into member values(member_seq.nextval,?,?,?,?,?,?,?,2,to_char(sysdate,'yyyy-mm-dd'),'상태 메세지를 적어보세요..♥','cyworld1.png',0,0)";
 		Object[] params = {m.getMemberId(),m.getMemberPw(),m.getMemberNickName(),m.getMemberName(),m.getMemberGender(),m.getMemberPhone(),m.getMemberAddr()};
 		int result = jdbc.update(query, params);
 		return result;
@@ -110,10 +110,10 @@ public class MemberDao {
 	}//selectAdminOneMember
 
 
-	public List findMember(String findMember) {
-		String query = "select * from member where member_nickname || member_name like ?";
+	public List findMember(int memberNo,String findMember) {
+		String query = "select * from member where member_level=2 and member_no != ? and (member_nickname || member_name || member_id like ?)";
 		String searchKeyword = "%" + findMember+"%"; 
-		Object[] params = {searchKeyword};
+		Object[] params = {memberNo, searchKeyword};
 		List memberList = jdbc.query(query, memberRowMapper, params);
 		if(memberList.isEmpty()) {
 			return null;
@@ -123,9 +123,11 @@ public class MemberDao {
 	}
 
 
-	public List viewAllMember() {
-		String query = "select * from member order by total_count";
-		return null;
+	public List viewAllMember(int memberNo) {
+		String query = "select * from member where member_level=2 and member_no != ? order by total_count desc";
+		Object[] params = {memberNo};
+		List viewMember = jdbc.query(query, memberRowMapper,params);
+		return viewMember;
 	}
 
 	public int updateProfile(Member member) {
@@ -159,6 +161,70 @@ public class MemberDao {
 		List photo = jdbc.query(query, photoRowMapper, params);
 		return photo;
 	}
+
+
+	public int updateTotalCount(int memberNo) {
+		String query = "update member set total_count = total_count+1 where member_no=?";
+		Object[] params = {memberNo};
+		int result = jdbc.update(query, params);
+
+		return result;
+	}
+
+
+	public int updateMsg(String profileMsg, Member member) {
+		String query = "update member set profile_msg =? where member_no=?";
+		Object[] params = {profileMsg, member.getMemberNo()};
+		System.out.println("dao member : "+member.getMemberNo());
+		int result = jdbc.update(query, params);
+		System.out.println("확인 : "+result);
+		return result;
+	}
+
+
+	public List photo1(Member member) {
+		String query ="select * from (select rownum as rnum, p.* from (select * from photo p2 where member_no = (select member_no from member where member_no = ?) order by 1 desc)p) where rnum <= 5";
+		Object[] params = {member.getMemberNo()};
+		List photo = jdbc.query(query, photoRowMapper, params);
+		return photo;
+	}
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	/*
+	 * public int updateProfileContent(Member m) { String query =
+	 * "update member set profile_msg=? where member_no=?"; Object[] params =
+	 * {m.getProfileMsg(),m.getMemberNo()}; int result = jdbc.update(query,params);
+	 * System.out.println("dao : "+result); return result; }
+	 */
+
+
+
+
+
 
 
 

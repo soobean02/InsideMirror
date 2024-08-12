@@ -113,7 +113,7 @@ input[name=product]:checked+label {
 	</div>
 	<div class="wrap">
 		<div class="reset_btn">
-			<a th:href="@{/product/canProduct(productNo=0,productListNo=0,all=1)}"><button>전체 초기화</button></a>
+			<a th:href="@{/product/canProduct(productNo=0,productListNo=0,all=1)}" class="canBtn"><button>전체 초기화</button></a>
 			<!-- <a href="/product/canProduct?all=1"><button>전체 초기화</button></a> -->
 		</div>
 		<div class="app_product_wrap">
@@ -126,7 +126,7 @@ input[name=product]:checked+label {
 					</div>
 					<div class="product_box2">
 						<h3 th:text="${sp.sellProduct.productName}"></h3>
-						<a th:href="@{/product/canProduct(productNo=${sp.buyProduct.productNo},productListNo=${sp.sellProduct.productListNo},all=0)}"><button>적용 취소</button></a>
+						<a th:href="@{/product/canProduct(productNo=${sp.buyProduct.productNo},productListNo=${sp.sellProduct.productListNo},all=0)}" class="canBtn"><button class="oneBtn">적용 취소</button></a>
 						<h4>구입일 : <th:block th:text="${sp.buyProduct.buyDate}"></th:block></h4>
 					</div>
 				</div>
@@ -143,6 +143,36 @@ input[name=product]:checked+label {
 			$(".form_radio").submit();
 		});
 		
+		$(".canBtn").on("click",function(event){
+			event.preventDefault(); // a태그 눌러도 동작 몬하게..!
+			const href = $(this).prop("href"); // 링크 가져오기
+			console.log(href);
+			swal({
+				title: "초기화",
+				text: "초기화하시겠습니까?",
+				icon: "info",
+				buttons:{
+					cancel:{
+						text:"아뇨",
+						value:false,
+						visible:true,
+						className:"btn-secondary",
+						closeModal:true
+					},
+					confirm:{
+						text:"네",
+						value:true,
+						visible:true,
+						className:"btn-primary",
+						closeModal:true
+					}
+				}
+			}).then(function(isConfirm){
+				if(isConfirm){ // 여기에 넣음 됨
+					window.location.href = href;
+				}
+			});
+		})
 		/*
 		$(function(){
 			$("body").css("background-color","blue");

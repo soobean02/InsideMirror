@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/css/minihomepage.css">
     <link rel="stylesheet" href="/css/layout.css">
     <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="/css/header.css">
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<script src="/summernote/summernote-lite.js"></script>
@@ -14,17 +15,23 @@
 	<script src="/js/sweetalert.min.js"></script>
 
 <style>
- .profile-text> textarea{
+ .profile-text> input{
  	width: 100%;
-    height: 180px;
+    height: 100px;  
     border: none;
     resize: none;
     padding: 0;
     overflow: hidden;
  }
+ .profile-image-area{
+ 	display: flex;
+ 	justify-content: center;
+ 	align-items: center;
+ }
  .profile-image-img{
- 	width: 100%;
- 	height: 230px;
+ 	width: 200px;
+ 	height: 200px;
+ 	border-radius: 15px;
  }
  .follow-btn{
  	display: flex;
@@ -32,23 +39,60 @@
  	align-content: center;
  	padding-bottom: 5px;
  }
+ .profile-btn-area{
+ 	visibility: hidden;
+ }
+ .swiper{
+ 	width:500px;
+ 	height:300px;
+ 	
+ }
+ .slide-image{
+ 
+ 	
+ 	
+ }
+ .swiper-img-wrap{
+ 	height:300px;
+ 	display: flex;
+ 	align-items: center;
+ 	justify-content: center 
+ }
+ .slide-image .slide{
+	height : 100%;
+	object-fit : contain;
+	}
+ .swiper-button-prev{
+	display: none;
+}
+.swiper-button-next{
+	display: none;
+}
+.swiper-scrollbar{
+	display: none;
+}
 </style>
 
-<div class="bookcover">
+	<th:block th:include="/common/header"></th:block>
+	<div class="bookcover">
 	<div class="bookdot">
 		<div class="page">
 			<div class="profile-container">
-				<div class="header profile-title">
-					TOTAL <span class="color-red">28</span>
+				<div class="header1 profile-title">
+					TOTAL <span class="color-red" th:text="${session.member.totalCount}"></span>
 				</div>
 				<div class="box profile-box">
-					<form action="/member/memberPage" method="post" enctype="multipart/form-data">
-					<div class="profile-image">
-						<img class="profile-image-img" th:src="@{/member/}+${session.member.profilePhoto}" alt="프로필 이미지">
-					</div>
-					</form>
+					<form action="/member/profile" method="POST" name="myPageFrm" id="profileFrm" enctype="multipart/form-data">
+
+                    <div class="profile-image-area">
+                            <img class="profile-image-img" th:src="@{/member/}+${session.member.profilePhoto}" id="profileImage">
+                    </div>
+                    <div class="profile-btn-area">
+                        <input type="file" name="profilePhoto" id="imageInput" accept=".jpg,.png,.jpeg" onchange="submitFunction(this)">
+                    </div>
+                    </form>
 					<div class="profile-text">
-						<textarea id="profileContent" name="profileContent" placeholder="자유롭게 전하고싶은 메세지를 적어주세요..♥"></textarea>
+							<input id="profileContent" name="profileMsg" th:value="${session.member.profileMsg}">
 					</div>
 					<div class="profile-username">
 						<span style="color: #0f1b5c" th:text="${session.member.memberName}"></span>(♪♬)
@@ -56,27 +100,17 @@
 					<div class="follow-btn-content">
 						<form action="/friend" method="post">
 							<div class="follow-btn">
-							<button type="button">일촌하기</button>
+								<button type="button">일촌하기</button>
 							</div>
 							<div class="follow-btn">
-							<button type="button">일촌목록</button>
+								<button type="button" onclick ="addGuestbookEntry()">일촌목록</button>
 							</div>
-						</form>	
+						</form>
+					</div>	
 					</div>
-					<!-- <div class="profile-dropdown">
-						<div class="dropdown-button">
-							<div class="dropdown-title">일촌 파도타기</div>
-							<div class="triangle-down"></div>
-						</div>
-						<div class="dropdown-content">
-							<a href="#"></a>
-							<a href="#">ㅁㅁㅁ의 홈피</a> <a href="#">ㅁㅁㅁ의 홈피</a>
-						</div>
-						</div> -->
-				</div>
 			</div>
 			<div class="content-container">
-				<div class="header content-title">
+				<div class="header1 content-title">
 					<div class="content-title-name" th:text="${session.member.memberName}+님의홈피"></div>
 				</div>
 				<div class="box content-box">
@@ -88,7 +122,20 @@
 				});
 			</script>  -->
 				
-<script>
+<script th:inline="javascript">
+	const cover = [[${session.spCss[0].sellProduct.productUrl}]];
+	const cursor = [[${session.spCss[1].sellProduct.productUrl}]];
+	const font = [[${session.spCss[2].sellProduct.productUrl}]];
+	console.log(cover);
+	console.log(cursor);
+	console.log(font);
+	$(function(){
+    	$("body").css("font-family",font);
+    	$("body").css("cursor",cursor);
+    	$(".bookcover").css("background-color",cover);
+ 	});
+
+
 document.addEventListener('DOMContentLoaded', function () {
     var textarea = document.getElementById('profileContent');
 
@@ -102,4 +149,21 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+$("#profileContent").on("change",function(){
+	const profileMsg = $("#profileContent").val();
+	console.log(profileMsg);
+	$.ajax({
+		url : "/member/updateMsg",
+		data : {profileMsg : profileMsg},
+		type : "post",
+		success : function(data){
+			$("#profileContent").text(data);
+		},
+		error : function(){
+			console.log("에러");
+		}
+	});
+});
+
+
 </script>

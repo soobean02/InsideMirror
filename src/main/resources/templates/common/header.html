@@ -11,6 +11,11 @@
 	<script src="/js/sweetalert.min.js"></script>
 
 </head>
+<style>
+	.search-group>#searchInput{
+		border-style: none;
+	}
+</style>
 
 <body>
 	<header class="header">
@@ -63,7 +68,7 @@
 			}
 		}).then(function (isConfirm) {
 			if (isConfirm) {
-				location.href = "/member/joinFrm";
+				location.href = "/member/joinFinal";
 			} else {
 				location.href = "/member/homelist";
 			}
