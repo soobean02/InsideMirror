@@ -17,7 +17,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 		if(member != null) return true; //로그인이 되어있으므로 true리턴
 		else {
 			//페이지 이동
-			response.sendRedirect("/member/login");
+			response.sendRedirect("/member/loginMsg");
 			return false;				//로그인이 안 되어있으므로 false리턴
 		}
 	}
