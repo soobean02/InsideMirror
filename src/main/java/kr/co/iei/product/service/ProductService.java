@@ -211,7 +211,7 @@ public class ProductService {
 			if (pageNo == reqPage) {
 				pageNavi += "<a class='page-item active-page' href='/admin/adminProductList?reqPage=" + pageNo + "'>";
 			} else {
-				pageNavi += "<a class='page-item' href='/admin/adminProductList?reqPage=" + pageNo + "'>";
+				pageNavi += "<a class='page-item' href='/admin/adminProductList?reqPage=" + pageNo + "&type="+type+ "'>";
 			}
 			pageNavi += pageNo;
 			pageNavi += "</a></li>";
