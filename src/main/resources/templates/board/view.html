@@ -141,6 +141,11 @@
         height: 100px;
         margin-left: 15px;
         margin-top: 10px;
+        border-radius: 10px;
+        background-color: #5c7cff;
+        cursor: pointer;
+        color: white;
+        border: none;
     }
     .view-content-wrap>div{
         padding-top: 5px;
@@ -222,9 +227,14 @@
         overflow: hidden;
     }
     .reComment-submit{
-        width: 10%;
+        width: 15%;
         height: 90px;
         margin-left: 20px;
+        border: none;
+        background-color: #718dff;
+        border-radius: 10px;
+        cursor: pointer;
+        color: white;
     }
     
     .reComment-content>textarea{
@@ -737,7 +747,7 @@
                 data : {memberNo : memberNo , boardNo : boardNo, boardCommentContent : content, boardCommentRef : boardCommentRef},
                 success : function(data){
                         if(data != null){
-                            alert("댓글 추가 성공");
+                            // alert("댓글 추가 성공");
                             $(item).prev().prev().prev().val("");
                             const comment = data.comment;
 
