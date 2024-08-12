@@ -57,6 +57,7 @@ public class MemberController {
 				return "redirect:/member/memberPage";
 			}else if(member.getMemberLevel() == 1) {
 				session.setAttribute("member", member);
+				session.setAttribute("spCss", sp); // css 적용 시키기
 				return "redirect:/admin/adminHome";
 			}else {
 				session.setAttribute("member", member);

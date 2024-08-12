@@ -89,17 +89,17 @@
 			</script>  -->
 				
 <script th:inline="javascript">
-const cover = [[${session.spCss[0].sellProduct.productUrl}]];
-const cursor = [[${session.spCss[1].sellProduct.productUrl}]];
-const font = [[${session.spCss[2].sellProduct.productUrl}]];
-console.log(cover);
-console.log(cursor);
-console.log(font);
-$(function(){
-    $("body").css("font-family",font);
-    $("body").css("cursor",cursor);
-    $(".bookcover").css("background-color",cover);
- });
+	const cover = [[${session.spCss[0].sellProduct.productUrl}]];
+	const cursor = [[${session.spCss[1].sellProduct.productUrl}]];
+	const font = [[${session.spCss[2].sellProduct.productUrl}]];
+	console.log(cover);
+	console.log(cursor);
+	console.log(font);
+	$(function(){
+    	$("body").css("font-family",font);
+    	$("body").css("cursor",cursor);
+    	$(".bookcover").css("background-color",cover);
+ 	});
 
 
 document.addEventListener('DOMContentLoaded', function () {
