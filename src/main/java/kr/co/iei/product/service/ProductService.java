@@ -167,31 +167,31 @@ public class ProductService {
 
 	}
 
-	public ProductListData selectAdminProduct(int reqPage) {
-
+	public ProductListData selectAdminProduct(int reqPage, int type) {
 		int numPerPage = 10;
 		// 시작번호
 		int end = reqPage * numPerPage; // 1페이지면 10, 2페이지면 20 ...
 		int start = end - numPerPage + 1; // 10 - 10 = 1번 부터..., 20 - 10 + 1 = 11 번 부터...
 
-		List list = productDao.selectProductList(start, end);
-		// 전체 페이지 수 계산
-		int totalCount = productDao.selectProductTotalCount();
-		// 전체 페이지 수 계산
+		List list = null;
+		int totalCount = 0;
+		
+		if(type == 0) {
+			list = productDao.selectProductList(start, end);
+			totalCount = productDao.selectProductTotalCount();
+		}else {
+			list = productDao.selectProductList(start, end, type);
+			totalCount = productDao.selectProductTotalCount(type);
+		}
+		
 		int totalPage = 0;
-
+		
 		if (totalCount % numPerPage == 0) { // 나머지가 없다면
 			totalPage = totalCount / numPerPage;
 		} else { // 나머지가 있다면
 			totalPage = totalCount / numPerPage + 1;
-		} // 올림연산, 삼항 연산도 많이 씀
-			// 페이지네비 사이즈 조정
+		}//else
 		int pageNaviSize = 5;
-
-		// 페이지네비 시작번호를 지정
-		// reqPage 1 ~ 5 : 1 2 3 4 5
-		// reqPage 6 ~ 10 : 6 7 8 9 10
-		// reqPage 11 ~ 15 : 11 12 13 14 15
 
 		int pageNo = ((reqPage - 1) / pageNaviSize) * pageNaviSize + 1;
 
@@ -223,12 +223,12 @@ public class ProductService {
 			}
 		}
 		// 다음 버튼(최종 페이지를 출력하지 않았으면)
-		if (pageNo <= totalPage) {
-			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/admin/adminProductList?reqPage=" + pageNo + "'>";
-			pageNavi += "<span class='material-icons'>chevron_right</span>";
-			pageNavi += "</a></li>";
-		}
+				if (pageNo <= totalPage) {
+					pageNavi += "<li>";
+					pageNavi += "<a class='page-item' href='/admin/adminProductList?reqPage=" + pageNo + "&type="+type+ "'>";
+					pageNavi += "<span class='material-icons'>chevron_right</span>";
+					pageNavi += "</a></li>";
+				}
 
 		// ul 닫기
 		pageNavi += "</ul>";

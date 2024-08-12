@@ -79,10 +79,11 @@ public class AdminController {
 	}//memberView
 
 	@GetMapping(value = "/adminProductList")
-	public String adminProductList(Model model, int reqPage) {
-		ProductListData pld = productService.selectAdminProduct(reqPage);
+	public String adminProductList(Model model, int reqPage, int type) {
+		ProductListData pld = productService.selectAdminProduct(reqPage, type);
 		model.addAttribute("list", pld.getList());
 		model.addAttribute("pageNavi", pld.getNaviPage());
+		model.addAttribute("ty", type);
 		return "admin/adminProductList";
 	}//adminProductList
 	
