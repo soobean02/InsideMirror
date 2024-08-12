@@ -13,37 +13,80 @@ import kr.co.iei.guestbook.dto.GuestBookRowMapper;
 public class GuestBookDao {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbc;
 
     @Autowired
     private GuestBookRowMapper guestBookRowMapper;
 
     public int insertComment(GuestBook gb) {
     	System.out.println(gb);
-        String query = "INSERT INTO guest_book VALUES (GUEST_BOOK_SEQ.NEXTVAL, ?, ?, ?, SYSDATE,?)";		
-        Object[] params = { gb.getMemberNo(), gb.getGuestWriterNo(), gb.getGuestCommentContent(),gb.getGuestBookType() };
-        int result = jdbcTemplate.update(query, guestBookRowMapper, params);
+    	/*
+    	if (!doesMemberExist(gb.getMemberNo())) {
+            System.out.println("존재하지 않는 memberNo입니다.");
+            return 0;
+        }
+
+        if (!doesGuestWriterExist(gb.getGuestWriterNo())) {
+            System.out.println("존재하지 않는 guestWriterNo입니다.");
+            return 0;
+        }*/
+        
+        String query = "INSERT INTO guest_book VALUES (GUEST_BOOK_SEQ.NEXTVAL, ?, ?, ?, SYSDATE,?, ?)";		
+        Object[] params = 
+        	{ gb.getMemberNo(), gb.getGuestWriterNo(), gb.getGuestCommentContent(),gb.getGuestBookType(), gb.getGuestNickname()};
+        int result = jdbc.update(query, params);
         return result;
     }
+    public boolean doesMemberExist(int memberNo) {
+        String query = "SELECT COUNT(*) FROM member WHERE member_no = ?";
+        Integer count = jdbc.queryForObject(query, new Object[]{memberNo}, Integer.class);
+        return count != null && count > 0;
+    }
+
+    public boolean doesGuestWriterExist(int guestWriterNo) {
+        String query = "SELECT COUNT(*) FROM guest_writer WHERE guest_writer_no = ?";
+        Integer count = jdbc.queryForObject(query, new Object[]{guestWriterNo}, Integer.class);
+        return count != null && count > 0;
+    }
+    
 
     public int updateComment(GuestBook gb) {
         String query = "UPDATE guest_book SET GUEST_COMMENT_CONTENT = ? WHERE GUEST_COMMENT_NO = ?";
         Object[] params = { gb.getGuestCommentContent(), gb.getGuestCommentNo() };
-        int result = jdbcTemplate.update(query, guestBookRowMapper, params);
-        return result;
+        return jdbc.update(query, params);       
     }
 
     public int deleteComment(GuestBook gb) {
         String query = "DELETE FROM guest_book WHERE GUEST_COMMENT_NO = ?";
         Object[] params = {gb.getGuestCommentNo()};
-        int result = jdbcTemplate.update(query, guestBookRowMapper,params);
-        return result;
+        return jdbc.update(query,params);       
     }
 
-    public List<GuestBook> getAllComments() {
-        String query = "SELECT * FROM guest_book ORDER BY GUEST_COMMENT_DATE DESC";
-        List list = jdbcTemplate.query(query, guestBookRowMapper);
+    public List<GuestBook> getAllComments(GuestBook gb) {
+        String query = "SELECT * FROM guest_book WHERE member_no = ? ORDER BY GUEST_COMMENT_DATE ASC";
+        System.out.println("dao : " + gb.getMemberNo());
+        Object[] params = {gb.getMemberNo()};
+        List list = jdbc.query(query, guestBookRowMapper, params);
         return list;
+        
     }
-
+	public List<GuestBook> selectGuestBookList() {
+		String sql = "SELECT * FROM guest_book ORDER BY GUEST_COMMENT_NO ASC";
+        return jdbc.query(sql, (rs, rowNum) -> {
+            GuestBook guestBook = new GuestBook();
+            guestBook.setGuestCommentNo(rs.getInt("guest_Comment_No"));
+            guestBook.setGuestWriterNo(rs.getInt("guest_Writer_No"));
+            guestBook.setGuestCommentContent(rs.getString("guest_Comment_Content"));
+            guestBook.setGuestCommentDate(rs.getDate("guest_Comment_Date"));
+            guestBook.setMemberNo(rs.getInt("member_No"));
+            guestBook.setGuestBookType(rs.getInt("guest_Book_Type"));
+            return guestBook;
+        });
+    }
+	public GuestBook getCommentByNo(int guestCommentNo) {
+	    String query = "SELECT * FROM guest_book WHERE GUEST_COMMENT_NO = ?";
+	    Object[] params = { guestCommentNo };
+	    return jdbc.queryForObject(query, guestBookRowMapper, params);
+	}
+		
 }

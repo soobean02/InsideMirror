@@ -3,18 +3,18 @@ package kr.co.iei.guestbook.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.iei.guestbook.dto.GuestBook;
 import kr.co.iei.guestbook.service.GuestBookService;
+import kr.co.iei.member.model.dto.Member;
+import kr.co.iei.member.model.service.MemberService;
 
 
 @Controller
@@ -23,49 +23,99 @@ public class GuestBookController {
     @Autowired
     private GuestBookService guestBookService; 
     
-    @GetMapping(value="/guestbookList")
-	public String guestbookList(Model model) {
-		return "guest/guestbookList";
-	}
-    @GetMapping(value="/guestList")
-    public String guestList(Model model) {
-    	return "guest/guestList";
+    @Autowired
+    private MemberService memberService; 
+    
+    public GuestBookController(GuestBookService guestBookService)
+    {
+    	this.guestBookService = guestBookService;
     }
+    
+    @GetMapping(value="/guestbookList")
+    public String guestbookList(Integer memberNo, Model model) {
+    	GuestBook gb = new GuestBook();
+    	gb.setMemberNo(memberNo);
+        List<GuestBook> guestbookList = guestBookService.getAllComments(gb);
+        
+        model.addAttribute("guestbookList", guestbookList);
+        
+        System.out.println("guestbookList : " + guestbookList);
+        return "guest/guestbookList";
+    }
+//    @GetMapping(value="/guestList")
+//    public String guestList(int memberNo, Model model) {
+//    	System.out.println("memberNo : " + memberNo);
+//    	return "guest/guestList";
+//    }
+    
 
     @PostMapping(value="/insertComment")
-    public String insertComment(int guestBookType,String guestbookInput,int memberNo,int guestWriterNo ,Model model) {
+    public String insertComment(Integer guestBookType, String guestbookInput, Integer memberNo, Integer guestWriterNo, String guestNickname, Model model) {  	
     	//System.out.println(guestBookType);
-    	//System.out.println(guestWriterNo);
-    	//System.out.println(guestbookInput);
-    	//System.out.println(memberNo);
+        //System.out.println(guestWriterNo);
+        //System.out.println(guestbookInput);
+        //System.out.println(memberNo);
+        //System.out.println(guestNickname);
+    	
 
         GuestBook gb = new GuestBook();
+        
         gb.setGuestBookType(guestBookType);
         gb.setGuestWriterNo(guestWriterNo);
         gb.setMemberNo(memberNo);
         gb.setGuestCommentContent(guestbookInput);
+        gb.setGuestNickname(guestNickname);
         
+        // 익명일 경우
+        if (guestBookType == 0) {
+            gb.setGuestNickname("익명");
+        } else { // 닉네임일 경우
+            gb.setGuestNickname(guestNickname);
+        }
+
         int result = guestBookService.insertComment(gb);
-        if(result > 0) {
+       // System.out.println("Service 결과: " + result);
+        
+        if (result > 0) {
+        	String successlog = "/guest/guestbookList?memberNo=" + memberNo;
             model.addAttribute("title", "댓글 작성");
             model.addAttribute("msg", "댓글이 작성되었습니다.");
             model.addAttribute("icon", "success");
+            model.addAttribute("loc", successlog);
         } else {
+        	String errorlog = "/guest/guestbookList?memberNo=" + memberNo;
             model.addAttribute("title", "댓글 작성 실패");
             model.addAttribute("msg", "댓글 작성 중 문제가 발생했습니다.");
             model.addAttribute("icon", "warning");
-            model.addAttribute("loc", "/guest/guestbookList");
+            model.addAttribute("loc", errorlog);
         }
-        
-        model.addAttribute("title", "댓글 작성");
-        model.addAttribute("msg", "댓글이 작성되었습니다.");
-        model.addAttribute("icon", "success");
-        model.addAttribute("loc", "/guest/guestbookList");
+
+//        model.addAttribute("title", "댓글 작성");
+//        model.addAttribute("msg", "댓글이 작성되었습니다.");
+//        model.addAttribute("icon", "success");
+//        model.addAttribute("loc", "/guest/guestbookList");
         return "common/msg";
     }
 
-    @PostMapping(value="/updateComment")
-    public String updateComment(GuestBook gb, Model model) {
+    
+    
+
+
+	
+	@PostMapping(value="/updateComment")
+    public String updateComment(String guestCommentContent, Integer guestCommentNo, Model model) {
+		if (guestCommentNo == null) {
+	        model.addAttribute("title", "실패");
+	        model.addAttribute("msg", "유효하지 않은 댓글 번호입니다.");
+	        model.addAttribute("icon", "warning");
+	        model.addAttribute("loc", "/guest/guestbookList");
+	        return "common/msg";
+	    }
+		
+		GuestBook gb = new GuestBook();
+        gb.setGuestCommentContent(guestCommentContent);
+        gb.setGuestCommentNo(guestCommentNo);
+        System.out.println(guestCommentNo);
         int result = guestBookService.updateComment(gb);
         if(result > 0) {
             model.addAttribute("title", "성공");
@@ -81,7 +131,7 @@ public class GuestBookController {
     }
 
     @GetMapping(value="/deleteComment")
-    public String deleteComment(int guestCommentNo, Model model) {
+    public String deleteComment(Integer guestCommentNo, Model model) {
         GuestBook gb = new GuestBook();
         gb.setGuestCommentNo(guestCommentNo);
         int result = guestBookService.deleteComment(gb);
@@ -99,9 +149,11 @@ public class GuestBookController {
     }
 
     @GetMapping(value="/getComments")
-    @ResponseBody
-    public List<GuestBook> getComments() {
-        return guestBookService.getAllComments();
+    public List<GuestBook> getComments(int memberNo) {
+        GuestBook gb = new GuestBook();
+        gb.setMemberNo(memberNo);
+        List<GuestBook> comments = guestBookService.getAllComments(gb);
+        return comments;
     }
 
 }
