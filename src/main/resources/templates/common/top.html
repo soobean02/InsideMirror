@@ -150,7 +150,9 @@
 		// 폰트 적용
 		$("body").css("font-family", font);
 		// 커서 이미지 적용
-		$("body *").css("cursor", "url('/img/" + cursor + "') 16 16, auto");
+		if(cursor!='default'){
+			$("body *").css("cursor", "url('/img/" + cursor + "') 16 16, auto");
+		}
 		// 배경 색상 또는 이미지 적용 (필요에 따라 변경)
 		$(".bookcover").css("background-color", cover);
 	});
