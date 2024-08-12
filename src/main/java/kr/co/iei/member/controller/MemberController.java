@@ -257,8 +257,14 @@ public class MemberController {
 	
 	
 	
-	
-	
+	@GetMapping(value="/loginMsg")
+	public String loginMsg(Model model){
+		model.addAttribute("title", "로그인");
+		model.addAttribute("msg", "로그인 후 이용가능한 서비스입니다.");
+		model.addAttribute("icon","warning");
+		model.addAttribute("loc","/member/login");
+		return "common/msg";
+	}
 	
 	
 	

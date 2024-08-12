@@ -7,20 +7,25 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import kr.co.iei.member.model.dto.Member;
 
-public class LoginInterceptor implements HandlerInterceptor {
+public class AdminInterceptor implements HandlerInterceptor{
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+
 		HttpSession session = request.getSession();
 		Member member = (Member)session.getAttribute("member");
-		if(member != null) return true; //로그인이 되어있으므로 true리턴
+		if(member != null && member.getMemberLevel() == 1) {
+			return true;
+		}
 		else {
-			//페이지 이동
-			response.sendRedirect("/member/loginMsg");
-			return false;				//로그인이 안 되어있으므로 false리턴
+			//관리자가 아닌경우
+            //경로 지정 필요
+			response.sendRedirect("/");
+			return false;
 		}
 	}
-
 	
+	
+
 }
