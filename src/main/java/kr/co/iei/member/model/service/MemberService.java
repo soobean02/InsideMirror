@@ -226,6 +226,18 @@ public class MemberService {
 	}//친구 sort
 
 
+	public int selectFriend(Member m, Member member) {
+		int selectFriend = memberDao.selectFriend(m, member);
+		if(selectFriend == 1) {
+			return selectFriend;
+		}else {
+			return 0;			
+		}
+	}
+
+
+
+
 
 
 
