@@ -45,6 +45,28 @@
         text-align: center;
     }
 
+    .submit-box{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+    .submit-btn{
+        width: 100px;
+        height: 50px;
+        background-color: rgb(101, 168, 255);
+        border: 1px solid rgb(148, 148, 148);
+        cursor: pointer;
+    }
+
+    .submit-btn:hover{
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2), 0 0 10px rgba(255, 255, 255, 0.5);
+        background-color: #7d8eff;
+        transform: scale(1.05);
+        color: white;
+    }
+
 </style>
 </head>
 <body>
@@ -63,11 +85,14 @@
                 <input type="text" name="boardTitle" th:value="${board.boardTitle}" id="boardTitle" placeholder="제목을 입력해주세요!">
             </div>
             
+            
             <div class="board-content">
                 <textarea name="boardContent" id="content" th:utext="${board.boardContent}"></textarea>
             </div>
-
-            <button type="submit">수정</button>
+            
+            <div class="submit-box">
+                <button type="submit" class="submit-btn">수정</button>
+            </div>
         </form>
 
 

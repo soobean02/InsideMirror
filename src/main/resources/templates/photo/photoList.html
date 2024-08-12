@@ -289,8 +289,6 @@
         
         getMore();
         function getMore(moreUrl, sort){
-            console.log("url 임",url);
-            console.log("its sort",sort);
             const amount = 4;
             if(moreUrl){
                 url = "/photo/sort";
@@ -348,7 +346,6 @@
 
                         start += amount;
                         currentCount = currentCount + data.length;
-                        console.log("cC",currentCount);
                         if(currentCount >= totalCount){
                             done = 1;
                         }

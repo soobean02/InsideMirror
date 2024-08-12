@@ -432,6 +432,13 @@
                             if($(".post-li").length == 0){
                                 emptyPhoto();
                             }
+                            else if($(".post-li").length <= 3){
+                                currentCount = $(".post-li").length;
+                                start = start - 1;
+                                done = 0;
+                                totalCount = totalCount - 1;
+                                getMore(false,sort);
+                            }
                         }
                     }
                 },

@@ -119,6 +119,19 @@
         display: none;
     }
 
+    .back-box{
+        width: 10%;
+        height: 40px;
+    }
+
+    .back-btn{
+        width: 80px;
+        height: 50px;
+        border: 1px solid #878787;
+        background-color: #dff7ff;
+        cursor: pointer;
+    }
+
 </style>
 
 </head>
@@ -140,9 +153,14 @@
                     <button type="submit"><span class="material-icons">upload</span></button>
                 </div>
                 
+                <div class="back-box left">
+                    <button type="button" class="back-btn" onclick="back()">작성 취소</button>
+                </div>
+
                 <div class="photo-file left">
                     <input type="file" name="upfile" accept=".jpg,.png,.jpeg" onchange="loadImg(this)">
                 </div>
+
                 
 
             </form>
@@ -187,9 +205,40 @@
         $("[type=submit]").on("click",function(e){
             const t = $("#img-view").attr("src");
             if($("#img-view").attr("src") == undefined){
+                swal({
+                    title : "사진첩",
+                    text : "사진을 업로드 해야 합니다.",
+                    icon : "info"
+                })
                 e.preventDefault();
             }
         })
+
+        function back(){
+            swal({
+                title : "사진첩",
+                text : "작성을 취소하시겠습니까? (작성된 내용은 저장되지 않습니다.)",
+                icon : "warning",
+                buttons:{
+                    cancel:{
+                        text:"계속하기",
+                        value:false,
+                        visible:true,
+                        closeModal: true
+                    },
+                    confirm:{
+                        text:"작성취소",
+                        value:true,
+                        visible:true,
+                        closeModal:true
+                    }
+                }
+            }).then(function(isConfirm){
+                if(isConfirm){
+                    history.back();
+                }
+            });
+        }
 
     </script>
 
