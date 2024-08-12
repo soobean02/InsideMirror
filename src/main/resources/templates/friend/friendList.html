@@ -21,13 +21,14 @@
 .friend-header {
 	border-bottom: 1px solid gray;
 	padding: 20px;
-	margin-bottom: 15px;
+	margin-bottom: 20px;
+	align-items: center;
 }
 
-.btn-cancel {
-	float: right;
+.submit {
+	
 }
-#searchInput{
+.input#searchInput{
 		outline: none;
 		border: none;
 		width: 300px;
@@ -36,25 +37,29 @@
 		text-align: center;
 		
 	}
-.search-group>#searchInput{
-		border-style: none;
-	}
+
 .search-group {
 	margin-bottom: 50px;
 	margin-left: 50px;
+	
 }
 .btn-secondary {
 	float: right;
+	border :1px solid gray;
+	background-color:transparent;
+	
+	 
 }
 
 .friend-scrollbox {
 	max-height: 450px;
 	overflow-y: auto;
 }
+
 </style>
 </head>
 <body>
-	<th:block th:include="common/friendtop"></th:block>
+	<th:block th:include="common/top"></th:block>
 			<div class="box-title">일촌목록 ></div>
 			<div class="friend-title">
 				<div class="search-group">
@@ -96,7 +101,7 @@
 							btn.parent().parent().remove();
 						},
 						error : function(error) {
-							alter: ('삭제중 에러가 나왔습니다.')
+							alert: ('삭제중 에러가 나왔습니다.')
 						}
 					})
 				}
