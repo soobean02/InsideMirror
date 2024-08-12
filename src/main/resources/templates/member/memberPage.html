@@ -73,7 +73,12 @@
 .swiper-scrollbar{
 	display: none;
 }
- 
+
+.news-row>a{
+	color: black;
+	text-decoration: none;
+}
+
 </style>
 
 <body>
@@ -86,13 +91,14 @@
 			<div class="box-title">Updated news ></div>
 			<div class="news-flex-box">
 				<div class="news-box">
-					<div class="news-row" th:each="p : ${photo}">
+					<div class="news-row" th:each="p,status : ${photo}">
 						<div class="news-category category-pic">사진첩</div>
-						<div class="news-title" th:text="${p.photoTitle}"></div>
+						<a href="/photo/list"><div class="news-title" th:text="${p.photoTitle}"></div></a>
+						<!-- <a href="/photo/list" th:if="${status.count == 2}"><div class="news-title" th:text="${p.photoTitle}"></div></a> -->
 					</div>
 					<div class="news-row" th:each="b : ${board}">
 						<div class="news-category category-post">게시판</div>
-						<div class="news-title" th:text="${b.boardTitle}"></div>
+						<a th:href="@{/board/view(boardNo=${b.boardNo})}"><div class="news-title" th:text="${b.boardTitle}"></div></a>
 					</div>
 				</div>
 			</div>

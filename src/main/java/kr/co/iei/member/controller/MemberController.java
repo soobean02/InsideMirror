@@ -53,7 +53,6 @@ public class MemberController {
 			return "common/msg";
 		}else {
 			List sp = productService.selectUseProductInfo(member); //<= 로그인 하면 top에 있는 css가 적용되게끔.. include 안되어있어서 일단 빼둠...
-			System.out.println(sp);
 			if(member.getMemberLevel() == 2) {
 				session.setAttribute("member", member);
 				session.setAttribute("spCss", sp); // css 적용 시키기

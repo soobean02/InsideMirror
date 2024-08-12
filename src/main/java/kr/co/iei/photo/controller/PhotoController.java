@@ -75,7 +75,6 @@ public class PhotoController {
 	@ResponseBody
 	@GetMapping(value="/sort")
 	public List Sort(int start, int amount, int sort, @SessionAttribute(required=false) Member member){
-		System.out.println("its SORT"+sort);
 		List photoList = photoService.selectPhotoSort(start, amount, sort, member);
 		return photoList;
 	}

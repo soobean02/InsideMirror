@@ -175,9 +175,7 @@ public class MemberDao {
 	public int updateMsg(String profileMsg, Member member) {
 		String query = "update member set profile_msg =? where member_no=?";
 		Object[] params = {profileMsg, member.getMemberNo()};
-		System.out.println("dao member : "+member.getMemberNo());
 		int result = jdbc.update(query, params);
-		System.out.println("확인 : "+result);
 		return result;
 	}
 

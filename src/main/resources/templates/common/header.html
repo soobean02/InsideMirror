@@ -42,7 +42,8 @@
 					<li class="li"><a href="/member/login">로그인</a></li>
 				</th:block>
 				<th:block th:if="${session.member != null}">
-					<li><a href="/member/memberPage" th:text="${session.member.memberNickName}"></a></li>
+					<li><a href="/member/memberPage" th:if="${session.member.memberLevel == 2}" th:text="${session.member.memberNickName}"></a></li>
+					<li><a href="/admin/adminHome" th:if="${session.member.memberLevel == 1}" th:text="${session.member.memberNickName}"></a></li>
 					<li><a href="/member/logout">로그아웃</a></li>
 				</th:block>
 			</ul>

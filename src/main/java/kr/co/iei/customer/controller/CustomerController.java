@@ -21,7 +21,6 @@ public class CustomerController {
 	
 	@GetMapping(value="/customerList")
 	public String customerList(Model model,int reqPage, @SessionAttribute Member member) {
-		System.out.println(member);
 
 		CustomerListData cld = customerService.selectCustomerList(reqPage, member);
 		model.addAttribute("list", cld.getList());
@@ -34,7 +33,6 @@ public class CustomerController {
 	}
 	@PostMapping(value="/customerWrite")
 	public String customerWrite(Customer c,@SessionAttribute("member") Member member, Model model) {
-		System.out.println(member);
 		int result = customerService.insertCustomerInq(c,member);
 		if(result > 0) {
 			// 세션 업데이트 하기

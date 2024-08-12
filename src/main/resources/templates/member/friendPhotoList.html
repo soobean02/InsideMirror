@@ -203,7 +203,16 @@
         }
     }
 
-    
+    .photo-empty{
+        width: 100%;
+        height: 400px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #808080;
+        font-size: 18px;
+        font-weight: 500;
+    }
 
 </style>
 
@@ -229,7 +238,9 @@
 
 
         <div class="photo-content">
-
+            <div class="photo-empty" style="display: none;">
+                <span th:text="${friendMember.memberNickName + '님의 사진첩에는 아직 멋진 사진이 없는거 같아요...'}"></span>
+            </div>
         </div>
 
 
@@ -273,6 +284,9 @@
                     type : "get",
                     data : {start : start , amount : amount , sort : sort, friendMemberNo : friendMemberNo},
                     success : function(data){
+                        if(start == 1 && data.length == 0){
+                            emptyPhoto();
+                        }
                         for(let i = 0; i < data.length; i++){
                             const p = data[i];
                             const li = $("<li>");
@@ -430,6 +444,10 @@
                 done = 0;
                 getMore(moreUrl, sort);
             }
+        }
+
+        function emptyPhoto(){
+            $(".photo-empty").show();
         }
 
     </script>
