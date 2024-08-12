@@ -183,6 +183,7 @@
         height: 30px;
         border: none;
         background-color: #c0eeff;
+        border-radius: 10px;
     }
 
     .page-btn:hover:not(:has(.active-page)){
@@ -383,6 +384,12 @@
 
         $(".write-btn").on("click",function(){
             location.href = "/board/writeFrm";
+        })
+
+        $(".search-input").on("focus",function(){
+            if($(this).val() !== ""){
+                $(".reset-btn").show();
+            }
         })
 
         $(".search-input").on("keyup",function(){
