@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.co.iei.board.model.dto.BoardRowMapper;
+import kr.co.iei.friend.dto.FriendRowMapper;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.MemberRowMapper;
 import kr.co.iei.member.model.dto.TitleRowMapper;
@@ -25,6 +26,8 @@ public class MemberDao {
 	private BoardRowMapper boardRowMapper;
 	@Autowired
 	private PhotoRowMapper photoRowMapper;
+	@Autowired
+	private FriendRowMapper friendRowMapper;
 
 	public List selectAllMember(int start, int end) {
 		String query = "select * from(select rownum as rnum, m.* from (select * from member order by 1 desc)m)where rnum between ? and ?";
@@ -274,6 +277,15 @@ public class MemberDao {
 		Object[] params = {memberNo, memberNo, friendMemberNo, start, end};
 		List list = jdbc.query(query, photoRowMapper, params);
 		return list;
+	}
+
+
+	public int selectFriend(Member m, Member member) {
+		System.out.println("dsasdsadasdasadsdasdasdasas");
+		String query = "select count(*) from friend where member_no = ? and friend_member_no = ?";
+		Object[] params = {member.getMemberNo(),m.getMemberNo()};
+		int selectFriend = jdbc.queryForObject(query, Integer.class,params);
+		return selectFriend;
 	}
 
 }
