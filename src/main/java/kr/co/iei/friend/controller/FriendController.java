@@ -29,7 +29,7 @@ public class FriendController {
     
  
     
-    
+    //일촌 목록
     @GetMapping(value="/friendList")
     public String guestbookList(@SessionAttribute Member member, Model model) {
     	Friend f = new Friend();
@@ -41,6 +41,7 @@ public class FriendController {
         return "friend/friendList";
     }
     
+    //일촌 삭제
     @ResponseBody
     @GetMapping(value="/friendCancel")
     public String friendCancel(int friendNo, Model model) {
@@ -59,7 +60,17 @@ public class FriendController {
         model.addAttribute("loc", "/fried/friendList");
         return "common/msg";
     }
-
+    
+    //일촌 맺기
+    @GetMapping(value="/friendRequest")
+    public String friendRequest(@SessionAttribute Member member, int friendMemberNo,String friendNickName, Model model) {
+    	Friend f = new Friend();
+    	f.setFriendNo(friendMemberNo);
+    	f.setFriendNickName(friendNickName);
+    	f.setMemberNo(member.getMemberNo());
+    	int result = friendService.friendRequest(f);
+    	return "redirect:/member/friendPage?memberNo="+friendMemberNo;
+    }
     
 
 

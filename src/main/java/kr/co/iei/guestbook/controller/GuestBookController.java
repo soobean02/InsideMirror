@@ -63,13 +63,13 @@ public class GuestBookController {
         gb.setGuestWriterNo(guestWriterNo);
         gb.setMemberNo(memberNo);
         gb.setGuestCommentContent(guestbookInput);
-        gb.setGuestNickname(guestNickname);
+        gb.setGuestNickName(guestNickname);
         
         // 익명일 경우
         if (guestBookType == 0) {
-            gb.setGuestNickname("익명");
+            gb.setGuestNickName("익명");
         } else { // 닉네임일 경우
-            gb.setGuestNickname(guestNickname);
+            gb.setGuestNickName(guestNickname);
         }
 
         int result = guestBookService.insertComment(gb);

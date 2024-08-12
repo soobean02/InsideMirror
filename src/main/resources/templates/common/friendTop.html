@@ -67,7 +67,7 @@
 					<div class="follow-btn-content">
 						<form action="/friend" method="post">
 							<div class="follow-btn">
-							<button type="button">일촌하기</button>
+							<button type="button" onclick="friendRequest()">일촌하기</button>
 							</div>
 						</form>	
 					</div>
@@ -90,6 +90,20 @@
     	$("body").css("cursor",cursor);
     	$(".bookcover").css("background-color",cover);
  	});
+
+	function friendRequest(){
+		const friendNo = [[${friendMember.memberNo}]];
+		const friendNickName = [[${friendMember.memberNickName}]];
+		
+		
+		location.href="/friend/friendRequest?friendMemberNo="+friendNo+"&friendNickName="+friendNickName;
+		
+		
+		
+		
+	}
+	
+	
 	</script>
 				
 				
