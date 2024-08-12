@@ -13,6 +13,16 @@ body {
 	background-size: cover;
 	margin: 0;
 }
+.wrapper{
+	height: 795px;
+}
+.valid{
+	margin: 0;
+}
+.invalid{
+	margin: 0;
+}
+
 </style>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <body>
@@ -51,7 +61,13 @@ body {
 								<td><label for="nickName">닉네임(별명)<sup>*</sup></label></td>
 								<td class="td-2"><input type="text" name="memberNickName"
 									id="nickName" required aria-required="true">
-									<p class="nickName-check-msg"></p>
+								</td>
+							</tr>
+							<tr>
+								<td>
+								</td>
+								<td class="check-msg">
+									<p class="nickName-check-msg"></p>																
 								</td>
 							</tr>
 							<tr>
@@ -59,14 +75,27 @@ body {
 								<td class="td-2"><input type="password" name="memberPw"
 									id="pw" required aria-required="true"
 									placeholder="(영문 대소문자/숫자/특수문자(!,@,#,$,%) 중 2가지 이상 조합, 8~12자)">
-									<p class="pw-check-msg"></p>
 									</td>
+							</tr>
+							<tr>
+								<td>
+								</td>
+								<td class="check-msg">
+									<p class="pw-check-msg"></p>
+								</td>
 							</tr>
 							<tr>
 								<td><label for="pwRe">비밀번호확인<sup>*</sup></label></td>
 								<td class="td-2"><input type="password" name="memberPwRe"
 									id="pwRe" required aria-required="true">
-									<p class="pwRe-check-msg"></p></td>
+								</td>
+							</tr>
+							<tr >
+								<td>
+								</td>
+								<td class="check-msg">
+									<p class="pwRe-check-msg"></p>
+								</td>
 							</tr>
 							<tr>
 								<td><label for="name">이름<sup>*</sup></label></td>
@@ -190,6 +219,10 @@ body {
 			$(".pwRe-check-msg").text("비밀번호가 일치하지않습니다.");
 			$(".pwRe-check-msg").addClass("invalid");
 		}
+	});
+	
+	$("#name").on("change",function(){
+		$(".pwRe-check-msg").removeClass("valid").removeClass("invalid").text("");
 	});
 	
 	$("#searchBtn").on("click", function(){
