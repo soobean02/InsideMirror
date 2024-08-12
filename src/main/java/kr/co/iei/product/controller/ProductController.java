@@ -177,7 +177,7 @@ public class ProductController {
 	}
 	// 상품 적용하기
 	@GetMapping(value="/useP")
-	public String useP(Model model, int productNo, int productListNo, @SessionAttribute Member member, @SessionAttribute SellBuyProduct sellBuyProduct) { // 상품 번호, 상품 리스트 번호  
+	public String useP(Model model, int productNo, int productListNo, @SessionAttribute Member member) { // 상품 번호, 상품 리스트 번호  
 		int result = productService.updateUseProduct(productNo, productListNo, member);
 		if(result > 0) {
 			List sp = productService.selectUseProductInfo(member);
