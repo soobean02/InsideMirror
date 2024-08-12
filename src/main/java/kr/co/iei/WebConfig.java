@@ -7,6 +7,8 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import kr.co.iei.utils.LoginInterceptor;
+
 
 
 // 스프링 부트 설정파일
@@ -34,21 +36,16 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addResourceHandler("/photo/**").addResourceLocations("file:///"+root+"/photo/");
 	}
 
-//	@Override
-//	public void addInterceptors(InterceptorRegistry registry) {
-//		// 로그인 처리가 꼭 필요한 애들을 갖다 넣기
-//		// .addPathPatterns()	=> 로그인 처리가 필요한 애들
-//		// .excludePathPatterns() => 예외인 애들 (/notice/** 처럼 한꺼번에 적었을때 그 중에서 로그인이 필요없어도 보여주고 싶은 애들만)
-//		//						  => but 에디터가 들어간 애들도 예외처리 해주어야함 파일 안 보임..
-//		registry.addInterceptor(new LoginInterceptor())
-//				.addPathPatterns("/member/loginout","/member/mypage1","/member/update1","/member/mypage2","/member/update2","/member/delete","/notice/**")
-//				.excludePathPatterns("/notice/list","/notice/view","/notice/filedown","/notice/editor/**","/admin/**");
-////		WebMvcConfigurer.super.addInterceptors(registry);
-//		
-//		registry.addInterceptor(new AdminInterceptor())
-//				.addPathPatterns("/admin/**");
-//	}
 	
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new LoginInterceptor())
+			.addPathPatterns("/member/logout","/board/**","/admin/**","/photo/**","/guest/**","/product/**","/customer/**")
+			.excludePathPatterns("");
+		
+		// registry.addInterceptor(new AdminInterceptor())
+		// 	.addPathPatterns("/admin/**");
+	}
 	
 	
 }
