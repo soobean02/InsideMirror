@@ -32,7 +32,7 @@ public class ProductService {
 		/* 도토리 구매 이력 테이블에 도토리 정보 넣어주기 */
 		int result2 = productDao.insertAcorns(m);
 
-		if (result1 > 0 && result2 > 0) { // 도토리 insert 성공 1 반환
+		if (result1 > 0 && result2 > 0) { // 도토리 update / insert 성공 1 반환
 			return 1;
 		} else { // 도토리 insert 실패 0 반환
 			return 0;
@@ -95,9 +95,9 @@ public class ProductService {
 		for (int i = 0; i < pageNaviSize; i++) {
 			pageNavi += "<li>";
 			if (pageNo == reqPage) {
-				pageNavi += "<a class='page-item active-page' href='/product/productList?reqPage=" + pageNo + "'>";
+				pageNavi += "<a class='page-item active-page' href='/product/productList?reqPage=" + pageNo + "&type="+type+ "'>";
 			} else {
-				pageNavi += "<a class='page-item' href='/product/productList?reqPage=" + pageNo + "'>";
+				pageNavi += "<a class='page-item' href='/product/productList?reqPage=" + pageNo + "&type="+type+ "'>";
 			}
 			pageNavi += pageNo;
 			pageNavi += "</a></li>";
@@ -111,7 +111,7 @@ public class ProductService {
 		// 다음 버튼(최종 페이지를 출력하지 않았으면)
 		if (pageNo <= totalPage) {
 			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/product/productList?reqPage=" + pageNo + "'>";
+			pageNavi += "<a class='page-item' href='/product/productList?reqPage=" + pageNo + "&type="+type+ "'>";
 			pageNavi += "<span class='material-icons'>chevron_right</span>";
 			pageNavi += "</a></li>";
 		}
@@ -146,6 +146,7 @@ public class ProductService {
 	public int productAdd(Member m, SellProduct sp) {
 		// 회원 정보에서 가지고 있는 도토리 개수 확인하기
 		Member member = memberDao.selectOneMember(m);
+		
 		if (member.getAcorns() >= sp.getProductPrice()) { // 판매중인 도토리 수 보다 멤버가 가지고 있는 도토리 개수가 같거나 많다면 성공
 			// 상품 구매 회원 지갑에서 도토리 빼내기 => 성공하면 insert / 실패시 0 반환
 			int result = productDao.updateAcornMinus(m, sp);
@@ -241,7 +242,7 @@ public class ProductService {
 		return result;
 	}// productUpdate
 
-	public ProductListData selectBuyProduct(int reqPage,  Member member, int type) {
+	public ProductListData selectBuyProduct(int reqPage,  Member member, int type, String product) {
 		// 한 페이지당 10개의 글 조회
 		int numPerPage = 10;
 		// 시작번호
@@ -284,7 +285,7 @@ public class ProductService {
 		// 이전 버튼(1페이지로 시작하지 않으면)
 		if (pageNo != 1) {
 			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/product/buyProductList?reqPage=" + (pageNo - 1) + "'>";
+			pageNavi += "<a class='page-item' href='/product/buyProductList?reqPage=" + (pageNo - 1) + "&type="+type+"&product="+product+ "'>";
 			pageNavi += "<span class='material-icons'>chevron_left</span>";
 			pageNavi += "</a></li>";
 		}
@@ -292,9 +293,9 @@ public class ProductService {
 		for (int i = 0; i < pageNaviSize; i++) {
 			pageNavi += "<li>";
 			if (pageNo == reqPage) {
-				pageNavi += "<a class='page-item active-page' href='/product/buyProductList?reqPage=" + pageNo + "'>";
+				pageNavi += "<a class='page-item active-page' href='/product/buyProductList?reqPage=" + pageNo + "&type="+type+"&product="+product+ "'>";
 			} else {
-				pageNavi += "<a class='page-item' href='/product/buyProductList?reqPage=" + pageNo + "'>";
+				pageNavi += "<a class='page-item' href='/product/buyProductList?reqPage=" + pageNo + "&type="+type+"&product="+product+ "'>";
 			}
 			pageNavi += pageNo;
 			pageNavi += "</a></li>";
@@ -308,7 +309,7 @@ public class ProductService {
 		// 다음 버튼(최종 페이지를 출력하지 않았으면)
 		if (pageNo <= totalPage) {
 			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/product/buyProductList?reqPage=" + pageNo + "'>";
+			pageNavi += "<a class='page-item' href='/product/buyProductList?reqPage=" + pageNo + "&type="+type+"&product="+product+ "'>";
 			pageNavi += "<span class='material-icons'>chevron_right</span>";
 			pageNavi += "</a></li>";
 		}
@@ -424,15 +425,43 @@ public class ProductService {
 	}
 
 	// 모두 초기화
+	@Transactional
 	public int updateZeroProduct(Member member) {
-//		int result = productDao.updateAllZeroProduct(member);
-		return 0;
+		// 지금 적용 중인 상품 모두 0으로
+		int result = productDao.updateAllZeroProduct(member);
+		if(result > 0) {
+			// 기본 배경, 커서, 폰트 지정
+			int r = productDao.updateProductB(member, 41); // 기본 배경
+			int c = productDao.updateProductC(member, 43); // 기본 커서
+			int f = productDao.updateProductF(member, 42); // 기본 폰트
+			if(r > 0 && c > 0 && f>0) {
+				return result;
+			}else {
+				return 0;
+			}
+		}else {
+			return 0;
+		}
 	}
 	
 	// 하나만 초기화
+	@Transactional
 	public int updateOneZeroProduct(Member member, int productNo, int productListNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		// 누른 상품 리스트 0으로 만들기
+		int result = productDao.updateOneZeroProduct(member,productListNo);
+		if(result > 0) { // 누른 상품 리스트 0으로 초기화 시 성공 헤ㅐㅆ을 때
+			
+			if(productListNo==1) { // 배경 초기화
+				int r = productDao.updateProductB(member, 41);
+			}else if(productListNo==2) { // 커서 초기화
+				int c = productDao.updateProductC(member, 43);
+			}else { // 폰트 초기화
+				int f = productDao.updateProductF(member, 42);
+			}
+		}else {
+			return 0;
+		}
+		return result;
 	}
 
 

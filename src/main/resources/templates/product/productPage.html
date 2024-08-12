@@ -6,13 +6,9 @@
 <title>상품 상세</title>
 </head>
 <style>
-:root { -
-	-point_color: lightskyblue; -
-	-btn_primary: skyblue; -
-	-btn_secondary: #eee; -
-	-table_line: #333;
+*{
+	margin: 0;
 }
-
 .start_page {
 	margin-top: 20px;
 }
@@ -106,20 +102,6 @@ form {
 	cursor: pointer;
 }
 
-.sec_box {
-	overflow: hidden;
-}
-
-.list_plus {
-	padding: 10px 10px 0 0;
-	font-weight: bold;
-	float: right;
-}
-
-.product_list {
-	padding: 10px;
-	margin-top: 40px;
-}
 
 .product_name {
 	font-weight: bold;
@@ -138,7 +120,7 @@ form {
 .product_img>img {
 	width: 90px;
 	height: 90px;
-	padding: 0 25px 15px 25px;
+	padding: 0 25px 15px 30px;
 }
 
 a {
@@ -194,9 +176,10 @@ h4 {
 }
 
 .product_box {
-	background-color: #eee;
+	border: 1px solid #eee;
+	border-radius: 5px;
 	padding: 10px;
-	margin-left: 20px;
+	margin-left: 30px;
 	width: 150px;
 	height: 170px;
 	float: left;
@@ -213,7 +196,7 @@ h4 {
 .btn {
 	color: #fff;
 	cursor: pointer;
-	background-color: var(- -btn_primary);
+	background-color: skyblue;
 	padding: 0;
 	font-weight: bold;
 	width: 120px;

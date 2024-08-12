@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import kr.co.iei.board.model.dto.BoardRowMapper;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.MemberRowMapper;
-import kr.co.iei.member.model.dto.Title;
 import kr.co.iei.member.model.dto.TitleRowMapper;
 import kr.co.iei.photo.model.dto.PhotoRowMapper;
 
@@ -227,5 +226,56 @@ public class MemberDao {
 
 
 
+
+
+	////사진첩
+	public int getTotalCount(int memberNo) {
+		String query = "select count(*) from photo where member_no = ?";
+		Object[] params = {memberNo};
+		int totalCount = jdbc.queryForObject(query, Integer.class, params);
+		return totalCount;
+	}//친구 사진첩 개수 조회
+
+
+	public List selectPhotoList(int start, int end, int friendMemberNo, Member member) {
+		String query = "select * from (select rownum as rnum, p.*,\r\n" + //
+						"(select count(*) from photo_like where photo_no = p.photo_no and member_no = ?) as is_like,\r\n" + //
+						"(select count(*) from photo_like where photo_no = p.photo_no) as like_count,\r\n" + //
+						"(select count(*) from book_mark where photo_no = p.photo_no and member_no = ?) as is_bookmark\r\n" + //
+						"from (select * from photo p2 where member_no = (select member_no from member where member_no = ?) order by 1 desc)p)\r\n" + //
+						"where rnum between ? and ?";
+		Object[] params = {member.getMemberNo(), member.getMemberNo(), friendMemberNo, start, end};
+		List list = jdbc.query(query, photoRowMapper, params);
+		return list;
+	}//친구 사진첩 조회
+
+
+	public Member getFriendMember(int memberNo) {
+		String query = "select * from member where member_no = ?";
+		Object[] params = {memberNo};
+		List list = jdbc.query(query, memberRowMapper, params);
+		if(list.isEmpty()){
+			return null;
+		}
+		return (Member)list.get(0);
+	}//친구 조회 with memberNo
+
+
+	public List PhotoSortPopular(int start, int end, int friendMemberNo, Member member) {
+		String query = "select * from\r\n" + //
+						"    (select rownum as rnum, p.*,\r\n" + //
+						"        (select count(*) from photo_like where photo_no = p.photo_no and member_no = ?) as is_like,\r\n" + //
+						"        (select count(*) from photo_like where photo_no = p.photo_no) as like_count,\r\n" + //
+						"        (select count(*) from book_mark where photo_no = p.photo_no and member_no = ?) as is_bookmark\r\n" + //
+						"    from\r\n" + //
+						"        (select *\r\n" + //
+						"            from photo p2\r\n" + //
+						"                where member_no = (select member_no from member where member_no = ?)\r\n" + //
+						"                order by (select count(*) from photo_like where photo_no = p2.photo_no) desc)p)\r\n" + //
+						"where rnum between ? and ?";
+		Object[] params = {member.getMemberNo(), member.getMemberNo(), friendMemberNo, start, end};
+		List list = jdbc.query(query, photoRowMapper, params);
+		return list;
+	}
 
 }

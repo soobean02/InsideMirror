@@ -103,17 +103,26 @@
         font-weight: 500;
     }
 
-    .order-wrap{
+    .change-wrap{
         /* background-color: azure; */
         width: 20%;
         float: left;
         height: 30px;
         text-align: center;
     }
-    .order-wrap>span{
-        cursor: pointer;
+    .change-wrap>a>button{
+        width: 60px;
+        height: 25px;
+        border: 1px solid #ccc;
+        background-color: #a4b8ff;
+        border-radius: 10px;
     }
 
+    .change-wrap>a>button:hover{
+        background-color: #4d73ff;
+        color: white;
+        cursor: pointer;
+    }
 
     .board-content{
         width: 100%;
@@ -194,7 +203,6 @@
 
     .sort-btn{
         cursor: pointer;
-        padding-top: 5px;
     }
 
     .order-content>ul{
@@ -203,26 +211,35 @@
     .order-content [type=radio]{
         margin-top: 8px;
     }
+
+    .remove-border{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 35px;
+    }
+    
+    .remove-border>.remove-mark{
+        font-size: 30px;
+        cursor: pointer;
+    }
+
+    .empty-wrap, .board-empty{
+        width: 100%;
+        height: 400px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color : #8f8f8f;
+        font-size: 20px;
+        font-weight: 500;
+    }
+
     .submit-btn>.material-icons{
         font-size: 30px;
     }
 
-    .order-content label{
-        cursor: pointer;
-    }
 
-    .board-empty{
-        width: 100%;
-        height: 350px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .board-empty span{
-        color: #9e9e9e;
-        font-size: 18px;
-        font-weight: 500;
-    }
 
 </style>
 
@@ -237,55 +254,17 @@
 <body>
     <th:block th:include="common/top"></th:block>
                     
-    <div class="box-title">자유 게시판 ></div>
+    <div class="box-title">즐겨찾기 ></div>
     
     <div class="board-wrap">
         <div class="board-header">
             
-            <div class="order-wrap left">
-                <span class="material-icons order-span order-submit">sort</span>
-                <div class="order-content">
-                    <ul>
-                        <form action="/board/order" method="get" class="order-form">
-                            <li th:switch="${orderDate}">
-                                <div th:case=null>
-                                    <input class="left" type="radio" name="orderDate" id="newest" value="newest" checked><label for="newest"><span class="left">최신순</span></label>
-                                    <input class="left" type="radio" name="orderDate" id="popular" value="popular"><label for="popular"><span class="left">인기순</span></label>
-                                </div>
-
-                                <div th:case="newest">
-                                    <input class="left" type="radio" name="orderDate" id="newest" value="newest" checked><label for="newest"><span class="left">최신순</span></label>
-                                    <input class="left" type="radio" name="orderDate" id="popular" value="popular"><label for="popular"><span class="left">인기순</span></label>
-                                </div>
-                                
-                                <div th:case="popular">
-                                    <input class="left" type="radio" name="orderDate" id="newest" value="newest"><label for="newest"><span class="left">최신순</span></label>
-                                    <input class="left" type="radio" name="orderDate" id="popular" value="popular" checked><label for="popular"><span class="left">인기순</span></label>
-                                </div>
-                            </li>
-                            <li th:switch="${orderFriend}">
-                                <div th:case=null>
-                                    <input class="left" type="radio" name="orderFriend" id="all" value="all" checked><label for="all"><span class="left" style="margin-right: 17px;">전체</span></label>
-                                    <input class="left" type="radio" name="orderFriend" id="friend" value="friend"><label for="friend"><span class="left">일촌</span></label>
-                                </div>
-                                <div th:case="all">
-                                    <input class="left" type="radio" name="orderFriend" id="all" value="all" checked><label for="all"><span class="left" style="margin-right: 17px;">전체</span></label>
-                                    <input class="left" type="radio" name="orderFriend" id="friend" value="friend"><label for="friend"><span class="left">일촌</span></label>
-                                </div>
-                                <div th:case="friend">
-                                    <input class="left" type="radio" name="orderFriend" id="all" value="all"><label for="all"><span class="left" style="margin-right: 17px;">전체</span></label>
-                                    <input class="left" type="radio" name="orderFriend" id="friend" value="friend" checked><label for="friend"><span class="left">일촌</span></label>
-                                </div>
-                            </li>
-                            <li style="clear: left;" onclick="order()" class="sort-btn">정렬하기</li>
-                            <input type="hidden" name="reqPage" value="1">
-                        </form>
-                    </ul>
-                </div>
+            <div class="change-wrap left">
+                <a href="/photo/bookmark/list"><button type="button">사진첩</button></a>
             </div>
 
             <div class="search-wrap left">
-                <form action="/board/search" method="get">
+                <form action="/board/bookmark/search" method="get">
                     <div class="select-wrap left" th:switch="${type}">
                         <select name="type" id="searchBox" th:case=null>
                             <option value="title" selected>제목</option>
@@ -314,7 +293,6 @@
                     
                     <input type="hidden" name="reqPage" value="1">
                     <div class="write-wrap left">
-                        <span class="material-icons write-btn" th:if="${session.member != null}" href="/board/writeFrm">create</span>
                     </div>
                     
 
@@ -324,12 +302,21 @@
 
         <div class="board-content">
             <div class="board-tr">
-                <div style="width:10%;">글번호</div>
+                <!-- <div style="width:10%;">글번호</div> -->
                 <div style="width:40%;">제목</div>
                 <div style="width:15%; text-align: center;">작성자</div>
                 <div style="width:10%; text-align: center;">조회수</div>
                 <div style="width:10%; text-align: center;">좋아요</div>
                 <div style="width:15%; text-align: center;">작성일</div>
+                <div style="width:10%; text-align: center;">즐겨찾기</div>
+            </div>
+
+            <!-- 즐겨찾기 한 것이 없으면 뜨는 div -->
+            <div th:if="${list.isEmpty && keyword == null}" class="empty-wrap">
+                <span>마음에 드는 글들을 즐겨찾기 해보는 건 어떨까요?</span>
+            </div>
+            <div class="empty-wrap" style="display: none;">
+                <span>마음에 드는 글들을 즐겨찾기 해보는 건 어떨까요?</span>
             </div>
 
             <div class="board-empty" th:if="${list.isEmpty}">
@@ -341,13 +328,18 @@
 
             <div class="board-td" th:each="board : ${list}">
                 <a th:href="@{/board/view(boardNo=${board.boardNo})}">
-                    <div class="board-list" style="width:10%; text-indent: 5px;" th:text="${board.boardNo}"></div>
+                    <!-- <div class="board-list" style="width:10%; text-indent: 5px;" th:text="${board.boardNo}"></div> -->
                     <div class="board-list" style="width:45%; overflow: hidden; text-overflow: ellipsis;" th:text="${board.boardTitle}"></div>
                     <div class="board-list" style="width:10%;" th:text="${board.boardWriter}"></div>
                     <div class="board-list" style="width:10%; text-align: center;" th:text="${board.readCount}"></div>
                     <div class="board-list" style="width:10%; text-align: center;" th:text="${board.boardLike}"></div>
                     <div class="board-list" style="width:15%;" th:text="${board.boardDate.substring(0,10)}"></div>
                 </a>
+
+                <div class="board-list remove-border" style="width: 10%; text-align: center;">
+                    <span class="material-icons remove-mark">delete</span>
+                </div>
+                <input type="hidden" th:value="${board.boardNo}">
             </div>
 
         </div>
@@ -360,30 +352,31 @@
 
 
     <script>
-
         $(".order-span").on("click",function(){
+            $(this).toggleClass("can-order");
             $(".order-content").toggle();
+            order(this);
         })
 
         //만약에 정렬을 눌러서 정렬 radio들을 보고 다시 정렬을 누르면 정렬을 바로 할 수 있게 세팅
-        function order(){
-            // const orderDate = $("[name=orderDate]:checked");
-            // const orderFriend = $("[name=orderFriend]:checked");
-            const type = $("#searchBox").val();
-            const keyword = $(".search-input").val();
-            
-            const inputType = $("<input type='hidden' name='type' value="+type+">");
-            const keywordType = $("<input type='hidden' name='keyword' value="+keyword+">");
+        function order(obj){
+            const item = $(obj);
+            if(!item.hasClass("can-order")){
+                // const orderDate = $("[name=orderDate]:checked");
+                // const orderFriend = $("[name=orderFriend]:checked");
+                const type = $("#searchBox").val();
+                const keyword = $(".search-input").val();
+                
+                const inputType = $("<input type='hidden' name='type' value="+type+">");
+                const keywordType = $("<input type='hidden' name='keyword' value="+keyword+">");
 
-            $(".order-form").append(inputType).append(keywordType);
-            //type이랑 keyword까지 같이 폼태그로 전송시켜서 현재 유저가 입력한거에서 order할 수 있게
-            $(".order-form").submit();
-            
+                $(".order-form").append(inputType).append(keywordType);
+                //type이랑 keyword까지 같이 폼태그로 전송시켜서 현재 유저가 입력한거에서 order할 수 있게
+                $(".order-form").submit();
+            }
         }
 
-        $(".write-btn").on("click",function(){
-            location.href = "/board/writeFrm";
-        })
+        
 
         $(".search-input").on("keyup",function(){
             if($(this).val() === ""){
@@ -393,6 +386,7 @@
                 $(".reset-btn").show();
             }
         })
+        
         $(".reset-btn").on("click",function(){
             $(".search-input").val("");
             $(".reset-btn").hide();
@@ -402,8 +396,39 @@
             window.location.href = $(obj).children("a").attr("href");
         }
 
-        
+        function sorting(){
+            $(".order-span").click();
+        }
 
+        $(".remove-mark").on("click",function(){
+            const removeBtn = $(this);
+            const boardNo = removeBtn.parent().next().val();
+
+            $.ajax({
+                url : "/board/markRemove",
+                type : "post",
+                data : {boardNo : boardNo},
+                success : function(data){
+                    if(data > 0){
+                        removeBtn.parent().parent().remove();
+                        removeBtn.parent().next().remove();
+                        removeBtn.remove();
+
+                        //즐겨찾기 한 게 아무 것도 없으면 다시 그 글 띄우기
+                        const boardTd = $(".board-td");
+                        if(boardTd.length == 0){
+                            $(".empty-wrap").show();
+                        }
+                    }
+                    else{
+                        alert("삭제 실패");
+                    }
+                },
+                error : function(){
+                    console.log("error");
+                }
+            })
+        })
 
         checkSearchInput();
         function checkSearchInput(){
@@ -412,6 +437,10 @@
                 $(".reset-btn").show();
             }
         }
+
+
+        
+
     </script>
 
 </body>

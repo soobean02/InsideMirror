@@ -1,5 +1,6 @@
 package kr.co.iei.photo.controller;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,8 @@ public class PhotoController {
 	private FileUtils fileUtils;//파일 업로드용
 
 	@GetMapping(value="/list")
-	public String list(Model model){
-		int totalCount = photoService.getTotalCount();
+	public String list(@SessionAttribute(required=false) Member member, Model model){
+		int totalCount = photoService.getTotalCount(member);
 		model.addAttribute("totalCount", totalCount);
 		return "/photo/photoList";
 	}
@@ -72,6 +73,14 @@ public class PhotoController {
 	}
 
 	@ResponseBody
+	@GetMapping(value="/sort")
+	public List Sort(int start, int amount, int sort, @SessionAttribute(required=false) Member member){
+		System.out.println("its SORT"+sort);
+		List photoList = photoService.selectPhotoSort(start, amount, sort, member);
+		return photoList;
+	}
+
+	@ResponseBody
 	@PostMapping(value="/like")
 	public int pushLike(int isLike, int photoNo, @SessionAttribute(required = false) Member member, Model model){
 		if(member == null){
@@ -88,14 +97,50 @@ public class PhotoController {
 		if(member == null){
 			return -1;
 		}
-		System.out.println(isBookmark);
 		int result = photoService.pushBookmark(isBookmark, photoNo, member);
 		return result;
 	}
+
+	@ResponseBody
+	@PostMapping(value="/remove")
+	public int removePhoto(int memberNo, int photoNo, @SessionAttribute(required=false) Member member){
+		if(member == null){
+			return -1;
+		}
+		Photo photo = photoService.removePhoto(memberNo, photoNo);
+
+		if(photo == null){
+			return 0;
+		}
+		String savepath = root + "/photo/";
+			File delFile = new File(savepath + photo.getPhotoContent());
+			delFile.delete();
+			
+		return 1;
+	}
+
 	
 	
 	
+	@GetMapping(value="/bookmark/list")
+	public String bookmark(@SessionAttribute(required=false) Member member, Model model){
+		int totalCount = photoService.geTBookmarkTotalCount(member);
+		model.addAttribute("totalCount", totalCount);
+		return "/photo/bookmarkPhoto";
+	}
 	
+	@ResponseBody
+	@GetMapping(value="/bookmark/more")
+	public List bookmarkMore(int start, int amount, @SessionAttribute(required = false) Member member){
+		List photoList = photoService.selectBookmarkPhotoList(start, amount, member);
+		return photoList;
+	}
 	
+	@ResponseBody
+	@GetMapping(value="/bookmark/sort")
+	public List bookmarkSort(int start, int amount, int sort, @SessionAttribute(required=false) Member member){
+		List photoList = photoService.selectBookmarkPhotoSort(start, amount, sort, member);
+		return photoList;
+	}
 	
 }

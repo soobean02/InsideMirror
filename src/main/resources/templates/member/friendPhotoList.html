@@ -37,6 +37,9 @@
     .photo-header{
         width: 100%;
         height: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .change-wrap{
@@ -59,13 +62,7 @@
         cursor: pointer;
     }
 
-    .order-wrap{
-        width: 70%;
-        height: 80px;
-        text-align: center;
-        text-indent: -70px;
-        line-height: 80px;
-    }
+
     .write-wrap{
         width: 10%;
         height: 80px;
@@ -206,76 +203,52 @@
         }
     }
 
-    .photo-empty{
-        width: 100%;
-        height: 400px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #a0a0a0;
-        font-size: 18px;
-        font-weight: 500;
-    }
-
-    .post-sub-info>.delete-tag{
-        font-size: 30px;
-        cursor: pointer;
-        margin-right: 20px;
-    }
+    
 
 </style>
 
 </head>
 <body>
 
-    <th:block th:include="common/top"></th:block>
+    <th:block th:include="common/friendTop"></th:block>
     <div class="box-title">사진첩 ></div>
     
     <div class="photo-wrap">
 
         <div class="photo-header">
 
-            <div class="change-wrap left">
-            </div>
 
             <div class="order-wrap left">
                 <button class="order-btn active-sort" onclick="newest(this)">최신순</button>
                 <button class="order-btn" onclick="popular(this)">인기순</button>
             </div>
 
-            <div class="write-wrap left">
-                <span class="material-icons photo-btn" th:if="${session.member != null}">add_a_photo</span>
-            </div>
+
 
         </div>
 
 
         <div class="photo-content">
-            <div class="photo-empty" style="display: none;">
-                <span>나만의 멋진 사진이 있다면 업로드를 해서 자랑하는 건 어떨까요?</span>
-            </div>
+
         </div>
 
 
     </div>
 
 
-    <th:block th:include="common/bottom"></th:block>
+    <th:block th:include="common/friendBottom"></th:block>
 
 
 
     <script>
+
         
 
-        $(".write-wrap>.material-icons").on("click",function(){
-            location.href = "/photo/writeFrm";
-        })
-
         let done = 0;
-        let url = "/photo/more";
+        let url = "/member/more";
         let sort = 1;
 
-        let totalCount = [[${totalCount}]];
+        const totalCount = [[${totalCount}]];
         let currentCount = 0;
         let start = 1;
         $(".photo-wrap").scroll(function(e) {
@@ -285,25 +258,21 @@
         });  
 
         const memberNo = [[${session.member.memberNo}]];
+        const friendMemberNo = [[${memberNo}]];
         
         
         getMore();
         function getMore(moreUrl, sort){
-            console.log("url 임",url);
-            console.log("its sort",sort);
             const amount = 4;
             if(moreUrl){
-                url = "/photo/sort";
+                url = "/member/sort";
             }
             if(done != 1){
                 $.ajax({
                     url : url,
                     type : "get",
-                    data : {start : start , amount : amount , sort : sort},
+                    data : {start : start , amount : amount , sort : sort, friendMemberNo : friendMemberNo},
                     success : function(data){
-                        if(start == 1 && data.length == 0){
-                            emptyPhoto();
-                        }
                         for(let i = 0; i < data.length; i++){
                             const p = data[i];
                             const li = $("<li>");
@@ -322,11 +291,9 @@
                             
                             const subInfoDiv = $("<div>");
                             subInfoDiv.addClass("post-sub-info").addClass("left");
-                            subInfoDiv.append(`<span class="material-icons delete-tag" onclick="removePhoto(this, ${memberNo}, ${p.photoNo})">delete</span>`);
                             subInfoDiv.append(`<span class="material-icons push-tag temp-like-tag like" onclick="likePush(this, ${memberNo}, ${p.photoNo})">favorite_border</span>`);
                             subInfoDiv.append(`<span class="like-count">${p.likeCount}</span>`);
                             subInfoDiv.append(`<span class="material-icons push-tag temp-bookmark-tag bookmark" onclick="pushBookmark(this, ${memberNo}, ${p.photoNo})">bookmark_border</span>`);
-                            subInfoDiv.append(`<span class="photo-date">${p.photoDate}</span>`);
                             
                             const img = $("<img class='img-box'>");
                             img.attr("src","/photo/"+p.photoContent);
@@ -348,8 +315,8 @@
 
                         start += amount;
                         currentCount = currentCount + data.length;
-                        console.log("cC",currentCount);
-                        if(currentCount >= totalCount){
+                        
+                        if(currentCount == totalCount){
                             done = 1;
                         }
                     },
@@ -436,63 +403,6 @@
             })
         }
 
-        function removePhoto(obj, memberNo, photoNo){
-
-            swal({
-				title:"사진첩 삭제",
-				text:"이 사진첩을 삭제하시겠습니까?",
-				icon:"info",
-				buttons:{
-					cancel:{
-						text:"취소",
-						value:false,
-						visible:true,
-						className:"btn-secondary",
-						closeModal:true
-					},
-					confirm:{
-						text:"삭제",
-						value:true,
-						visible:true,
-						className:"btn-primary",
-						closeModal:true
-					}
-				}
-			}).then(function(isConfirm){
-				if(isConfirm){
-					$.ajax({
-                        url : "/photo/remove",
-                        type : "post",
-                        data : {memberNo : memberNo, photoNo : photoNo},
-                        success : function(data){
-                            if(data == -1){
-                                alert("로그인 후 이용 가능");
-                            }
-                            if(data > 0){
-                                $(obj).parents(".post-li").remove();
-                                if($(".post-li").length == 0){
-                                    emptyPhoto();
-                                }
-                                else if($(".post-li").length <= 3){
-                                    currentCount = $(".post-li").length;
-                                    start = start - 1;
-                                    done = 0;
-                                    totalCount = totalCount - 1;
-                                    getMore(false,sort);
-                                }
-                            }
-                            else {
-                                alert("삭제실패");
-                            }
-                        },
-                        error : function(){
-                            console.log("error");
-                        }
-                    })
-                }
-            });
-        }
-
 
         function newest(obj){
             $(obj).addClass("active-sort");
@@ -501,7 +411,6 @@
 
                 $(".photo-content>.post-li").remove();
                 let moreUrl = true;
-                currentCount = 0;
                 start = 1;
                 sort = 1; //1이 newest 2가 popular
                 done = 0;
@@ -516,17 +425,11 @@
 
                 $(".photo-content>.post-li").remove();
                 let moreUrl = true;
-                currentCount = 0;
                 start = 1;
                 sort = 2; //1이 newest 2가 popular
                 done = 0;
                 getMore(moreUrl, sort);
             }
-        }
-
-
-        function emptyPhoto(){
-            $(".photo-empty").show();
         }
 
     </script>

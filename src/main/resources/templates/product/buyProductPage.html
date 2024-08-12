@@ -6,13 +6,6 @@
 <title>구입한 상품 상세</title>
 </head>
 <style>
-:root { -
-	-point_color: lightskyblue; -
-	-btn_primary: skyblue; -
-	-btn_secondary: #eee; -
-	-table_line: #333;
-}
-
 a {
 	text-decoration: none;
 	color: #000;
@@ -117,48 +110,6 @@ form {
 	cursor: pointer;
 }
 
-.sec_box {
-	overflow: hidden;
-}
-
-.list_plus {
-	padding: 10px 10px 0 0;
-	font-weight: bold;
-	float: right;
-}
-
-.product_list {
-	padding: 10px;
-	margin-top: 40px;
-}
-
-.product_box {
-	background-color: #eee;
-	padding: 10px;
-	margin-left: 35px;
-	width: 150px;
-	height: 180px;
-	float: left;
-}
-
-.product_name {
-	font-weight: bold;
-	text-align: center;
-	padding-bottom: 10px;
-}
-
-.product_box>a {
-	display: inline-block;
-	width: 150px;
-	text-align: center;
-	font-weight: bold;
-	cursor: pointer;
-}
-
-.product_img>img {
-	width: 100px;
-	padding: 0 25px 15px 25px;
-}
 
 .first_box {
 	height: 240px;
@@ -203,9 +154,10 @@ h4 {
 }
 
 .product_box {
-	background-color: #eee;
+	border: 1px solid #eee;
+	border-radius: 5px;
 	padding: 10px;
-	margin-left: 20px;
+	margin-left: 25px;
 	width: 160px;
 	height: 180px;
 	float: left;
@@ -228,31 +180,21 @@ h4 {
 .product_img>img {
 	width: 100px;
 	height: 100px;
-	padding: 0 25px 15px 25px;
-}
-
-.pay {
-	box-sizing: border-box;
-	width: 250px;
-	height: 220px;
-	float: right;
-	border: 1px solid #000;
-	border-radius: 10px;
-	margin-right: 40px;
+	padding: 0 25px 15px 30px;
 }
 
 .pay_acorn>* {
 	margin-top: 20px;
 }
 
-.pay_acorn>button {
+.pay_acorn button {
 	margin-left: 35px;
 }
 
 .btn {
 	color: #fff;
 	cursor: pointer;
-	background-color: var(- -btn_primary);
+	background-color: skyblue;
 	padding: 0;
 	width: 120px;
 	height: 30px;
@@ -296,7 +238,7 @@ h4 {
 			<div class="acorn_tx acorn_box">
 				<h3>구입일 <th:block th:text="${sp.buyProduct.buyDate}"></th:block></h3>
 				<!-- 적용하기 버튼을 누르면 상품 번호와 상품 리스트 번호를 같이 전송 -->
-				<button class="btn"><a th:href="@{/product/useP(productNo=${sp.buyProduct.productNo},productListNo=${sp.sellProduct.productListNo})}">적용하기</a></button>
+				<a th:href="@{/product/useP(productNo=${sp.buyProduct.productNo},productListNo=${sp.sellProduct.productListNo})}"><button class="btn">적용하기</button></a>
 				<a href="/customer/customerFrm" class="refund">환불하기 > </a>
 			</div>
 		</div>

@@ -1,6 +1,5 @@
 package kr.co.iei.member.controller;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
@@ -11,16 +10,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.Title;
 import kr.co.iei.member.model.service.MemberService;
+import kr.co.iei.product.service.ProductService;
 import kr.co.iei.utils.EmailSender;
 import kr.co.iei.utils.FileUtils;
 
@@ -31,6 +29,8 @@ public class MemberController {
 	private MemberService memberService;
 	@Autowired
 	private EmailSender emailSender;
+	@Autowired
+	private ProductService productService;
 	
 	@Value("${file.root}")
 	private String root;
@@ -44,6 +44,7 @@ public class MemberController {
 	@PostMapping(value="/loginin")
 	public String login(Member m, HttpSession session, Model model) {
 		Member member = memberService.selectOneMember(m);
+		
 		if(member == null) {
 			model.addAttribute("title", "로그인 실패");
 			model.addAttribute("msg", "아이디 또는 비밀번호를 확인하세요.");
@@ -51,7 +52,9 @@ public class MemberController {
 			model.addAttribute("loc","/member/login");
 			return "common/msg";
 		}else {
+//			List sp = productService.selectUseProductInfo(member); <= 로그인 하면 top에 있는 css가 적용되게끔.. include 안되어있어서 일단 빼둠...
 			if(member.getMemberLevel() == 2) {
+//				 model.addAttribute("spCss", sp); css 적용 시키기
 				session.setAttribute("member", member);
 				model.addAttribute("member", member);
 				return "redirect:/member/memberPage";
@@ -268,4 +271,42 @@ public class MemberController {
 	 * 
 	 * }
 	 */
+
+
+
+
+
+
+
+
+
+
+	///사진첩
+	@GetMapping(value="/photo")
+	public String friendPhoto(int memberNo, Model model){
+		int totalCount = memberService.getTotalCount(memberNo);
+		Member friendMember = memberService.getFriendMember(memberNo);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("memberNo", memberNo);
+		model.addAttribute("friendMember", friendMember);
+		return "/member/friendPhotoList";
+	}//다른 사람 사진첩 조회
+
+	@ResponseBody
+	@GetMapping(value="/more")
+	public List friendPhotoMore(int start, int amount, int friendMemberNo, @SessionAttribute(required = false) Member member){
+		//memberNo는 친구 고유번호 session은 나
+		List photoList = memberService.selectPhotoList(start, amount, friendMemberNo, member);
+		return photoList;
+	}//사진첩 조회
+	//친구 정렬 만들기
+
+	@ResponseBody
+	@GetMapping(value="/sort")
+	public List friendPhotoSort(int start, int amount, int sort, int friendMemberNo, @SessionAttribute(required = false) Member member){
+		List photoList = memberService.selectFriendPhotoSort(start, amount, sort, friendMemberNo, member);
+		return photoList;
+	}
+
+
 }

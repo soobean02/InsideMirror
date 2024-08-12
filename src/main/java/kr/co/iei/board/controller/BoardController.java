@@ -1,8 +1,6 @@
 package kr.co.iei.board.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.board.model.dto.Board;
 import kr.co.iei.board.model.dto.BoardComment;
-import kr.co.iei.board.model.dto.BoardFile;
 import kr.co.iei.board.model.dto.BoardListData;
 import kr.co.iei.board.model.service.BoardService;
 import kr.co.iei.member.model.dto.Member;
@@ -68,17 +65,13 @@ public class BoardController {
 
 	@PostMapping(value="/write")
 	public String write(Board board, Model model){
-		List<BoardFile> fileList = new ArrayList<BoardFile>();
-		// if(!upfile[0].isEmpty()){
-		// 	String savepath = root+"/board/";
-		// 	for(MultipartFile file : upfile){
-		// 		String filepath = fileUtils.upload(savepath, file);
-		// 		BoardFile boardFile = new BoardFile();
-		// 		boardFile.setFilepath(filepath);
-		// 		fileList.add(boardFile);
-		// 	}
-		// }
-		int result = boardService.insertBoard(board, fileList);
+		if(board.getBoardTitle().equals("")){
+			board.setBoardTitle("제목");
+		}
+		if(board.getBoardContent().equals("")){
+			board.setBoardContent(" ");
+		}
+		int result = boardService.insertBoard(board);
 		if(result > 0){
 			//작성 성공로직
 			model.addAttribute("title", "작성");
@@ -168,7 +161,7 @@ public class BoardController {
 		}
 		int result = boardService.pushBookMark(isBookMark, boardNo, member);
 		return result;
-	}
+	}//즐겨찾기하면
 
 	@ResponseBody
 	@PostMapping(value="/comment")
@@ -226,6 +219,38 @@ public class BoardController {
 		model.addAttribute("orderDate", orderDate);
 		model.addAttribute("orderFriend", orderFriend);
 		return "/board/boardList";
+	}
+
+
+
+
+
+	//즐겨찾기
+	@GetMapping(value="/bookmark/list")
+	public String bookmark(int reqPage, @SessionAttribute(required = false) Member member, Model model){
+		BoardListData bld = boardService.selectBoardBookmarkList(reqPage, member);
+		model.addAttribute("list", bld.getList());
+		model.addAttribute("pageNavi", bld.getPageNavi());
+		return "/board/bookmarkBoardList";
+	}
+
+	@ResponseBody
+	@PostMapping(value="/markRemove")
+	public int bookmarkRemove(int boardNo, @SessionAttribute(required=false) Member member){
+		int result = boardService.removeBookmark(boardNo, member);
+		return result;
+	} 
+
+	@GetMapping(value="/bookmark/search")
+	public String bookmarkSearch(String type, String keyword, int reqPage, Model model, @SessionAttribute(required=false) Member member){
+		if(keyword.equals("")) return "redirect:/board/bookmark/list?reqPage=1";
+
+		BoardListData bld = boardService.selectBookmarkSearchList(type,keyword,reqPage,member);
+		model.addAttribute("list", bld.getList());
+		model.addAttribute("pageNavi", bld.getPageNavi());
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("type", type);
+		return "board/bookmarkBoardList";
 	}
 
 }

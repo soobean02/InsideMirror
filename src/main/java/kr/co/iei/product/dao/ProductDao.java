@@ -54,9 +54,9 @@ public class ProductDao {
 		return result;
 	}
 
-	/* 구매 상품 출력 - 3개 짜리 */
+	/* 구매 상품 출력 - 최신순으로 3개 짜리 */
 	public List selectProductPhoto() {
-		String query = "SELECT * FROM sell_product WHERE ROWNUM <= 3";
+		String query = "SELECT * FROM sell_product WHERE ROWNUM <= 3 order by 1 desc";
 		List list = jdbc.query(query, sellProductRowMapper);
 		if (list.isEmpty()) {
 			return null;
@@ -269,5 +269,40 @@ public class ProductDao {
 		return result;
 	}
 
+	// 상품 전체 초기화
+	public int updateAllZeroProduct(Member member) {
+		String query = "update (select * from buy_product join sell_product using(product_no)) set use_product=0 where member_no=?";
+		Object[] params = {member.getMemberNo()};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+	
+	// 상품 하나만 초기화
+	public int updateOneZeroProduct(Member member, int productListNo) {
+		String query = "update (select * from buy_product join sell_product using(product_no)) set use_product=0 where member_no=? and product_list_no=?";
+		Object[] params = {member.getMemberNo(),productListNo};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+
+	// 기본 배경으로 초기화
+	public int updateProductB(Member member, int productNo) {
+		String query = "update (select * from buy_product join sell_product using(product_no)) set use_product=1 where member_no=? and product_no=?";
+		Object[] params = {member.getMemberNo(), productNo};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+	public int updateProductC(Member member, int productNo) {
+		String query = "update (select * from buy_product join sell_product using(product_no)) set use_product=1 where member_no=? and product_no=?";
+		Object[] params = {member.getMemberNo(), productNo};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+	public int updateProductF(Member member, int productNo) {
+		String query = "update (select * from buy_product join sell_product using(product_no)) set use_product=1 where member_no=? and product_no=?";
+		Object[] params = {member.getMemberNo(), productNo};
+		int result = jdbc.update(query, params);
+		return result;
+	}
 
 }

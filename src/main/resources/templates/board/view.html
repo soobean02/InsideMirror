@@ -81,19 +81,8 @@
         /* background-color: yellowgreen; */
         text-align: center;
     }
-    .fix{
-        width: 100%;
-        height: 30px;
-        /* background-color: blue; */
-        box-sizing: border-box;
-        border-bottom: 1px solid rgb(148, 148, 148);
-        text-align: right;
-    }
-    .fix>.material-icons{
-        margin-right: 15px;
-        cursor: pointer;
-        padding-top: 3px;
-    }
+    
+    
     
     .view-mark>span{
         line-height: 40px;
@@ -278,6 +267,44 @@
         color: #a8a8a8;
     }
 
+    .fix{
+        width: 100%;
+        height: 30px;
+        /* background-color: blue; */
+        box-sizing: border-box;
+        border-bottom: 1px solid rgb(148, 148, 148);
+        text-align: right;
+        display: flex;
+    }
+
+
+    .fix-wrap{
+        width: 50%;
+        height: 30px;
+        display: flex;
+        justify-content: right;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .back-wrap{
+        width: 55%;
+        height: 30px;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+    }
+
+    .back-btn{
+        float: left;
+
+    }
+
+    .fix-wrap>.material-icons{
+        margin-right: 15px;
+        cursor: pointer;
+    }
+
 </style>
 
 <head>
@@ -330,8 +357,14 @@
 <!-- 작성자 | 작성일 -->
 <!-- 조회수/하트개수 | 하트 | 북마크 순으로 -->
             <div class="fix left">
-                <span th:if="${session.member != null && session.member.memberNo == board.memberNo}" class="material-icons" th:onclick="boardEdit([[${board.boardNo}]],[[${board.boardTitle}]],[[${board.boardContent}]])">edit</span>
-                <span th:if="${session.member != null && session.member.memberNo == board.memberNo}" class="material-icons" th:onclick="boardDelete([[${board.boardNo}]])">delete</span>
+                <div class="back-wrap">
+                    <button onclick="history.back()" class="back-btn">돌아가기</button>
+                </div>
+
+                <div class="fix-wrap right">
+                    <span th:if="${session.member != null && session.member.memberNo == board.memberNo}" class="material-icons" th:onclick="boardEdit([[${board.boardNo}]],[[${board.boardTitle}]],[[${board.boardContent}]])">edit</span>
+                    <span th:if="${session.member != null && session.member.memberNo == board.memberNo}" class="material-icons" th:onclick="boardDelete([[${board.boardNo}]])">delete</span>
+                </div>
             </div>
             
 
@@ -341,6 +374,8 @@
         <div class="view-content-wrap">
             <div th:utext="${board.boardContent}"></div>
         </div>
+
+        
 
         <!-- 나중에 session 체크 해서 댓글 작성 넣기 -->
         <!-- != null 먼저 체크 해야함 &&로 -->
@@ -383,7 +418,7 @@
                         </th:block>
                     </div>
                     
-                    <div class="content-both comment-list-content content-hover left" th:text="${bc.boardCommentContent}"></div>
+                    <div class="content-both comment-list-content content-hover left" style="white-space: pre-line;" th:text="${bc.boardCommentContent}"></div>
 
                 </div>
                     <!-- 답글 -->
@@ -410,7 +445,7 @@
                                     <a href="javascript:void(0)" class="edit right" th:onclick="editComment(this,[[${bcc.boardCommentNo}]],[[${board.boardNo}]],[[${bcc.boardCommentRef}]])">수정</a>
                                 </th:block>
                             </p>
-                            <p class="content-both reComment-content-list content-hover" th:text="${bcc.boardCommentContent}"></p>
+                            <p class="content-both reComment-content-list content-hover" style="white-space: pre-line;" th:text="${bcc.boardCommentContent}"></p>
                         </div>
 
                     </div>
@@ -708,7 +743,7 @@
                                         <a href="javascript:void(0)" class="remove right" onclick="removeComment(this, ${comment.boardCommentNo}, ${boardNo})">삭제</a>
                                         <a href="javascript:void(0)" class="edit right" onclick="editComment(this, ${comment.boardCommentNo}, ${boardNo})">수정</a>
                                         </div>
-                                        <div class="content-both comment-list-content content-hover left short-content">${comment.boardCommentContent}</div>
+                                        <div class="content-both comment-list-content content-hover left short-content" style="white-space: pre-line;">${comment.boardCommentContent}</div>
                                     </div>`;
     
                                 const reComment = `
@@ -749,7 +784,7 @@
                                                 <a href="javascript:void(0)" class="remove right" onclick="removeComment(this,${comment.boardCommentNo},${boardNo},${comment.boardCommentRef})">삭제</a>
                                                 <a href="javascript:void(0)" class="edit right" onclick="editComment(this,${comment.boardCommentNo},${boardNo},${comment.boardCommentRef})">수정</a>
                                             </p>
-                                            <p class="content-both reComment-content-list content-hover short-content">${comment.boardCommentContent}</p>
+                                            <p class="content-both reComment-content-list content-hover short-content" style="white-space: pre-line;">${comment.boardCommentContent}</p>
                                         </div>
                                     </div>`;
                                     const reCommentBox = $(item).parent().parent();

@@ -216,7 +216,6 @@
         font-size: 18px;
         font-weight: 500;
     }
-
     .post-sub-info>.delete-tag{
         font-size: 30px;
         cursor: pointer;
@@ -229,13 +228,14 @@
 <body>
 
     <th:block th:include="common/top"></th:block>
-    <div class="box-title">사진첩 ></div>
+    <div class="box-title">즐겨찾기 ></div>
     
     <div class="photo-wrap">
 
         <div class="photo-header">
 
             <div class="change-wrap left">
+                <a href="/board/bookmark/list?reqPage=1"><button type="button">게시글</button></a>
             </div>
 
             <div class="order-wrap left">
@@ -252,7 +252,7 @@
 
         <div class="photo-content">
             <div class="photo-empty" style="display: none;">
-                <span>나만의 멋진 사진이 있다면 업로드를 해서 자랑하는 건 어떨까요?</span>
+                <span>다른 멋진 사진들을 즐겨찾기 해서 보고 싶을때 언제든 보는 건 어떨까요?</span>
             </div>
         </div>
 
@@ -265,14 +265,13 @@
 
 
     <script>
-        
 
         $(".write-wrap>.material-icons").on("click",function(){
             location.href = "/photo/writeFrm";
         })
 
         let done = 0;
-        let url = "/photo/more";
+        let url = "/photo/bookmark/more";
         let sort = 1;
 
         let totalCount = [[${totalCount}]];
@@ -289,11 +288,9 @@
         
         getMore();
         function getMore(moreUrl, sort){
-            console.log("url 임",url);
-            console.log("its sort",sort);
             const amount = 4;
             if(moreUrl){
-                url = "/photo/sort";
+                url = "/photo/bookmark/sort";
             }
             if(done != 1){
                 $.ajax({
@@ -322,7 +319,9 @@
                             
                             const subInfoDiv = $("<div>");
                             subInfoDiv.addClass("post-sub-info").addClass("left");
-                            subInfoDiv.append(`<span class="material-icons delete-tag" onclick="removePhoto(this, ${memberNo}, ${p.photoNo})">delete</span>`);
+                            if(p.memberNo == 1){
+                                subInfoDiv.append(`<span class="material-icons delete-tag" onclick="removePhoto(this, ${memberNo}, ${p.photoNo})">delete</span>`);
+                            }
                             subInfoDiv.append(`<span class="material-icons push-tag temp-like-tag like" onclick="likePush(this, ${memberNo}, ${p.photoNo})">favorite_border</span>`);
                             subInfoDiv.append(`<span class="like-count">${p.likeCount}</span>`);
                             subInfoDiv.append(`<span class="material-icons push-tag temp-bookmark-tag bookmark" onclick="pushBookmark(this, ${memberNo}, ${p.photoNo})">bookmark_border</span>`);
@@ -348,7 +347,7 @@
 
                         start += amount;
                         currentCount = currentCount + data.length;
-                        console.log("cC",currentCount);
+                        
                         if(currentCount >= totalCount){
                             done = 1;
                         }
@@ -427,7 +426,13 @@
                     }
                     else if(data == 1){
                         if(isBookMark == 0) $(obj).text("bookmark");
-                        else $(obj).text("bookmark_border");
+                        else {
+                            $(obj).parents(".post-li").remove();
+                            $(obj).text("bookmark_border");
+                            if($(".post-li").length == 0){
+                                emptyPhoto();
+                            }
+                        }
                     }
                 },
                 error : function(){
@@ -491,6 +496,8 @@
                     })
                 }
             });
+
+            
         }
 
 
@@ -523,7 +530,6 @@
                 getMore(moreUrl, sort);
             }
         }
-
 
         function emptyPhoto(){
             $(".photo-empty").show();
