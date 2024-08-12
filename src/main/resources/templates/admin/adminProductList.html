@@ -161,10 +161,11 @@ a{
 	<div id="pageNavi" th:utext="${pageNavi}"></div>
 
 	<th:block th:include="common/adminBottom"></th:block>
-	</div>
-	</div>
-	</div>
-	</div>
+
 </body>
-</body>
+<script>
+		$("#category").on("change",function(){
+			 $('#category').submit();
+		});
+	</script>
 </html>
