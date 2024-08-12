@@ -304,7 +304,7 @@
 
                     
                     <div class="input-wrap">
-                        <input type="text" name="keyword" class="search-input left" th:value="${keyword}" autocomplete="off">
+                        <input type="text" name="keyword" id="search-input" class="search-input left" th:value="${keyword}" autocomplete="off">
                         <button type="button" class="reset-btn">
                             <span class="material-icons">cancel</span>
                         </button>
@@ -371,21 +371,21 @@
             // const orderDate = $("[name=orderDate]:checked");
             // const orderFriend = $("[name=orderFriend]:checked");
             const type = $("#searchBox").val();
-            const keyword = $(".search-input").val();
-            
+            const keyword = $("#search-input").val();
             const inputType = $("<input type='hidden' name='type' value="+type+">");
             const keywordType = $("<input type='hidden' name='keyword' value="+keyword+">");
 
             $(".order-form").append(inputType).append(keywordType);
             //type이랑 keyword까지 같이 폼태그로 전송시켜서 현재 유저가 입력한거에서 order할 수 있게
             $(".order-form").submit();
-            
+
         }
 
         $(".write-btn").on("click",function(){
             location.href = "/board/writeFrm";
         })
 
+        
         $(".search-input").on("focus",function(){
             if($(this).val() !== ""){
                 $(".reset-btn").show();
