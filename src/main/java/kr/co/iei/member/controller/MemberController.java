@@ -292,13 +292,17 @@ public class MemberController {
 
 	///사진첩
 	@GetMapping(value="/photo")
-	public String friendPhoto(int memberNo, Model model){
+	public String friendPhoto(int memberNo, Model model, @SessionAttribute(required = false) Member member){
+		int sessionMemberNo = 0;
+		if(member != null){
+			sessionMemberNo = member.getMemberNo();
+		}
 		int totalCount = memberService.getTotalCount(memberNo);
 		Member friendMember = memberService.getFriendMember(memberNo);
 		List sp = productService.selectUseProductInfo(friendMember);
 		model.addAttribute("spCss",sp);
 		model.addAttribute("totalCount", totalCount);
-		model.addAttribute("memberNo", memberNo);
+		model.addAttribute("sessionMemberNo", sessionMemberNo);
 		model.addAttribute("friendMember", friendMember);
 		return "/member/friendPhotoList";
 	}//다른 사람 사진첩 조회
@@ -307,7 +311,11 @@ public class MemberController {
 	@GetMapping(value="/more")
 	public List friendPhotoMore(int start, int amount, int friendMemberNo, @SessionAttribute(required = false) Member member){
 		//memberNo는 친구 고유번호 session은 나
-		List photoList = memberService.selectPhotoList(start, amount, friendMemberNo, member);
+		int memberNo = 0;
+		if(member != null){
+			memberNo = member.getMemberNo();
+		}
+		List photoList = memberService.selectPhotoList(start, amount, friendMemberNo, memberNo);
 		return photoList;
 	}//사진첩 조회
 	//친구 정렬 만들기
@@ -315,7 +323,12 @@ public class MemberController {
 	@ResponseBody
 	@GetMapping(value="/sort")
 	public List friendPhotoSort(int start, int amount, int sort, int friendMemberNo, @SessionAttribute(required = false) Member member){
-		List photoList = memberService.selectFriendPhotoSort(start, amount, sort, friendMemberNo, member);
+		int memberNo = 0;
+
+		if(member != null){
+			memberNo = member.getMemberNo();
+		}
+		List photoList = memberService.selectFriendPhotoSort(start, amount, sort, friendMemberNo, memberNo);
 		return photoList;
 	}
 
