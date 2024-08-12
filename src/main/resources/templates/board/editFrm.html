@@ -50,11 +50,12 @@
         justify-content: center;
         align-items: center;
         margin-top: 20px;
+        gap: 20px;
     }
     .submit-btn{
         width: 100px;
         height: 50px;
-        background-color: rgb(101, 168, 255);
+        background-color: rgb(146, 193, 255);
         border: 1px solid rgb(148, 148, 148);
         cursor: pointer;
     }
@@ -63,6 +64,20 @@
         text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.2), 0 0 10px rgba(255, 255, 255, 0.5);
         background-color: #7d8eff;
+        transform: scale(1.05);
+        color: white;
+    }
+    .back-btn{
+        width: 100px;
+        height: 50px;
+        background-color: rgb(91, 162, 255);
+        border: 1px solid rgb(148, 148, 148);
+        cursor: pointer;
+    }
+    .back-btn:hover{
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2), 0 0 10px rgba(255, 255, 255, 0.5);
+        background-color: #4b63ff;
         transform: scale(1.05);
         color: white;
     }
@@ -91,6 +106,7 @@
             </div>
             
             <div class="submit-box">
+                <button type="button" class="back-btn" onclick="back()">수정취소</button>
                 <button type="submit" class="submit-btn">수정</button>
             </div>
         </form>
@@ -105,13 +121,18 @@
 
 
 
-
+    <script src="/summernote/summernote-lite.js"></script>
+	<script src="/summernote/lang/summernote-ko-KR.js"></script>
+	<link rel="stylesheet" href="/summernote/summernote-lite.css">
 
 
     <th:block th:include="common/bottom"></th:block>
 
     <script>
         $("#content").summernote({
+            minWidth : 200,
+            minHeight : 200,
+            maxWidth : 600,
             height: 380,
             lang: "ko-KR",
             disableResize: true,
@@ -129,7 +150,7 @@
             fontSizes: ['10', '12', '14', '16', '18', '20', '22', '24', '26', '28', '30', '32','34', '36'],
             callbacks: {
                 onImageUpload: function(files) {
-                uploadImage(files[0], this);
+                    uploadImage(files[0], this);
                 }
             }
         });
@@ -158,6 +179,33 @@
                 error : function(){
                     console.log("error");
                     //에러 메세지 띄우기
+                }
+            });
+        }
+
+        
+        function back(){
+            swal({
+                title : "사진첩",
+                text : "작성을 취소하시겠습니까? (작성된 내용은 저장되지 않습니다.)",
+                icon : "warning",
+                buttons:{
+                    cancel:{
+                        text:"계속하기",
+                        value:false,
+                        visible:true,
+                        closeModal: true
+                    },
+                    confirm:{
+                        text:"작성취소",
+                        value:true,
+                        visible:true,
+                        closeModal:true
+                    }
+                }
+            }).then(function(isConfirm){
+                if(isConfirm){
+                    history.back();
                 }
             });
         }

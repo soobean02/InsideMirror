@@ -17,13 +17,30 @@
         font-size: 18px;
         /* background-color: #92a2ff; */
     }
+    .back-wrap{
+        width: 20%;
+        float: left;
+        height: 40px;
+        text-align: center;
+        line-height: 60px;
+        margin: 10px 0px;
+    }
+    .back-wrap>.back-btn{
+        background-color: #429aff;
+        color: white;
+        border: none;
+        width: 50px;
+        height: 40px;
+        border-radius: 15px;
+        cursor: pointer;
+    }
 
     .title-bar{
         margin: 10px 0px;
         text-align: right;
         float: left;
-        width: 75%;
-        margin-left: 60px;
+        width: 60%;
+        margin-left: 10px;
     }
     .submit-div{
         width: 15%;
@@ -55,7 +72,7 @@
         border: none;
         border-bottom: 1px solid rgb(150, 150, 150);
         margin-top: 10px;
-        width: 80%;
+        width: 85%;
         outline: none;
         padding: 5px;
         font-size: 18px;
@@ -67,6 +84,10 @@
 
     .board-title{
         overflow: hidden;
+    }
+
+    .note-editor img{
+        max-width: 600px;
     }
 
 </style>
@@ -89,6 +110,11 @@
         <form action="/board/write" method="post" enctype="multipart/form-data">
 
             <div class="board-title">
+
+                <div class="back-wrap">
+                    <button type="button" class="back-btn" onclick="back()">작성취소</button>
+                </div>
+
                 <div class="title-bar">
                     <input type="text" name="boardTitle" id="boardTitle" placeholder="당신만의 멋진 제목을 적어주세요!">
                 </div>
@@ -169,7 +195,31 @@
 
         }
 
-    
+        function back(){
+            swal({
+                title : "게시글",
+                text : "작성을 취소하시겠습니까? (작성된 내용은 저장되지 않습니다.)",
+                icon : "warning",
+                buttons:{
+                    cancel:{
+                        text:"계속하기",
+                        value:false,
+                        visible:true,
+                        closeModal: true
+                    },
+                    confirm:{
+                        text:"작성취소",
+                        value:true,
+                        visible:true,
+                        closeModal:true
+                    }
+                }
+            }).then(function(isConfirm){
+                if(isConfirm){
+                    history.back();
+                }
+            });
+        }
 
     
 

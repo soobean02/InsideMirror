@@ -290,6 +290,8 @@ public class MemberController {
 	public String friendPhoto(int memberNo, Model model){
 		int totalCount = memberService.getTotalCount(memberNo);
 		Member friendMember = memberService.getFriendMember(memberNo);
+		List sp = productService.selectUseProductInfo(friendMember);
+		model.addAttribute("spCss",sp);
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("memberNo", memberNo);
 		model.addAttribute("friendMember", friendMember);
