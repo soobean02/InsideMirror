@@ -86,7 +86,7 @@ public class GuestBookController {
             model.addAttribute("title", "댓글 작성 실패");
             model.addAttribute("msg", "댓글 작성 중 문제가 발생했습니다.");
             model.addAttribute("icon", "warning");
-            model.addAttribute("loc", errorlog);
+            model.addAttribute("loc");
         }
 
 //        model.addAttribute("title", "댓글 작성");
