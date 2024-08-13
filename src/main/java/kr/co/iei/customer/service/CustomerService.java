@@ -113,7 +113,7 @@ public class CustomerService {
 
 	public CustomerListData selectAdminCustomerList(int reqPage) {
 		// 한 페이지당 10개의 글 조회
-		int numPerPage = 8;
+		int numPerPage = 6;
 		// 시작번호
 		int end = reqPage * numPerPage; // 1페이지면 10, 2페이지면 20 ...
 		int start = end - numPerPage + 1; // 10 - 10 = 1번 부터..., 20 - 10 + 1 = 11 번 부터...
