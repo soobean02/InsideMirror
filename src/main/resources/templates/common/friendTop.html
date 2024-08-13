@@ -22,6 +22,7 @@
     resize: none;
     padding: 0;
     overflow: hidden;
+    outline: none;
  }
  .profile-image-area{
  	display: flex;
@@ -43,7 +44,22 @@
  	visibility: hidden;
  }
  .follow{
- 	border-radius: 5px;
+ 	background-color: #3b87ab;
+    cursor: pointer;
+    border-radius: 4px;
+    color: #fff;
+    border: none;
+    width: 80px;
+    height: 33px;
+ }
+ .follow-remove{
+ 	background-color: #3b87ab;
+    cursor: pointer;
+    border-radius: 4px;
+    color: #fff;
+    border: none;
+    width: 80px;
+    height: 33px;
  }
 </style>
 <th:block th:include="/common/header"></th:block>

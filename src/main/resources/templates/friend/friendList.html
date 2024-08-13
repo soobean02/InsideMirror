@@ -36,6 +36,16 @@
 	border-radius: 15px;
 	text-align: center;
 }
+.searchFriendInput{
+		outline: none;
+		border: none;
+		border-bottom: 1px solid black; 
+		width: 300px;
+		height: 30px;
+		text-align: center;
+		background-color: transparent;
+		
+	}
 
 .submit-btn {
 	background-color: transparent;
@@ -48,10 +58,34 @@
 	display: none;
 	margin-left: 10px;
 }
-
+.btn-secondary {
+	float: right;
+	border :1px solid gray;
+	background-color:transparent;
+	
+	 
+}
 .friend-scrollbox {
 	max-height: 450px;
 	overflow-y: auto;
+}
+.friend-title{
+	display: flex;
+	justify-content: center;
+}
+.submit{
+	margin-top: 15px;
+	
+}
+.btn-secondary{
+    background-color: #3b87ab;
+    cursor: pointer;
+    border-radius: 4px;
+    float: right;
+    color: #fff;
+    border: none;
+    width: 80px;
+    height: 33px;
 }
 
 .friend-box {
@@ -98,6 +132,13 @@
 					<span th:text="${friendList.friendNickName}"></span>
 					<button class="btn-secondary"
 						th:onclick="friendCancel(this,[[${friendList.friendNo}]]);">일촌취소</button>
+			<div class="box-title">일촌목록 ></div>
+			<div class="friend-title">
+				<div class="search-group">
+					<form action="/friend/search" method="get">
+						<input type="text" id="searchInput1" name="findFriend" class="searchFriendInput">
+						<button class="submit"><img src="/image/searchfriend.png"></button>
+					</form>
 				</div>
 			</div>
 		</th:block>
