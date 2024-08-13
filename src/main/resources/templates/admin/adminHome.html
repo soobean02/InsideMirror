@@ -4,15 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>관리자 메인 홈피</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<link rel="stylesheet"
+	href="https://unpkg.com/swiper/swiper-bundle.min.css">
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <link rel="stylesheet" href="/css/minihomepage.css">
 <link rel="stylesheet" href="/css/layout.css">
 <link rel="stylesheet" href="/css/font.css">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 <script src="/summernote/summernote-lite.js"></script>
 <script src="/summernote/lang/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="/summernote/summernote-lite.css">
@@ -69,7 +73,19 @@ a {
 	margin-bottom: 20px;
 }
 
-.atbl th, .atbl td {
+.atbl th {
+	text-align: center;
+	border-bottom: 1px solid #ddd;
+	padding-left: 10px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	font-size: 13px;
+	height: 35px;
+	background-color: skyblue;
+}
+
+.atbl td {
+	height: 55px;
 	text-align: center;
 	border-bottom: 1px solid #ddd;
 	padding-left: 10px;
@@ -80,10 +96,6 @@ a {
 
 .atbl th.left, .tbl td.left {
 	text-align: left;
-}
-
-.atbl th {
-	background-color: skyblue;
 }
 
 .atbl.atbl-hover tbody>tr:hover {
@@ -144,8 +156,6 @@ a {
 			<th>이메일</th>
 			<th>성별</th>
 			<th>전화번호</th>
-			<th>주소</th>
-			<th>등급</th>
 			<th>가입일</th>
 		</tr>
 
@@ -158,8 +168,6 @@ a {
 			<td th:text="${m.memberId}"></td>
 			<td th:text="${m.memberGender}"></td>
 			<td th:text="${m.memberPhone}"></td>
-			<td th:text="${m.memberAddr}"></td>
-			<td th:text="${m.memberLevel}"></td>
 			<td th:text="${m.enrollDate}"></td>
 		</tr>
 	</table>

@@ -62,7 +62,19 @@ a {
 	margin-bottom: 20px;
 }
 
-.atbl th, .atbl td {
+.atbl th {
+	text-align: center;
+	border-bottom: 1px solid #ddd;
+	padding-left: 10px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	font-size: 13px;
+	height: 35px;
+	background-color: skyblue;
+}
+
+.atbl td {
+	height: 55px;
 	text-align: center;
 	border-bottom: 1px solid #ddd;
 	padding-left: 10px;
@@ -88,6 +100,9 @@ a {
 .box-title{
 	padding-bottom: 10px;
 }
+.content-box{
+	min-height: 541px;
+}
 </style>
 <body>
 	<th:block th:include="common/top"></th:block>
@@ -102,8 +117,6 @@ a {
 				<th>아이디</th>
 				<th>성별</th>
 				<th>전화번호</th>
-				<th>주소</th>
-				<th>등급</th>
 				<th>가입일</th>
 			</tr>
 
@@ -116,8 +129,6 @@ a {
 			<td th:text="${m.memberId}"></td>
 			<td th:text="${m.memberGender}"></td>
 			<td th:text="${m.memberPhone}"></td>
-			<td th:text="${m.memberAddr}"></td>
-			<td th:text="${m.memberLevel}"></td>
 			<td th:text="${m.enrollDate}"></td>
 		</tr>
 		</table>

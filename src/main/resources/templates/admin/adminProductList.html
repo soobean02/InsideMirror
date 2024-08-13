@@ -58,12 +58,12 @@ a{
 	float: right;
 }
 
-.select_op select {
-	width: 100px;
-	height: 30px;
-	border-radius: 10px;
-	text-align: center;
-	font-weight: bold;
+.control-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    padding: 10px 20px;
 }
 
 .product_list_box {
@@ -84,7 +84,7 @@ a{
 }
 
 .product_list_box>a {
-	width: 90px;
+	width: 80px;
 	border: 1px solid #eee;
 	border-radius: 5px;
 	float: left;
@@ -92,22 +92,9 @@ a{
 	text-align: center;
 	border-radius: 5px;
 }
-.select_op {
-            width: 200px; /* 전체 드롭다운 너비 */
-            margin-left: 450px; 
-            padding: 10px;
-            box-sizing: border-box;
-            float: left;
-        }
-
-        .select_op select:focus {
-            outline: none; /* 선택 시 기본 외곽선 제거 */
-        }
-}
 /*--------------------------------------------*/
 .client_btn {
-	margin-top: 10px;
-	padding: 15px;
+	padding: 10px 10px;
 }
 
 .client_btn>a {
@@ -115,33 +102,42 @@ a{
 	border: none;
 	font-weight: bold;
 	color: #fff;
-	width: 100px;
-	height: 30px;
 	border-radius: 5px;
 	cursor: pointer;
 }
 
+.select_op select {
+	width: 100px;
+	height: 30px;
+	border-radius: 10px;
+	text-align: center;
+	font-weight: bold;
+}
 
 </style>
 <body>
 	<th:block th:include="common/top"></th:block>
 
 	<div class="box-title">상품 목록</div>
-	<div class="client_btn">
-		<a href="/admin/adminProductAddFrm" class="client_btn">상품 추가</a>
-	</div>
+	
+    <div class="control-bar">
+        <div class="client_btn">
+            <a href="/admin/adminProductAddFrm" class="client_btn">상품 추가</a>
+        </div>
+        <div class="select_op">
+            <form action="/admin/adminProductList" method="get" id="category">
+                <input type="hidden" name="reqPage" value="1">
+                <select name="type">
+                    <option value="0" th:selected="${ty == 0}">전체</option>
+                    <option value="1" th:selected="${ty == 1}">배경</option>
+                    <option value="2" th:selected="${ty == 2}">커서</option>
+                    <option value="3" th:selected="${ty == 3}">폰트</option>
+                </select>
+            </form>
+        </div>
+    </div>
+
 	<div class="wrap">
-		<div class="select_op">
-			<form action="/admin/adminProductList" method="get" id="category">
-				<input type="hidden" name="reqPage" value="1">
-				<select name="type">
-					<option value="0"  th:selected="${ty == 0}">전체</option>
-					<option value="1" th:selected="${ty == 1}">배경</option>
-					<option value="2" th:selected="${ty == 2}">커서</option>
-					<option value="3" th:selected="${ty == 3}">폰트</option>
-				</select>
-			</form>
-		</div>
 		<div class="product_list_box">
 			<th:block th:each="pr : ${list}">
 				<a th:href="@{/admin/adminProductView(productNo=${pr.productNo})}">
@@ -155,7 +151,6 @@ a{
 				</a>
 			</th:block>
 		</div>
-		
 	</div>
 	
 	<div id="pageNavi" th:utext="${pageNavi}"></div>
@@ -164,8 +159,8 @@ a{
 
 </body>
 <script>
-		$("#category").on("change",function(){
-			 $('#category').submit();
-		});
-	</script>
+	$("#category").on("change",function(){
+		$('#category').submit();
+	});
+</script>
 </html>

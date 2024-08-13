@@ -20,7 +20,7 @@ import kr.co.iei.board.model.dto.BoardListData;
 import kr.co.iei.board.model.service.BoardService;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.utils.FileUtils;
-
+ 
 @Controller
 @RequestMapping(value = "/board")
 public class BoardController {
@@ -166,6 +166,9 @@ public class BoardController {
 	@ResponseBody
 	@PostMapping(value="/comment")
 	public Map<String, Object> comment(BoardComment comment, Model model, 	@SessionAttribute Member member){
+		if(member == null){
+			return null;
+		}
 		int result = boardService.insertBoardComment(comment);
 		BoardComment oneComment = boardService.selectOneComment(comment);
 		Board board = new Board();

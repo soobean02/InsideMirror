@@ -13,7 +13,6 @@
 }
 
 .form_inq {
-	padding: 20px;
 }
 
 .form_inq>input:nth-child(2) {
@@ -59,12 +58,10 @@
 		<form action="/customer/customerWrite" method="post" class="form_inq">
 			<div class="radio_inq">
 				<input type="radio" value="1" id="refund" name="customerList">
-				<label for="refund">환불</label> <input type="radio" value="2"
-					id="other" name="customerList"> <label for="other">기타</label>
+				<label for="refund">환불</label> <input type="radio" value="2" id="other" name="customerList"> <label for="other">기타</label>
 			</div>
-			<input type="text" placeholder="문의 제목 (15자 이내로 적어주세요)"
-				name="inqTitle" maxlength="15"> <input type="text"
-				placeholder="문의 내용" name="inqContent">
+			<input type="text" placeholder="문의 제목 (15자 이내로 적어주세요)" name="inqTitle" maxlength="15">
+			<input type="text" placeholder="문의 내용" name="inqContent">
 			<div class="client_btn">
 				<button type="submit">문의하기</button>
 			</div>
@@ -74,5 +71,7 @@
 	<!--끝!!!!-->
 	<th:block th:include="common/bottom"></th:block>
 </body>
-
+<script>
+	
+</script>
 </html>
