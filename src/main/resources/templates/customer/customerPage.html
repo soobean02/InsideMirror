@@ -7,35 +7,48 @@
 </head>
 <style>
 .customerPage_tb {
-	background-color: lightblue;
-	width: 90%;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 85%;
 	margin: 0 auto;
-	margin-top: 20px;
+	margin-top: 30px;
+	overflow: hidden;
+	margin-bottom: 10px;
 }
-
-.customerPage_tb>tr>* {
-	padding: 20px;
+.tr{
+	width:100%;
 }
-
-.cu_title {
+.tr>*{
+	padding: 5px 0;
+}
+.tr>.th{
+	padding: 10x;
+	float:left;
+}
+.tr>div:first-child{
+	height: 20px;
+	text-align: center;
+	width: 30%;
 	float: left;
-	margin: 10px;
-}
 
+}
+.tr>div:last-child{
+height: 20px;
+	width: 70%;
+	float: right;
+}
 .customerPage_content {
 	width: 90%;
 	height: 300px;
 	margin: 0 auto;
 	margin-top: 20px;
+	padding: 10px;
 	box-sizing: border-box;
 	border: 1px solid #000;
 	border-radius: 5px;
+	overflow: auto;
 }
 
-.customerPage_content>div {
-	padding: 20px;
-	color: #333;
-}
 
 .client_btn {
 	margin-top: 10px;
@@ -53,6 +66,9 @@
 	border-radius: 5px;
 	cursor: pointer;
 }
+.th{
+	font-weight: bold;
+}
 </style>
 <body>
 	<th:block th:include="common/top"></th:block>
@@ -60,22 +76,27 @@
 	<div class="box-title">고객 센터</div>
 	<div class="client_wrap">
 		<div class="customerPage_wrap">
-			<table class="customerPage_tb">
-				<tr>
-					<th>글번호</th>
-					<td th:text="${customer.inqNo}"></td>
-					<th>상태</th>
-					<td th:text="${customer.status}"></td>
-					<th>작성일</th>
-					<td th:text="${customer.inqDate}"></td>
-				</tr>
-				<tr>
-					<th colspan="2" class="cu_title">제목</th>
-					<td th:text="${customer.inqTitle}"></td>
-					<th>분류</th>
-					<td th:text="${customer.customerList}"></td>
-				</tr>
-			</table>
+			<div class="customerPage_tb">
+				<div class="tr">
+					<div class="sta th">상태</div>
+					<div th:text="${customer.status}"></div>
+				</div>
+				<div class="tr">
+					<div class="date th">작성일</div>
+					<div th:text="${customer.inqDate}"></div>
+				</div>
+				<div class="tr">
+					<div class="cu_title th">제목</div>
+					<div th:text="${customer.inqTitle}"></div>
+				</div>
+				<div class="tr">
+					<div class="type th">분류</div>
+					<th:block th:switch="${customer.customerList}">
+					<div th:case="1">환불</div>
+					<div th:case="2">기타</div>
+				</th:block>
+				</div>
+			</div>
 			<div class="customerPage_content">
 				<div th:text="${customer.inqContent}"></div>
 			</div>
