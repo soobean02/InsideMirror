@@ -329,7 +329,7 @@
             <div class="board-td" th:each="board : ${list}">
                 <a th:href="@{/board/view(boardNo=${board.boardNo})}">
                     <!-- <div class="board-list" style="width:10%; text-indent: 5px;" th:text="${board.boardNo}"></div> -->
-                    <div class="board-list" style="width:35%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap" th:text="${board.boardTitle}"></div>
+                    <div class="board-list" style="width:35%; max-width: 30ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap" th:text="${board.boardTitle}"></div>
                     <div class="board-list" style="width:21%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap" th:text="${board.boardWriter}"></div>
                     <div class="board-list" style="width:7%; text-align: left;" th:text="${board.readCount}"></div>
                     <div class="board-list" style="width:7%; text-align: center;" th:text="${board.boardLike}"></div>

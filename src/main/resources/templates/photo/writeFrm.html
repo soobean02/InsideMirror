@@ -212,13 +212,27 @@
                     icon : "info"
                 })
                 e.preventDefault();
+                return;
             }
+            
+            //제목 글자수 제한
+            const title = $("#photoTitle").val();
+            const regex = /^[\da-zA-Z\u3131-\u3163\uac00-\ud7a3]{1,18}$/;
+            if(!regex.test(title)){
+                swal({
+                    title : "사진첩",
+                    text : "18글자 이하로 제목을 지어주세요",
+                    icon : "info"
+                })
+                e.preventDefault();
+            }
+
         })
 
         function back(){
             swal({
                 title : "사진첩",
-                text : "작성을 취소하시겠습니까? (작성된 내용은 저장되지 않습니다.)",
+                text : "작성을 취소하시겠습니까? \r\n(작성된 내용은 저장되지 않습니다.)",
                 icon : "warning",
                 buttons:{
                     cancel:{
