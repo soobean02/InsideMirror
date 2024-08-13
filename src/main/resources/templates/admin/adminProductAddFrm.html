@@ -69,6 +69,13 @@ input[type="file"] {
     border-radius: 4px;
 }
 
+.input_item input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--table_line);
+    border-radius: 4px;
+}
+
 .select_op select {
     width: 100%;
     padding: 8px;
@@ -112,7 +119,7 @@ input[type="file"] {
 
 </style>
 <body>
-	<th:block th:include="common/top"></th:block>
+	<th:block th:include="common/adminTop"></th:block>
 
 	<div class="box-title">상품 추가 ></div>
 
@@ -150,7 +157,7 @@ input[type="file"] {
 					<th><label for="productListNo">상품 분류</label></th>
 					<td>
 						<div class="select_op">
-							<select id="productListNo" name="productListNo">
+							<select id="productListNo" name="productListNo" required>
 								<option value="">선택하세요</option>
 								<option value="1">배경</option>
 								<option value="2">커서</option>
@@ -172,7 +179,7 @@ input[type="file"] {
 					<th><label for="productPrice">상품 가격</label></th>
 					<td>
 						<div class="input_item">
-							<input type="text" name="productPrice" id="productPrice">
+							<input type="number" name="productPrice" id="productPrice" min="0" value="0">
 						</div>
 					</td>
 				</tr>
@@ -218,5 +225,33 @@ document.getElementById('productListNo').addEventListener('change', handleSelect
 window.addEventListener('DOMContentLoaded', (event) => {
     handleSelectionChange();
 });
+
+document.getElementById('addProductBtn').addEventListener('click', function() {
+    const productName = document.getElementById('productName').value.trim();
+    const productListNo = document.getElementById('productListNo').value.trim();
+    const productPrice = document.getElementById('productPrice').value.trim() || "0";
+    const productUrl = document.getElementById('productUrl').value.trim();
+    const dynamicInputRowVisible = document.getElementById('dynamicInputRow').style.display !== 'none';
+
+    if (productName === "" || productListNo === "" || productPrice === "0" || (dynamicInputRowVisible && productUrl === "")) {
+        swal({
+            title: "오류",
+            text: "다시 작성해주세요.",
+            icon: "info",
+            buttons: {
+                cancel: {
+                    text: "OK",
+                    value: false,
+                    visible: true,
+                    className: "btn-secondary",
+                    closeModal: true
+                }
+            }
+        });
+    } else {
+        document.getElementById('productForm').submit();
+    }
+});
+
 </script>
 </html>
