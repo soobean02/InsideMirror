@@ -119,7 +119,7 @@
                     <input type="text" name="boardTitle" id="boardTitle" placeholder="당신만의 멋진 제목을 적어주세요!">
                 </div>
                 <div class="submit-div">
-                    <button type="submit">전송</button>
+                    <button type="submit" id="submit-btn">전송</button>
                 </div>
                 
             </div>
@@ -219,6 +219,14 @@
             });
         }
 
+        $("#submit-btn").on("click",function(e){
+            const regex = /^[\da-zA-Z\u3131-\u3163\uac00-\ud7a3]{1,60}$/;
+            const boardTitle = $("#boardTitle").val();
+            if(!regex.test(boardTitle)){
+                alert("글자수 60글자");
+                e.preventDefault();
+            }
+        })
     
 
     </script>

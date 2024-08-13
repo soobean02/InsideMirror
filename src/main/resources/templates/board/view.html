@@ -38,11 +38,13 @@
     
     .view-title{
         width: 100%;
+        display: flex;
         height: 60px;
         /* background-color: blueviolet; */
         border-bottom: 1px solid rgb(132, 132, 132);
         box-sizing: border-box;
-        line-height: 60px;
+        /* line-height: 60px; */
+        align-items: center;
     }
     .view-etc{
         width: 100%;
@@ -170,13 +172,13 @@
         /* height: 10px; */
         margin-top: 20px;
         padding-bottom: 50px;
-        height: auto;
+        /* height: auto; */
         overflow: auto;
     }
     .comment-list-wrap{
         width: 100%;
-        height: 90px;
-        height: auto;
+        /* height: 90px;
+        height: auto; */
         overflow: auto;
         border-bottom: 1px solid #ccc;
     }
@@ -184,25 +186,32 @@
 
     .comment-list-content{
         width: 100%;
-        max-height: 120px;
         position: relative;
         word-wrap: break-word;
         word-break: break-all;
         overflow-y: hidden;
         overflow-x: hidden;
-        padding-bottom: 5px;
+        white-space: pre-wrap;
+        /* padding-bottom: 5px; */
+        /* display: -webkit-inline-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 5; */
+        margin-bottom: 5px;
+        font-size: 19px;
     }
 
     .reComment-content-list{
         width: 100%;
         word-wrap: break-word;
         word-break: break-all;
+        overflow-y: hidden;
         overflow-x: hidden;
+        white-space: pre-wrap;
     }
 
 
     .short-content{
-        padding-bottom: 10px;
+        /* padding-bottom: 10px; */
     }
 
     .size-btn{
@@ -509,47 +518,81 @@
                 
 
     <script>
-            
-        moreComment();
-        function moreComment(){
+
+        
+        moreComment1();
+        function moreComment1(){
             const longComment = $(".content-both");
             longComment.each(function(index,item){
-                const longCommentHeight = $(item).height();
-                if(longCommentHeight >= 120){
+                const longCommentHeight = $(item).innerHeight();
+                console.log(longCommentHeight);
+                if(longCommentHeight >= 131){
                     $(item).removeClass("short-content");
-                    const more = $("<button class='more size-btn' onmouseenter='sizeBtn(this)'>더보기</button>");
+                    $(item).css("maxHeight","120px");
+                    const more = $("<button class='more size-btn' onmouseenter='sizeBtn(this)' onclick='getMoreComment(this)'>더보기</button> ");
                     $(item).append(more);
                 }
-            });//댓글이 긴 경우 더보기 버튼 추가(우측 하단)
-            $(".more").on("click",function(){
-                $(this).parent().css("max-height","1000px").css("padding-bottom","10px");
-                reduceComment($(this).parent());
-                $(this).remove();
-            })//더보기 버튼 누르면 max-height를 늘려서 긴 댓글을 다 볼 수 있게 해줌
+            });
         }
         
 
-        function reduceComment(longItem){
-            const reduce = $("<button class='reduce size-btn' onmouseenter='sizeBtn(this)'>줄이기</button>")
-            longItem.append(reduce);
-            $(".reduce").on("click",function(){
-                $(this).parent().css("max-height","120px").css("padding-bottom","5px");
-                moreComment();
-                $(this).remove();
+
+        function moreComment(){
+            const longComment = $(".content-both");
+            longComment.each(function(index,item){
+                const longCommentHeight = $(item).innerHeight();
+                console.log(longCommentHeight);
+                
+                // if(longCommentHeight >= 121){
+                //     $(item).removeClass("short-content");
+                //     $(item).css("maxHeight","120px");
+                //     const more = $("<button class='more size-btn' onmouseenter='sizeBtn(this)' onclick='getMoreComment(this)'>더보기</button> ");
+                //     $(item).append(more);
+                // }
+                    
             })
+            //댓글이 긴 경우 더보기 버튼 추가(우측 하단)
+            // $(".more").on("click",function(){
+            //     $(this).parent().css("maxHeight","1000px");
+            //     reduceComment($(this).parent());
+            //     $(this).remove();
+            // })//더보기 버튼 누르면 max-height를 늘려서 긴 댓글을 다 볼 수 있게 해줌
         }
 
-        addShortComment();
+        function getMoreComment(obj){
+            $(obj).parent().css("maxHeight","1000px");
+            reduceComment($(obj).parent());
+            $(obj).remove();
+        }
+
+        function reduceComment(longItem){
+            const reduce = $("<button class='reduce size-btn' onmouseenter='sizeBtn(this)' onclick='getReduceComment(this)'>줄이기</button>")
+            longItem.append(reduce);
+            // $(".reduce").on("click",function(){
+            //     moreComment();
+            //     $(this).parent().css("maxHeight","120px");
+            //     $(this).remove();
+            // })
+        }
+
+        function getReduceComment(obj){
+            moreComment();
+            $(obj).parent().css("maxHeight","120px");
+            $(obj).remove();
+        }
+
+        //addShortComment();
         function addShortComment(){
             const content = $(".content-both");
             content.each(function(index,item){
-                if($(item).height() !== 120){
+                if($(item).innerHeight() <= 120){
                     $(item).addClass("short-content");
                 }
             });
 
         }
 
+        
 
         //답글누르면 답글 쓸 수 있는 거랑 답글들 리스트 뜨기
         $(".getReComment").on("click",function(){
@@ -732,9 +775,9 @@
 
             if(edited !== 1) {
                 $(item).next().text("수정");
-                $(item).next().attr("onclick","editComment(this, "+boardCommentNo+","+boardNo+","+boardCommentRef+")")
+                $(item).next().attr("onclick","editComment(this, "+boardCommentNo+","+boardNo+","+boardCommentRef+")");
                 $(item).text("삭제");
-                $(item).attr("onclick","removeComment("+boardCommentNo+")")
+                $(item).attr("onclick","removeComment(this, "+boardCommentNo+","+boardNo+","+boardCommentRef+")");
                 $(item).removeClass("cancel");
             }
         }
