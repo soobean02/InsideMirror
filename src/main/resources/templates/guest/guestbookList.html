@@ -189,12 +189,12 @@ button[type='guestbook-button']:hover{
                                     <th:block th:each="guestbook : ${guestbookList}">
                                     <div class="guestbook-box">
                                         <div class="guestbook-title">
-                                        	NO.<span id = "guestCommentNo" th:text="${guestbook.guestCommentNo}"></span>
-                                            <span th:text="${guestbook.guestNickName}"></span>
+                                        	NO.<span id = "guestCommentNo" th:text="${guestbook.guestCommentNo}"></span>|
+                                            <span th:text="${guestbook.guestNickName}"></span>|
                                             <span th:text="${guestbook.guestCommentDate}"></span>
                                             <div class="guestbook-date">
                                                 <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
-                                                <button class="btn-primary" th:onclick="editComment(this);">수정</button>
+                                                <button class="btn-primary" onclick="editComment(this);">수정</button>
                                             </div>
                                         </div>
                                         <div class="guestbook-contents">

@@ -56,7 +56,7 @@ body {
 					<form action="/member/join" method="post" autocomplete="off">
 						<table>
 							<tr>
-								<td colspan="2">
+								<td colspan="3">
 									<h3>회원 가입</h3>
 								</td>
 							</tr>
@@ -72,6 +72,9 @@ body {
 										<option value="gmail.com">google</option>
 										<option value="kakao.com">kakao</option>
 									</select>
+								</td>
+								<td>
+									<button type="button" id="sendBtn">이메일 전송</button>
 								</td>
 							</tr>
 							<tr>
@@ -151,7 +154,7 @@ body {
 								</td>
 							</tr>
 							<tr>
-								<td colspan="2"><input type="submit" class="join-accept"
+								<td colspan="3"><input type="submit" class="join-accept"
 									value="회원가입"></input></td>
 							</tr>
 						</table>
@@ -163,12 +166,68 @@ body {
 	<th:block th:include="/common/footer"></th:block>
 </body>
 <script>
+	let mailCode = null;
+	$("#sendBtn").on("click",function(){
+		const receiver = $("#emailLocal").val()+"@"+$("#emailDomain").val();
+		console.log(receiver);
+		if($("#emailLocal").val() == "" && $("#emailDomain").val() == ""){
+			swal({
+				title : "아이디(이메일)",
+				text : "입력해주세요.",
+				icon : "warning"
+			})
+			return;
+			
+		}else if($("#emailLocal").val() == ""){
+			swal({
+				title : "아이디(이메일)",
+				text : "입력해주세요.",
+				icon : "warning"
+			})
+			return;
+			
+			
+		}else if($("#emailDomain").val() == ""){
+			swal({
+				title : "아이디(이메일)",
+				text : "입력해주세요.",
+				icon : "warning"
+			})
+			return;
+			
+		}
+		$.ajax({
+			url : "/member/sendCode",
+			data : {receiver : receiver},
+			type : "post",
+			success : function(data){
+				if(data == "illegalemail"){
+					swal({
+						title : "이메일이 없습니다.",
+						text : "회원가입하시겠습니까?",
+						icon : "error"
+					});
+				}
+				else{
+					
+				console.log(data);
+				mailCode = data;
+				$("#auth").show();
+				authTime();
+				}
+			},
+			error : function(){
+				console.log("에러");
+			}
+		});
+	});
+	
 	const select = document.querySelector(".email-choice");
 	select.addEventListener("change", function() {
 		const input = document.querySelector("[name=memberId2]");
 		input.value = select.value;
 	});
-
+	
 	$("#nickName").on("change",function() {
 				$(".nickName-check-msg").removeClass("valid").removeClass("invalid");
 				const memberNickName = $(this).val();

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.mail.internet.AddressException;
 import jakarta.servlet.http.HttpSession;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.Title;
@@ -270,7 +271,11 @@ public class MemberController {
 							+"<h3>인증번호는 [<span style='color:red; font-size:bold;'>"
 							+sb.toString()
 							+"</span>]입니다.</h3>";
-		emailSender.sendMail(emailTitle, receiver, emailContent);
+		try {
+			emailSender.sendMail(emailTitle, receiver, emailContent);
+		} catch (Exception e) {
+			return "illegalemail";
+		}
 		return sb.toString();
 	}
 	
