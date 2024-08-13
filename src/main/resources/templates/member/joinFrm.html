@@ -39,6 +39,13 @@ body {
 	border:none;
 }
 
+#sendBtn{
+	background-color: #3b87ab;
+	color: white;
+	border-radius: 15px;
+	border:none;
+}
+
 
 </style>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -65,16 +72,21 @@ body {
 								<td class="td-2">
 									<input type="text" name="memberId" id="emailLocal" class="short-input" maxlength="20" required autocomplete="username"> 
 									<span class="mail-center">@</span>
-									<input type="text" name="memberId2" id="emailDomain" class="short-input" required autocomplete="email"> 
+									<input type="text" name="memberId2" id="emailDomain" class="short-input" required autocomplete="email">
 									<select class="email-choice">
-										<option value="">직접입력</option>
 										<option value="naver.com">naver</option>
 										<option value="gmail.com">google</option>
-										<option value="kakao.com">kakao</option>
 									</select>
 								</td>
 								<td>
 									<button type="button" id="sendBtn">이메일 전송</button>
+								</td>
+								<td id="auth" class="input-box">
+									<input type="text" id="authCode" placeholder="인증번호입력">
+									<button type="button" id="authBtn">인증하기</button>
+									<span id="timeZone"></span>
+									<span id="authMsg"></span>				
+									<input type="hidden" >
 								</td>
 							</tr>
 							<tr>
@@ -220,6 +232,48 @@ body {
 				console.log("에러");
 			}
 		});
+	});
+	let intervalId = null;
+	function authTime(){
+		$("#timeZone").html("<span id='min'>3</span> : <span id='sec'>00</span>");
+		intervalId = window.setInterval(function(){
+			const min = $("#min").text();
+			const sec = $("#sec").text();
+			if(sec == "00"){
+				//0초 다음은 분을 내려야 하므로
+				if(min == "0"){
+					window.clearInterval(intervalId);
+					mailCode = null;
+					$("#authMsg").text("인증시간이 만료되었습니다.");
+					$("#authMsg").css("color","red");
+					
+				}else{
+					const newMin = Number(min) - 1;
+					$("#min").text(newMin);
+					$("#sec").text(59);						
+				}
+			}else{
+				//0초가 아니면 초를 내리면 됨
+				const newSec = Number(sec) - 1;
+				if(newSec < 10){
+					$("#sec").text("0"+newSec);
+				}else{
+					$("#sec").text(newSec);						
+				}
+			}
+		},1000);
+	}
+	$("#authBtn").on("click",function(){
+		const authCode = $("#authCode").val();
+		if(authCode == mailCode){
+				alert("인증완료");
+			$("#checkPassword").submit();
+
+		}else{
+			$("#authMsg").text("인증번호를 확인하세요.");
+			$("#authMsg").css("color","red");
+			
+		}
 	});
 	
 	const select = document.querySelector(".email-choice");
