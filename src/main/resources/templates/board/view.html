@@ -190,6 +190,7 @@
         word-break: break-all;
         overflow-y: hidden;
         overflow-x: hidden;
+        padding-bottom: 5px;
     }
 
     .reComment-content-list{
@@ -423,7 +424,7 @@
         <!-- 나중에 session 체크 해서 댓글 작성 넣기 -->
         <!-- != null 먼저 체크 해야함 &&로 -->
         <div class="view-comment-wrap">
-
+            
             <div class="comment-header">
                 
             </div>
@@ -513,15 +514,15 @@
         function moreComment(){
             const longComment = $(".content-both");
             longComment.each(function(index,item){
-                const longCommentHeight = $(item).css("height");
-                if(longCommentHeight === '120px'){
+                const longCommentHeight = $(item).height();
+                if(longCommentHeight >= 120){
                     $(item).removeClass("short-content");
-                    const more = $("<button class='more size-btn'>더보기</button>");
+                    const more = $("<button class='more size-btn' onmouseenter='sizeBtn(this)'>더보기</button>");
                     $(item).append(more);
                 }
             });//댓글이 긴 경우 더보기 버튼 추가(우측 하단)
             $(".more").on("click",function(){
-                $(this).parent().css("max-height","1000px");
+                $(this).parent().css("max-height","1000px").css("padding-bottom","10px");
                 reduceComment($(this).parent());
                 $(this).remove();
             })//더보기 버튼 누르면 max-height를 늘려서 긴 댓글을 다 볼 수 있게 해줌
@@ -529,10 +530,10 @@
         
 
         function reduceComment(longItem){
-            const reduce = $("<button class='reduce size-btn'>줄이기</button>")
+            const reduce = $("<button class='reduce size-btn' onmouseenter='sizeBtn(this)'>줄이기</button>")
             longItem.append(reduce);
             $(".reduce").on("click",function(){
-                $(this).parent().css("max-height","120px");
+                $(this).parent().css("max-height","120px").css("padding-bottom","5px");
                 moreComment();
                 $(this).remove();
             })
@@ -557,12 +558,19 @@
 
         //더보기/줄이기  버튼에 hover하면 댓글창이 가지고 있는 content-hover를 없애기
         //그래야 버튼을 hover했을때 버튼의 투명도가 내려가지 않음
-        $(".size-btn").on("mouseenter",function(){
-            $(this).parent().removeClass("content-hover");
-            $(this).on("mouseleave",function(){
-                $(this).parent().addClass("content-hover");
+        function sizeBtn(obj){
+            $(obj).parent().removeClass("content-hover");
+            $(obj).on("mouseleave",function(){
+                $(this).parent().addClass("content-hover")
             })
-        })
+        }
+
+        // $(".size-btn").on("mouseenter",function(){
+        //     $(this).parent().removeClass("content-hover");
+        //     $(this).on("mouseleave",function(){
+        //         $(this).parent().addClass("content-hover");
+        //     })
+        // })
 
         function getReComment(thisbtn){
             //this로 받아온 thisbtn을 btn으로 바꾸고 item으로 다시 바꿔줘야 기존 코드 그대로 사용 가능
@@ -617,18 +625,18 @@
 
             //원본글은 display none으로 복사해서 editContent에 append
             //이후 작성자가 취소 누르면 이 글의 텍스트를 복사해서 붙이고 copy된거 지우기
-            const originalContent = $(item).parent().next().clone();
+            const originalContent = $(item).parent().next().clone().children().remove().end();
             originalContent.attr("display","none");
             originalContent.addClass("copy");
 
-            const pContent = $(item).parent().next();
+            const pContent = $(item).parent().next().children().remove().end();
             let editContent;
             if(boardCommentRef === 0){
                 //댓글인 경우 클래스에 left를 넣어줘야 함
-                editContent = $("<textarea class='edit-comment-content left'>");
+                editContent = $("<textarea class='edit-comment-content left'></textarea>");
             }
             else{
-                editContent = $("<textarea class='edit-comment-content'>");
+                editContent = $("<textarea class='edit-comment-content'></textarea>");
             }
             editContent.height(height);
             editContent.val(pContent.text());
@@ -662,6 +670,8 @@
                             $(item).prev().text("삭제");
                             $(item).prev().attr("onclick","removeComment(this, "+boardCommentNo+","+boardNo+","+boardCommentRef+")")
                             $(item).prev().removeClass("cancel");
+                            moreComment();
+                            addShortComment();
                             swal({
                                 title : "댓글",
                                 text : "수정완료",
@@ -674,7 +684,7 @@
                             const ifEdited = $(item).prevAll(".edited").is(".edited");
                             if(!ifEdited){
                                 //만약에 이미 수정된 적이 있는 글이면 (수정) 이라는 글씨를 안 붙이기 위함
-                                if(boardCommentRef === undefined){
+                                if(boardCommentRef === undefined || boardCommentRef === 0){
                                     //댓글인 경우 left를 넣어야 함
                                     writer.after("<div class='edited left'>(수정)</div>");
                                 }
@@ -694,10 +704,10 @@
                     error : function(){
                         //에러
                         swal({
-                                title : "서버에러",
-                                text : "잠시후 다시 시도해주세요",
-                                icon : "error"
-                            })
+                            title : "서버에러",
+                            text : "잠시후 다시 시도해주세요",
+                            icon : "error"
+                        })
                     }
                 });
         }
@@ -741,7 +751,7 @@
                     $(item).parent().parent().remove();
                     swal({
                         title : "댓글",
-                        text : "수정완료",
+                        text : "삭제완료",
                         icon : "success"
                     })
                     //나중에 swal
@@ -808,10 +818,10 @@
                                         <span class="getReCommentCount right">${comment.reCommentCount}</span>
                                         <span class="right">(</span>
                                         <a href="javascript:void(0)" class="getReComment right">답글</a>
-                                        <a href="javascript:void(0)" class="remove right" onclick="removeComment(this, ${comment.boardCommentNo}, ${boardNo})">삭제</a>
-                                        <a href="javascript:void(0)" class="edit right" onclick="editComment(this, ${comment.boardCommentNo}, ${boardNo})">수정</a>
+                                        <a href="javascript:void(0)" class="remove right" onclick="removeComment(this, ${comment.boardCommentNo}, ${boardNo}, 0)">삭제</a>
+                                        <a href="javascript:void(0)" class="edit right" onclick="editComment(this, ${comment.boardCommentNo}, ${boardNo}, 0)">수정</a>
                                         </div>
-                                        <div class="content-both comment-list-content content-hover left short-content" style="white-space: pre-line;">${comment.boardCommentContent}</div>
+                                        <div class="content-both comment-list-content content-hover left short-content">${comment.boardCommentContent}</div>
                                     </div>`;
     
                                 const reComment = `
@@ -872,7 +882,15 @@
                             })
                         }
                 },
-                error : function(){
+                error : function(data){
+                    if(data.status == 400){
+                        swal({
+                            title : "로그인",
+                            text : "로그인후 이용가능한 서비스입니다.",
+                            icon : "info"
+                        })
+                        location.href = "member/login";
+                    }
                     swal({
                         title : "서버에러",
                         text : "잠시 후 다시 시도해주세요",
@@ -945,7 +963,7 @@
                 error : function(){
                     swal({
                         title : "게시글",
-                        text : "게시글이 사라졌거나 찾을 수 없습니다.",
+                        text : "게시글이 사라졌거나 에러가 났습니다.",
                         icon : "warning"
                     })
                 }
@@ -962,7 +980,12 @@
                 data : {isBookMark : isBookMark, boardNo : boardNo},
                 success : function(data){
                     if(data == -1){
-                        alert("로그인 후 이용가능합니다.");
+                        swal({
+                            title : "로그인",
+                            text : "로그인후 이용가능한 서비스입니다.",
+                            icon : "info"
+                        })
+                        location.href = "member/login";
                     }
                     else if(data == 1){
                         if(isBookMark == 0) $(obj).text("bookmark");
@@ -970,7 +993,11 @@
                     }
                 },
                 error : function(){
-                    alert("서버 에러")
+                    swal({
+                        title : "게시글",
+                        text : "게시글이 사라졌거나 에러가 났습니다.",
+                        icon : "warning"
+                    })
                 }
             })
 

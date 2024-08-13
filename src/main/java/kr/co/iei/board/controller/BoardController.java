@@ -166,6 +166,9 @@ public class BoardController {
 	@ResponseBody
 	@PostMapping(value="/comment")
 	public Map<String, Object> comment(BoardComment comment, Model model, 	@SessionAttribute Member member){
+		if(member == null){
+			return null;
+		}
 		int result = boardService.insertBoardComment(comment);
 		BoardComment oneComment = boardService.selectOneComment(comment);
 		Board board = new Board();
