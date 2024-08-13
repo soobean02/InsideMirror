@@ -15,13 +15,15 @@
 	<script src="/js/sweetalert.min.js"></script>
 
 <style>
- .profile-text> input{
+ .profile-text> textarea{
  	width: 100%;
     height: 100px;  
-    border: none;
+    border: 1px solid #aeaeae;
+	border-radius: 10px;
     resize: none;
     padding: 0;
-    overflow: hidden;
+    overflow: auto;
+	outline: none;
  }
  .profile-image-area{
  	display: flex;
@@ -99,7 +101,7 @@
                     </div>
                     </form>
 					<div class="profile-text">
-							<input id="profileContent" name="profileMsg" th:value="${session.member.profileMsg}">
+							<textarea id="profileContent" name="profileMsg" th:text="${session.member.profileMsg}"></textarea>
 					</div>
 					<div class="profile-username">
 						<span style="color: #0f1b5c" th:text="${session.member.memberName}"></span>(♪♬)
