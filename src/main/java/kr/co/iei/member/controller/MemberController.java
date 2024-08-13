@@ -278,6 +278,9 @@ public class MemberController {
 	@PostMapping(value="/updateMsg")
 	public int updateMsg(String profileMsg, @SessionAttribute(required=false)Member member) {
 		int result = memberService.updateMsg(profileMsg, member);
+		if(result>0) {
+			member.setProfileMsg(profileMsg);
+		}
 		return result;
 	}
 	

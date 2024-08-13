@@ -20,7 +20,7 @@ import kr.co.iei.board.model.dto.BoardListData;
 import kr.co.iei.board.model.service.BoardService;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.utils.FileUtils;
-
+ 
 @Controller
 @RequestMapping(value = "/board")
 public class BoardController {

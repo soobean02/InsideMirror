@@ -18,25 +18,14 @@
 	margin-right: 50px;
 }
 
-.search-group {
-	margin-bottom: 50px;
-	margin-left: 210px;
-}
-
-.input-wrap {
-	display: flex;
+.friend-header {
+	border-bottom: 1px solid gray;
+	padding: 20px;
+	margin-bottom: 20px;
 	align-items: center;
 }
 
-.search-input {
-	outline: none;
-	border: none;
-	width: 300px;
-	height: 30px;
-	border-radius: 15px;
-	text-align: center;
-}
-.searchFriendInput{
+.search-input{
 		outline: none;
 		border: none;
 		border-bottom: 1px solid black; 
@@ -47,17 +36,12 @@
 		
 	}
 
-.submit-btn {
-	background-color: transparent;
-	border: none;
-	margin-top: 10px;
-	cursor: pointer;
+.search-group {
+	margin-bottom: 50px;
+	margin-left: 50px;
+	
 }
 
-.reset-btn {
-	display: none;
-	margin-left: 10px;
-}
 .btn-secondary {
 	float: right;
 	border :1px solid gray;
@@ -87,23 +71,6 @@
     width: 80px;
     height: 33px;
 }
-
-.friend-box {
-	border-bottom: 1px solid gray;
-	padding: 10px;
-}
-
-.friend-header {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-
-.btn-secondary {
-	border: 1px solid gray;
-	background-color: transparent;
-	cursor: pointer;
-}
 </style>
 </head>
 <body>
@@ -113,11 +80,8 @@
 		<div class="search-group">
 			<form method="get" action="/friend/friendList">
 				<div class="input-wrap">
-					<input type="text" name="searchKeyword" class="search-input"
-						placeholder="검색어를 입력하세요" />
-					<button type="submit" class="submit-btn">
-						<span class="material-icons">search</span>
-					</button>
+					<input type="text" name="searchKeyword" class="search-input"/>
+					<button class="submit"><img src="/image/searchfriend.png"></button>
 				</div>
 			</form>
 		</div>
@@ -126,21 +90,12 @@
 		<th:block th:each="friendList : ${friendList}">
 			<div class="friend-box">
 				<div class="friend-header">
-					<button class="material-icons"
-						data-url="/member/minihomepage/${friendList.friendNo}"
-						onclick="navigateToHome(this)">home</button>
+					<button class="material-icons" data-url="/member/minihomepage/memberNo=${friendmemberNo.memberNo}" onclick="navigateToHome(this)">home</button>
 					<span th:text="${friendList.friendNickName}"></span>
 					<button class="btn-secondary"
 						th:onclick="friendCancel(this,[[${friendList.friendNo}]]);">일촌취소</button>
-			<div class="box-title">일촌목록 ></div>
-			<div class="friend-title">
-				<div class="search-group">
-					<form action="/friend/search" method="get">
-						<input type="text" id="searchInput1" name="findFriend" class="searchFriendInput">
-						<button class="submit"><img src="/image/searchfriend.png"></button>
-					</form>
-				</div>
-			</div>
+		</div>
+	</div>
 		</th:block>
 	</div>
 	<th:block th:include="common/bottom"></th:block>
@@ -164,10 +119,20 @@
 			}
 		})
 	}
-		function navigateToHome(button) {
-			const url = $(button).data('url');
-			window.location.href = url;
-		}
+	
+	 // 홈 버튼 클릭 시 호출되는 함수
+    function navigateToHome(button) {
+        const url = $(button).attr('data-url');
+
+        if (!url || url === ' ') {
+            alert('');
+            history.back(); // 이전 페이지로 돌아가기
+            return;
+        }
+
+        // 닉네임 사용자의 경우 URL로 이동
+        window.location.href = "/member/minihomepage";
+    }
 	</script>
 </body>
 </html>
