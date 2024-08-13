@@ -30,7 +30,7 @@
 .guestbook-writer {
     display: flex;
     align-items: center;
-    margin-top: 10px;
+    /* margin-top: 10px; */
 }
 
 #guestbookInput {
@@ -134,6 +134,7 @@ button[type='guestbook-button']:hover{
     display: flex; 
     gap: 20px; 
     align-items: center; 
+    margin-top: 10px;
 }
 
 .guest-check-box input[type="radio"] {
@@ -170,6 +171,12 @@ button[type='guestbook-button']:hover{
 	margin: 0 0;
 }
 
+.submit-btn{
+		border: none;
+		background-color: transparent;
+		cursor: pointer;
+	}
+
 </style>
 <head>
     <meta charset="UTF-8">
@@ -183,57 +190,254 @@ button[type='guestbook-button']:hover{
 </head>
 <body>
 <th:block th:include="common/friendtop"></th:block>
-                                <div class="guestbook-scrollbox" id="guestbook-scrollbox">
-                                    <div class="guest-text">방명록 ></div>
-                                     <div class="guestbook-box">
-                                        <div class="guestbook-title">No. 1
-                                            <span>이름</span>
-                                            <div class="guestbook-date">(2024.00.00)
-                                            </div>
-                                        </div>
-                                        <div class="guestbook-contents">
-                                            <div class="guestbook-text">
-                                                <p>이 글귀 좋더라.. 읽어봐..<br><br><br>울ㅈ1않ㄱㅣ<br>아프ㅈ1않ㄱㅣ<br>씩씩ㅎrㄱㅣ<br>억ㅈㅣ로ㄹr도 웃ㄱㅣ<br>ㅌ1 ㄴㅐㅈㅣ 말ㄱㅣ<br>.<br>.<br>.<br>오늘도 괜찮은 듯<br>그렇ㄱㅔ ㅈ1ㄴㅐㄱㅣ</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="guestbook-box">
-                                        <div class="guestbook-title">No. 2
-                                            <span>이름</span>
-                                            <div class="guestbook-date">(2024.00.00)
-                                            </div>
-                                        </div>
-                                        <div class="guestbook-contents">
-                                            <div class="guestbook-text">
-                                                <p>너 내가 보내준 인소 봤냐 이 부분 개쩐다<br><br><br>"누구한테 문자하냐?"<br>"사랑하는 사람한테"<br><br><br>"나한테 문자를 왜 보내"</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                     <div class="guestbook-box" >
-                                        <div class="guestbook-title">No. 3
-                                            <span>이름</span>
-                                            <div class="guestbook-date">(2024.00.00)
-                                            </div>
-                                        </div>
-                                        <div class="guestbook-contents">
-                                            <div class="guestbook-text">
-                                                <p>야 내일 캔모아 갈래?</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="guestbook-box">
-                                        <div class="guestbook-title">No. 4
-                                            <span>이름</span>
-                                            <div class="guestbook-date">(2024.00.00)
-                                            </div>
-                                        </div>
-                                        <div class="guestbook-contents">
-                                            <div class="guestbook-text">
-                                                <p>나랑 찍은 사진은 왜 안 올려 ㅡ.ㅡ</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+    <div class="guestbook-scrollbox" id="guestbook-scrollbox">
+        <div class="guest-text">방명록 ></div>
+        <th:block th:each="guestbook : ${guestbookList}">
+            <div class="guestbook-box">
+                <div class="guestbook-title">
+                NO. <span id="guestCommentNo" th:text="${guestbook.guestCommentNo}"></span>
+                    <span th:text="${guestbook.guestNickName}"></span> <span
+                        th:text="${guestbook.guestCommentDate}"></span>
+                    <button class="material-icons" data-url="/member/minihomepage/${guestbook.guestCommentNo}"
+                        onclick="navigateToHome(this)">home</button>
+                    <div class="guestbook-date">
+                        <button th:if="${session.member != null && session.member.memberNo == guestbook.guestWriterNo}" class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
+                        <button th:if="${session.member != null && session.member.memberNo == guestbook.guestWriterNo}" class="btn-primary" th:onclick="editComment(this);">수정</button>
+                    </div>
+                </div>
+                <div class="guestbook-contents">
+                    <div class="guestbook-text">
+                        <span id="guestCommentContent" th:text="${guestbook.guestCommentContent}"></span>
+                        <textarea id="edit-textarea" class="edit-textarea" style="display: none;"></textarea>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </div>
+
+    <div class="guest-comment-wrap">
+        <form action="/member/insertComment" method="post" class="submit-form">
+            <!-- <form action="/guest/insertComment" method="post" class="insertGuestBookForm"> -->
+                <div class="guest-check-box">
+                    <input type="radio" name="guestBookType" id="nickname" value="1" checked> 
+                    <label for="nickname">닉네임</label>
+                    <input type="radio" name="guestBookType" id="anonymous" value="0">
+                    <label for="anonymous">익명</label> 
+                </div>
+                <div class="guestbook-writer">
+                    <textarea id="guestbookInput" name="guestbookInput" placeholder="방명록을 입력해주세요...♥"></textarea>
+                    <input type="hidden" id="guestNickname" name="guestNickname" th:value="${session.member.memberNickName}">
+                    <input type="hidden" id="memberNo" name="memberNo" th:value="${friendMember.memberNo}"> <input
+                        type="hidden" id="guestWriterNo" name="guestWriterNo" th:value="${session.member.memberNo}">
+                    <!-- <button type="button" onclick="addGuestbookEntry()">전송</button> -->
+                    <button type="button" onclick="addGuestbookEntry()" class="submit-btn"><img src="/image/speechbubble.png"></button>
+        
+                </div>
+            </form>
+
+    </div>
+
+
+
+
 <th:block th:include="/common/friendBottom"></th:block>
+
+
+<script>
+    getNickName();
+		function getNickName() {
+			const memberNickNameValue = $(".profile-username>span").text();
+			$(".nickName").val(memberNickNameValue);
+		}
+
+		//댓글추가
+		function addGuestbookEntry() {
+			const input = document.getElementById('guestbookInput');
+			const text = input.value.trim();
+			const identity = document
+				.querySelector('input[name="guestBookType"]:checked');
+			const guestBookType = identity ? identity.value : null;
+			const memberNo = $("#memberNo").val();
+			const error = "/member/guestbookList";
+			const writeText = "/member/guestbookList";
+			if (text === '') {
+				alert('댓글 내용을 입력하세요.');
+				return writeText;
+			}
+
+			if (!guestBookType) {
+				alert('익명 또는 닉네임을 선택하세요.');
+				return error;
+			}
+			$(".submit-form").submit();
+		}
+
+		//댓글 삭제 확인
+		function confirmDeleteComment(button) {
+			const guestbookBox = button.closest('.guestbook-box');
+			//const guestCommentNo = document.getElementById('guestCommentNo'); 
+			const guestCommentNo = guestbookBox
+				.querySelector('#guestCommentNo').innerText;
+			console.log(guestCommentNo);
+
+			if (!guestCommentNo) {
+				console.error('댓글 번호가 없습니다.');
+				return;
+			}
+
+			if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
+				deleteComment(button);
+			}
+		}
+
+		// 댓글 삭제
+		function deleteComment(button) {
+			const guestbookBox = button.closest('.guestbook-box');
+			const guestCommentNo = $('#guestCommentNo').text();
+
+			if (!guestCommentNo) {
+				console.error('댓글 번호가 없습니다.');
+				return;
+			}
+
+			$.ajax({
+				type: 'Post',
+				url: `/member/deleteComment`,
+				data: {
+					guestCommentNo: guestCommentNo
+				},
+				success: function (response) {
+					guestbookBox.remove();
+				},
+				error: function (error) {
+					alert('댓글 삭제 중 오류가 발생했습니다.');
+				}
+			});
+		}
+
+		// 댓글 수정	
+		function editComment(obj) {
+			const btn = $(obj);
+			const textarea = btn.parent().parent().next().children().children()
+				.eq(1);
+			const content = btn.parent().parent().next().children().children()
+				.eq(0);
+
+			textarea.val(content.text());
+			textarea.show();
+			content.hide();
+
+			//수정 버튼을 ->수정 완료 버튼으로 전환 
+			btn.text("수정 완료");
+			btn.attr("onclick", "saveComment(this);");
+
+			//삭제 버튼을 -> 수정 취소 버튼으로 전환
+			btn.prev().text("수정 취소");
+			btn.prev().attr("onclick", "saveCancel(this);");
+
+		}
+		function saveComment(obj) {
+			const btn = $(obj);
+			const textarea = btn.parent().parent().next().children().children()
+				.eq(1);
+			const content = btn.parent().parent().next().children().children()
+				.eq(0);
+			const guestCommentNo = btn.closest('.guestbook-box').find(
+				'#guestCommentNo').text();
+			const updateContent = textarea.val();
+
+			$.ajax({
+				type: 'POST',
+				url: '/member/updateComment',
+				data: {
+					guestCommentNo: guestCommentNo,
+					guestCommentContent: updateContent
+				},
+				success: function (response) {
+					content.text(updateContent);
+					textarea.hide();
+					content.show();
+					console.log(response);
+
+					//수정 버튼을 ->수정 완료 버튼으로 전환 
+					btn.text("수정");
+					btn.attr("onclick", "editComment(this);");
+
+					//삭제 버튼을 -> 수정 취소 버튼으로 전환
+					btn.prev().text("삭제");
+					btn.prev().attr("onclick", "confirmDeleteComment(this);");
+				},
+			});
+		}
+
+		// 댓글 저장
+		function saveCancel(obj) {
+			const btn = $(obj);
+			const textarea = btn.parent().parent().next().children().children()
+				.eq(1);
+			const content = btn.parent().parent().next().children().children()
+				.eq(0);
+
+			textarea.hide();
+			content.show();
+			//수정완료에서-> 수정버튼으로 전환
+			btn.next().text("수정");
+			btn.next().attr("onclick", "editComment(this);");
+			//수정취소에서 -> 삭제버튼으로전환
+			btn.text("삭제");
+			btn.attr("onclick", "confirmDeleteComment(this);");
+
+		}
+		// 홈 버튼 클릭 시 호출되는 함수
+		function navigateToHome(button) {
+			const url = $(button).attr('data-url');
+
+			if (!url || url === '#') {
+				alert('익명의 사용자로 접근 불가');
+				history.back(); // 이전 페이지로 돌아가기
+				return;
+			}
+
+			// 닉네임 사용자의 경우 URL로 이동
+			window.location.href = "/member/minihomepage";
+		}
+		//엔터키 이벤트
+		$(document).ready(
+			function () {
+				document.getElementById('guestbookInput').addEventListener(
+					'keypress', function (event) {
+						if (event.key === 'Enter' && !event.shiftKey) {
+							event.preventDefault();
+							addGuestbookEntry();
+						}
+					});
+			});
+		function saveCancel() {
+			swal({
+				title: "방명록",
+				text: "수정 하시겠습니까?",
+				icon: "warning",
+				buttons: {
+					cancel: {
+						text: "계속하기",
+						value: false,
+						visible: true,
+						closeModal: true
+					},
+					confirm: {
+						text: "작성취소",
+						value: true,
+						visible: true,
+						closeModal: true
+					}
+				}
+			}).then(function (isConfirm) {
+				if (isConfirm) {
+					history.back();
+				}
+			});
+		}
+</script>
+
 </body>
 </html>

@@ -30,7 +30,7 @@
 	.guestbook-writer {
 		display: flex;
 		align-items: center;
-		margin-top: 10px;
+		/* margin-top: 10px; */
 	}
 
 	#guestbookInput {
@@ -69,9 +69,6 @@
 		background-color: transparent;
 	}
 
-	.guest-check-box {
-		padding: 0px 10px;
-	}
 
 	.btn-primary {
 		background-color: #3b87ab;
@@ -142,6 +139,8 @@
 	}
 
 	.guest-check-box {
+		padding: 0px 10px;
+		margin-top: 10px;
 		display: flex;
 		gap: 20px;
 		align-items: center;
@@ -187,6 +186,13 @@
 	#guestbook-scrollbox{
 		min-height: 350px;
 	}
+
+	.submit-btn{
+		border: none;
+		background-color: transparent;
+		cursor: pointer;
+	}
+
 </style>
 
 <head>
@@ -213,8 +219,8 @@
 					<button class="material-icons" data-url="/member/minihomepage/${guestbook.guestCommentNo}"
 						onclick="navigateToHome(this)">home</button>
 					<div class="guestbook-date">
-						<button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
-						<button class="btn-primary" th:onclick="editComment(this);">수정</button>
+						<button th:if="${session.member != null && session.member.memberNo == guestbook.guestWriterNo}" class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
+						<button th:if="${session.member != null && session.member.memberNo == guestbook.guestWriterNo}" class="btn-primary" th:onclick="editComment(this);">수정</button>
 					</div>
 				</div>
 				<div class="guestbook-contents">
@@ -227,7 +233,7 @@
 		</th:block>
 	</div>
 	<form action="/guest/insertComment" method="post" class="submit-form">
-	<form action="/guest/insertComment" method="post" class="insertGuestBookForm">
+	<!-- <form action="/guest/insertComment" method="post" class="insertGuestBookForm"> -->
 		<div class="guest-check-box">
 			<input type="radio" name="guestBookType" id="nickname" value="1" checked> 
 			<label for="nickname">닉네임</label>
@@ -239,8 +245,8 @@
 			<input type="hidden" id="guestNickname" name="guestNickname" th:value="${session.member.memberNickName}">
 			<input type="hidden" id="memberNo" name="memberNo" th:value="${session.member.memberNo}"> <input
 				type="hidden" id="guestWriterNo" name="guestWriterNo" th:value="${session.member.memberNo}">
-			<button type="button" onclick="addGuestbookEntry()">전송</button>
-			<button type="guestbook-button" onclick="addGuestbookEntry()"><img src="/image/speechbubble.png"></button>
+			<!-- <button type="button" onclick="addGuestbookEntry()">전송</button> -->
+			<button type="button" onclick="addGuestbookEntry()" class="submit-btn"><img src="/image/speechbubble.png"></button>
 
 		</div>
 	</form>

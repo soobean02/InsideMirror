@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.mail.internet.AddressException;
 import jakarta.servlet.http.HttpSession;
+import kr.co.iei.guestbook.dto.GuestBook;
+import kr.co.iei.guestbook.service.GuestBookService;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.Title;
 import kr.co.iei.member.model.service.MemberService;
@@ -370,21 +371,135 @@ public class MemberController {
 			memberNo = member.getMemberNo();
 		}
 		Member selectMember = memberService.selectFriendPage(m);
-		Title getTitle = memberService.getTitle(selectMember);
+		// Title getTitle = memberService.getTitle(selectMember);
 		List sp = productService.selectUseProductInfo(selectMember); // css 적용
-		
+
+
+		GuestBook gb = new GuestBook();
+		gb.setMemberNo(m.getMemberNo());
+        List<GuestBook> guestbookList = memberService.getAllComments(gb);
+        
+        model.addAttribute("guestbookList", guestbookList);
+
+
 		//로그인 한 회원번호, 친구 번호로 -> 로그인 한 회원기준으로 일촌인 조회 -> model에 등록 -> 등록된값으로 일촌신청/일촌취소 버튼 선택할 수 있게
 		int selectFriend = memberService.selectFriend(m, memberNo);
 		model.addAttribute("bestFriend",selectFriend);			
-		System.out.println(memberNo);
 		
 		model.addAttribute("friendMember", selectMember);
 		model.addAttribute("spCss",sp);
-		model.addAttribute("board",getTitle.getBoard());
-		model.addAttribute("photo",getTitle.getPhoto());
-		model.addAttribute("photo1",getTitle.getPhoto1());
+		// model.addAttribute("board",getTitle.getBoard());
+		// model.addAttribute("photo",getTitle.getPhoto());
+		// model.addAttribute("photo1",getTitle.getPhoto1());
 		
 		return "/member/friendGuestList";
 
 	}
+
+	@Autowired GuestBookService guestBookService;
+
+
+	@PostMapping(value="/insertComment")
+    public String insertComment(Integer guestBookType, String guestbookInput, Integer memberNo, Integer guestWriterNo, String guestNickname, Model model) {  	
+    	//System.out.println(guestBookType);
+        //System.out.println(guestWriterNo);
+        //System.out.println(guestbookInput);
+        //System.out.println(memberNo);
+        //System.out.println(guestNickname);
+    	
+
+        GuestBook gb = new GuestBook();
+        System.out.println("guestWriterno임ㅇㅇㅇ"+guestWriterNo);
+		System.out.println("membno"+memberNo);
+        gb.setGuestBookType(guestBookType);
+        gb.setGuestWriterNo(guestWriterNo);
+        gb.setMemberNo(memberNo);
+        gb.setGuestCommentContent(guestbookInput);
+        gb.setGuestNickName(guestNickname);
+        
+        // 익명일 경우
+        if (guestBookType == 0) {
+            gb.setGuestNickName("익명");
+        } else { // 닉네임일 경우
+            gb.setGuestNickName(guestNickname);
+        }
+
+        int result = guestBookService.insertComment(gb);
+       // System.out.println("Service 결과: " + result);
+        
+        if (result > 0) {
+        	String successlog = "/member/friendGuestList?memberNo=" + memberNo;
+            model.addAttribute("title", "댓글 작성");
+            model.addAttribute("msg", "댓글이 작성되었습니다.");
+            model.addAttribute("icon", "success");
+            model.addAttribute("loc", successlog);
+        } else {
+        	String errorlog = "/member/friendGuestList?memberNo=" + memberNo;
+            model.addAttribute("title", "댓글 작성 실패");
+            model.addAttribute("msg", "댓글 작성 중 문제가 발생했습니다.");
+            model.addAttribute("icon", "warning");
+            model.addAttribute("loc",errorlog);
+        }
+
+//        model.addAttribute("title", "댓글 작성");
+//        model.addAttribute("msg", "댓글이 작성되었습니다.");
+//        model.addAttribute("icon", "success");
+//        model.addAttribute("loc", "/guest/friendGuestList");
+        return "common/msg";
+    }
+
+    
+    
+
+
+	
+	@PostMapping(value="/updateComment")
+    public String updateComment(String guestCommentContent, Integer guestCommentNo, Model model) {
+		if (guestCommentNo == null) {
+			model.addAttribute("title", "실패");
+			model.addAttribute("msg", "유효하지 않은 댓글 번호입니다.");
+			model.addAttribute("icon", "warning");
+			model.addAttribute("loc", "//friendGuestList");
+			return "common/msg";
+		}
+		
+		GuestBook gb = new GuestBook();
+        gb.setGuestCommentContent(guestCommentContent);
+        gb.setGuestCommentNo(guestCommentNo);
+        int result = guestBookService.updateComment(gb);
+        if(result > 0) {
+            model.addAttribute("title", "성공");
+            model.addAttribute("msg", "댓글이 수정되었습니다.");
+            model.addAttribute("icon", "success");
+        } else {
+            model.addAttribute("title", "실패");
+            model.addAttribute("msg", "댓글 수정 중 문제가 발생했습니다.");
+            model.addAttribute("icon", "warning");
+        }
+        model.addAttribute("loc", "/member/friendGuestList");
+        return "common/msg";
+    }
+
+    @PostMapping(value="/deleteComment")
+    public String deleteComment(Integer guestCommentNo, Model model) {
+        GuestBook gb = new GuestBook();
+        gb.setGuestCommentNo(guestCommentNo);
+        int result = guestBookService.deleteComment(gb);
+        if(result > 0) {
+            model.addAttribute("title", "성공");
+            model.addAttribute("msg", "댓글이 삭제되었습니다.");
+            model.addAttribute("icon", "success");
+        } else {
+            model.addAttribute("title", "실패");
+            model.addAttribute("msg", "댓글 삭제 중 문제가 발생했습니다.");
+            model.addAttribute("icon", "warning");
+        }
+        model.addAttribute("loc", "/member/friendGuestList");
+        return "common/msg";
+    }
+
+
+
+
+
 }

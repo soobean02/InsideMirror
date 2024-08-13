@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.iei.board.model.dto.BoardRowMapper;
 import kr.co.iei.friend.dto.FriendRowMapper;
+import kr.co.iei.guestbook.dto.GuestBook;
+import kr.co.iei.guestbook.dto.GuestBookRowMapper;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.MemberRowMapper;
 import kr.co.iei.member.model.dto.TitleRowMapper;
@@ -28,6 +30,9 @@ public class MemberDao {
 	private PhotoRowMapper photoRowMapper;
 	@Autowired
 	private FriendRowMapper friendRowMapper;
+
+	@Autowired
+	private GuestBookRowMapper guestBookRowMapper;
 
 	public List selectAllMember(int start, int end) {
 		String query = "select * from(select rownum as rnum, m.* from (select * from member order by 1 desc)m)where rnum between ? and ?";
@@ -319,6 +324,14 @@ public class MemberDao {
 		Object[] params = {friendMemberNo, member.getMemberNo()};
 		int result = jdbc.update(query, params);
 		return result;
+	}
+
+
+	public List<GuestBook> getAllComments(GuestBook gb) {
+		String query = "SELECT * FROM guest_book WHERE member_no = ? ORDER BY GUEST_COMMENT_DATE ASC";
+        Object[] params = {gb.getMemberNo()};
+        List list = jdbc.query(query, guestBookRowMapper, params);
+        return list;
 	}
 	
 	
