@@ -62,7 +62,7 @@
 
 		<div class="box profile-box">
 			<div class="profile-image-view">
-				<img class="profile-image-img" src="image/아바타.png" alt="프로필 이미지">
+				<img class="profile-image-img" th:src="@{'/member/'+${m.profilePhoto}}" alt="프로필 이미지">
 			</div>
 
 			<table>
