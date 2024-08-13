@@ -242,9 +242,10 @@ button[type='guestbook-button']:hover{
         const guestBookType = identity ? identity.value : null;
         const memberNo = $("#memberNo").val();
         const error = "/guest/guestbookList";
+        const writeText = "/guest/guestbookList";
         if (text === '') {
             alert('댓글 내용을 입력하세요.');
-            return;
+            return writeText;
         }
 
         if (!guestBookType) {
