@@ -80,14 +80,14 @@
     padding: 15px;
     border: none;
     border-radius: 15px;
-    background: black; 
-    color: white; 
+    background: #3b87ab; 
+    color: #fff; 
     font-size: 16px;
     cursor: pointer;
 }
 
 .btn-box button[type="submit"]:hover {
-    background: #333;
+    background: #6B66FF;
 }
 
 .login-bottom {

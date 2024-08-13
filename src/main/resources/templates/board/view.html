@@ -184,11 +184,22 @@
 
     .comment-list-content{
         width: 100%;
-        overflow: hidden;
-        max-height: 110px;
-        /* padding-bottom: 20px; */
+        max-height: 120px;
         position: relative;
+        word-wrap: break-word;
+        word-break: break-all;
+        overflow-y: hidden;
+        overflow-x: hidden;
     }
+
+    .reComment-content-list{
+        width: 100%;
+        word-wrap: break-word;
+        word-break: break-all;
+        overflow-x: hidden;
+    }
+
+
     .short-content{
         padding-bottom: 10px;
     }
@@ -447,7 +458,7 @@
                         </th:block>
                     </div>
                     
-                    <div class="content-both comment-list-content content-hover left" style="white-space: pre-line;" th:text="${bc.boardCommentContent}"></div>
+                    <div class="content-both comment-list-content content-hover left"  th:text="${bc.boardCommentContent}"></div>
 
                 </div>
                     <!-- 답글 -->
@@ -500,7 +511,7 @@
             const longComment = $(".content-both");
             longComment.each(function(index,item){
                 const longCommentHeight = $(item).css("height");
-                if(longCommentHeight === '110px'){
+                if(longCommentHeight === '120px'){
                     $(item).removeClass("short-content");
                     const more = $("<button class='more size-btn'>더보기</button>");
                     $(item).append(more);
@@ -518,7 +529,7 @@
             const reduce = $("<button class='reduce size-btn'>줄이기</button>")
             longItem.append(reduce);
             $(".reduce").on("click",function(){
-                $(this).parent().css("max-height","110px");
+                $(this).parent().css("max-height","120px");
                 moreComment();
                 $(this).remove();
             })
@@ -528,7 +539,7 @@
         function addShortComment(){
             const content = $(".content-both");
             content.each(function(index,item){
-                if($(item).height() !== 110){
+                if($(item).height() !== 120){
                     $(item).addClass("short-content");
                 }
             });
@@ -812,7 +823,7 @@
                                                 <a href="javascript:void(0)" class="remove right" onclick="removeComment(this,${comment.boardCommentNo},${boardNo},${comment.boardCommentRef})">삭제</a>
                                                 <a href="javascript:void(0)" class="edit right" onclick="editComment(this,${comment.boardCommentNo},${boardNo},${comment.boardCommentRef})">수정</a>
                                             </p>
-                                            <p class="content-both reComment-content-list content-hover short-content" style="white-space: pre-line;">${comment.boardCommentContent}</p>
+                                            <p class="content-both reComment-content-list content-hover short-content">${comment.boardCommentContent}</p>
                                         </div>
                                     </div>`;
                                     const reCommentBox = $(item).parent().parent();

@@ -94,17 +94,46 @@ tr td input{
     width: 70%;
     height: 50px;
     color: white;
-    background-color: black;
+    background-color: #3b87ab;
     text-decoration: none;
+    border:none;
 }
 
 .td-2 input[type="radio"]{
     display: none;
 }
 
-.td-2 input[name=memberGender]:checked+label{
-    background-color: black;
-    color:  white;
-    border-radius: 15px;
-    padding: 0 10px;
+.td-2 input[name=memberGender] label{
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; 
+    padding: 3px 10px; 
+    border: 1px solid #ccc;
+    border-radius: 5px; 
+    background-color: #f9f9f9;
+    color: #333;
+    transition: background-color 0.3s, border-color 0.3s;
+    user-select: none; 
+}
+
+.td-2 input[name=memberGender]:checked+label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; 
+    padding: 3px 10px; 
+    border: 1px solid #ccc;
+    border-radius: 5px; 
+    background-color: #3b87ab;
+    color: white;
+    transition: background-color 0.3s, border-color 0.3s;
+    user-select: none; 
+}
+
+.td-2 input[type="radio"]:checked + label::before {
+    content: "✓"; 
+    display: inline-block;
+    color: #fff;
+    margin-right: 8px;
 }

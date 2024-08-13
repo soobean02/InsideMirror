@@ -25,16 +25,14 @@
 	align-items: center;
 }
 
-.submit {
-	
-}
-.input#searchInput{
+.searchFriendInput{
 		outline: none;
 		border: none;
+		border-bottom: 1px solid black; 
 		width: 300px;
 		height: 30px;
-		border-radius: 15px;
 		text-align: center;
+		background-color: transparent;
 		
 	}
 
@@ -43,6 +41,7 @@
 	margin-left: 50px;
 	
 }
+
 .btn-secondary {
 	float: right;
 	border :1px solid gray;
@@ -50,10 +49,27 @@
 	
 	 
 }
-
 .friend-scrollbox {
 	max-height: 450px;
 	overflow-y: auto;
+}
+.friend-title{
+	display: flex;
+	justify-content: center;
+}
+.submit{
+	margin-top: 15px;
+	
+}
+.btn-secondary{
+    background-color: #3b87ab;
+    cursor: pointer;
+    border-radius: 4px;
+    float: right;
+    color: #fff;
+    border: none;
+    width: 80px;
+    height: 33px;
 }
 
 </style>
@@ -64,8 +80,8 @@
 			<div class="friend-title">
 				<div class="search-group">
 					<form action="/friend/search" method="get">
-						<input type="text" id="searchInput" name="findFriend">
-						<button class="submit">검색</button>
+						<input type="text" id="searchInput1" name="findFriend" class="searchFriendInput">
+						<button class="submit"><img src="/image/searchfriend.png"></button>
 					</form>
 				</div>
 			</div>
