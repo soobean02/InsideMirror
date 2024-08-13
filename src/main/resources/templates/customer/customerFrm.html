@@ -63,7 +63,7 @@
 			<input type="text" placeholder="문의 제목 (15자 이내로 적어주세요)" name="inqTitle" maxlength="15">
 			<input type="text" placeholder="문의 내용" name="inqContent">
 			<div class="client_btn">
-				<button type="submit">문의하기</button>
+				<button type="button" id="go">문의하기</button>
 			</div>
 		</form>
 
@@ -72,6 +72,28 @@
 	<th:block th:include="common/bottom"></th:block>
 </body>
 <script>
-	
+	$("#go").on("click",function(){
+		const customerList = $("input[name='customerList']:checked").val();
+		const title = $("input[name='inqTitle']").val();
+		const content = $("input[name='inqContent']").val();
+		if(customerList==undefined || title=="" || content==""){ // 라디오, 제목, 내용 중 하나라도 입력이 안되어있으면 알림창
+			swal({
+				title: "오류",
+				text: "다시 작성해주세요",
+				icon: "info",
+				buttons:{
+					cancel:{
+						text:"ok",
+						value:false,
+						visible:true,
+						className:"btn-secondary",
+						closeModal:true
+					}
+				}
+			});
+		}else{
+			$(".form_inq").submit();
+		}
+	});
 </script>
 </html>
