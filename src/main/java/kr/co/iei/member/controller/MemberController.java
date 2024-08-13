@@ -315,13 +315,6 @@ public class MemberController {
 
 
 
-
-
-
-
-
-
-
 	///사진첩
 	@GetMapping(value="/photo")
 	public String friendPhoto(int memberNo, Model model, @SessionAttribute(required = false) Member member){
@@ -365,6 +358,28 @@ public class MemberController {
 	}
 	
 	
+	@GetMapping(value="/friendGuestList")
+	public String friendGuestList(Member m, @SessionAttribute(required = false) Member member,Model model) {
+		int memberNo = 0;
+		if(member != null) {
+			memberNo = member.getMemberNo();
+		}
+		Member selectMember = memberService.selectFriendPage(m);
+		Title getTitle = memberService.getTitle(selectMember);
+		List sp = productService.selectUseProductInfo(selectMember); // css 적용
+		
+		//로그인 한 회원번호, 친구 번호로 -> 로그인 한 회원기준으로 일촌인 조회 -> model에 등록 -> 등록된값으로 일촌신청/일촌취소 버튼 선택할 수 있게
+		int selectFriend = memberService.selectFriend(m, memberNo);
+		model.addAttribute("bestFriend",selectFriend);			
+		System.out.println(memberNo);
+		
+		model.addAttribute("friendMember", selectMember);
+		model.addAttribute("spCss",sp);
+		model.addAttribute("board",getTitle.getBoard());
+		model.addAttribute("photo",getTitle.getPhoto());
+		model.addAttribute("photo1",getTitle.getPhoto1());
+		
+		return "/member/friendGuestList";
 
-
+	}
 }
