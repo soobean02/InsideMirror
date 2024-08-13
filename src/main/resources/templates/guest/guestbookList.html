@@ -220,7 +220,7 @@
 			</div>
 		</th:block>
 	</div>
-	<form action="/guest/insertComment" method="post">
+	<form action="/guest/insertComment" method="post" class="submit-form">
 		<div class="guest-check-box">
 			<input type="radio" name="guestBookType" id="anonymous" value="0">
 			<label for="anonymous">익명</label> <input type="radio" name="guestBookType" id="nickname" value="1"> <label
@@ -231,7 +231,7 @@
 			<input type="hidden" id="guestNickname" name="guestNickname" th:value="${session.member.memberNickName}">
 			<input type="hidden" id="memberNo" name="memberNo" th:value="${session.member.memberNo}"> <input
 				type="hidden" id="guestWriterNo" name="guestWriterNo" th:value="${session.member.memberNo}">
-			<button type="guestbook-button" onclick="addGuestbookEntry()">전송</button>
+			<button type="button" onclick="addGuestbookEntry()">전송</button>
 
 		</div>
 	</form>
@@ -262,7 +262,7 @@
 				alert('익명 또는 닉네임을 선택하세요.');
 				return error;
 			}
-
+			$(".submit-form").submit();
 		}
 
 		//댓글 삭제 확인

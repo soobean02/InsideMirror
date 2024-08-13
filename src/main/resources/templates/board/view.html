@@ -192,21 +192,19 @@
         overflow-y: hidden;
         overflow-x: hidden;
         white-space: pre-wrap;
-        /* padding-bottom: 5px; */
-        /* display: -webkit-inline-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 5; */
         margin-bottom: 5px;
-        font-size: 19px;
     }
 
     .reComment-content-list{
         width: 100%;
+        max-height: 120px;
+        position: relative;
         word-wrap: break-word;
         word-break: break-all;
-        overflow-y: hidden;
+        overflow-y: scroll;
         overflow-x: hidden;
         white-space: pre-wrap;
+        margin-bottom: 5px;
     }
 
 
@@ -498,7 +496,7 @@
                                     <a href="javascript:void(0)" class="edit right" th:onclick="editComment(this,[[${bcc.boardCommentNo}]],[[${board.boardNo}]],[[${bcc.boardCommentRef}]])">수정</a>
                                 </th:block>
                             </p>
-                            <p class="content-both reComment-content-list content-hover" style="white-space: pre-line;" th:text="${bcc.boardCommentContent}"></p>
+                            <p class="content-both reComment-content-list content-hover" th:text="${bcc.boardCommentContent}"></p>
                         </div>
 
                     </div>
@@ -543,12 +541,12 @@
                 const longCommentHeight = $(item).innerHeight();
                 console.log(longCommentHeight);
                 
-                // if(longCommentHeight >= 121){
-                //     $(item).removeClass("short-content");
-                //     $(item).css("maxHeight","120px");
-                //     const more = $("<button class='more size-btn' onmouseenter='sizeBtn(this)' onclick='getMoreComment(this)'>더보기</button> ");
-                //     $(item).append(more);
-                // }
+                if(longCommentHeight >= 121){
+                    $(item).removeClass("short-content");
+                    $(item).css("maxHeight","120px");
+                    const more = $("<button class='more size-btn' onmouseenter='sizeBtn(this)' onclick='getMoreComment(this)'>더보기</button> ");
+                    $(item).append(more);
+                }
                     
             })
             //댓글이 긴 경우 더보기 버튼 추가(우측 하단)
