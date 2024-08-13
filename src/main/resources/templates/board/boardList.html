@@ -194,8 +194,19 @@
     }
 
     .sort-btn{
+        border-top: 0.5px solid rgb(143, 143, 143);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .sort-btn>span{
         cursor: pointer;
-        padding-top: 5px;
+        display: block;
+        width: 80px;
+        height: 30px;
+        background-color: #afc0ff;
+        border-radius: 10px;
     }
 
     .order-content>ul{
@@ -210,6 +221,14 @@
 
     .order-content label{
         cursor: pointer;
+    }
+
+    .order-content li{
+        height: 30px;
+    }
+
+    .order-content li:nth-child(2){
+        margin-bottom: 5px;
     }
 
     .board-empty{
@@ -278,7 +297,7 @@
                                     <input class="left" type="radio" name="orderFriend" id="friend" value="friend" checked><label for="friend"><span class="left">일촌</span></label>
                                 </div>
                             </li>
-                            <li style="clear: left;" onclick="order()" class="sort-btn">정렬하기</li>
+                            <li style="clear: left;" class="sort-btn"><span onclick="order()">정렬하기</span></li>
                             <input type="hidden" name="reqPage" value="1">
                         </form>
                     </ul>
