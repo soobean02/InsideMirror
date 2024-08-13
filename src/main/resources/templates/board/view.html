@@ -345,9 +345,7 @@
         cursor: auto;
     }
 
-   
-        
-    
+
 
 
 </style>
@@ -664,7 +662,12 @@
                             $(item).prev().text("삭제");
                             $(item).prev().attr("onclick","removeComment(this, "+boardCommentNo+","+boardNo+","+boardCommentRef+")")
                             $(item).prev().removeClass("cancel");
-                            alert("수정이 완료되었습니다");
+                            swal({
+                                title : "댓글",
+                                text : "수정완료",
+                                icon : "success"
+                            })
+
                             //나중에 swal로
                             //writer를 구해오고 after에 (수정) 넣기
                             const writer = $(item).prevAll(".writer");
@@ -681,12 +684,20 @@
                             }
                         }
                         else{
-                            alert("댓글 수정에 실패했습니다");
+                            swal({
+                                title : "댓글",
+                                text : "수정실패",
+                                icon : "warning"
+                            })
                         }
                     },
                     error : function(){
                         //에러
-                        alert("서버 에러");
+                        swal({
+                                title : "서버에러",
+                                text : "잠시후 다시 시도해주세요",
+                                icon : "error"
+                            })
                     }
                 });
         }
@@ -728,7 +739,11 @@
                 success : function(data){
                     $(item).parent().parent().next().remove();
                     $(item).parent().parent().remove();
-                    alert("댓글이 삭제되었습니다");
+                    swal({
+                        title : "댓글",
+                        text : "수정완료",
+                        icon : "success"
+                    })
                     //나중에 swal
                     if(boardCommentRef !== 0){
                         getReCommentCount.text(getReCommentCount.text()-1);
@@ -736,7 +751,11 @@
                     }
                 },
                 error : function(){
-                    alert("서버 에러")
+                    swal({
+                        title : "서버에러",
+                        text : "잠시 후 다시 시도해주세요",
+                        icon : "error"
+                    })
                 }
             });
         }
@@ -768,6 +787,11 @@
                 success : function(data){
                         if(data != null){
                             // alert("댓글 추가 성공");
+                            swal({
+                                title : "댓글",
+                                text : "작성완료",
+                                icon : "success"
+                            })
                             $(item).prev().prev().prev().val("");
                             const comment = data.comment;
 
@@ -841,11 +865,19 @@
                             }
                         }//if
                         else{
-                            alert("댓글 작성 실패");
+                            swal({
+                                title : "댓글",
+                                text : "작성실패",
+                                icon : "warning"
+                            })
                         }
                 },
                 error : function(){
-                    alert("서버 에러");
+                    swal({
+                        title : "서버에러",
+                        text : "잠시 후 다시 시도해주세요",
+                        icon : "error"
+                    })
                 }
             })
         }//댓글 추가
@@ -895,18 +927,27 @@
                 data : {isLike : isLike , boardNo : boardNo},
                 success : function(data){
                     if(data == -1){
-                        alert("로그인 후 이용 가능합니다.");
+                        swal({
+                            title : "로그인",
+                            text : "로그인후 이용가능한 서비스입니다.",
+                            icon : "info"
+                        })
+                        location.href = "member/login";
                     }
                     else if(data == 1){
                         if(isLike == 0) $(obj).text("favorite");
                         else $(obj).text("favorite_border");
                     }
                     else if(data == 0){
-                        alert("실패")
+                        //실패경우임 근데 딱히 뭐 추가할 필요x
                     }
                 },
                 error : function(){
-                    alert("서버 에러");
+                    swal({
+                        title : "게시글",
+                        text : "게시글이 사라졌거나 찾을 수 없습니다.",
+                        icon : "warning"
+                    })
                 }
             });
         }
