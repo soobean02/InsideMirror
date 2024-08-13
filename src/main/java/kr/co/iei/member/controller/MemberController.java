@@ -5,6 +5,7 @@ import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -255,6 +256,7 @@ public class MemberController {
 		
 		Random r = new Random();
 		StringBuffer sb = new StringBuffer();
+		try {
 		for(int i=0;i<6;i++) {
 			int flag = r.nextInt(3);
 			if(flag == 0) {
@@ -272,9 +274,8 @@ public class MemberController {
 							+"<h3>인증번호는 [<span style='color:red; font-size:bold;'>"
 							+sb.toString()
 							+"</span>]입니다.</h3>";
-		try {
 			emailSender.sendMail(emailTitle, receiver, emailContent);
-		} catch (Exception e) {
+		} catch (MailException e) {
 			return "illegalemail";
 		}
 		return sb.toString();
@@ -378,7 +379,7 @@ public class MemberController {
 		GuestBook gb = new GuestBook();
 		gb.setMemberNo(m.getMemberNo());
         List<GuestBook> guestbookList = memberService.getAllComments(gb);
-        
+        System.out.println(guestbookList);
         model.addAttribute("guestbookList", guestbookList);
 
 
@@ -409,8 +410,6 @@ public class MemberController {
     	
 
         GuestBook gb = new GuestBook();
-        System.out.println("guestWriterno임ㅇㅇㅇ"+guestWriterNo);
-		System.out.println("membno"+memberNo);
         gb.setGuestBookType(guestBookType);
         gb.setGuestWriterNo(guestWriterNo);
         gb.setMemberNo(memberNo);
