@@ -100,11 +100,11 @@
 	</div>
 	<th:block th:include="common/bottom"></th:block>
 	<script>
-	<!--일촌 삭제-->
+	<!--일촌 목록에서 삭제-->
 	function friendCancel(obj, friendNo) {
 
 		const btn = $(obj);
-		console.log(friendNo);
+		
 		$.ajax({
 			type : 'GET',
 			url : `/friend/friendCancel`,

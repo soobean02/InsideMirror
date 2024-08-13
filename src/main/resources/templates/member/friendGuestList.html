@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
 <style>
 .guestbook-scrollbox {
     max-height: 450px;
@@ -98,7 +97,6 @@
     font-family: "KOTRA_BOLD-Bold";
     border-bottom: 1px solid grey;
     color: #3b87ab;
-	
 	width: 620px;
 }
 .edit-textarea {
@@ -171,34 +169,70 @@ button[type='guestbook-button']:hover{
 .menu-button a{
 	margin: 0 0;
 }
+
 </style>
-<meta charset="UTF-8">
-<title>minihomepage</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>guestbookList</title>
+    <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="/css/minihomepage.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 <body>
-<th:block th:include="/common/friendTop"></th:block>
- <div class="guestbook-scrollbox" id="guestbook-scrollbox">
+<th:block th:include="common/friendtop"></th:block>
+                                <div class="guestbook-scrollbox" id="guestbook-scrollbox">
                                     <div class="guest-text">방명록 ></div>
-                                    <th:block th:each="guestbook : ${guestbookList}">
-                                    <div class="guestbook-box">
-                                        <div class="guestbook-title">
-                                        	NO.<span id = "guestCommentNo" th:text="${guestbook.guestCommentNo}"></span>
-                                            <span th:text="${guestbook.guestNickName}"></span>
-                                            <span th:text="${guestbook.guestCommentDate}"></span>
-                                         <!--  <button class="material-icons" data-url="/member/minihomepage/${guestbook.guestCommentNo}" onclick="navigateToHome(this)">home</button> -->
-                                            <div class="guestbook-date">
-                                                <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
-                                                <button class="btn-primary" th:onclick="editComment(this);">수정</button>
+                                     <div class="guestbook-box">
+                                        <div class="guestbook-title">No. 1
+                                            <span>이름</span>
+                                            <div class="guestbook-date">(2024.00.00)
                                             </div>
                                         </div>
                                         <div class="guestbook-contents">
                                             <div class="guestbook-text">
-                                                <span id = "guestCommentContent" th:text="${guestbook.guestCommentContent}"></span>
-                                                <textarea id ="edit-textarea" class="edit-textarea" style="display: none;"></textarea>
+                                                <p>이 글귀 좋더라.. 읽어봐..<br><br><br>울ㅈ1않ㄱㅣ<br>아프ㅈ1않ㄱㅣ<br>씩씩ㅎrㄱㅣ<br>억ㅈㅣ로ㄹr도 웃ㄱㅣ<br>ㅌ1 ㄴㅐㅈㅣ 말ㄱㅣ<br>.<br>.<br>.<br>오늘도 괜찮은 듯<br>그렇ㄱㅔ ㅈ1ㄴㅐㄱㅣ</p>
                                             </div>
                                         </div>
                                     </div>
-                                    </th:block>
+                                    <div class="guestbook-box">
+                                        <div class="guestbook-title">No. 2
+                                            <span>이름</span>
+                                            <div class="guestbook-date">(2024.00.00)
+                                            </div>
+                                        </div>
+                                        <div class="guestbook-contents">
+                                            <div class="guestbook-text">
+                                                <p>너 내가 보내준 인소 봤냐 이 부분 개쩐다<br><br><br>"누구한테 문자하냐?"<br>"사랑하는 사람한테"<br><br><br>"나한테 문자를 왜 보내"</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="guestbook-box" >
+                                        <div class="guestbook-title">No. 3
+                                            <span>이름</span>
+                                            <div class="guestbook-date">(2024.00.00)
+                                            </div>
+                                        </div>
+                                        <div class="guestbook-contents">
+                                            <div class="guestbook-text">
+                                                <p>야 내일 캔모아 갈래?</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="guestbook-box">
+                                        <div class="guestbook-title">No. 4
+                                            <span>이름</span>
+                                            <div class="guestbook-date">(2024.00.00)
+                                            </div>
+                                        </div>
+                                        <div class="guestbook-contents">
+                                            <div class="guestbook-text">
+                                                <p>나랑 찍은 사진은 왜 안 올려 ㅡ.ㅡ</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 <th:block th:include="/common/friendBottom"></th:block>
 </body>

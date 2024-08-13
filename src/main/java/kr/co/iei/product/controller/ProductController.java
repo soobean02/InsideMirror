@@ -107,8 +107,18 @@ public class ProductController {
 		model.addAttribute("prdouctPrice", result);
 		if(result > 0) {
 			member.setAcorns(member.getAcorns() - sp.getProductPrice()); // 세션 갱신
+			model.addAttribute("title", "성공!");
+			model.addAttribute("msg", "결제 성공");
+			model.addAttribute("icon", "success");
+			model.addAttribute("loc", "/product/productList?reqPage=1&type=0");
+			return "common/msg";
+		}else {
+			model.addAttribute("title", "실패!");
+			model.addAttribute("msg", "구매 실패");
+			model.addAttribute("icon", "error");
+			model.addAttribute("loc", "/product/productPage");
+			return "common/msg";
 		}
-		return "redirect:/product/productList?reqPage=1&type=0";
 	}
 	
 	/*구매 상품 리스트 - 타입 검사 추가*/

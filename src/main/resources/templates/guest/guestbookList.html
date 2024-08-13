@@ -1,392 +1,436 @@
 <!DOCTYPE html>
 <html lang="ko">
 <style>
-.guestbook-scrollbox {
-    max-height: 450px;
-    overflow-y: auto;
-}
+	.guestbook-scrollbox {
+		max-height: 450px;
+		overflow-y: auto;
+	}
 
-.guestbook-box {
-    border-bottom: 1px solid #ddd;
-    padding: 10px 0;
-    margin-top: 18px;
-}
+	.guestbook-box {
+		border-bottom: 1px solid #ddd;
+		padding: 10px 0;
+		margin-top: 18px;
+	}
 
-.guestbook-title {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
+	.guestbook-title {
+		font-weight: bold;
+		margin-bottom: 5px;
+	}
 
-.guestbook-contents {
-    padding-left: 10px;
-}
+	.guestbook-contents {
+		padding-left: 10px;
+	}
 
-.guestbook-text {
-    margin: 0;
-    background-color: aliceblue;
-    width: 450px;
-}
+	.guestbook-text {
+		margin: 0;
+		background-color: aliceblue;
+		width: 450px;
+	}
 
-.guestbook-writer {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-}
+	.guestbook-writer {
+		display: flex;
+		align-items: center;
+		margin-top: 10px;
+	}
 
-#guestbookInput {
-    flex: 1;
-    padding: 0px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-right: 10px;
-    height: 60px;
-    margin-top: 10px;
-}
+	#guestbookInput {
+		flex: 1;
+		padding: 0px;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		margin-right: 10px;
+		height: 60px;
+		margin-top: 10px;
+	}
 
-.guestbook-button {
-    padding: 10px 20px;
-    background-color: #3b87ab;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    height: 55px;
-}
+	.guestbook-button {
+		padding: 10px 20px;
+		background-color: #3b87ab;
+		color: white;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+		height: 55px;
+	}
 
-.menu-button {
-    display: flex;
-    flex-direction: column;
-}
+	.menu-button {
+		display: flex;
+		flex-direction: column;
+	}
 
-.menu-button a {
-    text-decoration: none;
-    margin: 5px 0;
-}
-.material-icons{
-    cursor: pointer;
-    border: none;
-    background-color: transparent;
-}
-.guest-check-box{
-    padding: 0px 10px;
-}
-.btn-primary{
-    background-color: #3b87ab;
-    cursor: pointer;
-    border-radius: 4px;
-    float: right;
-    margin-right: 15px;
-    color: #fff;
-    border: none;
-    width: 43px;
-    height: 25px;
-}
-.btn-secondary{
-    background-color: #3b87ab;
-    cursor: pointer;
-    border-radius: 4px;
-    float: right;
-    color: #fff;
-    border: none;
-    width: 43px;
-    height: 25px;
-}
-.guest-text{
-	background-color: white;
-	border-bottom: 1px solid #000;
-    font-family: "KOTRA_BOLD-Bold";
-    border-bottom: 1px solid grey;
-    color: #3b87ab;
-	
-	position: fixed;
-	width: 620px;
-}
-.edit-textarea {
-	width: 100%;
-    height: 100px;  
-    border: none;
-    resize: none;
-    padding: 0;
-    overflow: hidden;
-    outline: none;
-    border: 1px solid aliceblue;
-    border-radius: 4px;
-}
-.btn-primary,.btn-secondary{
-	width: 70px;
-}
+	.menu-button a {
+		text-decoration: none;
+		margin: 5px 0;
+	}
 
-#guestbookInput{
- 	width: 100%;
-    height: 100px;  
-    border: 1px solid #ccc;;
-    resize: none;
-    padding: 0;
-    outline: none;
- }
-button[type='guestbook-button']{
-	border: none;
-	background-color: transparent;
-}
-button[type='guestbook-button']:hover{
-	opacity: 0.5;
-}
+	.material-icons {
+		cursor: pointer;
+		border: none;
+		background-color: transparent;
+	}
 
-.guest-check-box {
-    display: flex; 
-    gap: 20px; 
-    align-items: center; 
-}
+	.guest-check-box {
+		padding: 0px 10px;
+	}
 
-.guest-check-box input[type="radio"] {
-    display: none; 
-}
+	.btn-primary {
+		background-color: #3b87ab;
+		cursor: pointer;
+		border-radius: 4px;
+		float: right;
+		margin-right: 15px;
+		color: #fff;
+		border: none;
+		width: 43px;
+		height: 25px;
+	}
 
-.guest-check-box label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer; 
-    padding: 3px 10px; 
-    border: 1px solid #ccc;
-    border-radius: 5px; 
-    background-color: #f9f9f9;
-    color: #333;
-    transition: background-color 0.3s, border-color 0.3s;
-    user-select: none; 
-}
+	.btn-secondary {
+		background-color: #3b87ab;
+		cursor: pointer;
+		border-radius: 4px;
+		float: right;
+		color: #fff;
+		border: none;
+		width: 43px;
+		height: 25px;
+	}
 
-.guest-check-box input[type="radio"]:checked + label {
-    background-color: #3B87AB; 
-    color: #fff; 
-    border-color: #2980b9; 
-}
+	.guest-text {
+		background-color: white;
+		border-bottom: 1px solid #000;
+		font-family: "KOTRA_BOLD-Bold";
+		border-bottom: 1px solid grey;
+		color: #3b87ab;
+		width: 620px;
+	}
 
-.guest-check-box input[type="radio"]:checked + label::before {
-    content: "✓"; 
-    display: inline-block;
-    color: #fff;
-    margin-right: 8px;
-}
-.menu-button a{
-	margin: 0 0;
-}
+	.edit-textarea {
+		width: 100%;
+		height: 100px;
+		border: none;
+		resize: none;
+		padding: 0;
+		overflow: hidden;
+		outline: none;
+		border: 1px solid aliceblue;
+		border-radius: 4px;
+	}
+
+	.btn-primary,
+	.btn-secondary {
+		width: 70px;
+	}
+
+	#guestbookInput {
+		width: 100%;
+		height: 100px;
+		border: 1px solid #ccc;
+		;
+		resize: none;
+		padding: 0;
+		outline: none;
+	}
+
+	button[type='guestbook-button'] {
+		border: none;
+		background-color: transparent;
+	}
+
+	button[type='guestbook-button']:hover {
+		opacity: 0.5;
+	}
+
+	.guest-check-box {
+		display: flex;
+		gap: 20px;
+		align-items: center;
+	}
+
+	.guest-check-box input[type="radio"] {
+		display: none;
+	}
+
+	.guest-check-box label {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		padding: 3px 10px;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		background-color: #f9f9f9;
+		color: #333;
+		transition: background-color 0.3s, border-color 0.3s;
+		user-select: none;
+	}
+
+	.guest-check-box input[type="radio"]:checked+label {
+		background-color: #3B87AB;
+		color: #fff;
+		border-color: #2980b9;
+	}
+
+	.guest-check-box input[type="radio"]:checked+label::before {
+		content: "✓";
+		display: inline-block;
+		color: #fff;
+		margin-right: 8px;
+	}
+
+	.menu-button a {
+		margin: 0 0;
+	}
 </style>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>guestbookList</title>
-    <link rel="stylesheet" href="/css/font.css">
-    <link rel="stylesheet" href="/css/minihomepage.css">
-    <link rel="stylesheet" href="/css/layout.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>guestbookList</title>
+	<link rel="stylesheet" href="/css/font.css">
+	<link rel="stylesheet" href="/css/minihomepage.css">
+	<link rel="stylesheet" href="/css/layout.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
+
 <body>
-<th:block th:include="common/top"></th:block>
-                                <div class="guestbook-scrollbox" id="guestbook-scrollbox">
-                                    <div class="guest-text">방명록 ></div>
-                                    <th:block th:each="guestbook : ${guestbookList}">
-                                    <div class="guestbook-box">
-                                        <div class="guestbook-title">
-                                        	NO.<span id = "guestCommentNo" th:text="${guestbook.guestCommentNo}"></span>|
-                                            <span th:text="${guestbook.guestNickName}"></span>|
-                                            <span th:text="${guestbook.guestCommentDate}"></span>
-                                            <div class="guestbook-date">
-                                                <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
-                                                <button class="btn-primary" onclick="editComment(this);">수정</button>
-                                            </div>
-                                        </div>
-                                        <div class="guestbook-contents">
-                                            <div class="guestbook-text">
-                                                <span id = "guestCommentContent" th:text="${guestbook.guestCommentContent}"></span>
-                                                <textarea id ="edit-textarea" class="edit-textarea" style="display: none;"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </th:block>
-                                </div>
-                            <form action="/guest/insertComment" method="post">
-	                            <div class="guest-check-box">
-	                                <input type="radio" name="guestBookType" id="anonymous" value="0">
-	                                <label for="anonymous">익명</label>
-	                                <input type="radio" name="guestBookType" id="nickname" value="1">
-	                                <label for="nickname">닉네임</label>
-	                            </div>
-	                            <div class="guestbook-writer">
-									                          
-	                                <textarea id="guestbookInput" name="guestbookInput" placeholder="방명록을 입력해주세요...♥"></textarea>
-	                               <input type="hidden" id = "guestNickname" name="guestNickname" th:value="${session.member.memberNickName}">	                               	
-	                               <input type="hidden" id = "memberNo" name="memberNo" th:value="${session.member.memberNo}">
-	                               <input type="hidden" id = "guestWriterNo" name="guestWriterNo" th:value="${session.member.memberNo}">
-	                                <button type="guestbook-button" onclick="addGuestbookEntry()">전송</button>
+	<th:block th:include="common/top"></th:block>
+	<div class="guestbook-scrollbox" id="guestbook-scrollbox">
+		<div class="guest-text">방명록 ></div>
+		<th:block th:each="guestbook : ${guestbookList}">
+			<div class="guestbook-box">
+				<div class="guestbook-title">
+					NO.<span id="guestCommentNo" th:text="${guestbook.guestCommentNo}"></span>
+					<span th:text="${guestbook.guestNickName}"></span> <span
+						th:text="${guestbook.guestCommentDate}"></span>
+					<button class="material-icons" data-url="/member/minihomepage/${guestbook.guestCommentNo}"
+						onclick="navigateToHome(this)">home</button>
+					<div class="guestbook-date">
+						<button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
+						<button class="btn-primary" th:onclick="editComment(this);">수정</button>
+					</div>
+				</div>
+				<div class="guestbook-contents">
+					<div class="guestbook-text">
+						<span id="guestCommentContent" th:text="${guestbook.guestCommentContent}"></span>
+						<textarea id="edit-textarea" class="edit-textarea" style="display: none;"></textarea>
+					</div>
+				</div>
+			</div>
+		</th:block>
+	</div>
+	<form action="/guest/insertComment" method="post">
+		<div class="guest-check-box">
+			<input type="radio" name="guestBookType" id="anonymous" value="0">
+			<label for="anonymous">익명</label> <input type="radio" name="guestBookType" id="nickname" value="1"> <label
+				for="nickname">닉네임</label>
+		</div>
+		<div class="guestbook-writer">
+			<textarea id="guestbookInput" name="guestbookInput" placeholder="방명록을 입력해주세요...♥"></textarea>
+			<input type="hidden" id="guestNickname" name="guestNickname" th:value="${session.member.memberNickName}">
+			<input type="hidden" id="memberNo" name="memberNo" th:value="${session.member.memberNo}"> <input
+				type="hidden" id="guestWriterNo" name="guestWriterNo" th:value="${session.member.memberNo}">
+			<button type="guestbook-button" onclick="addGuestbookEntry()">전송</button>
 
-	                            </div>
-                            </form>
-                        <th:block th:include="common/bottom"></th:block>
-    <script>
+		</div>
+	</form>
+	<th:block th:include="common/bottom"></th:block>
+	<script>
+		getNickName();
+		function getNickName() {
+			const memberNickNameValue = $(".profile-username>span").text();
+			$(".nickName").val(memberNickNameValue);
+		}
 
-    getNickName();
-    function getNickName(){
-    	const memberNickNameValue = $(".profile-username>span").text();
-    	$(".nickName").val(memberNickNameValue);
-    }
-   
-    
-  //댓글추가
-    function addGuestbookEntry() {
-        const input = document.getElementById('guestbookInput');
-        const text = input.value.trim();
-        const identity = document.querySelector('input[name="guestBookType"]:checked');
-        const guestBookType = identity ? identity.value : null;
-        const memberNo = $("#memberNo").val();
-        const error = "/guest/guestbookList";
-        const writeText = "/guest/guestbookList";
-        if (text === '') {
-            alert('댓글 내용을 입력하세요.');
-            return writeText;
-        }
+		//댓글추가
+		function addGuestbookEntry() {
+			const input = document.getElementById('guestbookInput');
+			const text = input.value.trim();
+			const identity = document
+				.querySelector('input[name="guestBookType"]:checked');
+			const guestBookType = identity ? identity.value : null;
+			const memberNo = $("#memberNo").val();
+			const error = "/guest/guestbookList";
+			const writeText = "/guest/guestbookList";
+			if (text === '') {
+				alert('댓글 내용을 입력하세요.');
+				return writeText;
+			}
 
-        if (!guestBookType) {
-            alert('익명 또는 닉네임을 선택하세요.');
-            return error;
-        }
-        
+			if (!guestBookType) {
+				alert('익명 또는 닉네임을 선택하세요.');
+				return error;
+			}
 
-  }
+		}
 
+		//댓글 삭제 확인
+		function confirmDeleteComment(button) {
+			const guestbookBox = button.closest('.guestbook-box');
+			//const guestCommentNo = document.getElementById('guestCommentNo'); 
+			const guestCommentNo = guestbookBox
+				.querySelector('#guestCommentNo').innerText;
+			console.log(guestCommentNo);
 
-//댓글 삭제 확인
- function confirmDeleteComment(button) {
-     const guestbookBox = button.closest('.guestbook-box');
-     //const guestCommentNo = document.getElementById('guestCommentNo'); 
-     const guestCommentNo = guestbookBox.querySelector('#guestCommentNo').innerText; 
-     console.log(guestCommentNo);
+			if (!guestCommentNo) {
+				console.error('댓글 번호가 없습니다.');
+				return;
+			}
 
-     if (!guestCommentNo) {
-         console.error('댓글 번호가 없습니다.');
-         return;
-     }
+			if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
+				deleteComment(button);
+			}
+		}
 
-     if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
-         deleteComment(button);
-     }
- }
- 
-// 댓글 삭제
- function deleteComment(button) {
-     const guestbookBox = button.closest('.guestbook-box');
-     const guestCommentNo = $('#guestCommentNo').text();
+		// 댓글 삭제
+		function deleteComment(button) {
+			const guestbookBox = button.closest('.guestbook-box');
+			const guestCommentNo = $('#guestCommentNo').text();
 
-     if (!guestCommentNo) {
-         console.error('댓글 번호가 없습니다.');
-         return;
-     }
+			if (!guestCommentNo) {
+				console.error('댓글 번호가 없습니다.');
+				return;
+			}
 
-     $.ajax({
-         type: 'Post',
-         url: `/guest/deleteComment`,
-         data: {guestCommentNo: guestCommentNo},
-         success: function(response) {
-             guestbookBox.remove();
-         },
-         error: function(error) {
-             alert('댓글 삭제 중 오류가 발생했습니다.');
-         }
-     });
- }
+			$.ajax({
+				type: 'Post',
+				url: `/guest/deleteComment`,
+				data: {
+					guestCommentNo: guestCommentNo
+				},
+				success: function (response) {
+					guestbookBox.remove();
+				},
+				error: function (error) {
+					alert('댓글 삭제 중 오류가 발생했습니다.');
+				}
+			});
+		}
 
- 	// 댓글 수정	
- 	function editComment(obj){
- 		const btn = $(obj);
- 		const textarea = btn.parent().parent().next().children().children().eq(1);
- 		const content = btn.parent().parent().next().children().children().eq(0);
- 		
- 		textarea.val(content.text());
- 		textarea.show();
- 		content.hide();
- 		
- 		
- 		//수정 버튼을 ->수정 완료 버튼으로 전환 
- 		btn.text("수정 완료");
- 		btn.attr("onclick","saveComment(this);");
- 		
- 		//삭제 버튼을 -> 수정 취소 버튼으로 전환
- 		btn.prev().text("수정 취소");
- 		btn.prev().attr("onclick","saveCancel(this);");
- 		
- 	}	
- 	function saveComment(obj){
- 		const btn = $(obj);
- 		const textarea = btn.parent().parent().next().children().children().eq(1);
- 		const content = btn.parent().parent().next().children().children().eq(0);
- 		const guestCommentNo = btn.closest('.guestbook-box').find('#guestCommentNo').text();
- 		const updateContent = textarea.val();
- 		
- 		$.ajax({
- 	         type: 'POST',
- 	         url: '/guest/updateComment',
- 	         data: {guestCommentNo: guestCommentNo,
- 	        	 guestCommentContent: updateContent},
- 	         success: function(response) {
- 	             content.text(updateContent);
- 	             textarea.hide();
- 	             content.show();
- 	             console.log(response);
- 	             
- 	          //수정 버튼을 ->수정 완료 버튼으로 전환 
- 	     		btn.text("수정");
- 	     		btn.attr("onclick","editComment(this);");
- 	     		
- 	     		//삭제 버튼을 -> 수정 취소 버튼으로 전환
- 	     		btn.prev().text("삭제");
- 	     		btn.prev().attr("onclick","confrimDeleteComment(this);");
- 	         },
- 	         error: function(error) {
- 	             alert('댓글 삭제 중 오류가 발생했습니다.');
- 	             console.error(error);
- 	         }
- 	     });
- 	}
- 	
- 	
-    // 댓글 저장
-    function saveCancel(obj) {
-    	const btn = $(obj);
-    	const textarea = btn.parent().parent().next().children().children().eq(1);
-    	textarea.hide();
-    
-    	//수정완료에서-> 수정버튼으로 전환
-    	btn.next().text("수정");
-    	btn.next().attr("onclick","editComment(this);");
-    	//수정취소에서 -> 삭제버튼으로전환
-    	btn.text("삭제");
-    	btn.attr("onclick","confirmDeleteComment(this);");
+		// 댓글 수정	
+		function editComment(obj) {
+			const btn = $(obj);
+			const textarea = btn.parent().parent().next().children().children()
+				.eq(1);
+			const content = btn.parent().parent().next().children().children()
+				.eq(0);
 
-    }
-    // 홈 버튼 클릭 시 호출되는 함수
-    function navigateToHome(button) {
-        const url = $(button).attr('data-url');
+			textarea.val(content.text());
+			textarea.show();
+			content.hide();
 
-        if (!url || url === '#') {
-            alert('익명의 사용자로 접근 불가');
-            history.back(); // 이전 페이지로 돌아가기
-            return;
-        }
+			//수정 버튼을 ->수정 완료 버튼으로 전환 
+			btn.text("수정 완료");
+			btn.attr("onclick", "saveComment(this);");
 
-        // 닉네임 사용자의 경우 URL로 이동
-        window.location.href = "/member/minihomepage";
-    }
-    //엔터키 이벤트
-    $(document).ready(function() {
-        document.getElementById('guestbookInput').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter' && !event.shiftKey) {
-                event.preventDefault();
-                addGuestbookEntry();
-            }
-        });
-    });
+			//삭제 버튼을 -> 수정 취소 버튼으로 전환
+			btn.prev().text("수정 취소");
+			btn.prev().attr("onclick", "saveCancel(this);");
 
-    </script>
+		}
+		function saveComment(obj) {
+			const btn = $(obj);
+			const textarea = btn.parent().parent().next().children().children()
+				.eq(1);
+			const content = btn.parent().parent().next().children().children()
+				.eq(0);
+			const guestCommentNo = btn.closest('.guestbook-box').find(
+				'#guestCommentNo').text();
+			const updateContent = textarea.val();
+
+			$.ajax({
+				type: 'POST',
+				url: '/guest/updateComment',
+				data: {
+					guestCommentNo: guestCommentNo,
+					guestCommentContent: updateContent
+				},
+				success: function (response) {
+					content.text(updateContent);
+					textarea.hide();
+					content.show();
+					console.log(response);
+
+					//수정 버튼을 ->수정 완료 버튼으로 전환 
+					btn.text("수정");
+					btn.attr("onclick", "editComment(this);");
+
+					//삭제 버튼을 -> 수정 취소 버튼으로 전환
+					btn.prev().text("삭제");
+					btn.prev().attr("onclick", "confirmDeleteComment(this);");
+				},
+			});
+		}
+
+		// 댓글 저장
+		function saveCancel(obj) {
+			const btn = $(obj);
+			const textarea = btn.parent().parent().next().children().children()
+				.eq(1);
+			const content = btn.parent().parent().next().children().children()
+				.eq(0);
+
+			textarea.hide();
+			content.show();
+			//수정완료에서-> 수정버튼으로 전환
+			btn.next().text("수정");
+			btn.next().attr("onclick", "editComment(this);");
+			//수정취소에서 -> 삭제버튼으로전환
+			btn.text("삭제");
+			btn.attr("onclick", "confirmDeleteComment(this);");
+
+		}
+		// 홈 버튼 클릭 시 호출되는 함수
+		function navigateToHome(button) {
+			const url = $(button).attr('data-url');
+
+			if (!url || url === '#') {
+				alert('익명의 사용자로 접근 불가');
+				history.back(); // 이전 페이지로 돌아가기
+				return;
+			}
+
+			// 닉네임 사용자의 경우 URL로 이동
+			window.location.href = "/member/minihomepage";
+		}
+		//엔터키 이벤트
+		$(document).ready(
+			function () {
+				document.getElementById('guestbookInput').addEventListener(
+					'keypress', function (event) {
+						if (event.key === 'Enter' && !event.shiftKey) {
+							event.preventDefault();
+							addGuestbookEntry();
+						}
+					});
+			});
+		function saveCancel() {
+			swal({
+				title: "방명록",
+				text: "수정 하시겠습니까?",
+				icon: "warning",
+				buttons: {
+					cancel: {
+						text: "계속하기",
+						value: false,
+						visible: true,
+						closeModal: true
+					},
+					confirm: {
+						text: "작성취소",
+						value: true,
+						visible: true,
+						closeModal: true
+					}
+				}
+			}).then(function (isConfirm) {
+				if (isConfirm) {
+					history.back();
+				}
+			});
+		}
+	</script>
 </body>
+
 </html>
