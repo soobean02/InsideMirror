@@ -87,13 +87,13 @@
 		</div>
 	</div>
 	<div class="friend-scrollbox" id="friend-scrollbox">
-		<th:block th:each="friendList : ${friendList}">
+		<th:block th:each="friend : ${friendList}">
 			<div class="friend-box">
 				<div class="friend-header">
-					<button class="material-icons" data-url="/member/minihomepage/memberNo=${friendmemberNo.memberNo}" onclick="navigateToHome(this)">home</button>
-					<span th:text="${friendList.friendNickName}"></span>
+					<button class="material-icons" th:data="${'/member/friendPage?memberNo='+friend.memberNo}" onclick="navigateToHome(this)">home</button>
+					<span th:text="${friend.friendNickName}"></span>
 					<button class="btn-secondary"
-						th:onclick="friendCancel(this,[[${friendList.friendNo}]]);">일촌취소</button>
+						th:onclick="friendCancel(this,[[${friend.friendNo}]]);">일촌취소</button>
 		</div>
 	</div>
 		</th:block>
@@ -122,16 +122,11 @@
 	
 	 // 홈 버튼 클릭 시 호출되는 함수
     function navigateToHome(button) {
-        const url = $(button).attr('data-url');
+        const url = $(button).attr('data');
 
-        if (!url || url === ' ') {
-            alert('');
-            history.back(); // 이전 페이지로 돌아가기
-            return;
-        }
 
         // 닉네임 사용자의 경우 URL로 이동
-        window.location.href = "/member/minihomepage";
+        window.location.href = url;
     }
 	</script>
 </body>
