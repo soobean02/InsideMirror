@@ -33,12 +33,12 @@ public class GuestBookService {
 	public List<GuestBook> getAllComments(GuestBook gb) {
 		return guestBookDao.getAllComments(gb);
     }
-
-	public GuestBook getCommentByNo(Integer guestCommentNo) {
-		 return guestBookDao.getCommentByNo(guestCommentNo);
+/*
+	public GuestBook getCommentByNo(GuestBook gb) {
+		 return guestBookDao.getCommentByNo(gb);
 		
 	}
-
+*/
 
 	
 	

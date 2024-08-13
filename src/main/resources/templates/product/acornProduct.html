@@ -7,12 +7,16 @@
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 </head>
 <style>
+
+.menu-container{
+	width:100px;
+}
+
 a {
 	text-decoration: none;
 	color: #000;
 }
 .content-box{
-	width: 675px;
 }
 .box-title>div:first-child {
 	float: left;
@@ -33,12 +37,13 @@ a {
 
 .start_page {
 	margin-top: 20px;
+	width: 100%;
 }
 
 .icon_img {
-	width: 160px;
+	width: 130px;
+	margin: 20px 20px 0px 20px;
 	height: 160px;
-	margin: 10px 20px 0 20px;
 	float: left;
 }
 
@@ -48,8 +53,11 @@ a {
 }
 
 form {
-	width: 200px;
+	width: 180px;
 	float: left;
+}
+form>div>label{
+	font-size: 14px;
 }
 
 .radio_item {
@@ -66,7 +74,7 @@ form {
 	box-sizing: border-box;
 	width: 250px;
 	height: 180px;
-	float: left;
+	float: right;
 	border: 1px solid #000;
 	border-radius: 10px;
 }
@@ -142,7 +150,7 @@ form {
 	border-radius: 5px;
 	padding: 10px;
 	margin-left: 35px;
-	width: 150px;
+	width: 130px;
 	height: 180px;
 	float: left;
 }
@@ -162,8 +170,8 @@ form {
 }
 
 .product_img>img {
-	width: 100px;
-	height: 100px;
+	width: 80px;
+	height: 80px;
 	padding: 0 25px 15px 25px;
 }
 </style>
@@ -186,7 +194,7 @@ form {
 
 		<div class="first_box">
 			<div class="icon_img">
-				<img src="/img/acorn.png" width="160px" height="160px">
+				<img src="/img/acorn.png" width="130px" height="130px">
 			</div>
 			<div class="radio_box">
 				<!--라디오 박스-->

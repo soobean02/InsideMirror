@@ -168,6 +168,9 @@ button[type='guestbook-button']:hover{
     color: #fff;
     margin-right: 8px;
 }
+.menu-button a{
+	margin: 0 0;
+}
 </style>
 <head>
     <meta charset="UTF-8">
@@ -189,7 +192,7 @@ button[type='guestbook-button']:hover{
                                         	NO.<span id = "guestCommentNo" th:text="${guestbook.guestCommentNo}"></span>
                                             <span th:text="${guestbook.guestNickName}"></span>
                                             <span th:text="${guestbook.guestCommentDate}"></span>
-                                           <button class="material-icons" onclick="navigateToHome(this)">home</button>
+                                            <button class="material-icons" data-url="/member/minihomepage/${guestbook.guestCommentNo}" onclick="navigateToHome(this)">home</button>
                                             <div class="guestbook-date">
                                                 <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
                                                 <button class="btn-primary" th:onclick="editComment(this);">수정</button>
@@ -239,9 +242,10 @@ button[type='guestbook-button']:hover{
         const guestBookType = identity ? identity.value : null;
         const memberNo = $("#memberNo").val();
         const error = "/guest/guestbookList";
+        const writeText = "/guest/guestbookList";
         if (text === '') {
             alert('댓글 내용을 입력하세요.');
-            return;
+            return writeText;
         }
 
         if (!guestBookType) {
@@ -256,7 +260,8 @@ button[type='guestbook-button']:hover{
 //댓글 삭제 확인
  function confirmDeleteComment(button) {
      const guestbookBox = button.closest('.guestbook-box');
-     const guestCommentNo = document.getElementById('guestCommentNo'); 
+     //const guestCommentNo = document.getElementById('guestCommentNo'); 
+     const guestCommentNo = guestbookBox.querySelector('#guestCommentNo').innerText; 
      console.log(guestCommentNo);
 
      if (!guestCommentNo) {
@@ -280,7 +285,7 @@ button[type='guestbook-button']:hover{
      }
 
      $.ajax({
-         type: 'GET',
+         type: 'Post',
          url: `/guest/deleteComment`,
          data: {guestCommentNo: guestCommentNo},
          success: function(response) {
@@ -292,14 +297,17 @@ button[type='guestbook-button']:hover{
      });
  }
 
- 	// 댓글 수정
-	
+ 	// 댓글 수정	
  	function editComment(obj){
  		const btn = $(obj);
  		const textarea = btn.parent().parent().next().children().children().eq(1);
- 		textarea.show();
  		const content = btn.parent().parent().next().children().children().eq(0);
- 		textarea.text(content.text());
+ 		
+ 		textarea.val(content.text());
+ 		textarea.show();
+ 		content.hide();
+ 		
+ 		
  		//수정 버튼을 ->수정 완료 버튼으로 전환 
  		btn.text("수정 완료");
  		btn.attr("onclick","saveComment(this);");
@@ -308,8 +316,40 @@ button[type='guestbook-button']:hover{
  		btn.prev().text("수정 취소");
  		btn.prev().attr("onclick","saveCancel(this);");
  		
+ 	}	
+ 	function saveComment(obj){
+ 		const btn = $(obj);
+ 		const textarea = btn.parent().parent().next().children().children().eq(1);
+ 		const content = btn.parent().parent().next().children().children().eq(0);
+ 		const guestCommentNo = btn.closest('.guestbook-box').find('#guestCommentNo').text();
+ 		const updateContent = textarea.val();
  		
+ 		$.ajax({
+ 	         type: 'POST',
+ 	         url: '/guest/updateComment',
+ 	         data: {guestCommentNo: guestCommentNo,
+ 	        	 guestCommentContent: updateContent},
+ 	         success: function(response) {
+ 	             content.text(updateContent);
+ 	             textarea.hide();
+ 	             content.show();
+ 	             console.log(response);
+ 	             
+ 	          //수정 버튼을 ->수정 완료 버튼으로 전환 
+ 	     		btn.text("수정");
+ 	     		btn.attr("onclick","editComment(this);");
+ 	     		
+ 	     		//삭제 버튼을 -> 수정 취소 버튼으로 전환
+ 	     		btn.prev().text("삭제");
+ 	     		btn.prev().attr("onclick","confrimDeleteComment(this);");
+ 	         },
+ 	         error: function(error) {
+ 	             alert('댓글 삭제 중 오류가 발생했습니다.');
+ 	             console.error(error);
+ 	         }
+ 	     });
  	}
+ 	
  	
     // 댓글 저장
     function saveCancel(obj) {
@@ -323,12 +363,10 @@ button[type='guestbook-button']:hover{
     	//수정취소에서 -> 삭제버튼으로전환
     	btn.text("삭제");
     	btn.attr("onclick","confirmDeleteComment(this);");
-    	
-      
+
     }
- // 홈 버튼 클릭 시 호출되는 함수
+    // 홈 버튼 클릭 시 호출되는 함수
     function navigateToHome(button) {
-        const guestCommentNo = $(button).closest('.guestbook-box').find('#guestCommentNo').text();
         const url = $(button).attr('data-url');
 
         if (!url || url === '#') {

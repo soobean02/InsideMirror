@@ -69,10 +69,11 @@ public class GuestBookDao {
             return guestBook;
         });
     }
-	public GuestBook getCommentByNo(int guestCommentNo) {
+	public List<GuestBook> getCommentByNo(GuestBook gb) {
 	    String query = "SELECT * FROM guest_book WHERE GUEST_COMMENT_NO = ?";
-	    Object[] params = { guestCommentNo };
-	    return jdbc.queryForObject(query, guestBookRowMapper, params);
+	    Object[] params = {gb.getMemberNo()};
+	    List list =  jdbc.query(query, guestBookRowMapper, params);
+	     return list;
 	}
 		
 }

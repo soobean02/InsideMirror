@@ -114,7 +114,6 @@ public class GuestBookController {
 		GuestBook gb = new GuestBook();
         gb.setGuestCommentContent(guestCommentContent);
         gb.setGuestCommentNo(guestCommentNo);
-        System.out.println(guestCommentNo);
         int result = guestBookService.updateComment(gb);
         if(result > 0) {
             model.addAttribute("title", "성공");
@@ -129,7 +128,7 @@ public class GuestBookController {
         return "common/msg";
     }
 
-    @GetMapping(value="/deleteComment")
+    @PostMapping(value="/deleteComment")
     public String deleteComment(Integer guestCommentNo, Model model) {
         GuestBook gb = new GuestBook();
         gb.setGuestCommentNo(guestCommentNo);
@@ -146,13 +145,14 @@ public class GuestBookController {
         model.addAttribute("loc", "/guest/guestbookList");
         return "common/msg";
     }
-
+/*
     @GetMapping(value="/getComments")
-    public List<GuestBook> getComments(int memberNo) {
+    public List<GuestBook> getComments(Integer memberNo) {
         GuestBook gb = new GuestBook();
         gb.setMemberNo(memberNo);
         List<GuestBook> comments = guestBookService.getAllComments(gb);
         return comments;
     }
+    */
 
 }

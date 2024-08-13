@@ -18,13 +18,24 @@
 	margin-right: 50px;
 }
 
-.friend-header {
-	border-bottom: 1px solid gray;
-	padding: 20px;
-	margin-bottom: 20px;
+.search-group {
+	margin-bottom: 50px;
+	margin-left: 210px;
+}
+
+.input-wrap {
+	display: flex;
 	align-items: center;
 }
 
+.search-input {
+	outline: none;
+	border: none;
+	width: 300px;
+	height: 30px;
+	border-radius: 15px;
+	text-align: center;
+}
 .searchFriendInput{
 		outline: none;
 		border: none;
@@ -36,12 +47,17 @@
 		
 	}
 
-.search-group {
-	margin-bottom: 50px;
-	margin-left: 50px;
-	
+.submit-btn {
+	background-color: transparent;
+	border: none;
+	margin-top: 10px;
+	cursor: pointer;
 }
 
+.reset-btn {
+	display: none;
+	margin-left: 10px;
+}
 .btn-secondary {
 	float: right;
 	border :1px solid gray;
@@ -72,10 +88,50 @@
     height: 33px;
 }
 
+.friend-box {
+	border-bottom: 1px solid gray;
+	padding: 10px;
+}
+
+.friend-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.btn-secondary {
+	border: 1px solid gray;
+	background-color: transparent;
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
 	<th:block th:include="common/top"></th:block>
+	<div class="box-title">일촌목록 ></div>
+	<div class="friend-title">
+		<div class="search-group">
+			<form method="get" action="/friend/friendList">
+				<div class="input-wrap">
+					<input type="text" name="searchKeyword" class="search-input"
+						placeholder="검색어를 입력하세요" />
+					<button type="submit" class="submit-btn">
+						<span class="material-icons">search</span>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="friend-scrollbox" id="friend-scrollbox">
+		<th:block th:each="friendList : ${friendList}">
+			<div class="friend-box">
+				<div class="friend-header">
+					<button class="material-icons"
+						data-url="/member/minihomepage/${friendList.friendNo}"
+						onclick="navigateToHome(this)">home</button>
+					<span th:text="${friendList.friendNickName}"></span>
+					<button class="btn-secondary"
+						th:onclick="friendCancel(this,[[${friendList.friendNo}]]);">일촌취소</button>
 			<div class="box-title">일촌목록 ></div>
 			<div class="friend-title">
 				<div class="search-group">
@@ -85,65 +141,33 @@
 					</form>
 				</div>
 			</div>
-			<div class="friend-scrollbox" id="friend-scrollbox">
-				<th:block th:each="friendList : ${friendList}">
-					<div class="friend-box">
-						<div class="friend-header">
-							<span th:text="${friendList.friendNickName}"></span>
-							<button class="material-icons" onclick="navigateToHome(this)"
-								data-url="#"
-								th:data-url="'/friend/home?friendNo=' + ${friendList.friendNo}">home</button>
-							<button class="btn-secondary"
-								th:onclick="friendCancel(this,[[${friendList.friendNo}]]);">일촌취소</button>
-						</div>
-					</div>
-				</th:block>
-			</div>
-			<th:block th:include="common/bottom"></th:block>
-			<script>
-			
-			<!--일촌 삭제-->
-				function friendCancel(obj, friendNo) {
+		</th:block>
+	</div>
+	<th:block th:include="common/bottom"></th:block>
+	<script>
+	<!--일촌 삭제-->
+	function friendCancel(obj, friendNo) {
 
-					const btn = $(obj);
-					console.log(friendNo);
-					$.ajax({
-						type : 'GET',
-						url : `/friend/friendCancel`,
-						data : {
-							friendNo : friendNo
-						},
-						success : function(response) {
-							btn.parent().parent().remove();
-						},
-						error : function(error) {
-							alert: ('삭제중 에러가 나왔습니다.')
-						}
-					})
-				}
-				
-				
-					/*
-					const friendheader == button.closest('.friend-header');
-					const friendNo = $('#friendNo').text();
-					
-					if(!friendNo){
-					 console.log('일촌 번호가 없습니다');
-					 return;
-					}
-					
-					$ajax({
-					 type: 'GET',
-					 url: `/friend/friendCancel`,
-					 data : {friendNo : friendNo},
-					 success : function(response){
-						 friendheader.remove();
-					 },
-					 error : function(error){
-						 alert('일촌 삭제 중 에러가 발생했습니다')
-					 }
-					})
-					 */
-			</script>
+		const btn = $(obj);
+		console.log(friendNo);
+		$.ajax({
+			type : 'GET',
+			url : `/friend/friendCancel`,
+			data : {
+				friendNo : friendNo
+			},
+			success : function(response) {
+				btn.parent().parent().remove();
+			},
+			error : function(error) {
+				alert: ('삭제중 에러가 나왔습니다.')
+			}
+		})
+	}
+		function navigateToHome(button) {
+			const url = $(button).data('url');
+			window.location.href = url;
+		}
+	</script>
 </body>
 </html>

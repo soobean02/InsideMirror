@@ -15,21 +15,20 @@ public class FriendService {
     @Autowired
     private FriendDao friendDao;
 
-	public List<Friend> selectAllList(Friend f) {
-		List<Friend> list = friendDao.selectAllList(f);
-		return list;
-	}
-	
-	@Transactional
-	public int friendCancel(Friend f) {
-		return friendDao.friendCancel(f);
-		
-	}
+    public List<Friend> selectAllList(Friend f) {
+        return friendDao.selectAllList(f);
+    }
+    
+    @Transactional
+    public int friendCancel(Friend f) {
+        return friendDao.friendCancel(f);
+    }
 
-	public int friendRequest(Friend f) {
-		int result = friendDao.friendRequest(f);
-		return result;
-	}
+    public int friendRequest(Friend f) {
+        return friendDao.friendRequest(f);
+    }
 
-   
+    public List<Friend> selectList(Friend f, String keyword) {
+        return friendDao.selectList(f, keyword);
+    }
 }
