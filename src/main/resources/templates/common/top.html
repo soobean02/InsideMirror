@@ -21,7 +21,6 @@
     border: none;
     resize: none;
     padding: 0;
-    overflow: hidden;
  }
  .profile-image-area{
  	display: flex;
@@ -79,6 +78,7 @@
 	color: white;
 	border:none;
 }
+
 </style>
 	<th:block th:include="/common/header"></th:block>
 	<div class="bookcover">
@@ -99,7 +99,9 @@
                     </div>
                     </form>
 					<div class="profile-text">
-							<input id="profileContent" name="profileMsg" th:value="${session.member.profileMsg}">
+							<input id="profileContent" name="profileMsg" th:value="${session.member.profileMsg}"> <!-- 한 줄만 출력 가능 -->
+							<!-- <textarea id="profileContent" name="profileMsg" th:value="${session.member.profileMsg}"></textarea> <= 새로고침하면 사라짐-->
+							
 					</div>
 					<div class="profile-username">
 						<span style="color: #0f1b5c" th:text="${session.member.memberName}"></span>(♪♬)

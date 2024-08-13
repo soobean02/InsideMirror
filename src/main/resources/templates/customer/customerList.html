@@ -80,7 +80,9 @@ a {
 	cursor: pointer;
 	background-color: rgba(10, 10, 10, 0.5);
 }
-
+.atbl td:nth-child(2){
+	font-weight: bold;
+}
 /*--------------------------------------------*/
 .client_btn {
 	margin-top: 30px;
@@ -113,16 +115,19 @@ a {
 			<th>분류</th>
 			<th>상태</th>
 		</tr>
-		<tr th:each="customer : ${list}">
-			<td th:text="${customer.inqNo}"></td>
-			<td><a th:href="@{/customer/customerPage(inqNo=${customer.inqNo})}" th:text="${customer.inqTitle}"></a></td>
-			<td th:text="${customer.inqDate}"></td>
+		<th:block th:each="customer : ${list}">
+		<tr>
+			<td><a th:href="@{/customer/customerPage(inqNo=${customer.inqNo})}" th:text="${customer.inqNo}"></a></td>
+			<td><a th:href="@{/customer/customerPage(inqNo=${customer.inqNo})}"th:text="${customer.inqTitle}"></a></td>
+			<td><a th:href="@{/customer/customerPage(inqNo=${customer.inqNo})}"th:text="${customer.inqDate}"></a></td>
 			<th:block th:switch="${customer.customerList}">
 				<td th:case="1">환불</td>
 				<td th:case="2">기타</td>
 			</th:block>
 			<td th:text="${customer.status}"></td>
+		
 		</tr>
+		</th:block>
 	</table>
 	<div id="pageNavi" th:utext="${pageNavi}"></div>
 	<!--끝!!!!-->
