@@ -192,7 +192,6 @@ button[type='guestbook-button']:hover{
                                         	NO.<span id = "guestCommentNo" th:text="${guestbook.guestCommentNo}"></span>
                                             <span th:text="${guestbook.guestNickName}"></span>
                                             <span th:text="${guestbook.guestCommentDate}"></span>
-                                            <button class="material-icons" data-url="/member/minihomepage/${guestbook.guestCommentNo}" onclick="navigateToHome(this)">home</button>
                                             <div class="guestbook-date">
                                                 <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
                                                 <button class="btn-primary" th:onclick="editComment(this);">수정</button>
