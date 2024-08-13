@@ -29,7 +29,7 @@ public class GuestBookController {
     {
     	this.guestBookService = guestBookService;
     }
-    
+   
     @GetMapping(value="/guestbookList")
     public String guestbookList(Integer memberNo, Model model) {
     	GuestBook gb = new GuestBook();
@@ -38,7 +38,7 @@ public class GuestBookController {
         
         model.addAttribute("guestbookList", guestbookList);
         
-        System.out.println("guestbookList : " + guestbookList);
+      
         return "guest/guestbookList";
     }
 //    @GetMapping(value="/guestList")
@@ -145,7 +145,7 @@ public class GuestBookController {
         model.addAttribute("loc", "/guest/guestbookList");
         return "common/msg";
     }
-/*
+
     @GetMapping(value="/getComments")
     public List<GuestBook> getComments(Integer memberNo) {
         GuestBook gb = new GuestBook();
@@ -153,6 +153,6 @@ public class GuestBookController {
         List<GuestBook> comments = guestBookService.getAllComments(gb);
         return comments;
     }
-    */
+    
 
 }
