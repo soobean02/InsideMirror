@@ -90,7 +90,7 @@
 		<th:block th:each="friend : ${friendList}">
 			<div class="friend-box">
 				<div class="friend-header">
-					<button class="material-icons" th:data="${'/member/friendPage?memberNo='+friend.memberNo}" onclick="navigateToHome(this)">home</button>
+					<button class="material-icons" th:data="${'/member/friendPage?memberNo='+friend.friendMemberNo}" onclick="navigateToHome(this)">home</button>
 					<span th:text="${friend.friendNickName}"></span>
 					<button class="btn-secondary"
 						th:onclick="friendCancel(this,[[${friend.friendNo}]]);">일촌취소</button>
