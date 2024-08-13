@@ -97,8 +97,6 @@
     font-family: "KOTRA_BOLD-Bold";
     border-bottom: 1px solid grey;
     color: #3b87ab;
-	
-	position: fixed;
 	width: 620px;
 }
 .edit-textarea {
@@ -171,6 +169,7 @@ button[type='guestbook-button']:hover{
 .menu-button a{
 	margin: 0 0;
 }
+
 </style>
 <head>
     <meta charset="UTF-8">
@@ -192,7 +191,7 @@ button[type='guestbook-button']:hover{
                                         	NO.<span id = "guestCommentNo" th:text="${guestbook.guestCommentNo}"></span>
                                             <span th:text="${guestbook.guestNickName}"></span>
                                             <span th:text="${guestbook.guestCommentDate}"></span>
-                                            <button class="material-icons" data-url="/member/minihomepage/${guestbook.guestCommentNo}" onclick="navigateToHome(this)">home</button>
+                                             <button class="material-icons" data-url="/member/minihomepage/${guestbook.guestCommentNo}" onclick="navigateToHome(this)">home</button>
                                             <div class="guestbook-date">
                                                 <button class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
                                                 <button class="btn-primary" th:onclick="editComment(this);">수정</button>
@@ -214,8 +213,7 @@ button[type='guestbook-button']:hover{
 	                                <input type="radio" name="guestBookType" id="nickname" value="1">
 	                                <label for="nickname">닉네임</label>
 	                            </div>
-	                            <div class="guestbook-writer">
-									                          
+	                            <div class="guestbook-writer">                      
 	                                <textarea id="guestbookInput" name="guestbookInput" placeholder="방명록을 입력해주세요...♥"></textarea>
 	                               <input type="hidden" id = "guestNickname" name="guestNickname" th:value="${session.member.memberNickName}">	                               	
 	                               <input type="hidden" id = "memberNo" name="memberNo" th:value="${session.member.memberNo}">
