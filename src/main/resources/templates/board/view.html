@@ -184,25 +184,31 @@
 
     .comment-list-content{
         width: 100%;
-        max-height: 120px;
         position: relative;
         word-wrap: break-word;
         word-break: break-all;
         overflow-y: hidden;
         overflow-x: hidden;
-        padding-bottom: 5px;
+        white-space: pre-wrap;
+        /* padding-bottom: 5px; */
+        /* display: -webkit-inline-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 5; */
+        margin-bottom: 5px;
     }
 
     .reComment-content-list{
         width: 100%;
         word-wrap: break-word;
         word-break: break-all;
+        overflow-y: hidden;
         overflow-x: hidden;
+        white-space: pre-wrap;
     }
 
 
     .short-content{
-        padding-bottom: 10px;
+        /* padding-bottom: 10px; */
     }
 
     .size-btn{
@@ -514,15 +520,17 @@
         function moreComment(){
             const longComment = $(".content-both");
             longComment.each(function(index,item){
-                const longCommentHeight = $(item).height();
-                if(longCommentHeight >= 120){
+                const longCommentHeight = $(item).innerHeight();
+                console.log(longCommentHeight);
+                if(longCommentHeight >= 121){
                     $(item).removeClass("short-content");
+                    $(item).css("maxHeight","120px");
                     const more = $("<button class='more size-btn' onmouseenter='sizeBtn(this)'>더보기</button>");
                     $(item).append(more);
                 }
             });//댓글이 긴 경우 더보기 버튼 추가(우측 하단)
             $(".more").on("click",function(){
-                $(this).parent().css("max-height","1000px").css("padding-bottom","10px");
+                $(this).parent().css("maxHeight","1000px");
                 reduceComment($(this).parent());
                 $(this).remove();
             })//더보기 버튼 누르면 max-height를 늘려서 긴 댓글을 다 볼 수 있게 해줌
@@ -533,8 +541,8 @@
             const reduce = $("<button class='reduce size-btn' onmouseenter='sizeBtn(this)'>줄이기</button>")
             longItem.append(reduce);
             $(".reduce").on("click",function(){
-                $(this).parent().css("max-height","120px").css("padding-bottom","5px");
                 moreComment();
+                $(this).parent().css("maxHeight","120px");
                 $(this).remove();
             })
         }
@@ -543,7 +551,7 @@
         function addShortComment(){
             const content = $(".content-both");
             content.each(function(index,item){
-                if($(item).height() !== 120){
+                if($(item).innerHeight() <= 120){
                     $(item).addClass("short-content");
                 }
             });
