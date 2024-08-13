@@ -148,38 +148,44 @@
 	}
 
 	.guest-check-box input[type="radio"] {
-		display: none;
+    display: none; 
 	}
 
 	.guest-check-box label {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		cursor: pointer;
-		padding: 3px 10px;
-		border: 1px solid #ccc;
-		border-radius: 5px;
-		background-color: #f9f9f9;
-		color: #333;
-		transition: background-color 0.3s, border-color 0.3s;
-		user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; 
+    padding: 3px 10px; 
+    border: 1px solid #ccc;
+    border-radius: 5px; 
+    background-color: #f9f9f9;
+    color: #333;
+    transition: background-color 0.3s, border-color 0.3s;
+    user-select: none; 
 	}
 
-	.guest-check-box input[type="radio"]:checked+label {
-		background-color: #3B87AB;
-		color: #fff;
-		border-color: #2980b9;
+	.guest-check-box input[type="radio"]:checked + label {
+    background-color: #3B87AB; 
+    color: #fff; 
+    border-color: #2980b9; 
 	}
 
-	.guest-check-box input[type="radio"]:checked+label::before {
-		content: "✓";
-		display: inline-block;
-		color: #fff;
-		margin-right: 8px;
+	.guest-check-box input[type="radio"]:checked + label::before {
+    content: "✓"; 
+    display: inline-block;
+    color: #fff;
+    margin-right: 8px;
 	}
 
 	.menu-button a {
 		margin: 0 0;
+	}
+	.insertGuestBookForm{
+		margin-top: 10px;
+	}
+	#guestbook-scrollbox{
+		min-height: 350px;
 	}
 </style>
 
@@ -221,10 +227,12 @@
 		</th:block>
 	</div>
 	<form action="/guest/insertComment" method="post" class="submit-form">
+	<form action="/guest/insertComment" method="post" class="insertGuestBookForm">
 		<div class="guest-check-box">
+			<input type="radio" name="guestBookType" id="nickname" value="1" checked> 
+			<label for="nickname">닉네임</label>
 			<input type="radio" name="guestBookType" id="anonymous" value="0">
-			<label for="anonymous">익명</label> <input type="radio" name="guestBookType" id="nickname" value="1"> <label
-				for="nickname">닉네임</label>
+			<label for="anonymous">익명</label> 
 		</div>
 		<div class="guestbook-writer">
 			<textarea id="guestbookInput" name="guestbookInput" placeholder="방명록을 입력해주세요...♥"></textarea>
@@ -232,6 +240,7 @@
 			<input type="hidden" id="memberNo" name="memberNo" th:value="${session.member.memberNo}"> <input
 				type="hidden" id="guestWriterNo" name="guestWriterNo" th:value="${session.member.memberNo}">
 			<button type="button" onclick="addGuestbookEntry()">전송</button>
+			<button type="guestbook-button" onclick="addGuestbookEntry()"><img src="/image/speechbubble.png"></button>
 
 		</div>
 	</form>
