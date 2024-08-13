@@ -6,21 +6,15 @@
 <title>상품 상세</title>
 </head>
 <style>
-*{
-	margin: 0;
-}
-.content-box{
-	width: 690px;
-}
 .start_page {
 	margin-top: 20px;
 }
 
 .icon_img {
-	width: 150px;
-	height: 150px;
-	margin: 10px 20px 0 20px;
+	width: 130px;
+	height: 130px;
 	float: left;
+	margin: 20px 0 0 20px;
 }
 
 .first_box {
@@ -28,7 +22,7 @@
 	border-bottom: 1px solid #8d8d8d;
 }
 
-form {
+.radio_box>form {
 	width: 200px;
 	float: left;
 }
@@ -136,21 +130,15 @@ a {
 	border-bottom: 1px solid #8d8d8d;
 }
 
-.icon_img {
-	width: 160px;
-	height: 160px;
-	margin: 10px 20px 0 20px;
-	float: left;
-}
 
 .try {
-	padding: 20px 0 20px 30px;
+	padding: 20px 0 20px 10px;
 	float: left;
 	font-weight: bold;
 }
 
 .pr_title {
-	width: 130px;
+	width: 110px;
 	float: left;
 }
 
@@ -181,8 +169,8 @@ h4 {
 .product_box {
 	border: 1px solid #eee;
 	border-radius: 5px;
-	padding: 10px;
-	margin-left: 35px;
+	padding: 8px;
+	margin-left: 22px;
 	width: 150px;
 	height: 170px;
 	float: left;
@@ -215,6 +203,7 @@ h4 {
 }
 
 .buy_product {
+	font-size: 20px;
 	color: #ddd;
 }
 .try{
@@ -230,7 +219,7 @@ h4 {
 	<div class="start_page">
 		<div class="first_box">
 			<div class="icon_img">
-				<img th:src="@{'/product/editor/'+${p.productImg}}" width="120px" height="120px">
+				<img th:src="@{'/product/editor/'+${p.productImg}}" width="100px" height="100px">
 					<button class="try">적용해보기 > </button>
 			</div>
 			<div class="pr_title">

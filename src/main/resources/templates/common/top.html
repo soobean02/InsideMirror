@@ -42,7 +42,7 @@
  	margin-top: 10px;
  }
  .profile-btn-area{
- 	visibility: hidden;
+ 	display: none;
  }
  .swiper{
  	width:500px;
@@ -94,7 +94,7 @@
 					<form action="/member/profile" method="POST" name="myPageFrm" id="profileFrm" enctype="multipart/form-data">
 
                     <div class="profile-image-area">
-                            <img class="profile-image-img" th:src="@{/member/}+${session.member.profilePhoto}" id="profileImage">
+                            <img class="profile-image-img" th:src="@{/member/}+${session.member.profilePhoto}" id="profileImage" onclick="test();">
                     </div>
                     <div class="profile-btn-area">
                         <input type="file" name="profilePhoto" id="imageInput" accept=".jpg,.png,.jpeg" onchange="submitFunction(this)">
@@ -195,6 +195,10 @@ $("#profileContent").on("change",function(){
 		function friendList(){
 			location.href="/friend/friendList";
 		}
-
-
+	function test(){
+		$(".profile-btn-area>input").click();
+	}
+	function submitFunction(obj){
+		$("#profileFrm").submit();
+	}
 </script>
