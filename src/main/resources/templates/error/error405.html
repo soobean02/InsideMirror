@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>505</title>
-<style>
+<title>error</title>
 
+<style>
     body{
-        background-color: rgb(196, 196, 196);
+        background-color: rgb(167, 167, 167);
     }
 
     .error-wrap{
@@ -19,11 +19,10 @@
     }
 
     .error-wrap>h2{
-        font-size: 40px;
+        font-size: 60px;
         font-weight: 700;
-
     }
-
+    
     .error-wrap>button{
         width: 100px;
         height: 70px;
@@ -34,25 +33,19 @@
         color: white;
         align-self: center;
     }
-
 </style>
+
 </head>
 <body>
-    
-
-
     <th:block th:include="/common/header"></th:block>
     <div class="error-wrap">
         <h2>
-            서버에서 처리하는 도중 문제가 발생했습니다.<br>
-            이전 페이지로 돌아가서 다시 시도해주세요.<br>
-            불편을 끼쳐드려서 죄송합니다.<br>
+            다시 시도해주시길 바랍니다.
+            <br>
+            <button onclick="history.back()">뒤로가기</button>
         </h2>
-        <button onclick="history.back()">뒤로가기</button>
-        
-    </div>
-    <th:block th:include="common/footer"></th:block>
 
+    </div>
 
 </body>
 </html>

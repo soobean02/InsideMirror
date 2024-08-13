@@ -18,7 +18,9 @@ public class WebError implements WebServerFactoryCustomizer<ConfigurableWebServe
 		// 505에러
 		ErrorPage error505 = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR,"/error/serverError");
 		
-		factory.addErrorPages(error404, error505);
+		ErrorPage error405 = new ErrorPage(HttpStatus.METHOD_NOT_ALLOWED, "/error/methodNotAllowed");
+
+		factory.addErrorPages(error404, error505, error405);
 		
 	}
 
