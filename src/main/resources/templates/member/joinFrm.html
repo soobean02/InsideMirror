@@ -65,7 +65,7 @@ body {
 							<tr>
 								<td><label for="emailLocal">아이디(이메일)<sup>*</sup></label></td>
 								<td class="td-2">
-									<input type="text" name="memberId" id="emailLocal" class="short-input" required autocomplete="username"> 
+									<input type="text" name="memberId" id="emailLocal" class="short-input" maxlength="20" required autocomplete="username"> 
 									<span class="mail-center">@</span>
 									<input type="text" name="memberId2" id="emailDomain" class="short-input" required autocomplete="email"> 
 									<select class="email-choice">
@@ -79,7 +79,7 @@ body {
 							<tr>
 								<td><label for="nickName">닉네임(별명)<sup>*</sup></label></td>
 								<td class="td-2"><input type="text" name="memberNickName"
-									id="nickName" required aria-required="true">
+									id="nickName" required aria-required="true" maxlength="20">
 								</td>
 							</tr>
 							<tr>
@@ -93,7 +93,7 @@ body {
 								<td><label for="pw">비밀번호<sup>*</sup></label></td>
 								<td class="td-2"><input type="password" name="memberPw"
 									id="pw" required aria-required="true"
-									placeholder="(영문 대소문자/숫자/특수문자(!,@,#,$,%) 중 2가지 이상 조합, 8~12자)">
+									placeholder="(영문 대소문자/숫자/특수문자(!,@,#,$,%) 중 2가지 이상 조합, 8~12자)" maxlength="12">
 									</td>
 							</tr>
 							<tr>
@@ -106,7 +106,7 @@ body {
 							<tr>
 								<td><label for="pwRe">비밀번호확인<sup>*</sup></label></td>
 								<td class="td-2"><input type="password" name="memberPwRe"
-									id="pwRe" required aria-required="true">
+									id="pwRe" required aria-required="true" maxlength="12">
 								</td>
 							</tr>
 							<tr >
@@ -119,7 +119,7 @@ body {
 							<tr>
 								<td><label for="name">이름<sup>*</sup></label></td>
 								<td class="td-2"><input type="text" name="memberName"
-									id="name" required aria-required="true"></td>
+									id="name" required aria-required="true" maxlength="10"></td>
 							</tr>
 							<tr>
 								<td><label for="gender">성별<sup>*</sup></label></td>
@@ -260,17 +260,21 @@ body {
 	    }).open();
 	});
 
-	///
+	///입력한 숫자만 허용
+	document.querySelectorAll('.phone1, .phone2, .phone3').forEach(function(input) {
+    input.addEventListener('input', function() {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+});
 	$(".phone1").on("keyup",function(){
-		if($(".phone1").val().length == 3){
+		if(this.val().length == 3){
 			$(".phone2").focus();
 		}
 	})
 	$(".phone2").on("keyup",function(){
-		if($(".phone2").val().length == 4){
+		if(this.val().length == 4){
 			$(".phone3").focus();
 		}
 	})
-
 </script>
 </html>
