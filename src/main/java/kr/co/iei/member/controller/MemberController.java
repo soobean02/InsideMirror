@@ -60,7 +60,11 @@ public class MemberController {
 				session.setAttribute("member", member);
 				session.setAttribute("spCss", sp); // css 적용 시키기
 				model.addAttribute("member", member);
-				return "redirect:/member/memberPage";
+				model.addAttribute("title", "♥WELCOME♥");
+				model.addAttribute("msg","바 ㄴ ㄱ ㅏ 우 ㅓ 요~");
+				model.addAttribute("icon","success");
+				model.addAttribute("loc","/member/memberPage");
+				return "common/msg";
 			}else if(member.getMemberLevel() == 1) {
 				session.setAttribute("member", member);
 				session.setAttribute("spCss", sp); // css 적용 시키기
@@ -74,8 +78,8 @@ public class MemberController {
 	@GetMapping(value="/logout")
 	public String logout(HttpSession session, Model model) {
 		session.invalidate();
-		model.addAttribute("title", "로그아웃");
-		model.addAttribute("msg","안녕히 가세요~");
+		model.addAttribute("title", "♡BYE BYE♡");
+		model.addAttribute("msg","아 ㄴ 녀 ㅇ ㅎ ㅣ ㄱ ㅏㅅ ㅔ 요~");
 		model.addAttribute("icon","success");
 		model.addAttribute("loc","/");
 		return "common/msg";
@@ -120,7 +124,7 @@ public class MemberController {
 		return "/member/joinFrm";
 	}
 	@PostMapping(value="/join")
-	public String join(Member m,String memberId2, String[]phone) {
+	public String join(Member m,String memberId2, String[]phone, Model model) {
 		String memberId = m.getMemberId()+"@"+memberId2;
 		String memberPhone = phone[0]+"-"+phone[1]+"-"+phone[2];
 		m.setMemberId(memberId);
@@ -129,7 +133,11 @@ public class MemberController {
 		if(result>0) {
 			/*회원가입 성공 시 - 배경, 커서, 폰트 정리*/
 			int r = memberService.joinProduct(m);
-			return "redirect:/";
+			model.addAttribute("title", "♡환영㉭ㅐ 요♡");
+			model.addAttribute("msg","♬♪♭♩♬♪");
+			model.addAttribute("icon","success");
+			model.addAttribute("loc","/");
+			return "common/msg";
 		}else {
 			return "redirect:/member/joinFrm";
 		}
