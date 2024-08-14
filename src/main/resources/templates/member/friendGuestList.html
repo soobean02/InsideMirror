@@ -185,6 +185,26 @@ button[type='guestbook-button']:hover{
         height: 390px;
     }
 
+	.no-login{
+		margin-top: 20px;
+		width: 100%;
+		height: 20px;
+		text-align: center;
+		line-height: 20px;
+		cursor: pointer;
+		font-size: 18px;
+		font-weight: 500;
+	}
+
+	.login{
+		text-decoration: none;
+		font-size: 18px;
+		font-weight: 500;
+		color: #9d9d9d;
+	}
+	.login:hover{
+		color: rgb(122, 128, 255);
+	}
 
 </style>
 <head>
@@ -233,8 +253,14 @@ button[type='guestbook-button']:hover{
     </div>
 
     <div class="guest-comment-wrap">
+		<div class="no-login" th:if="${session.member == null}">
+			<span>로그인 후 이용가능한 서비스입니다.</span>
+			<br>
+			<a href="/member/login" class="login">로그인 하러가기</a>
+		</div>
         <form action="/member/insertComment" method="post" class="submit-form">
             <!-- <form action="/guest/insertComment" method="post" class="insertGuestBookForm"> -->
+
                 <div class="guest-check-box" th:if="${session.member != null}">
                     <input type="radio" name="guestBookType" id="nickname" value="1" checked> 
                     <label for="nickname">닉네임</label>
