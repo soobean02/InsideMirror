@@ -73,7 +73,7 @@
 </body>
 <script>
 	$("#go").on("click",function(){
-		const regex = /^[\da-zA-Z\u3131-\u3163\uac00-\ud7a3\s]*$/;
+		const regex =  /^.{0,15}$/;
 		const inqTitle = $("#inqTitle").val();
 		const customerList = $("input[name='customerList']:checked").val();
 		const title = $("input[name='inqTitle']").val();
