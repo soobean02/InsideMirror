@@ -39,13 +39,21 @@ body {
 	border:none;
 }
 
-#sendBtn{
+#sendBtn,#authBtn{
 	background-color: #3b87ab;
 	color: white;
 	border-radius: 15px;
 	border:none;
 }
-
+.input-box{
+	visibility: none;
+}
+.td-send>#sendBtn{
+	margin-left: 417px;
+}
+.td-1{
+	width: 486px;
+}
 
 </style>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -69,24 +77,32 @@ body {
 							</tr>
 							<tr>
 								<td><label for="emailLocal">아이디(이메일)<sup>*</sup></label></td>
-								<td class="td-2">
+								<td class="td-2 td-1">
 									<input type="text" name="memberId" id="emailLocal" class="short-input" maxlength="20" required autocomplete="username"> 
 									<span class="mail-center">@</span>
-									<input type="text" name="memberId2" id="emailDomain" class="short-input" required autocomplete="email">
+									<input type="text" name="memberId2" id="emailDomain" class="short-input" required autocomplete="email" readonly>
 									<select class="email-choice">
 										<option value="naver.com">naver</option>
 										<option value="gmail.com">google</option>
 									</select>
 								</td>
-								<td>
-									<button type="button" id="sendBtn">이메일 전송</button>
+								<td class="td-2 td-send">
+									<button type="button" id="sendBtn" onclick="test();">이메일 전송</button>
 								</td>
-								<td id="auth" class="input-box">
-									<input type="text" id="authCode" placeholder="인증번호입력">
-									<button type="button" id="authBtn">인증하기</button>
-									<span id="timeZone"></span>
-									<span id="authMsg"></span>				
-									<input type="hidden" >
+							</tr>
+							<tr>
+							</tr>
+							<tr id="auth" class="input-box">
+								<td>
+								</td>
+								<td class="td-2">								
+								<input type="password" id="authCode" placeholder="인증번호입력">
+								<button type="button" id="authBtn" onchange="authFunction(this)">인증하기</button>
+								</td>
+								<td class="td-2">
+								<span id="timeZone"></span>
+								<span id="authMsg"></span>				
+								<input type="hidden" >
 								</td>
 							</tr>
 							<tr>
@@ -267,7 +283,8 @@ body {
 		const authCode = $("#authCode").val();
 		if(authCode == mailCode){
 				alert("인증완료");
-			$("#checkPassword").submit();
+			$("#timeZone").remove();
+			
 
 		}else{
 			$("#authMsg").text("인증번호를 확인하세요.");
@@ -387,5 +404,11 @@ body {
 			$(".phone3").focus();
 		}
 	})
+	function test(){
+		$(".input-box").click();
+	}
+	function authFunction(obj){
+		$(".input-box").show().submit();
+	}
 </script>
 </html>
