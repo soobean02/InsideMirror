@@ -222,8 +222,57 @@
         $("#submit-btn").on("click",function(e){
             const regex = /^[\da-zA-Z\u3131-\u3163\uac00-\ud7a3]{1,60}$/;
             const boardTitle = $("#boardTitle").val();
-            if(!regex.test(boardTitle)){
-                alert("글자수 60글자");
+            // const regexContent = /^[\da-zA-Z\u3131-\u3163\uac00-\ud7a3]{1,10}$/;
+            const regexContent = /^.{0,1000}$/;
+            const boardContent = $("#content").val();
+
+            const text = "<p>"+boardContent+"</p>";
+            const regexC = /<p>|<\/p>|&nbsp;|<br>/g;
+            const newText = text.replace(regexC, "");
+            
+            
+            if(boardTitle == "" || boardTitle.trim() === ""){
+                swal({
+                    title : "게시글",
+                    text : "제목을 입력해주세요!",
+                    icon : "info"
+                })
+                e.preventDefault();
+            }
+
+            else if(!regex.test(boardTitle)){
+                swal({
+                    title : "게시글",
+                    text : "60글자 이하로 제목을 지어주세요!",
+                    icon : "info"
+                })
+                e.preventDefault();
+            }
+
+            else if(newText === "" || newText.trim() === ""){
+                swal({
+                    title : "게시글",
+                    text : "멋진 내용을 작성해주세요!",
+                    icon : "info"
+                })
+                e.preventDefault();
+            }
+
+            else if(boardContent == "" || boardContent.trim() === ""){
+                swal({
+                    title : "게시글",
+                    text : "멋진 내용을 작성해주세요!",
+                    icon : "info"
+                })
+                e.preventDefault();
+            }
+
+            else if(!regexContent.test(boardContent)){
+                swal({
+                    title : "게시글",
+                    text : "내용은 800자 이하로 작성해주세요",
+                    icon : "info"
+                })
                 e.preventDefault();
             }
         })

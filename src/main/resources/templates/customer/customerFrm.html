@@ -60,7 +60,7 @@
 				<input type="radio" value="1" id="refund" name="customerList">
 				<label for="refund">환불</label> <input type="radio" value="2" id="other" name="customerList"> <label for="other">기타</label>
 			</div>
-			<input type="text" placeholder="문의 제목 (15자 이내로 적어주세요)" name="inqTitle" maxlength="15">
+			<input type="text" placeholder="문의 제목 (15자 이내로 적어주세요)" name="inqTitle" maxlength="15" id="inqTitle">
 			<input type="text" placeholder="문의 내용" name="inqContent">
 			<div class="client_btn">
 				<button type="button" id="go">문의하기</button>
@@ -73,6 +73,8 @@
 </body>
 <script>
 	$("#go").on("click",function(){
+		const regex = /^[\da-zA-Z\u3131-\u3163\uac00-\ud7a3\s]*$/;
+		const inqTitle = $("#inqTitle").val();
 		const customerList = $("input[name='customerList']:checked").val();
 		const title = $("input[name='inqTitle']").val();
 		const content = $("input[name='inqContent']").val();
@@ -80,6 +82,21 @@
 			swal({
 				title: "오류",
 				text: "다시 작성해주세요",
+				icon: "info",
+				buttons:{
+					cancel:{
+						text:"ok",
+						value:false,
+						visible:true,
+						className:"btn-secondary",
+						closeModal:true
+					}
+				}
+			});
+		}else if(!regex.test(inqTitle) || !/[^\s]/.test(inqTitle)){
+			swal({
+				title: "오류",
+				text: "제목을 다시 작성해주세요",
 				icon: "info",
 				buttons:{
 					cancel:{

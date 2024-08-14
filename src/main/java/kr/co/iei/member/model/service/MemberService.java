@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.iei.guestbook.dto.GuestBook;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.Member;
 import kr.co.iei.member.model.dto.MemberListData;
@@ -253,6 +254,11 @@ public class MemberService {
 		}
 		return result;
 	}
+
+
+	public List<GuestBook> getAllComments(GuestBook gb) {
+		return memberDao.getAllComments(gb);
+	}//친구 방명록 조회
 
 
 
