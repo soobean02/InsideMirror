@@ -523,7 +523,6 @@
             const longComment = $(".content-both");
             longComment.each(function(index,item){
                 const longCommentHeight = $(item).innerHeight();
-                console.log(longCommentHeight);
                 if(longCommentHeight >= 131){
                     $(item).removeClass("short-content");
                     $(item).css("maxHeight","120px");
@@ -539,7 +538,6 @@
             const longComment = $(".content-both");
             longComment.each(function(index,item){
                 const longCommentHeight = $(item).innerHeight();
-                console.log(longCommentHeight);
                 
                 if(longCommentHeight >= 121){
                     $(item).removeClass("short-content");

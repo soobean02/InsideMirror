@@ -217,7 +217,6 @@ public class MemberController {
 		//로그인 한 회원번호, 친구 번호로 -> 로그인 한 회원기준으로 일촌인 조회 -> model에 등록 -> 등록된값으로 일촌신청/일촌취소 버튼 선택할 수 있게
 		int selectFriend = memberService.selectFriend(m, memberNo);
 		model.addAttribute("bestFriend",selectFriend);			
-		System.out.println(memberNo);
 		
 		model.addAttribute("friendMember", selectMember);
 		model.addAttribute("spCss",sp);
@@ -387,7 +386,6 @@ public class MemberController {
 		GuestBook gb = new GuestBook();
 		gb.setMemberNo(m.getMemberNo());
         List<GuestBook> guestbookList = memberService.getAllComments(gb);
-        System.out.println(guestbookList);
         model.addAttribute("guestbookList", guestbookList);
 
 

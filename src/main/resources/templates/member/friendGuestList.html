@@ -295,7 +295,6 @@ button[type='guestbook-button']:hover{
 			//const guestCommentNo = document.getElementById('guestCommentNo'); 
 			// const guestCommentNo = guestbookBox
 				//.querySelector('#guestCommentNo').innerText;
-			console.log(guestCommentNo);
 
 			if (!guestCommentNo) {
 				console.error('댓글 번호가 없습니다.');
@@ -376,6 +375,7 @@ button[type='guestbook-button']:hover{
 					guestCommentContent: updateContent
 				},
 				success: function (response) {
+					content.text(updateContent);
 					textarea.hide();
 					content.show();
 

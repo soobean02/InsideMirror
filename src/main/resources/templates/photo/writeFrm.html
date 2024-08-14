@@ -151,7 +151,7 @@
                 </div>
 
                 <div class="photo-submit left">
-                    <button type="submit"><span class="material-icons">upload</span></button>
+                    <button type="submit" class="submit-btn"><span class="material-icons">upload</span></button>
                 </div>
                 
                 <div class="back-box left">
@@ -203,7 +203,7 @@
 			}//else
 		}//    파일불러오기
 
-        $("[type=submit]").on("click",function(e){
+        $(".submit-btn").on("click",function(e){
             const t = $("#img-view").attr("src");
             if($("#img-view").attr("src") == undefined){
                 swal({
