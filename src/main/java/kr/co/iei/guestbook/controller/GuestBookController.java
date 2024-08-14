@@ -130,6 +130,7 @@ public class GuestBookController {
 
     @PostMapping(value="/deleteComment")
     public String deleteComment(Integer guestCommentNo, Model model) {
+        System.out.println(guestCommentNo);
         GuestBook gb = new GuestBook();
         gb.setGuestCommentNo(guestCommentNo);
         int result = guestBookService.deleteComment(gb);

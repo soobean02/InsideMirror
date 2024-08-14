@@ -207,14 +207,14 @@ button[type='guestbook-button']:hover{
             <th:block th:each="guestbook : ${guestbookList}">
                 <div class="guestbook-box">
                     <div class="guestbook-title">
-                        NO. <span id="guestCommentNo" th:text="${guestbook.guestCommentNo}"></span>
+                        NO. <span id="guestCommentNo" th:text="${guestbook.guestCommentNo}" class="guestCommentNo"></span>
                         <span th:text="${guestbook.guestNickName}"></span> <span
                         th:text="${guestbook.guestCommentDate}"></span>
                         <button class="material-icons" data-url="/member/minihomepage/${guestbook.guestCommentNo}"
                         th:onclick="navigateToHome(this, [[${guestbook.guestBookType}]])">home</button>
                         <div class="guestbook-date">
-                            <button th:if="${session.member != null && session.member.memberNo == guestbook.guestWriterNo}" class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
-                            <button th:if="${session.member != null && session.member.memberNo == guestbook.guestWriterNo}" class="btn-primary" th:onclick="editComment(this);">수정</button>
+                            <button th:if="${session.member != null && session.member.memberNo == guestbook.guestWriterNo}" class="btn-secondary" th:onclick="confirmDeleteComment(this,[[${guestbook.guestCommentNo}]])">삭제</button>
+                            <button th:if="${session.member != null && session.member.memberNo == guestbook.guestWriterNo}" class="btn-primary" onclick="editComment(this);">수정</button>
                         </div>
                     </div>
                     <div class="guestbook-contents">
@@ -290,11 +290,11 @@ button[type='guestbook-button']:hover{
 		}
 
 		//댓글 삭제 확인
-		function confirmDeleteComment(button) {
+		function confirmDeleteComment(button, guestCommentNo) {
 			const guestbookBox = button.closest('.guestbook-box');
 			//const guestCommentNo = document.getElementById('guestCommentNo'); 
-			const guestCommentNo = guestbookBox
-				.querySelector('#guestCommentNo').innerText;
+			// const guestCommentNo = guestbookBox
+				//.querySelector('#guestCommentNo').innerText;
 			console.log(guestCommentNo);
 
 			if (!guestCommentNo) {
@@ -303,14 +303,14 @@ button[type='guestbook-button']:hover{
 			}
 
 			if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
-				deleteComment(button);
+				deleteComment(button,guestCommentNo);
 			}
 		}
 
 		// 댓글 삭제
-		function deleteComment(button) {
+		function deleteComment(button,guestCommentNo) {
 			const guestbookBox = button.closest('.guestbook-box');
-			const guestCommentNo = $('#guestCommentNo').text();
+			
 
 			if (!guestCommentNo) {
 				console.error('댓글 번호가 없습니다.');
@@ -363,6 +363,11 @@ button[type='guestbook-button']:hover{
 				'#guestCommentNo').text();
 			const updateContent = textarea.val();
 
+			if(updateContent == "" || updateContent.trim() === ""){
+				alert("댓글 내용을 적어주세요");
+				return;
+			}
+
 			$.ajax({
 				type: 'POST',
 				url: '/member/updateComment',
@@ -371,10 +376,8 @@ button[type='guestbook-button']:hover{
 					guestCommentContent: updateContent
 				},
 				success: function (response) {
-					content.text(updateContent);
 					textarea.hide();
 					content.show();
-					console.log(response);
 
 					//수정 버튼을 ->수정 완료 버튼으로 전환 
 					btn.text("수정");

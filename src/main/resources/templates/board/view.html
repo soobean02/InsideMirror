@@ -694,9 +694,21 @@
 
         function editComplete(item, boardCommentNo, boardNo, boardCommentRef){
             //수정완료 버튼을 눌렀음
+            const regex = /^[\da-zA-Z\u3131-\u3163\uac00-\ud7a3]{1,1000}$/;
+            const commentContent = $(item).parent().next().val();
+
+            if(!regex.test(commentContent)){
+                swal({
+                    title : "댓글",
+                    text : "댓글 내용이 너무 깁니다!",
+                    icon : "info"
+                })
+                return;
+            }
+
+
 
             //비동기 처리  
-            const commentContent = $(item).parent().next().val();
                 $.ajax({
                     url : "/board/updateComment",
                     type : "post",
@@ -820,10 +832,22 @@
             const memberNo = $(item).prev().val();
             const boardNo = $(item).prev().prev().val();
             const content = $(item).prev().prev().prev().val();
+
+            const regex = /^[\da-zA-Z\u3131-\u3163\uac00-\ud7a3]{1,1000}$/;
+
+
             if(content == "" || content.trim() === ""){
                 swal({
                     title : "댓글",
                     text : "내용을 작성해주세요!",
+                    icon : "info"
+                })
+                return;
+            }
+            else if(!regex.test(content)){
+                swal({
+                    title : "댓글",
+                    text : "댓글 내용이 너무 깁니다!",
                     icon : "info"
                 })
                 return;

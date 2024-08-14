@@ -451,7 +451,7 @@ public class MemberController {
     
 
 
-	
+	@ResponseBody
 	@PostMapping(value="/updateComment")
     public String updateComment(String guestCommentContent, Integer guestCommentNo, Model model) {
 		if (guestCommentNo == null) {
