@@ -7,18 +7,18 @@
 <script src="/js/sweetalert.min.js"></script>
 </head>
 <style>
-:root { -
-	-point_color: lightskyblue; -
-	-btn_primary: skyblue; -
-	-btn_secondary: #eee; -
-	-table_line: #333;
+:root {
+	--point_color: lightskyblue;
+	--btn_primary: skyblue;
+	--btn_secondary: #eee;
+	--table_line: #333;
 }
 
 form {
 	max-width: 600px;
 	margin: 20px auto;
 	padding: 20px;
-	border: 1px solid var(- -table_line);
+	border: 1px solid var(--table_line);
 	border-radius: 8px;
 	background-color: #f9f9f9;
 }
@@ -32,11 +32,11 @@ table {
 th, td {
 	padding: 10px;
 	text-align: center;
-	border-bottom: 1px solid var(- -table_line);
+	border-bottom: 1px solid var(--table_line);
 }
 
 th {
-	background-color: var(- -btn_secondary);
+	background-color: var(--btn_secondary);
 	font-weight: bold;
 }
 
@@ -51,7 +51,7 @@ th {
 	height: 80px;
 	overflow: hidden;
 	border-radius: 4px;
-	border: 1px solid var(- -table_line);
+	border: 1px solid var(--table_line);
 }
 
 .product_img img {
@@ -68,14 +68,14 @@ input[type="file"] {
 .input_item input[type="text"] {
 	width: 100%;
 	padding: 8px;
-	border: 1px solid var(- -table_line);
+	border: 1px solid var(--table_line);
 	border-radius: 4px;
 }
 
 .select_op select {
 	width: 100%;
 	padding: 8px;
-	border: 1px solid var(- -table_line);
+	border: 1px solid var(--table_line);
 	border-radius: 4px;
 	background-color: white;
 }
@@ -86,7 +86,7 @@ input[type="file"] {
 }
 
 .product-btn button {
-	background-color: var(- -btn_primary);
+	background-color: var(--btn_primary);
 	color: white;
 	padding: 10px 20px;
 	border: none;
@@ -97,7 +97,7 @@ input[type="file"] {
 }
 
 .product-btn button:hover {
-	background-color: var(- -point_color);
+	background-color: var(--point_color);
 }
 
 .product-delete-btn {
@@ -191,7 +191,8 @@ input[type="file"] {
 						<td>
 							<div class="input_item">
 								<input type="text" name="productName" id="productName"
-									th:value="${sp.productName}">
+									th:value="${sp.productName}" 
+							placeholder="9자 이내로 적어주세요." maxlength="9">
 							</div>
 						</td>
 					</tr>
@@ -216,7 +217,7 @@ input[type="file"] {
 						<td>
 							<div class="input_item">
 								<input type="text" id="productUrl" name="productUrl"
-									placeholder="상품 url 정보 입력">
+									placeholder="">
 							</div>
 						</td>
 					</tr>
@@ -248,32 +249,169 @@ input[type="file"] {
 	<th:block th:include="common/adminBottom"></th:block>
 </body>
 <script>
-	function previewImage(event) {
-		var reader = new FileReader();
-		reader.onload = function() {
-			var output = document.getElementById('productImg');
-			output.src = reader.result;
-		};
-		reader.readAsDataURL(event.target.files[0]);
-	}
-	function handleSelectionChange() {
-	    var selectElement = document.getElementById('productListNo');
-	    var selectedValue = selectElement.value;
-	    var inputRow = document.getElementById('dynamicInputRow');
+function previewImage(event) {
+    var reader = new FileReader();
+    reader.onload = function() {
+        var output = document.getElementById('productImg');
+        output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
 
-	    if (selectedValue !== "") {  // 값이 비어 있지 않은 경우
-	        inputRow.style.display = 'table-row'; // inputRow를 표시
-	    } else {
-	        inputRow.style.display = 'none'; // inputRow를 숨김
-	    }
-	}
+function handleSelectionChange() {
+    var selectElement = document.getElementById('productListNo');
+    var selectedValue = selectElement.value;
+    var inputRow = document.getElementById('dynamicInputRow');
 
-	// 이벤트 리스너 추가
-	document.getElementById('productListNo').addEventListener('change', handleSelectionChange);
+    if (selectedValue !== "") {  // 값이 비어 있지 않은 경우
+        inputRow.style.display = 'table-row'; // inputRow를 표시
+    } else {
+        inputRow.style.display = 'none'; // inputRow를 숨김
+    }
+    updatePlaceholder();
+}
 
-	// 페이지가 로드될 때 초기 선택 상태에 따라 입력란을 표시하거나 숨기기
-	window.addEventListener('DOMContentLoaded', (event) => {
-	    handleSelectionChange();
-	});
+// 이벤트 리스너 추가
+document.getElementById('productListNo').addEventListener('change', handleSelectionChange);
+
+// 페이지가 로드될 때 초기 선택 상태에 따라 입력란을 표시하거나 숨기기
+window.addEventListener('DOMContentLoaded', (event) => {
+    handleSelectionChange();
+});
+
+function validateInput(input) {
+    const regex = /^[\da-zA-Z\u3131-\u3163\uac00-\ud7a3\s]*$/;
+    const maxLength = 6;
+    let length = 0;
+
+    // 현재 입력된 문자열의 길이를 계산 (한글은 1로 계산, 영문/숫자/공백도 1로 계산)
+    for (let i = 0; i < input.value.length; i++) {
+        const char = input.value[i];
+        if (char.match(/[\u3131-\u3163\uac00-\ud7a3]/)) {
+            length += 1;
+        } else if (char.match(/[\da-zA-Z\s]/)) {
+            length += 1;
+        }
+
+        // 길이가 최대 길이를 초과하면 입력을 중단
+        if (length > maxLength) {
+            input.value = input.value.substring(0, i);
+            break;
+        }
+    }
+
+    // 정규 표현식에 맞지 않는 입력이 있으면 제거
+    if (!regex.test(input.value)) {
+        input.value = input.value.replace(/[^a-zA-Z0-9\u3131-\u3163\uac00-\ud7a3\s]/g, '');
+    }
+}
+
+$(".product-add-btn").on("click", function(e) {
+    const regex = /^[\da-zA-Z\u3131-\u3163\uac00-\ud7a3\s]*$/;
+    const productName = $("#productName").val().trim();
+    const productListNo = $("select[name='productListNo']").val();
+    const productImg = $("img[id='productImg']").attr("src");
+    const productPrice = $("input[name='productPrice']").val().trim() || "0";
+    
+    let hasError = false;
+
+    if (productImg == "/img/acorn.png") {
+        swal({
+            title: "오류",
+            text: "상품 사진을 등록해주세요",
+            icon: "info",
+            buttons: {
+                cancel: {
+                    text: "ok",
+                    value: false,
+                    visible: true,
+                    className: "btn-secondary",
+                    closeModal: true
+                }
+            }
+        });
+        hasError = true;
+    }
+
+    if (productListNo === "" || productName === "" || productPrice === "0") {
+        swal({
+            title: "오류",
+            text: "다시 작성해주세요",
+            icon: "info",
+            buttons: {
+                cancel: {
+                    text: "ok",
+                    value: false,
+                    visible: true,
+                    className: "btn-secondary",
+                    closeModal: true
+                }
+            }
+        });
+        hasError = true;
+    } else if (!regex.test(productName) || !/[^\s]/.test(productName)) {
+        swal({
+            title: "오류",
+            text: "상품명을 다시 작성해주세요",
+            icon: "info",
+            buttons: {
+                cancel: {
+                    text: "ok",
+                    value: false,
+                    visible: true,
+                    className: "btn-secondary",
+                    closeModal: true
+                }
+            }
+        });
+        hasError = true;
+    }
+
+    // 오류가 있는 경우 폼 제출 중단
+    if (hasError) {
+        e.preventDefault();
+    } else {
+        // 오류가 없는 경우 폼 제출 및 성공 메시지 표시
+        swal({
+            title: "성공",
+            text: "상품이 추가되었습니다.",
+            icon: "success",
+            buttons: {
+                confirm: {
+                    text: "확인",
+                    value: true,
+                    visible: true,
+                    className: "btn-primary",
+                    closeModal: true
+                }
+            }
+        }).then((value) => {
+            if (value) {
+                $(".form_product").submit();
+            }
+        });
+    }
+});
+
+
+function updatePlaceholder() {
+    var productListNo = document.getElementById("productListNo").value;
+    var productUrlInput = document.getElementById("productUrl");
+    var dynamicInputRow = document.getElementById("dynamicInputRow");
+
+    if (productListNo === "1") { // 배경
+        productUrlInput.placeholder = "컬러 이름을 적어주세요. ex-red";
+        dynamicInputRow.style.display = "table-row"; // 입력란 표시
+    } else if (productListNo === "2") { // 커서
+        productUrlInput.placeholder = "url(이미지 이름.png)을 적어주세요.";
+        dynamicInputRow.style.display = "table-row"; // 입력란 표시
+    } else if (productListNo === "3") { // 폰트
+        productUrlInput.placeholder = "폰트 이름을 적어주세요. ex-나눔고딕체";
+        dynamicInputRow.style.display = "table-row"; // 입력란 표시
+    } else {
+        dynamicInputRow.style.display = "none"; // 입력란 숨김
+    }
+}
+
 </script>
 </html>
