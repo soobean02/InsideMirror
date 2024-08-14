@@ -40,7 +40,6 @@ public class ProductController {
 		int result = productService.updateAcorns(m);
 		if(result > 0) {
 			// 도토리 잘 들어감 - 경고창 정하면 model 사용해서 만들기
-			System.out.println("성공");
 			// 세션 업데이트 하기
 			member.setAcorns(m.getAcorns()+member.getAcorns());
 			model.addAttribute("title", "성공!");
@@ -49,11 +48,6 @@ public class ProductController {
 			model.addAttribute("loc", "/product/acornProduct");
 			return "common/msg";
 		}else {
-//			// 도토리 insert 실패 시 api 연동해보기..
-//			model.addAttribute("fail", 0);
-//			model.addAttribute("failMerchant", merchant); // 주문 번호
-//			model.addAttribute("failAcornPrice", m.getAcorns()*100); // 실패한 도토리 가격
-//			return "/product/acornProduct";
 			model.addAttribute("title", "결제 실패");
 			model.addAttribute("msg", "관리자에게 문의해주세요");
 			model.addAttribute("icon", "error");
@@ -61,12 +55,7 @@ public class ProductController {
 			return "common/msg";
 		}
 	}
-//	@ResponseBody
-//	@PostMapping(value="/failAcorn")
-//	public String acornCount() {
-//		System.out.println("실패");
-//		return "";
-//	}
+
 	/*판매 상품 리스트*/
 	@GetMapping(value="/productList")
 	public String productList(Model model, int reqPage, int type) {
@@ -96,7 +85,6 @@ public class ProductController {
 		}else {
 			model.addAttribute("bp",bp);
 		}
-		System.out.println(p);
 		return "/product/productPage";
 	}
 	
@@ -136,10 +124,7 @@ public class ProductController {
 	@GetMapping(value="/buyProductPage")
 	public String buyProductPage(Model model, int buyNo,  @SessionAttribute Member member) {
 		// 구매한 상품 정보 출력
-		System.out.println(buyNo);
 		SellBuyProduct sp = productService.selectBuyProductInfo(buyNo);
-		System.out.println(sp.getBuyProduct());
-		System.out.println(sp.getSellProduct());
 		model.addAttribute("sp",sp);
 		// 세션 보내기
 		List product = productService.selectProductPhoto();

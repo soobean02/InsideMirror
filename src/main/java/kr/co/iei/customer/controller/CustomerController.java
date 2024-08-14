@@ -33,29 +33,7 @@ public class CustomerController {
 	}
 	@PostMapping(value="/customerWrite")
 	public String customerWrite(Customer c,@SessionAttribute("member") Member member, Model model) {
-//		System.out.println(c);
-//		if(c.getCustomerList() == 0) {
-//			model.addAttribute("title", "실패");
-//			model.addAttribute("msg", "유형을 선택해주세요");
-//			model.addAttribute("icon", "error");
-//			model.addAttribute("loc", "/customer/customerFrm");
-//			return "common/msg";
-//		}
-//		if(c.getInqTitle() == null) {
-//			model.addAttribute("title", "실패");
-//			model.addAttribute("msg", "제목을 적어주세요");
-//			model.addAttribute("icon", "error");
-//			model.addAttribute("loc", "/customer/customerFrm");
-//			return "common/msg";
-//		}
-//		if(c.getInqContent() == null) {
-//			model.addAttribute("title", "실패");
-//			model.addAttribute("msg", "내용을 적어주세요");
-//			model.addAttribute("icon", "error");
-//			model.addAttribute("loc", "/customer/customerFrm");
-//			return "common/msg";
-//		}
-		
+
 		int result = customerService.insertCustomerInq(c,member);
 		if(result > 0) {
 			// 세션 업데이트 하기
