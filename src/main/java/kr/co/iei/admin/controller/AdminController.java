@@ -121,11 +121,7 @@ public class AdminController {
 		sp.setProductImg(filepath);
 		int result = productService.adminAddProduct(sp);
 		if(result>0) {
-			model.addAttribute("title", "추가 완료");
-			model.addAttribute("msg", "상품이 추가되었습니다.");
-			model.addAttribute("icon", "success");
-			model.addAttribute("loc", "/admin/adminProductList?reqPage=1&type=0");
-			return "common/msg";
+			return "redirect:/admin/adminProductList?reqPage=1&type=0";
 		}else {
 			return "redirect:/";
 		}//else
