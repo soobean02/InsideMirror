@@ -176,7 +176,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 $("#profileContent").on("change",function(){
 	const profileMsg = $("#profileContent").val();
-	console.log(profileMsg);
 	$.ajax({
 		url : "/member/updateMsg",
 		data : {profileMsg : profileMsg},
@@ -185,7 +184,7 @@ $("#profileContent").on("change",function(){
 			$("#profileContent").text(data);
 		},
 		error : function(){
-			console.log("에러");
+			alert("잠시후 다시 시도해주세요");
 		}
 	});
 });
