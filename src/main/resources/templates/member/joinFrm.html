@@ -91,6 +91,11 @@ body {
 								</td>
 							</tr>
 							<tr>
+								<td>
+								</td>
+								<td>
+									<p class="email-check-msg"></p>
+								</td>
 							</tr>
 							<tr id="auth" class="input-box">
 								<td>
@@ -194,6 +199,7 @@ body {
 	<th:block th:include="/common/footer"></th:block>
 </body>
 <script>
+
 	let mailCode = null;
 	$("#sendBtn").on("click",function(){
 		const receiver = $("#emailLocal").val()+"@"+$("#emailDomain").val();
@@ -392,16 +398,7 @@ body {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
 });
-	$(".phone1").on("keyup",function(){
-		if(this.val().length == 3){
-			$(".phone2").focus();
-		}
-	})
-	$(".phone2").on("keyup",function(){
-		if(this.val().length == 4){
-			$(".phone3").focus();
-		}
-	})
+	
 	function test(){
 		$(".input-box").click();
 	}

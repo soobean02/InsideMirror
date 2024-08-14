@@ -261,6 +261,12 @@ public class MemberService {
 	}//친구 방명록 조회
 
 
+	public Member selectOneEmail(String memberId) {
+		Member member = memberDao.selectEmail(memberId);
+		return member;
+	}
+
+
 
 
 

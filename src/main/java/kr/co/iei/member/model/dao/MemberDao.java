@@ -332,6 +332,18 @@ public class MemberDao {
         List list = jdbc.query(query, guestBookRowMapper, params);
         return list;
 	}
+
+
+	public Member selectEmail(String memberId) {
+		String query = "select * from member where member_id=?";
+		Object[] params = {memberId};
+		List member = jdbc.query(query, memberRowMapper, params);
+		if(member.isEmpty()) {
+			return null;			
+		}else {
+			return (Member)member.get(0);
+		}
+	}
 	
 	
 	
