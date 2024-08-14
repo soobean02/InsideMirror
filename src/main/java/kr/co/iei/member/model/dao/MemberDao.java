@@ -286,7 +286,6 @@ public class MemberDao {
 
 
 	public int selectFriend(Member m, int memberNo) {
-		System.out.println("dsasdsadasdasadsdasdasdasas");
 		String query = "select count(*) from friend where member_no = ? and friend_member_no = ?";
 		Object[] params = {memberNo,m.getMemberNo()};
 		int selectFriend = jdbc.queryForObject(query, Integer.class,params);

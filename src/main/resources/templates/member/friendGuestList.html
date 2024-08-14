@@ -235,13 +235,13 @@ button[type='guestbook-button']:hover{
     <div class="guest-comment-wrap">
         <form action="/member/insertComment" method="post" class="submit-form">
             <!-- <form action="/guest/insertComment" method="post" class="insertGuestBookForm"> -->
-                <div class="guest-check-box">
+                <div class="guest-check-box" th:if="${session.member != null}">
                     <input type="radio" name="guestBookType" id="nickname" value="1" checked> 
                     <label for="nickname">닉네임</label>
                     <input type="radio" name="guestBookType" id="anonymous" value="0">
                     <label for="anonymous">익명</label> 
                 </div>
-                <div class="guestbook-writer">
+                <div class="guestbook-writer" th:if="${session.member != null}">
                     <textarea id="guestbookInput" name="guestbookInput" placeholder="방명록을 입력해주세요...♥"></textarea>
                     <input type="hidden" id="guestNickname" name="guestNickname" th:value="${session.member.memberNickName}">
                     <input type="hidden" id="memberNo" name="memberNo" th:value="${friendMember.memberNo}"> <input
