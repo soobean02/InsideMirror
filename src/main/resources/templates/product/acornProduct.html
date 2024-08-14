@@ -302,8 +302,6 @@ form>div>label{
 				alert("결제 방법을 선택해주세요!");
 				return;
 			}
-			console.log("선택한 도토리 값: " + acornPay);
-			console.log("선택한 결제 방법: " + pay);
 			pay_start(acornPay, pay);
 		});
 
@@ -312,7 +310,6 @@ form>div>label{
 			const memberName = [[${session.member.memberName}]]; // 멤버 이름
 			const memberTel = [[${session.member.memberPhone}]]; // 멤버 전화번호
 			const memberAddr = [[${session.member.memberAddr}]]; // 멤버 주소
-			console.log(memberName);
 			const date = new Date();
 			const dateString = "order_no_" + date.getFullYear() + "" + (date.getMonth() + 1)
 					+ "" + date.getDate() + "" + date.getHours() + ""

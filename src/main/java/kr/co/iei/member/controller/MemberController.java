@@ -60,11 +60,7 @@ public class MemberController {
 				session.setAttribute("member", member);
 				session.setAttribute("spCss", sp); // css 적용 시키기
 				model.addAttribute("member", member);
-				model.addAttribute("title", "♥WELCOME♥");
-				model.addAttribute("msg","바 ㄴ ㄱ ㅏ 우 ㅓ 요~");
-				model.addAttribute("icon","success");
-				model.addAttribute("loc","/member/memberPage");
-				return "common/msg";
+				return "redirect:/member/memberPage";
 			}else if(member.getMemberLevel() == 1) {
 				session.setAttribute("member", member);
 				session.setAttribute("spCss", sp); // css 적용 시키기

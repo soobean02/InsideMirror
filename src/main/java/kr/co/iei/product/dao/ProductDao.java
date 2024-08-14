@@ -48,7 +48,6 @@ public class ProductDao {
 	/* 도토리 구매 이력 - insert */
 	public int insertAcorns(Member m) {
 		String query = "insert into acorns_purchase_history values(ACORNS_PURCHASE_HISTORY_SEQ.NEXTVAL,?,?,TO_CHAR(SYSDATE,'yyyy-mm-dd'))";
-		System.out.println(m);
 		Object[] params = { m.getMemberNo(), (m.getAcorns() * 100) };// 여기 바꿔야함! MEMBER_NO 임시로 넣어둠
 		int result = jdbc.update(query, params);
 		return result;
