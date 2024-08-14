@@ -220,7 +220,7 @@
         }
 
         $("#submit-btn").on("click",function(e){
-            const regex = /^[\da-zA-Z\u3131-\u3163\uac00-\ud7a3]{1,60}$/;
+            const regex = /^.{0,60}$/;
             const boardTitle = $("#boardTitle").val();
             
             const regexContent = /^.{0,1000}$/;
