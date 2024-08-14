@@ -188,7 +188,7 @@
         });
 
         function loadImg(obj){
-
+            
 			if(obj.files.length != 0 && obj.files[0] != 0){
 				const reader = new FileReader(); 
 				reader.readAsDataURL(obj.files[0]);
@@ -204,8 +204,9 @@
 		}//    파일불러오기
 
         $(".submit-btn").on("click",function(e){
+
             const t = $("#img-view").attr("src");
-            if($("#img-view").attr("src") == undefined){
+            if($("#img-view").attr("src") == undefined || t == ""){
                 swal({
                     title : "사진첩",
                     text : "사진을 업로드 해야 합니다.",
@@ -217,7 +218,7 @@
             
             //제목 글자수 제한
             const title = $("#photoTitle").val();
-            const regex = /^[\da-zA-Z\u3131-\u3163\uac00-\ud7a3]{1,18}$/;
+            const regex = /^.{0,18}$/;
             if(!regex.test(title)){
                 swal({
                     title : "사진첩",
