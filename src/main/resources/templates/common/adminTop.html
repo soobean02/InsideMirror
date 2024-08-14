@@ -114,7 +114,7 @@
 						$("body").css("font-family", font);
 						// 커서 이미지 적용
 						if(cursor!='default'){
-							$("html *").not(".board-content *").css("cursor", "url('/img/" + cursor + "') 16 16, auto");
+							$("html *").not(".board-content *").css("cursor",cursor);
 						}
 						// 배경 색상 또는 이미지 적용 (필요에 따라 변경)
 						$(".bookcover").css("background-color", cover);

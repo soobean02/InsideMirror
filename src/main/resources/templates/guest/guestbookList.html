@@ -228,8 +228,8 @@
 						<button class="material-icons" data-url="/member/minihomepage/${guestbook.guestCommentNo}"
 						th:onclick="navigateToHome(this, [[${guestbook.guestBookType}]])">home</button>
 						<div class="guestbook-date">
-							<button th:if="${session.member != null && session.member.memberNo == guestbook.guestWriterNo}" class="btn-secondary" onclick="confirmDeleteComment(this)">삭제</button>
-							<button th:if="${session.member != null && session.member.memberNo == guestbook.guestWriterNo}" class="btn-primary" th:onclick="editComment(this);">수정</button>
+							<button th:if="${session.member != null && session.member.memberNo == guestbook.guestWriterNo}" class="btn-secondary" th:onclick="confirmDeleteComment(this, [[${guestbook.guestCommentNo}]])">삭제</button>
+							<button th:if="${session.member != null && session.member.memberNo == guestbook.guestWriterNo}" class="btn-primary" onclick="editComment(this);">수정</button>
 						</div>
 					</div>
 					<div class="guestbook-contents">
@@ -295,12 +295,11 @@
 		}
 
 		//댓글 삭제 확인
-		function confirmDeleteComment(button) {
+		function confirmDeleteComment(button, guestCommentNo) {
 			const guestbookBox = button.closest('.guestbook-box');
 			//const guestCommentNo = document.getElementById('guestCommentNo'); 
-			const guestCommentNo = guestbookBox
-				.querySelector('#guestCommentNo').innerText;
-			console.log(guestCommentNo);
+			// const guestCommentNo = guestbookBox
+				// .querySelector('#guestCommentNo').innerText;
 
 			if (!guestCommentNo) {
 				console.error('댓글 번호가 없습니다.');
@@ -308,14 +307,14 @@
 			}
 
 			if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
-				deleteComment(button);
+				deleteComment(button, guestCommentNo);
 			}
 		}
 
 		// 댓글 삭제
-		function deleteComment(button) {
+		function deleteComment(button, guestCommentNo) {
 			const guestbookBox = button.closest('.guestbook-box');
-			const guestCommentNo = $('#guestCommentNo').text();
+			// const guestCommentNo = $('#guestCommentNo').text();
 
 			if (!guestCommentNo) {
 				console.error('댓글 번호가 없습니다.');
@@ -345,6 +344,10 @@
 			const content = btn.parent().parent().next().children().children()
 				.eq(0);
 
+			
+
+
+
 			textarea.val(content.text());
 			textarea.show();
 			content.hide();
@@ -359,6 +362,7 @@
 
 		}
 		function saveComment(obj) {
+
 			const btn = $(obj);
 			const textarea = btn.parent().parent().next().children().children()
 				.eq(1);
@@ -367,6 +371,11 @@
 			const guestCommentNo = btn.closest('.guestbook-box').find(
 				'#guestCommentNo').text();
 			const updateContent = textarea.val();
+
+			if(updateContent == "" || updateContent.trim() === ""){
+				alert("댓글 내용을 적어주세요");
+				return;
+			}
 
 			$.ajax({
 				type: 'POST',

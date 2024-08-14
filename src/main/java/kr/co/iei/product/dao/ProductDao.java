@@ -223,24 +223,24 @@ public class ProductDao {
 	}// selectThreeProduct
 
 	// 회원가입을 하는 순간 기본 배경 커서 폰트 insert 해주기 -> 내 상품에 있음
-	public int joinProductB(int num) { // 기본 배경이 41번
-		String query = "INSERT INTO buy_product VALUES(buy_product_seq.nextval, 41, ?, TO_CHAR(SYSDATE,'yyyy-mm-dd'), '사용',null, 1)";
+	public int joinProductB(int num) { // 기본 배경이 1번
+		String query = "INSERT INTO buy_product VALUES(buy_product_seq.nextval, 1, ?, TO_CHAR(SYSDATE,'yyyy-mm-dd'), '사용',null, 1)";
 		Object[] params = { num };
 		int result = jdbc.update(query, params);
 		return result;
 	}
 
-	public int joinProductC(int num) {// 기본 커서가 43번
-		String query = "INSERT INTO buy_product VALUES(buy_product_seq.nextval, 43, ?, TO_CHAR(SYSDATE,'yyyy-mm-dd'), '사용',null, 1)";
+	public int joinProductC(int num) {// 기본 커서가 2번
+		String query = "INSERT INTO buy_product VALUES(buy_product_seq.nextval, 2, ?, TO_CHAR(SYSDATE,'yyyy-mm-dd'), '사용',null, 1)";
 		Object[] params = { num };
 		int result = jdbc.update(query, params);
 		return result;
 	}
 
-	public int joinProductF(int num) { // 기본 폰트가 42번
+	public int joinProductF(int num) { // 기본 폰트가 3번
 		// String query = "INSERT INTO buy_product VALUES(buy_product_seq.nextval, ?, ?,
 		// TO_CHAR(SYSDATE,'yyyy-mm-dd'), '사용',null, 0)";
-		String query = "INSERT INTO buy_product VALUES(buy_product_seq.nextval, 42, ?, TO_CHAR(SYSDATE,'yyyy-mm-dd'), '사용',null, 1)";
+		String query = "INSERT INTO buy_product VALUES(buy_product_seq.nextval, 3, ?, TO_CHAR(SYSDATE,'yyyy-mm-dd'), '사용',null, 1)";
 		Object[] params = { num };
 		int result = jdbc.update(query, params);
 		return result;
