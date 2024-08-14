@@ -199,34 +199,6 @@ body {
 	<th:block th:include="/common/footer"></th:block>
 </body>
 <script>
-$("#emailLocal").on("change",function() {
-	$(".email-check-msg").removeClass("valid").removeClass("invalid");
-	const memberId = $(this).val();
-	const emailReg = /^[가-힣a-zA-Z0-9]{4,20}$/;
-	if (emailReg.test(memberId)) {
-		$.ajax({
-			url : "/member/ajaxCheckEmail",
-			type : "get",
-			data : {memberId : memberId},
-			success : function(data) {
-				if(data == 0){
-				$(".email-check-msg").text("사용 가능한 이메일 입니다.");
-				$(".email-check-msg").addClass("valid").remove("invalid");
-			}else{
-				$(".email-check-msg").text("이미 사용중인 이메일 입니다.");
-				$(".email-check-msg").addClass("invalid");		
-				}
-			},
-			error : function() {
-				console.log("에러")
-			}
-		});
-	} else {
-		$(".email-check-msg").text(
-				"(영문 대소문자/숫자/한글 중 2가지 이상 조합이 필요합니다. (4~20자 이내");
-		$(".email-check-msg").addClass("invalid");
-	}
-});
 
 	let mailCode = null;
 	$("#sendBtn").on("click",function(){
