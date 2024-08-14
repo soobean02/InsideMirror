@@ -692,7 +692,7 @@
 
         function editComplete(item, boardCommentNo, boardNo, boardCommentRef){
             //수정완료 버튼을 눌렀음
-            const regex = /^[\da-zA-Z\u3131-\u3163\uac00-\ud7a3]{1,1000}$/;
+            const regex = /^[\s\S]{0,1000}$/;
             const commentContent = $(item).parent().next().val();
 
             if(!regex.test(commentContent)){
