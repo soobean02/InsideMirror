@@ -251,6 +251,16 @@ public class MemberController {
 			return 1;
 		}
 	}
+	@ResponseBody
+	@GetMapping(value="/ajaxCheckEmail")
+	public int ajaxCheckEmail(String memberId) {
+		Member member = memberService.selectOneEmail(memberId);
+		if(member == null) {
+			return 0;
+		}else {
+			return 1;
+		}
+	}
 	
 	@ResponseBody
 	@PostMapping(value="/sendCode")
