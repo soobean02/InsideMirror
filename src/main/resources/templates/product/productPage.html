@@ -341,10 +341,12 @@ h4 {
 		
 		$(".try").on("click",function(){
 			const len = [[${p}]];
+			console.log(len.productListNo);
+			console.log(len.productUrl);
 			if(len.productListNo == 1){
 				$(".bookcover").css("background-color", len.productUrl);
 			}else if(len.productListNo == 2){
-				$("body *").not(".board-content *").css("cursor", "url('/img/" + len.productUrl + "') 16 16, auto");
+				$("body *").not(".board-content *").css("cursor", len.productUrl);
 			}else if(len.productListNo == 3){
 				$("body").css("font-family", len.productUrl);
 			}
