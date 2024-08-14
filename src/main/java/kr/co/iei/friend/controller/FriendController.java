@@ -42,7 +42,6 @@ public class FriendController {
         } else {
             friendList = friendService.selectList(f, keyword);
         }
-        System.out.println(friendList);
         model.addAttribute("friendList", friendList);
         model.addAttribute("searchKeyword", keyword);
 
