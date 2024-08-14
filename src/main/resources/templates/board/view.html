@@ -831,7 +831,7 @@
             const boardNo = $(item).prev().prev().val();
             const content = $(item).prev().prev().prev().val();
 
-            const regex = /^.{0,1000}$/;
+            const regex = /^[\s\S]{0,1000}$/;
 
 
             if(content == "" || content.trim() === ""){
