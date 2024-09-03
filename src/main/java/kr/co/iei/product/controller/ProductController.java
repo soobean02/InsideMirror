@@ -28,6 +28,7 @@ public class ProductController {
 	@Autowired
 	private MemberService memberService;
 	
+	/*최신 상품 3개 출력*/
 	@GetMapping(value="/acornProduct")
 	public String acorn_product(Model model,  @SessionAttribute Member member) {
 		List product = productService.selectProductPhoto();
@@ -65,6 +66,7 @@ public class ProductController {
 		model.addAttribute("ty", type);
 		return "/product/productList";
 	}
+	
 	/*판매 상세 페이지*/
 	@GetMapping(value="/proudctPage")
 	public String productPage(Model model, int productNo,  @SessionAttribute Member member) { // buyProductPage로 되어있었음...

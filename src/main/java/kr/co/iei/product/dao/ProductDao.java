@@ -40,7 +40,7 @@ public class ProductDao {
 	/* 멤버 테이블 도토리 구매 - update */
 	public int updateAcorns(Member m) {
 		String query = "UPDATE MEMBER SET ACORNS = ACORNS + ? WHERE MEMBER_NO=?";
-		Object[] params = { m.getAcorns(), m.getMemberNo() }; // 여기 바꿔야함! MEMBER_NO 임시로 넣어둠
+		Object[] params = { m.getAcorns(), m.getMemberNo() }; 
 		int result = jdbc.update(query, params);
 		return result;
 	}
@@ -48,7 +48,7 @@ public class ProductDao {
 	/* 도토리 구매 이력 - insert */
 	public int insertAcorns(Member m) {
 		String query = "insert into acorns_purchase_history values(ACORNS_PURCHASE_HISTORY_SEQ.NEXTVAL,?,?,TO_CHAR(SYSDATE,'yyyy-mm-dd'))";
-		Object[] params = { m.getMemberNo(), (m.getAcorns() * 100) };// 여기 바꿔야함! MEMBER_NO 임시로 넣어둠
+		Object[] params = { m.getMemberNo(), (m.getAcorns() * 100) };
 		int result = jdbc.update(query, params);
 		return result;
 	}

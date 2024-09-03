@@ -141,7 +141,7 @@ input[name=product]:checked+label {
 		});
 		
 		$(".canBtn").on("click",function(event){
-			event.preventDefault(); // a태그 눌러도 동작 몬하게..!
+			event.preventDefault(); // a태그 눌러도 동작하지 못하게
 			const href = $(this).prop("href"); // 링크 가져오기
 			swal({
 				title: "초기화",
@@ -164,7 +164,7 @@ input[name=product]:checked+label {
 					}
 				}
 			}).then(function(isConfirm){
-				if(isConfirm){ // 여기에 넣음 됨
+				if(isConfirm){
 					window.location.href = href;
 				}
 			});

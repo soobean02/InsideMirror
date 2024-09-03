@@ -284,7 +284,7 @@ form>div>label{
 	</div>
 	<script th:inline="javascript">
 		$("input[name='acorn']").on("change", function() {
-			const acornCount = $(this).val(); // 도토리 건든 거
+			const acornCount = $(this).val(); // 도토리
 			const acornPrice = acornCount * 100; // 도토리 가격
 
 			$("#acornCount").text("도토리 " + acornCount + " 개");
